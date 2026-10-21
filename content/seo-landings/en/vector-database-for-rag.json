@@ -5,31 +5,33 @@
   "nav": "Vector database for RAG",
   "path": "/solutions/vector-database-for-rag",
   "title": "Vector Database for RAG | Milvus, Open Source",
-  "description": "Milvus is an open-source vector database for RAG (retrieval-augmented generation): BM25 + dense hybrid search, regex filters, reranking, multi-tenancy, disk indexes.",
+  "description": "Milvus is an open-source vector database for RAG: BM25 + dense hybrid search, metadata filtering, reranking, multi-tenancy, disk indexes, Lite to billions of chunks.",
   "keywords": {
     "primary": "vector database for RAG",
     "secondary": [
       "best vector database for RAG",
-      "RAG vector store",
       "vector store for RAG",
-      "RAG database",
-      "retrieval augmented generation database",
       "open source vector database for RAG",
-      "hybrid search for RAG",
+      "how to choose a vector database for RAG",
       "hybrid search RAG BM25",
       "RAG reranking",
-      "vector database for RAG LangChain",
-      "local vector database for RAG",
-      "RAG vector database example",
-      "multi-tenant RAG"
+      "multi-tenant RAG",
+      "metadata filtering for RAG",
+      "vector database vs pgvector for RAG",
+      "managed vs self-hosted vector database",
+      "local RAG",
+      "chunking and embeddings for RAG",
+      "production RAG retrieval",
+      "Graph RAG"
     ],
     "questions": [
-      "What does a vector database for RAG have to do well?",
-      "What is the best vector database for RAG?",
+      "Do I need a vector database for RAG?",
+      "Which vector database is best for RAG?",
+      "Do I need a dedicated vector database for RAG, or is pgvector enough?",
       "Do I need Elasticsearch for keyword matching in RAG?",
-      "Can I rerank RAG results with my own model?",
-      "Can I run a vector database for RAG locally?",
-      "Does Milvus work with LangChain and LlamaIndex?"
+      "Does Milvus handle chunking and embeddings?",
+      "Can I rerank RAG results with my own model, and how do I measure retrieval quality?",
+      "Can I run a vector database for RAG locally with LangChain or LlamaIndex?"
     ]
   },
   "h1": "The vector database for RAG: retrieval that holds up in production",
@@ -89,12 +91,12 @@
       "body": "Built-in BM25 full-text search fuses with dense vectors in one hybrid search, so one vector store for RAG retrieves exact IDs and paraphrased questions alike."
     },
     {
-      "title": "Multi-tenant RAG retrieval",
-      "body": "Filter expressions run inside vector search; a partition key lets many tenants share one collection, millions per the docs."
+      "title": "Metadata filtering, multi-tenant RAG",
+      "body": "Filter expressions (==, in, ranges and JSON paths) run with vector search in one request. Include the correct tenant filter on every request when sharing a collection through a partition key."
     },
     {
       "title": "Answers stay current",
-      "body": "Upsert replaces chunks by primary key, deletes remove them, and per-request consistency levels decide how fresh each read must be."
+      "body": "Upsert replaces chunks by primary key, deletes remove them, and per-request consistency levels decide how fresh each read must be. No second index to keep in sync."
     },
     {
       "title": "Large knowledge bases, smaller bill",
@@ -131,7 +133,7 @@
     },
     {
       "title": "Disk indexes to cut cost",
-      "body": "Not every chunk needs to live in memory; pick the footprint for your latency budget.",
+      "body": "Not every chunk needs to live in memory: HNSW for the hot set, disk and quantized indexes for the rest. Pick the footprint for your latency budget.",
       "bullets": [
         "DiskANN keeps the graph and raw vectors on SSD; AISAQ moves nearly everything to SSD",
         "mmap and tiered storage load data from disk or object storage on demand",
@@ -147,32 +149,38 @@
     "note": "embed() is your embedding model. For BM25 + dense hybrid retrieval and regex filters, see the hybrid search and pattern matching guides."
   },
   "compare": {
-    "h2": "Retrieval-augmented generation database needs, mapped to Milvus",
-    "caption": "RAG database requirements mapped to Milvus features (milvus.io/docs)",
+    "h2": "How to choose a vector database for RAG: a five-point checklist",
+    "caption": "How to choose a vector database for RAG: what to check, why it matters, and the Milvus answer (milvus.io/docs)",
     "heads": [
-      "RAG requirement",
-      "Milvus feature"
+      "What to check",
+      "Why it matters for RAG",
+      "Milvus"
     ],
     "rows": [
       [
-        "Exact codes + semantic recall (hybrid search)",
-        "BM25 + dense hybrid_search, regex / LIKE / TEXT_MATCH filters"
+        "Hybrid search (keyword + vector)",
+        "Error codes, SKUs and clause numbers miss with embeddings alone",
+        "BM25 + dense hybrid_search; regex, LIKE, TEXT_MATCH filters"
       ],
       [
-        "Scoped, multi-tenant retrieval",
-        "Filter expressions, partition key"
+        "Metadata filtering and multi-tenancy",
+        "Each user must see only their documents, at query time",
+        "Filter expressions inside ANN; partition key for millions of tenants"
       ],
       [
-        "Better top-k ordering (RAG reranking)",
+        "Reranking",
+        "Top-k order decides what the LLM reads",
         "RRF / weighted rankers, model rankers, Function Chain, XGBoost scoring"
       ],
       [
-        "Fresh knowledge",
+        "Freshness",
+        "Stale chunks produce confident wrong answers",
         "Upsert, delete, consistency levels"
       ],
       [
-        "Growth at sane cost",
-        "Lite → Standalone → Distributed; DiskANN, mmap, tiered storage"
+        "Scale, cost, managed vs self-hosted",
+        "Pilots start small; production reaches billions of chunks",
+        "Milvus Lite → Standalone → Distributed, or Zilliz Cloud; DiskANN, mmap, tiered storage"
       ]
     ],
     "note": null
@@ -191,25 +199,33 @@
   ],
   "faqs": [
     [
-      "What is the best vector database for RAG?",
+      "Which vector database is best for RAG?",
       "One that covers retrieval end to end: keyword plus semantic search, tenant filters, reranking, storage that fits the corpus. Milvus ships all four, open source, one API from Lite to Distributed."
+    ],
+    [
+      "Do I need a dedicated vector database for RAG, or is pgvector enough?",
+      "pgvector fits when the corpus is small and already lives in Postgres. A dedicated vector database for RAG pays off when you need hybrid search, filtered search at scale, tenant isolation and disk indexes; Milvus Lite keeps the start just as light."
     ],
     [
       "Do I need Elasticsearch for keyword matching in RAG?",
       "Not for retrieval. Milvus runs BM25 natively, adds regex, LIKE and TEXT_MATCH filters, and hybrid_search fuses keyword and dense results in one request."
     ],
     [
-      "Can I rerank RAG results with my own model?",
-      "Yes. In Milvus 3.0+, a Function Chain can score candidates with your XGBoost model over scalar features, or call a hosted reranker, inside the search request."
+      "Does Milvus handle chunking and embeddings?",
+      "Chunking stays in your loader (LangChain, LlamaIndex, Dify). Embeddings can move into the database: Embedding Functions (Milvus 2.6+) call OpenAI, Cohere, Voyage AI, Gemini and others on insert and at query time, so you store text and search with text."
     ],
     [
-      "Can I run a vector database for RAG locally? Does Milvus work with LangChain and LlamaIndex?",
-      "Yes to both. pip install Milvus Lite for a local vector database for RAG, then use the official LangChain, LlamaIndex, Haystack or Dify integrations; the same code later targets a cluster or Zilliz Cloud."
+      "Can I rerank RAG results with my own model, and how do I measure retrieval quality?",
+      "Yes. In Milvus 3.0+, a Function Chain can score candidates with your XGBoost model or call a hosted reranker inside the search request. Measure recall@k and NDCG on labeled queries before and after."
+    ],
+    [
+      "Can I run a vector database for RAG locally with LangChain or LlamaIndex?",
+      "Yes. pip install Milvus Lite for local RAG, then use the official LangChain, LlamaIndex, Haystack or Dify integrations; the docs also include a Graph RAG tutorial for multi-hop questions. The same code later targets a cluster or Zilliz Cloud."
     ]
   ],
   "final": {
-    "h2": "Put a production-grade RAG vector store behind your LLM",
-    "body": "Start with Milvus Lite in a notebook, plug it into LangChain or LlamaIndex, then add hybrid search, grep filters, rerank chains and disk indexes as your corpus grows."
+    "h2": "Put a production RAG retrieval layer behind your LLM",
+    "body": "Start with Milvus Lite in a notebook, plug it into LangChain or LlamaIndex, then add hybrid search, metadata filtering, rerank chains and disk indexes as your corpus grows."
   },
   "sources": [
     "https://milvus.io/docs/full-text-search.md",
@@ -217,10 +233,10 @@
     "https://milvus.io/docs/filtered-search.md",
     "https://milvus.io/docs/multi_tenancy.md",
     "https://milvus.io/docs/use-partition-key.md",
-    "https://milvus.io/docs/rerankers-overview.md",
+    "https://milvus.io/docs/reranking.md",
     "https://milvus.io/docs/model-ranker-overview.md",
     "https://milvus.io/docs/upsert-entities.md",
-    "https://milvus.io/docs/tune_consistency.md",
+    "https://milvus.io/docs/consistency.md",
     "https://milvus.io/docs/integrate_with_langchain.md",
     "https://milvus.io/docs/integrate_with_llamaindex.md",
     "https://milvus.io/docs/integrate_with_haystack.md",
@@ -251,7 +267,12 @@
     "https://milvus.io/docs/tiered-storage-overview.md",
     "https://milvus.io/docs/ivf-rabitq.md",
     "https://milvus.io/docs/ivf-sq8.md",
-    "https://milvus.io/docs/ivf-pq.md"
+    "https://milvus.io/docs/ivf-pq.md",
+    "https://milvus.io/docs/embedding-function-overview.md",
+    "https://milvus.io/docs/graph_rag_with_milvus.md",
+    "https://milvus.io/docs/milvus_lite.md",
+    "https://milvus.io/docs/boolean.md",
+    "https://milvus.io/docs/delete-entities.md"
   ],
   "notes": [
     "Meituan (10B+ vectors, 100+ use cases, 2B+ single collection, self-run open-source Milvus, quote 'from RAG to agent memory') and Read AI (sub 20-50 ms, millions of monthly users) re-checked on zilliz.com customer pages 2026-10-21. Read AI page does not say RAG explicitly; copy says 'retrieval'.",
@@ -265,7 +286,8 @@
     "Weighted RRF (per-request weights) shipped in 3.0.1 (#52926); copy just says RRF / weighted.",
     "Docs label AISAQ (Milvus 2.6.4+), Tiered Storage (2.6.4+) and Boost Ranker (2.6.2+) as beta. Copy does not say beta; decide before launch. Memory facts used only as documented: DiskANN keeps PQ codes in RAM and raw vectors + graph on SSD; AISAQ keeps all index data on SSD; IVF_RABITQ docs state a 1-to-32 compression ratio; SQ8 = 8-bit ints instead of 32-bit floats.",
     "Code snippet kept (approved tenant-scoped MilvusClient example); hybrid_search + regex example not added because a runnable BM25 schema makes it ~30 lines.",
-    "Keyword pass 2026-10-21: keywords.primary/secondary/questions rebuilt from Google/Bing/Baidu autocomplete (WebSearch budget exhausted in session). research: https://suggestqueries.google.com (autocomplete, hl=en / zh-CN); https://api.bing.com/osjson.aspx (autocomplete, en-US / zh-CN); https://www.baidu.com/sugrec (autocomplete). \"Do I have to run it myself?\" and \"Will it scale without a huge memory bill?\" FAQs dropped (facts remain in benefits, disk-index block and stats); benefits_h2 is a question-style h2."
+    "SERP pass 2026-10-21: studied 16 EN / 18 ZH results (2 Medium, learnopencv, 1 Zhihu, 1 segmentfault, 1 adg.csdn hits blocked, not counted). Primary SERP is table-first and decision-oriented (dronahq decision guide, pingcap 10-DB table, zenml/braintrust/liveblocks listicles); code is rare. Gaps closed: how-to-choose checklist as the compare table (8 results) with a managed vs self-hosted row (8) and scale bands (4 ZH); 'dedicated vector DB vs pgvector' fair FAQ (9); chunking + embedding model via Embedding Functions (5); evaluation metrics recall@k / NDCG inside the rerank FAQ (5); Graph RAG tutorial mention (5); metadata filtering operators (4); freshness / no second index to sync (3); ZH '为什么 RAG 要用向量数据库' and '知识库、知识图谱与向量数据库的区别' FAQs. Not added: competitor comparison table / pricing (SPEC-v3: no competitor x-times claims, no pricing), index-parameter tuning (HNSW ef etc.). Dropped keywords (no title/H2 evidence): EN 'RAG vector store', 'RAG database', 'retrieval augmented generation database', 'vector database for RAG LangChain', 'local vector database for RAG' (SERP says 'local RAG'), 'RAG vector database example'; ZH 'RAG 用什么向量数据库' (SERP says 怎么选 / 如何选择), '检索增强生成 数据库', '大模型知识库 向量检索'. Not verifiable: Google PAA boxes (no SERP API); questions taken from result titles/H2s/FAQ blocks. Embedding Function providers per embedding-function-overview (label 'Compatible with Milvus 2.6.x'): OpenAI, Azure OpenAI, DashScope, Bedrock, Vertex AI, Voyage AI, Cohere, SiliconFlow, TEI, Hugging Face, Gemini, Yandex; applies on insert and on query text. pgvector line is a fair 'when X fits' statement, not a benchmark claim.",
+    "Retain previously reviewed executable example changes and sample prerequisites."
   ],
   "layout": "pillar",
   "aiq": [
@@ -341,8 +363,44 @@
       "cta_zilliz_signup_click"
     ]
   },
-  "benefits_h2": "What does a vector database for RAG have to do well?",
+  "benefits_h2": "Do I need a vector database for RAG? What it has to do well",
   "feature_blocks_h2": "Hybrid search, RAG reranking and disk indexes",
+  "research": [
+    "https://www.dronahq.com/vector-database-rag/",
+    "https://www.pingcap.com/compare/best-vector-database/",
+    "https://docs.cloud.google.com/gemini-enterprise-agent-platform/build/rag-engine/vector-db-choices",
+    "https://writer.com/engineering/rag-vector-database/",
+    "https://www.zenml.io/blog/vector-databases-for-rag",
+    "https://developers.cloudflare.com/vectorize/reference/what-is-a-vector-database/",
+    "https://n8n.io/rag/",
+    "https://www.braintrust.dev/articles/best-vector-databases-for-rag-2026",
+    "https://liveblocks.io/blog/whats-the-best-vector-database-for-building-ai-products",
+    "https://www.analyticsinsight.net/database/best-vector-database-options-for-rag-in-2026-explained",
+    "https://alphacorp.ai/blog/best-vector-databases-for-rag-2026-top-7-picks",
+    "https://pecollective.com/tools/best-vector-databases/",
+    "https://airbyte.com/agentic-data/what-is-a-vector-store",
+    "https://community.n8n.io/t/building-rag-in-2025-vector-stores-as-tools-is-here/75166",
+    "https://www.infoq.com/articles/vector-search-hybrid-retrieval-rag/",
+    "https://truto.one/blog/how-to-architect-strict-data-isolation-in-multi-tenant-rag-pipelines/",
+    "https://cloud.tencent.com/developer/article/2432140",
+    "https://javaguide.cn/ai/rag/rag-vector-store.html",
+    "https://jimmysong.io/zh/book/ai-handbook/rag/vector-databases/",
+    "https://www.cnblogs.com/hohoa/p/18456986",
+    "https://blog.csdn.net/m0_59235945/article/details/142067781",
+    "https://blog.csdn.net/qq_31142761/article/details/161358996",
+    "https://developer.aliyun.com/article/1740657",
+    "https://blog.csdn.net/m0_59164520/article/details/146200857",
+    "https://blog.csdn.net/AAI666666/article/details/160339583",
+    "https://quanxiaoha.com/java-interview/why-rag-uses-vector-database",
+    "https://cloud.tencent.com/product/vdb",
+    "https://blog.csdn.net/2301_81940605/article/details/155488221",
+    "https://blog.csdn.net/weixin_43440181/article/details/149029293",
+    "https://www.53ai.com/news/RAG/2024070227395.html",
+    "https://blog.csdn.net/Yunyi_Chi/article/details/157506581",
+    "https://www.53ai.com/news/RAG/2025082574298.html",
+    "https://cloud.baidu.com/article/3365381",
+    "https://www.cnblogs.com/N3ptune/p/17978538"
+  ],
   "lang": "en",
   "reviewedOn": "2026-10-21"
 }

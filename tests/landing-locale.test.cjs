@@ -35,7 +35,7 @@ function localeHook(pathname, search = '', hash = '') {
   return { ...hook.useGlobalLocale(), assigned, pushed, cookies, dispatched };
 }
 
-test('all 20 landing and hub routes expose only their available EN/ZH translations', () => {
+test('all landing and hub routes expose only their available EN/ZH translations', () => {
   for (const { loc } of getLandingSitemapPaths()) {
     const h = localeHook(loc);
     assert.equal(h.disabled, false, loc);

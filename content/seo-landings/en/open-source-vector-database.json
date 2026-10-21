@@ -4,30 +4,30 @@
   "slug": "open-source-vector-database",
   "nav": "Open-source vector database",
   "path": "/solutions/open-source-vector-database",
-  "title": "Open Source Vector Database, Apache 2.0 | Milvus",
-  "description": "Milvus is a free, Apache 2.0 open source vector database on GitHub with 40K+ stars. Hardware-accelerated search, Kubernetes-native scale, and adopters like NVIDIA.",
+  "title": "Open Source Vector Database: Milvus, Apache 2.0 | Milvus",
+  "description": "Milvus is a free, Apache 2.0 open source vector database with 40K+ GitHub stars. Compare it with Qdrant, Weaviate, Chroma and pgvector; run via pip, Docker or K8s.",
   "keywords": {
     "primary": "open source vector database",
     "secondary": [
+      "best open source vector database",
+      "open source vector database comparison",
       "self hosted vector database",
       "free vector database",
-      "vector database github",
-      "apache 2.0 vector database",
       "open source vector database for rag",
-      "open source vector database for llm",
-      "open source vector database comparison",
+      "vector database comparison",
+      "milvus vs qdrant vs weaviate vs chroma",
+      "open source vs managed vector database",
       "local vector database python",
-      "on premise vector database",
       "vector database docker",
-      "vector database kubernetes"
+      "vector database kubernetes",
+      "on-premise vector database"
     ],
     "questions": [
-      "Is Milvus really free?",
-      "Who maintains Milvus, and could the license change?",
-      "How does Milvus rank in an open source vector database comparison?",
-      "Is a self-hosted, on-premise vector database production-ready at scale?",
-      "Is it an open source vector database for RAG and LLM apps?",
-      "Deploy a self-hosted vector database: pip, Docker, Kubernetes or managed?"
+      "What is the best open source vector database for RAG?",
+      "Are open source vector databases free for commercial use?",
+      "Open source vs managed vector database: which should you choose?",
+      "How much RAM does a self-hosted vector database need?",
+      "Is a self-hosted, on-premise vector database production-ready at scale?"
     ]
   },
   "h1": "The open source vector database: free, self-hosted, Apache 2.0",
@@ -72,17 +72,17 @@
     },
     {
       "title": "Scales out, not up",
-      "body": "Storage and compute are separated. Stateless query, streaming and data nodes scale independently on Kubernetes, up to tens of billions of vectors."
+      "body": "Storage and compute are separated. Stateless query, streaming and data nodes scale independently on Kubernetes to tens of billions of vectors."
     },
     {
       "title": "Trusted in production",
-      "body": "NVIDIA, Salesforce, Walmart, eBay, IBM and Reddit appear on the Milvus adopter wall. Meituan runs 10B+ vectors on self-hosted Milvus."
+      "body": "NVIDIA, Salesforce, Walmart, eBay, IBM and Reddit are on the Milvus adopter wall; Meituan runs 10B+ vectors on self-hosted Milvus."
     }
   ],
   "feature_blocks": [
     {
       "title": "An open ecosystem, not a walled garden",
-      "body": "Official SDKs and a REST API cover the common stacks; Milvus plugs into the AI tools you use.",
+      "body": "Official SDKs and a REST API cover the common stacks and AI frameworks.",
       "bullets": [
         "SDKs for Python, Java, Go and Node.js, plus a RESTful API",
         "Integrations with LangChain, LlamaIndex, OpenAI, Hugging Face, Spark and Kafka",
@@ -91,7 +91,7 @@
     },
     {
       "title": "Every major index, one engine",
-      "body": "Choose the index per vector field for your recall, latency and memory budget, and combine vector search with filters or full-text search.",
+      "body": "Choose the index per collection for recall, latency and memory, and combine vector search with filters or full-text search.",
       "bullets": [
         "HNSW, IVF, DiskANN, SCANN and RaBitQ quantization (IVF_RABITQ)",
         "GPU indexes: GPU_CAGRA, GPU_IVF_FLAT, GPU_IVF_PQ",
@@ -99,12 +99,12 @@
       ]
     },
     {
-      "title": "Built for billions and many tenants",
-      "body": "Distributed Milvus installs with the official Helm chart or Milvus Operator and keeps cost in check as data grows.",
+      "title": "Deploy a self-hosted vector database: pip, Docker, Kubernetes or managed",
+      "body": "Same engine and API at every size, sized per the install overview. Distributed Milvus installs with the official Helm chart or Milvus Operator.",
       "bullets": [
-        "Add query nodes for reads and streaming or data nodes for writes",
-        "Hot/cold tiered storage keeps cold data on object storage",
-        "Up to 65,536 collections per cluster by default; partition keys serve millions of tenants"
+        "Milvus Lite: pip install, a local file, up to a few million vectors for notebooks and prototypes",
+        "Standalone: one Docker Compose file (milvus-standalone, etcd, MinIO), up to 100M vectors",
+        "Distributed on Kubernetes: 100M to tens of billions of vectors, tiered storage, 65,536 collections by default, partition keys for millions of tenants"
       ]
     }
   ],
@@ -142,62 +142,79 @@
   },
   "stats": [],
   "compare": {
-    "h2": "Deploy a self-hosted vector database: pip, Docker, Kubernetes or managed?",
-    "caption": "Self-hosted vector database modes, sized per the Milvus install overview",
+    "h2": "How does Milvus compare with other open source vector databases?",
+    "caption": "Open source vector database comparison: Milvus vs Qdrant vs Weaviate vs Chroma vs pgvector, per each project's license file and docs",
     "heads": [
-      "Mode",
-      "Runs on",
-      "Use it when"
+      "Database",
+      "License, language",
+      "Self-hosted deployment",
+      "Vector indexes",
+      "Hybrid search (keyword + vector)"
     ],
     "rows": [
       [
-        "Milvus Lite",
-        "Python process (Linux, macOS)",
-        "Prototyping or notebooks, up to a few million vectors"
+        "Milvus",
+        "Apache-2.0; Go, C++",
+        "pip (Lite), Docker (Standalone), Kubernetes (Distributed); Zilliz Cloud",
+        "HNSW, IVF, DiskANN, SCANN, IVF_RABITQ, GPU_CAGRA",
+        "Built-in BM25 and sparse vectors; RRF or weighted ranker"
       ],
       [
-        "Standalone (Docker)",
-        "One machine, Docker",
-        "Production on one server, up to ~100M vectors"
+        "Qdrant",
+        "Apache-2.0; Rust",
+        "Docker single node, cluster; Qdrant Cloud managed",
+        "HNSW",
+        "Dense + sparse vectors fused with RRF or DBSF"
       ],
       [
-        "Distributed (Kubernetes)",
-        "Kubernetes (Helm or Operator)",
-        "100M to tens of billions of vectors, high availability"
+        "Weaviate",
+        "BSD-3-Clause core (separate Weaviate License for wl/); Go",
+        "Docker, Kubernetes; Weaviate Cloud managed",
+        "HNSW, flat, dynamic, HFresh",
+        "Vector + BM25F with relative score or ranked fusion"
       ],
       [
-        "Zilliz Cloud",
-        "Fully managed Milvus",
-        "You want Milvus without running it; free tier to start"
+        "Chroma",
+        "Apache-2.0; Python, Rust",
+        "In-process, client-server; Chroma Cloud managed",
+        "HNSW (single node), SPANN (distributed)",
+        "Vector search with full-text and metadata filters"
+      ],
+      [
+        "pgvector",
+        "PostgreSQL License; C",
+        "Extension in any Postgres, including managed Postgres",
+        "HNSW, IVFFlat",
+        "Postgres full-text search combined in SQL, e.g. with RRF"
       ]
     ],
-    "note": null
+    "note": "Facts from each project's documentation. Results depend on configuration; run VectorDBBench on your own data."
   },
   "faqs": [
     [
-      "Is Milvus really free?",
-      "Yes. Apache 2.0 permits commercial use, modification and redistribution at no cost. You pay only for the infrastructure you run, or for Zilliz Cloud managed hosting."
+      "Are open source vector databases free for commercial use?",
+      "Milvus is: Apache 2.0 permits commercial use, modification and redistribution at no cost, and released code stays Apache 2.0. Milvus is a graduated LF AI & Data Foundation project; Zilliz is its major contributor. You pay only for the infrastructure you run."
     ],
     [
-      "Who maintains Milvus, and could the license change?",
-      "Milvus is a graduated LF AI & Data Foundation project with open governance; Zilliz is its major contributor. Released Apache 2.0 code stays Apache 2.0."
+      "What is the best open source vector database for RAG?",
+      "Pick by workload. Milvus fits RAG that needs hybrid search, filtering and scale: built-in BM25, partition keys for per-tenant retrieval, and LangChain and LlamaIndex integrations, from a laptop file to a Kubernetes cluster."
     ],
     [
-      "How does Milvus rank in an open source vector database comparison?",
-      "Use VectorDBBench, the open source benchmark that runs the same datasets on every database: on Cohere 1M, Milvus-16c64g-sq4u-fp16-force_merge reached 9,575.69 QPS at 2.3 ms P99."
+      "Open source vs managed vector database: which should you choose?",
+      "Self-hosting Milvus gives full control of data and infrastructure cost; your team runs upgrades, scaling and backups. Zilliz Cloud runs the same engine behind the same MilvusClient API, so moving either way needs no rewrite."
     ],
     [
-      "Is it an open source vector database for RAG and LLM apps?",
-      "Yes. LangChain and LlamaIndex ship Milvus integrations, built-in BM25 gives hybrid search, and filters plus partition keys cover RAG and agent memory."
+      "How much RAM does a self-hosted vector database need?",
+      "Raw float32 vectors take dimensions × 4 bytes each before index overhead. Milvus cuts that with SQ8 (75% less than FP32), IVF_RABITQ (1-to-32 compression) or DiskANN on NVMe; estimate with milvus.io/tools/sizing."
     ],
     [
       "Is a self-hosted, on-premise vector database production-ready at scale?",
-      "Distributed Milvus runs on Kubernetes with replicas and independent scaling. Meituan runs 10B+ vectors on self-hosted Milvus; Read AI serves 20–50 ms retrieval to millions of users."
+      "Yes. Distributed Milvus runs on Kubernetes with replicas and independent scaling. Meituan runs 10B+ vectors on self-hosted Milvus; Read AI serves 20–50 ms retrieval to millions of users."
     ]
   ],
   "final": {
     "h2": "Run an open source vector database in five minutes",
-    "body": "pip install pymilvus, open a local file, and search. Move to Standalone or Kubernetes when data grows, or hand operations to Zilliz Cloud, no rewrite."
+    "body": "pip install pymilvus, open a local file, and search. Move to Standalone or Kubernetes as data grows, or hand operations to Zilliz Cloud, with no rewrite."
   },
   "sources": [
     "https://github.com/milvus-io/milvus",
@@ -222,7 +239,21 @@
     "https://github.com/zilliztech/VectorDBBench",
     "https://zilliz.com/customers/meituan",
     "https://zilliz.com/customers/read-ai",
-    "https://docs.zilliz.com/docs/free-trials"
+    "https://docs.zilliz.com/docs/free-trials",
+    "https://milvus.io/docs/install_standalone-docker-compose.md",
+    "https://milvus.io/docs/ivf-rabitq.md",
+    "https://github.com/qdrant/qdrant",
+    "https://github.com/qdrant/qdrant/blob/master/LICENSE",
+    "https://qdrant.tech/documentation/concepts/indexing/",
+    "https://qdrant.tech/documentation/concepts/hybrid-queries/",
+    "https://github.com/weaviate/weaviate/blob/main/LICENSE",
+    "https://docs.weaviate.io/weaviate/concepts/vector-index",
+    "https://docs.weaviate.io/weaviate/search/hybrid",
+    "https://weaviate.io/platform",
+    "https://github.com/chroma-core/chroma",
+    "https://github.com/chroma-core/chroma/blob/main/LICENSE",
+    "https://docs.trychroma.com/docs/collections/configure",
+    "https://github.com/pgvector/pgvector"
   ],
   "notes": [
     "Helm install command intentionally not shown in full: the docs' command pins an image tag and streaming flags that change per release; the page links to the Helm guide instead.",
@@ -233,9 +264,10 @@
     "Index list per docs/index-explained.md (released). FMINDEX intentionally excluded (master-only).",
     "Contributor count (README all-contributors badge shows 432) left out of copy as a volatile counter.",
     "Body intentionally above v3 SEM ceiling (owner asked for a richer page, target 550–750 words).",
-    "Keyword pass 2026-10-21: keywords rebuilt from Google/Baidu autocomplete (WebSearch budget exhausted); research: https://suggestqueries.google.com (autocomplete, hl=en); https://www.baidu.com/sugrec (autocomplete)."
+    "SERP pass 2026-10-21: studied 12 EN / 7 ZH results (listicles: instaclustr, redis, designveloper, encore, firecrawl, zenml, estha; self-hosted guides: awesomeosai, ainomam, technolynx, markaicode; ZH: 腾讯云 2490862, 博客园 vipsoft, jishuzhan 2045085461480275970, zyentor 3185, 53ai, 掘金 7671219839776653322, 阿里云 Milvus 版). Gaps closed: Milvus/Qdrant/Weaviate/Chroma/pgvector comparison table (license, language, deployment, indexes, hybrid search) replaces the deployment-mode table, which moved into the third feature block; FAQs rewritten to SERP questions (free for commercial use, best for RAG, open source vs managed, RAM math); Standalone Docker Compose = milvus-standalone + etcd + MinIO per install_standalone-docker-compose.md. Dropped: 'vector database github', 'apache 2.0 vector database', 'open source vector database for llm' (no SERP evidence); the 'rank in comparison' FAQ folded into the production-ready FAQ. Weaviate language 'Go' and Chroma 'Python, Rust' from the GitHub repos; Weaviate deployment list from weaviate.io/platform.",
+    "Retain previously reviewed executable example changes and sample prerequisites."
   ],
-  "benefits_h2": "Why Milvus as an open source vector database for RAG and LLM apps",
+  "benefits_h2": "Why Milvus as an open source vector database for RAG and AI agents",
   "bench": [
     {
       "title": "Vector search throughput (QPS, higher is better)",
@@ -279,6 +311,8 @@
   "related": [
     "distributed-vector-database",
     "milvus-vs-qdrant",
+    "milvus-vs-weaviate",
+    "milvus-vs-pgvector",
     "vector-database-for-rag",
     "hybrid-search"
   ],
@@ -341,6 +375,20 @@
       "cta_zilliz_signup_click"
     ]
   },
+  "research": [
+    "https://www.instaclustr.com/education/vector-database/best-open-source-vector-database-solutions-top-5-in-2026/",
+    "https://www.instaclustr.com/education/vector-database/top-10-open-source-vector-databases/",
+    "https://redis.io/blog/best-open-source-vector-databases-comparison/",
+    "https://www.designveloper.com/blog/best-open-source-vector-database/",
+    "https://encore.dev/articles/best-vector-databases",
+    "https://www.firecrawl.dev/blog/best-vector-databases",
+    "https://www.zenml.io/blog/vector-databases-for-rag",
+    "https://estha.ai/blog/8-open-source-vector-databases-compared-choosing-the-right-solution-for-your-ai-applications/",
+    "https://awesomeosai.com/self-hosted/vector-databases",
+    "https://www.ainomam.com/post/vector-database-self-hosted-guide-20260802",
+    "https://www.technolynx.com/post/milvus-docker-standalone-vs-distributed-deployment-and-when-each-fits/",
+    "https://markaicode.com/best/best-milvus-configuration-production-guide/"
+  ],
   "lang": "en",
   "reviewedOn": "2026-10-21"
 }

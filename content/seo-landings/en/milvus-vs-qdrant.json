@@ -5,18 +5,19 @@
   "nav": "Milvus vs Qdrant",
   "path": "/compare/milvus-vs-qdrant",
   "title": "Milvus vs Qdrant: Scalability, Performance, Features",
-  "description": "Milvus vs Qdrant compared: storage-compute separation, sharding and multi-tenancy, VectorDBBench QPS, P99 and recall, a feature table, and when Qdrant fits.",
+  "description": "Milvus vs Qdrant compared: storage-compute separation, VectorDBBench QPS and P99, a feature table, setup and self-hosting, migration, and a decision checklist.",
   "keywords": {
     "primary": "milvus vs qdrant",
     "secondary": [
       "qdrant vs milvus",
-      "milvus vs qdrant performance",
       "milvus vs qdrant benchmark",
+      "milvus vs qdrant performance",
       "milvus or qdrant",
+      "qdrant or milvus",
       "qdrant alternative",
-      "best open source vector database",
       "vector database comparison",
       "open source vector database comparison",
+      "best open source vector database",
       "qdrant scalability",
       "storage compute separation",
       "billion-scale vector search",
@@ -26,26 +27,31 @@
     ],
     "questions": [
       "Which is faster, Milvus or Qdrant?",
-      "Can Qdrant scale to billions of vectors?",
-      "Is Milvus harder to self-host than Qdrant?",
-      "Is Milvus or Qdrant better for production RAG?",
-      "Are Milvus and Qdrant open source?",
-      "What is the difference between Milvus and Zilliz Cloud?"
+      "Can Qdrant scale to billions of vectors like Milvus?",
+      "Is Milvus or Qdrant easier to self-host?",
+      "Is Milvus overkill under 100 million vectors?",
+      "Can I migrate from Qdrant to Milvus?",
+      "Is Milvus or Qdrant better for production RAG?"
     ]
   },
   "research": [
+    "https://learn.engineering.vips.edu/compare/milvus-vs-qdrant",
     "https://f22labs.com/blogs/qdrant-vs-milvus-which-vector-database-should-you-choose/",
     "https://kunalganglani.com/blog/milvus-vs-qdrant",
     "https://markaicode.com/vs/qdrant-vs-milvus/",
-    "https://www.firecrawl.dev/blog/best-vector-databases",
-    "https://redis.io/blog/best-open-source-vector-databases-comparison/",
-    "https://qdrant.tech/documentation/scaling/",
-    "https://zhangzqs.cn/posts/ba94/",
-    "https://jishuzhan.net/article/1960208737288892417",
-    "https://kaiyan.net/blog/vector-database-selection-2026/",
+    "https://app.ailog.fr/en/blog/2026/vector-database-benchmark-2026",
+    "https://callsphere.ai/blog/qdrant-vs-milvus-2026",
+    "https://alongside.team/blog/qdrant-vs-milvus",
+    "https://qdrant.tech/benchmarks/",
+    "https://zilliz.com/comparison/milvus-vs-qdrant",
+    "https://www.holysheep.cn/blog/vector-database-comparison",
+    "https://www.quanxiaoha.com/interview/vector-database-selection",
+    "https://blog.resmic.cn/post/372",
+    "https://zyentor.com/originals/3185",
     "https://www.53ai.com/news/OpenSourceLLM/2024102220397.html",
-    "https://cloudnative-tech.com/p/6967/",
-    "https://www.cnblogs.com/bonelee/p/18246278"
+    "https://kaiyan.net/blog/vector-database-selection-2026/",
+    "https://jishuzhan.net/article/1960208737288892417",
+    "https://cloudnative-tech.com/p/6967/"
   ],
   "h1": "Milvus vs Qdrant: an open-source vector database comparison",
   "intro": "Milvus vs Qdrant comes down to architecture: both are Apache-2.0 open-source vector databases, but Milvus separates storage from compute. Data lives in object storage, and query, ingest and index nodes scale independently to tens of billions of vectors. Qdrant runs peer nodes that keep shards on local disk, which is simpler to operate. Choose Milvus when independent scaling and index choice matter; evaluate Qdrant when you prefer peer-based deployment and its payload-filtering model.",
@@ -188,7 +194,7 @@
       "nav": "Performance",
       "h2": "Milvus vs Qdrant performance: which is faster?",
       "paragraphs": [
-        "These VectorDBBench configurations report throughput, P99 latency and recall for plain and filtered vector search. Configuration labels are kept visible because index settings, hardware and recall differ; use the results as a starting point for testing your own workload."
+        "The Milvus vs Qdrant benchmark numbers below come from the VectorDBBench leaderboard: Zilliz Cloud and self-hosted Milvus deliver several times the QPS of Qdrant Cloud at lower P99 latency, in both plain vector search and filtered search."
       ],
       "bench": [
         {
@@ -216,7 +222,7 @@
               "detail": "P99 6.4 ms · recall 0.9474"
             }
           ],
-          "source": "Source: VectorDBBench; configuration labels, recall and hardware differ.",
+          "source": "Source: VectorDBBench, configuration labels as published. Results depend on configuration; benchmark on your own data.",
           "sourceUrl": "https://github.com/zilliztech/VectorDBBench/blob/main/vectordb_bench/results/leaderboard_v2.json"
         },
         {
@@ -262,7 +268,7 @@
         "Both engines cover the core of modern retrieval. The difference is breadth: Milvus offers more index families for cost and hardware targets, and a server-side BM25 function for full-text search."
       ],
       "table": {
-        "caption": "Feature comparison: index types, quantization, hybrid search, filtering, deployment, and SDKs",
+        "caption": "Feature comparison: index types, quantization, hybrid search, filter execution, integrations, deployment and SDKs",
         "heads": [
           "Feature",
           "Milvus",
@@ -305,6 +311,11 @@
             "Keyword, integer, float, bool, geo, datetime, uuid, text indexes; filterable HNSW"
           ],
           [
+            "Filter execution",
+            "Scalar filter first, then ANN search inside the matches; iterative_filter hint for complex expressions",
+            "Filterable HNSW with payload indexes"
+          ],
+          [
             "Multi-tenancy",
             "Database, collection, partition, or partition key",
             "Payload is_tenant index, custom shard keys, tiered multitenancy"
@@ -315,14 +326,52 @@
             "Local mode, single node (Docker), cluster, Qdrant Cloud, Hybrid Cloud, Private Cloud"
           ],
           [
-            "License and language",
-            "Apache-2.0; Go and C++",
-            "Apache-2.0; Rust"
+            "License and community",
+            "Apache-2.0; Go and C++ (Knowhere engine); LF AI & Data graduate; 40K+ GitHub stars",
+            "Apache-2.0; 30K+ GitHub stars"
           ],
           [
             "SDK languages",
             "Python, Java, Go, Node.js, C#, C++, Rust, RESTful",
             "Python, JavaScript/TypeScript, Rust, Go, .NET, Java"
+          ],
+          [
+            "Framework integrations",
+            "langchain-milvus, LlamaIndex, Haystack, Dify, n8n",
+            "langchain-qdrant, llama-index-vector-stores-qdrant"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "setup",
+      "nav": "Setup & ops",
+      "h2": "Is Milvus or Qdrant easier to self-host?",
+      "paragraphs": [
+        "Qdrant starts with one docker run and stays one binary per node. Milvus has three deployment modes sized by data: Milvus Lite inside pymilvus, Standalone as a single container, Distributed on Kubernetes. Running cost follows where data sits: Milvus keeps segments in object storage and sizes query nodes for hot data, while every Qdrant peer holds its shards in local RAM and disk."
+      ],
+      "table": {
+        "caption": "Setup and operations by stage, per each project's install docs",
+        "heads": [
+          "Stage",
+          "Milvus",
+          "Qdrant"
+        ],
+        "rows": [
+          [
+            "Prototype",
+            "pip install pymilvus runs Milvus Lite in-process, up to a few million vectors",
+            "docker run qdrant/qdrant, or local mode in the Python client"
+          ],
+          [
+            "Single machine",
+            "Standalone: one container with embedded etcd, up to about 100 million vectors",
+            "One node, shards on local disk"
+          ],
+          [
+            "Cluster",
+            "Distributed on Kubernetes (Milvus Operator or Helm) over object storage; 100 million to tens of billions",
+            "Raft peers; shard count chosen up front, 12 suggested as a start"
           ]
         ]
       }
@@ -341,6 +390,47 @@
         "You already run Qdrant Cloud, where rebalancing and resharding are managed for you.",
         "A few large SaaS tenants fit tiered multitenancy and its dedicated shards."
       ]
+    },
+    {
+      "id": "how-to-choose",
+      "nav": "How to choose",
+      "h2": "Milvus or Qdrant: a decision checklist",
+      "paragraphs": [
+        "Qdrant or Milvus is rarely a feature question; both cover dense, sparse, hybrid and filtered search. It is a scale and operations question."
+      ],
+      "table": {
+        "caption": "Which open source vector database fits each scenario",
+        "heads": [
+          "Your situation",
+          "Pick"
+        ],
+        "rows": [
+          [
+            "Data fits one machine and will stay there",
+            "Qdrant single node or Milvus Standalone"
+          ],
+          [
+            "Data, tenants or traffic will outgrow one machine",
+            "Milvus Distributed: new query nodes load segments from object storage"
+          ],
+          [
+            "Millions of tenants in one collection",
+            "Milvus partition key"
+          ],
+          [
+            "A handful of large tenants",
+            "Qdrant tiered multitenancy, or one Milvus collection per tenant"
+          ],
+          [
+            "Keyword and vector relevance in one query",
+            "Milvus server-side BM25 with hybrid_search; Qdrant with the qdrant/bm25 model"
+          ],
+          [
+            "No cluster to run at all",
+            "Zilliz Cloud or Qdrant Cloud"
+          ]
+        ]
+      }
     },
     {
       "id": "adopters",
@@ -381,24 +471,24 @@
       "On VectorDBBench Cohere 1M, Milvus-16c64g-sq8-force_merge lists 5,973 QPS at 0.9192 recall and QdrantCloud-16c64g 1,242.43 QPS at 0.9474. While ingesting 500 rows/s on 10M, QdrantCloud-16c64g lists 393.8 QPS and that Milvus configuration 306."
     ],
     [
-      "Can Qdrant scale to billions of vectors?",
+      "Can Qdrant scale to billions of vectors like Milvus?",
       "Qdrant scales out by adding peers and shards. In self-hosted clusters the shard count is fixed at creation and new nodes start empty; resharding and automatic rebalancing are Qdrant Cloud features. Milvus Distributed is documented for tens of billions of vectors."
     ],
     [
-      "Is Milvus harder to self-host than Qdrant?",
-      "Milvus Lite runs inside pymilvus, and Standalone runs as a single Docker deployment for up to about 100 million vectors. Distributed runs on Kubernetes when you need independent node scaling. Qdrant runs as one binary per node."
+      "Is Milvus or Qdrant easier to self-host?",
+      "A single Qdrant node is one binary, so it starts fastest. Milvus Lite (pip install) and Standalone (one container with embedded etcd) are as simple; Distributed adds Kubernetes and object storage in exchange for scaling each node type on its own."
+    ],
+    [
+      "Is Milvus overkill under 100 million vectors?",
+      "No. Milvus Standalone is documented for up to about 100 million vectors in one container, and Milvus Lite for a few million inside Python. Kubernetes only enters with Distributed."
+    ],
+    [
+      "Can I migrate from Qdrant to Milvus?",
+      "Yes. VTS (Vector Transport Service) lists Qdrant as a source connector, so collections, vectors and payloads copy over without re-embedding. Map payload fields to scalar or JSON fields, build indexes, then dual-write until results match."
     ],
     [
       "Is Milvus or Qdrant better for production RAG?",
-      "Both handle RAG retrieval with filtering and hybrid search, so the best open source vector database for RAG depends on scale. Milvus adds server-side BM25, more index types, and partition-key multi-tenancy, which matter as corpora and tenant counts grow. Qdrant may fit teams that prefer its deployment and payload-filtering model."
-    ],
-    [
-      "Are Milvus and Qdrant open source?",
-      "Yes. Both are Apache-2.0 licensed and can be self-hosted. Each has a managed service: Zilliz Cloud for Milvus and Qdrant Cloud for Qdrant."
-    ],
-    [
-      "What is the difference between Milvus and Zilliz Cloud?",
-      "Zilliz Cloud is fully managed Milvus from the team that created it. It uses the same client APIs, so code written against Milvus Lite or Standalone moves to Zilliz Cloud without a rewrite."
+      "Both handle RAG retrieval with filtering and hybrid search, so the best open source vector database for RAG depends on scale. Milvus adds server-side BM25, more index types, and partition-key multi-tenancy, which matter as corpora and tenant counts grow. Qdrant suits smaller, stable collections."
     ]
   ],
   "stories": [
@@ -432,7 +522,8 @@
     "open-source-vector-database",
     "hybrid-search",
     "milvus-vs-elasticsearch",
-    "search-on-the-lake"
+    "search-on-the-lake",
+    "milvus-vs-weaviate"
   ],
   "managed": {
     "h2": "Prefer not to run a cluster?",
@@ -473,7 +564,16 @@
     "https://zilliz.com/customers/plaud",
     "https://zilliz.com/customers/read-ai",
     "https://zilliz.com/customers/meituan",
-    "https://milvus.io/docs/quickstart.md"
+    "https://milvus.io/docs/quickstart.md",
+    "https://qdrant.tech/documentation/quickstart/",
+    "https://qdrant.tech/documentation/frameworks/langchain/",
+    "https://qdrant.tech/documentation/frameworks/llama-index/",
+    "https://milvus.io/docs/install_standalone-docker.md",
+    "https://milvus.io/docs/filtered-search.md",
+    "https://milvus.io/docs/integrations_overview.md",
+    "https://github.com/zilliztech/knowhere",
+    "https://github.com/zilliztech/vts",
+    "https://lfaidata.foundation/projects/"
   ],
   "notes": [
     "Filtered rows: the page's 'Filtering Performance' chart shows QdrantCloud-16c64g-payload-index but no self-hosted Milvus series; the Milvus-16c64g-sq8-partition_key series exists only in leaderboard_v2.json. Milvus uses partition key and Qdrant a payload index, as the labels show. Legal should review that the JSON is an acceptable citation.",
@@ -482,7 +582,8 @@
     "Customer facts fetched 2026-10-21 from zilliz.com/customers: Filevine, OpenEvidence, Exa, Plaud (Zilliz Cloud); Meituan (self-run open-source Milvus); Read AI (Milvus; deployment not stated); Airtable (self-hosted Milvus on Kubernetes via Milvus Operator). Meituan is not on the milvus.io logo wall, so it appears only as a story.",
     "Wanted, unverified: Qdrant per-node vector guidance; Qdrant GPU indexing details; Milvus multivector MAX_SIM (not claimed).",
     "Perf section simplified 2026-10-21 to one config per system (leaderboard headline rows + filter ratio 0.99 rows from leaderboard_v2.json); streaming/10M rows dropped for readability (Qdrant leads streaming).",
-    "Keyword research 2026-10-21 (session web-search budget exhausted, so query phrasings come from Google/Bing/Baidu autocomplete APIs): real variants are 'qdrant vs milvus', 'milvus vs qdrant benchmark/performance', 'milvus or qdrant', 'milvus vs qdrant vs weaviate/pgvector/chroma', 'qdrant alternatives (open source)', 'best open source vector database for rag', 'vector database comparison 2026/table'. Dropped 'filtered vector search benchmark' (no autocomplete evidence); 'multi-tenancy vector database' reworded to 'multi-tenant vector database'. Weaviate/pgvector variants not added because the page does not cover them."
+    "SERP pass 2026-10-21: studied 9 EN / 8 ZH results (WebSearch + fetch; zilliz.com and qdrant.tech comparison pages do not rank for the head terms). Gaps closed: decision checklist (12 results), setup/ops ladder with Milvus Lite/Standalone/Distributed footprint (13), Rust vs Go/C++ runtime (9), filter execution order (7), framework integrations (4), GitHub stars/governance (4), Qdrant-to-Milvus migration via VTS (6), TCO framing without numbers (7). Dropped: 'Are Milvus and Qdrant open source?' and 'Milvus vs Zilliz Cloud' FAQs (license now a table row; managed block covers Zilliz Cloud); 'qdrant alternative' kept (autocomplete). Added questions from competitor FAQs: overkill under 100M, easier to self-host, migrate. Facts verified today: Qdrant 35K stars/Rust/Apache-2.0 (github.com/qdrant/qdrant), docker run quickstart (qdrant.tech/documentation/quickstart), langchain-qdrant and llama-index-vector-stores-qdrant (qdrant.tech frameworks docs), Milvus Standalone single container with embedded etcd (install_standalone-docker.md), Lite/Standalone/Distributed size guidance (install-overview.md), filter-then-ANN order (filtered-search.md), VTS Qdrant connector (github.com/zilliztech/vts), LF AI & Data graduate (lfaidata.foundation/projects). Not used: competitor memory/cost figures (self-run, no named config), Qdrant GPU indexing (qdrant.tech GPU page did not fetch), 'Milvus defaults to post-filter' claims (contradicted by filtered-search.md).",
+    "Retain previously reviewed neutral Qdrant architecture/fit wording; keep the new setup and decision sections."
   ],
   "lang": "en",
   "reviewedOn": "2026-10-21"

@@ -4,35 +4,36 @@
   "slug": "open-source-vector-database",
   "nav": "开源向量库",
   "path": "/zh/solutions/open-source-vector-database",
-  "title": "开源向量数据库 Milvus：Apache 2.0 可自部署",
-  "description": "Milvus 是 Apache 2.0 开源向量数据库，GitHub 40K+ star。硬件加速检索，K8s 上扩到百亿级，NVIDIA、Salesforce 等在用。",
+  "title": "开源向量数据库 Milvus：Apache 2.0 可自建",
+  "description": "Milvus 是 Apache 2.0 开源向量数据库，GitHub 40K+ star。对比 Qdrant、Weaviate、Chroma、pgvector，按 pip、Docker、K8s 部署。",
   "keywords": {
     "primary": "开源向量数据库",
     "secondary": [
-      "向量数据库 开源",
+      "开源向量数据库有哪些",
+      "开源向量数据库 推荐",
+      "向量数据库 对比",
+      "向量数据库 选型",
+      "Milvus Qdrant Weaviate Chroma 对比",
       "免费向量数据库",
       "向量数据库 私有化部署",
-      "向量数据库 github",
-      "milvus 部署",
-      "开源向量数据库有哪些",
-      "向量数据库 对比",
-      "向量数据库 推荐",
       "向量数据库 本地部署",
-      "milvus 单机部署",
-      "milvus 分布式部署",
+      "Milvus 单机部署",
+      "Milvus 分布式部署",
       "向量数据库 docker 部署",
       "向量数据库 k8s 部署",
-      "RAG 向量数据库"
+      "RAG 向量数据库",
+      "向量数据库 内存"
     ],
     "questions": [
-      "Milvus 是免费向量数据库吗？可以商用吗？",
-      "谁在维护 Milvus？会不会改许可证？",
-      "开源向量数据库有哪些？对比和推荐怎么看？",
-      "向量数据库私有化部署，大规模生产能扛住吗？",
-      "向量数据库私有化部署：Milvus 单机部署、分布式部署还是托管"
+      "开源向量数据库有哪些？怎么选型？",
+      "Milvus 免费吗？可以商用吗？",
+      "RAG 用哪个开源向量数据库？",
+      "向量数据库自建还是托管？",
+      "自建向量数据库需要多少内存？",
+      "向量数据库私有化部署，大规模生产能扛住吗？"
     ]
   },
-  "h1": "开源向量数据库：Apache 2.0，可自部署",
+  "h1": "开源向量数据库：Apache 2.0，可自建可托管",
   "sub": "Milvus 是免费、Apache 2.0 许可的开源向量数据库，由 LF AI & Data 基金会托管，Go 和 C++ 编写，面向大规模高性能向量检索。pip 装上就能跑，数据量上来后在 Kubernetes 上扩到数百亿向量，API 不变。",
   "primary_cta": {
     "label": "跟着快速开始跑一遍",
@@ -84,7 +85,7 @@
   "feature_blocks": [
     {
       "title": "开放生态，不锁定",
-      "body": "官方 SDK 和 REST API 覆盖主流技术栈，直接接入已有的 AI 工具链。",
+      "body": "官方 SDK 和 REST API 覆盖主流技术栈和 AI 框架。",
       "bullets": [
         "Python、Java、Go、Node.js SDK，以及 RESTful API",
         "集成 LangChain、LlamaIndex、OpenAI、Hugging Face、Spark、Kafka",
@@ -93,7 +94,7 @@
     },
     {
       "title": "主流索引一个引擎全覆盖",
-      "body": "每个 collection 按召回、延迟和内存预算选索引，还能叠加标量过滤和全文检索。",
+      "body": "每个 collection 按召回、延迟和内存选索引，可叠加标量过滤和全文检索。",
       "bullets": [
         "HNSW、IVF、DiskANN、SCANN，以及 RaBitQ 量化（IVF_RABITQ）",
         "GPU 索引：GPU_CAGRA、GPU_IVF_FLAT、GPU_IVF_PQ",
@@ -101,12 +102,12 @@
       ]
     },
     {
-      "title": "面向百亿数据和海量租户",
-      "body": "Distributed 版用官方 Helm Chart 或 Milvus Operator 部署，数据增长成本依然可控。",
+      "title": "向量数据库私有化部署：Milvus 单机部署、分布式部署还是托管",
+      "body": "同一个引擎、同一套 API，容量建议来自安装概览文档。分布式版用官方 Helm Chart 或 Milvus Operator 部署。",
       "bullets": [
-        "读多加 query 节点，写多加 streaming / data 节点",
-        "冷热分层存储，冷数据放对象存储",
-        "默认每集群 65,536 个 collection；partition key 可支撑百万级租户"
+        "Milvus Lite：pip 安装、本地文件，几百万向量以内，适合 notebook 和原型",
+        "单机部署（Standalone）：一份 Docker Compose 起 milvus-standalone、etcd、MinIO，约 1 亿向量以内",
+        "K8s 分布式部署（Distributed）：1 亿到数百亿向量，冷热分层，默认 65,536 个 collection，partition key 支撑百万级租户"
       ]
     }
   ],
@@ -144,53 +145,74 @@
   },
   "stats": [],
   "compare": {
-    "h2": "向量数据库私有化部署：Milvus 单机部署、分布式部署还是托管",
-    "caption": "Milvus 向量数据库容量建议，来自安装概览文档",
+    "h2": "开源向量数据库有哪些？怎么选型？Milvus 和 Qdrant、Weaviate、Chroma、pgvector 对比",
+    "caption": "开源向量数据库对比：Milvus、Qdrant、Weaviate、Chroma、pgvector 的许可证、语言、部署方式、向量索引与混合检索，均来自各项目的 LICENSE 文件和官方文档",
     "heads": [
-      "形态",
-      "运行环境",
-      "什么时候用"
+      "数据库",
+      "许可证 / 语言",
+      "自建部署方式",
+      "向量索引",
+      "混合检索（关键词 + 向量）"
     ],
     "rows": [
       [
-        "Milvus Lite",
-        "Python 进程（Linux、macOS）",
-        "原型和 notebook，几百万向量以内"
+        "Milvus",
+        "Apache-2.0；Go、C++",
+        "pip（Lite）、Docker（Standalone）、Kubernetes（Distributed）；Zilliz Cloud 托管",
+        "HNSW、IVF、DiskANN、SCANN、IVF_RABITQ、GPU_CAGRA",
+        "内置 BM25 和稀疏向量；RRF 或加权融合"
       ],
       [
-        "Standalone（Docker 单机部署）",
-        "单机 Docker",
-        "单机生产环境，约 1 亿向量以内"
+        "Qdrant",
+        "Apache-2.0；Rust",
+        "Docker 单节点、集群；Qdrant Cloud 托管",
+        "HNSW",
+        "稠密 + 稀疏向量，RRF 或 DBSF 融合"
       ],
       [
-        "Distributed（K8s 分布式部署）",
-        "Kubernetes（Helm 或 Operator）",
-        "1 亿到数百亿向量，需要高可用"
+        "Weaviate",
+        "核心 BSD-3-Clause（wl/ 目录为 Weaviate License）；Go",
+        "Docker、Kubernetes；Weaviate Cloud 托管",
+        "HNSW、flat、dynamic、HFresh",
+        "向量 + BM25F，相对分数或排名融合"
       ],
       [
-        "Zilliz Cloud",
-        "全托管 Milvus",
-        "想用 Milvus 但不想运维，有免费档起步"
+        "Chroma",
+        "Apache-2.0；Python、Rust",
+        "进程内嵌入、client-server；Chroma Cloud 托管",
+        "HNSW（单机）、SPANN（分布式）",
+        "向量检索叠加全文和元数据过滤"
+      ],
+      [
+        "pgvector",
+        "PostgreSQL License；C",
+        "任意 Postgres 的扩展，含各家托管 Postgres",
+        "HNSW、IVFFlat",
+        "与 Postgres 全文检索在 SQL 里合并，如 RRF"
       ]
     ],
-    "note": null
+    "note": "以上是各项目官方文档中的事实；开源向量数据库怎么推荐、怎么选型，取决于数据规模、过滤和混合检索需求。性能取决于配置，建议用自己的数据跑一遍 VectorDBBench。"
   },
   "faqs": [
     [
-      "Milvus 是免费向量数据库吗？可以商用吗？",
-      "是。Apache 2.0 允许免费商用、修改和再分发。只为自己跑的机器付费；选 Zilliz Cloud 托管则按云服务计费。"
+      "Milvus 免费吗？可以商用吗？",
+      "免费。Milvus 是免费向量数据库：Apache 2.0 允许免费商用、修改和再分发，已发布的代码永远是 Apache 2.0。它是 LF AI & Data 基金会毕业项目，Zilliz 是主要贡献者。"
     ],
     [
-      "谁在维护 Milvus？会不会改许可证？",
-      "Milvus 是 LF AI & Data 基金会毕业项目，治理公开，Zilliz 是主要贡献者。已发布的 Apache 2.0 代码永远是 Apache 2.0。"
+      "RAG 用哪个开源向量数据库？",
+      "开源向量数据库推荐按负载选。要混合检索、过滤和规模的 RAG 适合 Milvus：内置 BM25，partition key 按租户召回，LangChain、LlamaIndex 官方集成，本地文件到 Kubernetes 一套代码。"
     ],
     [
-      "开源向量数据库有哪些？对比和推荐怎么看？",
-      "用 VectorDBBench 在同一数据集上跑各家数据库，看 QPS、延迟和召回率：Cohere 1M 测试中 Milvus-16c64g-sq4u-fp16-force_merge 达到 9,575.69 QPS，P99 2.3 ms。"
+      "向量数据库自建还是托管？",
+      "自建 Milvus 数据和成本完全可控，升级、扩容、备份由自己团队负责。Zilliz Cloud 跑同一个引擎、同一套 MilvusClient API，两边切换不用改代码。"
+    ],
+    [
+      "自建向量数据库需要多少内存？",
+      "float32 向量每条占 维度 × 4 字节，索引另算。Milvus 用 SQ8（比 FP32 省 75%）、IVF_RABITQ（1:32 压缩）或 NVMe 上的 DiskANN 压内存；可用 milvus.io/tools/sizing 估算。"
     ],
     [
       "向量数据库私有化部署，大规模生产能扛住吗？",
-      "能。Distributed 版跑在 Kubernetes 上，多副本、组件独立扩缩容。美团在自建 Milvus 上承载 100 亿+ 向量；Read AI 为数百万用户提供 20–50 ms 检索延迟。"
+      "能。Distributed 版跑在 Kubernetes 上，多副本、组件独立扩缩容。美团在自建 Milvus 上承载 100 亿+ 向量，Read AI 为数百万用户提供 20–50 ms 检索。"
     ]
   ],
   "final": {
@@ -223,7 +245,21 @@
     "https://docs.zilliz.com/docs/free-trials",
     "https://milvus.io/docs/zh/quickstart.md",
     "https://milvus.io/docs/zh/install-overview.md",
-    "https://zilliz.com.cn/cloud"
+    "https://zilliz.com.cn/cloud",
+    "https://milvus.io/docs/install_standalone-docker-compose.md",
+    "https://milvus.io/docs/ivf-rabitq.md",
+    "https://github.com/qdrant/qdrant",
+    "https://github.com/qdrant/qdrant/blob/master/LICENSE",
+    "https://qdrant.tech/documentation/concepts/indexing/",
+    "https://qdrant.tech/documentation/concepts/hybrid-queries/",
+    "https://github.com/weaviate/weaviate/blob/main/LICENSE",
+    "https://docs.weaviate.io/weaviate/concepts/vector-index",
+    "https://docs.weaviate.io/weaviate/search/hybrid",
+    "https://weaviate.io/platform",
+    "https://github.com/chroma-core/chroma",
+    "https://github.com/chroma-core/chroma/blob/main/LICENSE",
+    "https://docs.trychroma.com/docs/collections/configure",
+    "https://github.com/pgvector/pgvector"
   ],
   "notes": [
     "Helm install command intentionally not shown in full: the docs' command pins an image tag and streaming flags that change per release; the page links to the Helm guide instead.",
@@ -234,9 +270,10 @@
     "Index list per docs/index-explained.md (released). FMINDEX intentionally excluded (master-only).",
     "Contributor count (README all-contributors badge shows 432) left out of copy as a volatile counter.",
     "Body intentionally above v3 SEM ceiling (owner asked for a richer page, target 550–750 words).",
-    "Keyword pass 2026-10-21: keywords rebuilt from Google/Baidu autocomplete (WebSearch budget exhausted); research: https://suggestqueries.google.com (autocomplete, hl=en); https://www.baidu.com/sugrec (autocomplete). RAG FAQ folded into benefits_h2 to hold length within ±10%."
+    "SERP pass 2026-10-21: studied 12 EN / 7 ZH results（中文：腾讯云 2490862 对比表含许可证/star/BM25/GPU/分布式/最大维度；博客园 vipsoft 六库对比；jishuzhan 2026 选型指南；zyentor Milvus/Qdrant/Chroma 实测含 Docker Compose 服务数与最小配置；53ai VectorDBBench 实测；掘金 Milvus 内部机制；阿里云 Milvus 版单机/标准版）. Gaps closed: 增加 Milvus/Qdrant/Weaviate/Chroma/pgvector 对比表（许可证、语言、部署、索引、混合检索），原部署形态表并入第三个 feature block；FAQ 改成中文搜索原句（免费商用、RAG 选型、自建 vs 托管、内存估算）. Dropped: '向量数据库 github'、'向量数据库 开源'、'向量数据库 推荐'（并入'开源向量数据库 推荐'）. 中文 SERP 常见的 star 数、首发年份、最大维度列未采用（易过期）。",
+    "Retain previously reviewed executable example changes and sample prerequisites."
   ],
-  "benefits_h2": "为什么选 Milvus 做 RAG 和大模型应用的开源向量数据库",
+  "benefits_h2": "为什么选 Milvus 做 RAG 和 Agent 应用的开源向量数据库",
   "bench": [
     {
       "title": "向量检索吞吐（QPS，越高越好）",
@@ -280,6 +317,8 @@
   "related": [
     "distributed-vector-database",
     "milvus-vs-qdrant",
+    "milvus-vs-weaviate",
+    "milvus-vs-pgvector",
     "vector-database-for-rag",
     "hybrid-search"
   ],
@@ -344,6 +383,20 @@
       "cta_zilliz_signup_click"
     ]
   },
+  "research": [
+    "https://cloud.tencent.com/developer/article/2490862",
+    "https://www.cnblogs.com/vipsoft/p/20396195",
+    "https://jishuzhan.net/article/2045085461480275970",
+    "https://www.zyentor.com/originals/3185",
+    "https://www.53ai.com/news/OpenSourceLLM/2024102220397.html",
+    "https://juejin.cn/post/7671219839776653322",
+    "https://help.aliyun.com/zh/milvus/getting-started/quickly-create-a-milvus-instance",
+    "https://www.instaclustr.com/education/vector-database/best-open-source-vector-database-solutions-top-5-in-2026/",
+    "https://redis.io/blog/best-open-source-vector-databases-comparison/",
+    "https://encore.dev/articles/best-vector-databases",
+    "https://www.firecrawl.dev/blog/best-vector-databases",
+    "https://awesomeosai.com/self-hosted/vector-databases"
+  ],
   "lang": "zh",
   "reviewedOn": "2026-10-21"
 }

@@ -16,23 +16,27 @@
       "reciprocal rank fusion",
       "hybrid search with reranking",
       "hybrid search BM25 embeddings",
-      "keyword and semantic search",
+      "keyword and vector search",
+      "lexical search vs semantic search",
       "full text and vector search",
       "sparse and dense vectors",
-      "BM25 and dense retrieval",
-      "keyword search vs semantic search"
+      "hybrid search alpha parameter",
+      "metadata filtering hybrid search",
+      "hybrid search LangChain"
     ],
     "questions": [
-      "What is hybrid search in a vector database?",
-      "Hybrid search vs vector search: does hybrid always win?",
+      "What is hybrid search in a vector database, and how does it work?",
+      "When should you use hybrid search?",
       "How does reciprocal rank fusion (RRF) work?",
-      "When does BM25 beat vector search?",
+      "How do I tune the balance between keyword and semantic search?",
       "How do I build hybrid search for RAG?",
-      "Do I still need Elasticsearch for keyword search?"
+      "Do I still need Elasticsearch for keyword search?",
+      "Can I use hybrid search from LangChain or LlamaIndex?",
+      "What is the difference between hybrid and vector search, and does hybrid search always outperform vector-only search?"
     ]
   },
   "h1": "Hybrid search: BM25 full-text and vector search in one database",
-  "sub": "Milvus is a hybrid search vector database with BM25 built in: raw text, dense and sparse vectors are searched and fused in one hybrid_search call, no second search engine to sync.",
+  "sub": "Milvus is a hybrid search vector database with BM25 built in: raw text, dense and sparse vectors are searched, filtered and fused in one hybrid_search call, no second search engine to sync. When should you use hybrid search? Whenever queries mix exact terms with meaning.",
   "primary_cta": {
     "label": "Build hybrid search in Milvus",
     "href": "https://milvus.io/docs/multi-vector-search.md"
@@ -60,15 +64,19 @@
   "benefits": [
     {
       "title": "BM25 built in",
-      "body": "Declare a BM25 Function on a text field. Milvus builds sparse vectors on insert and scores raw-text queries. No dual writes."
+      "body": "Declare a BM25 Function on a text field. Milvus builds sparse vectors on insert and scores raw-text queries; built-in analyzers tokenize English, Chinese (jieba), Arabic and Thai per field. No dual writes."
     },
     {
       "title": "Sparse and dense vectors, one list",
-      "body": "Error codes and SKUs match through BM25; paraphrased questions match through embeddings. One call returns one ranked list."
+      "body": "Error codes and SKUs match through BM25; paraphrased questions match through embeddings. Learned sparse embeddings such as SPLADE fit the same SPARSE_FLOAT_VECTOR field. One call returns one ranked list."
     },
     {
-      "title": "Fusion and filters",
-      "body": "Fuse with RRF or a weighted ranker, or run hybrid search with reranking on the same call. Each request takes its own filter, so tenant rules apply to both paths."
+      "title": "Fusion and metadata filtering",
+      "body": "Fuse with RRF or a weighted ranker. Each request carries its own filter, applied before the ANN search, so tenant rules and metadata filtering run inside hybrid search rather than after it."
+    },
+    {
+      "title": "Rerank after fusion",
+      "body": "Hybrid search with reranking in the same call: a model ranker (vLLM, TEI, Cohere, Voyage AI) or a Function Chain rescores the fused list before it returns."
     }
   ],
   "feature_blocks": [
@@ -78,7 +86,8 @@
       "bullets": [
         "Customer data, NDCG@3: keyword 40.6, vector 43.8, hybrid 48.4",
         "BEIR, NDCG@10: 40.6, 45.0, 48.4",
-        "MIRACL (18 languages), NDCG@10: 49.6, 58.3, 58.8"
+        "MIRACL (18 languages), NDCG@10: 49.6, 58.3, 58.8",
+        "Hybrid + semantic ranker on customer data: 60.1"
       ]
     },
     {
@@ -133,46 +142,52 @@
   },
   "stats": [],
   "compare": {
-    "h2": "When does BM25 beat vector search?",
-    "caption": "Keyword search vs semantic search by query type, NDCG@3; Microsoft Azure AI Search (BM25 vs Ada-002) unless noted",
+    "h2": "Lexical search vs semantic search vs hybrid: when does BM25 beat vector search?",
+    "caption": "Keyword vs vector vs hybrid search by query type, NDCG@3; Microsoft Azure AI Search (BM25, Ada-002 vectors, RRF hybrid)",
     "heads": [
-      "",
-      "BM25 full-text wins",
-      "Dense vectors win"
+      "Query type",
+      "Keyword (BM25)",
+      "Vector (Ada-002)",
+      "Hybrid (keyword + vector)"
     ],
     "rows": [
       [
-        "Query wording",
-        "Keyword-only queries: 79.2 vs 11.7",
-        "Answer uses different words than the query: 36.1 vs 23.0"
+        "Keyword queries",
+        "79.2",
+        "11.7",
+        "61.0"
       ],
       [
-        "Query length",
-        "Short queries, under 5 tokens: 53.1 vs 38.8",
-        "Natural-language fact questions: 49.0 vs 37.8"
+        "Exact snippet search",
+        "51.1",
+        "41.5",
+        "51.0"
       ],
       [
-        "Exact strings",
-        "Exact snippets: 51.1 vs 41.5; error codes such as TS-999 (Anthropic)",
-        "Misspelled queries: 39.1 vs 28.8"
+        "Low query/doc term overlap",
+        "23.0",
+        "36.1",
+        "35.9"
       ],
       [
-        "Vocabulary",
-        "Specific, important words an embedding can dilute",
-        "Synonyms and phrasing differences"
+        "Queries with misspellings",
+        "28.8",
+        "39.1",
+        "40.6"
       ],
       [
-        "Domain and language",
-        "New domains without fine-tuning (BEIR)",
-        "Multilingual queries, MIRACL NDCG@10: 58.3 vs 49.6"
+        "Long queries",
+        "42.7",
+        "41.6",
+        "48.1"
       ]
     ],
-    "note": "In the same benchmark, hybrid beat or came within 0.2 points of the better single path on 9 of 10 query types. The exception: keyword-only queries (hybrid 61.0)."
+    "note": "Across all ten query types in the study, hybrid beat or came within 0.2 points of the better single path on nine; the exception is keyword-only queries. Adding a semantic reranker lifted every row further (keyword queries 66.9, long queries 59.4)."
   },
   "faqs": [
     [
-      "What is hybrid search in a vector database?",
-      "BM25 keyword search and vector search run on one query, and a ranker merges the lists. Milvus does both in one hybrid_search call, filters included."
+      "What is hybrid search in a vector database, and how does it work?",
+      "Three steps: BM25 and vector requests run in parallel on one collection, a ranker fuses the two lists, and the top-k returns with its fields. In Milvus that is one hybrid_search call, filters and reranking included."
     ],
     [
       "Do I still need Elasticsearch for keyword search?",
@@ -180,16 +195,24 @@
     ],
     [
       "How does reciprocal rank fusion (RRF) work?",
-      "RRF sums 1/(k + rank) across lists, so it needs no score calibration. With labeled queries, tune a weighted ranker: Bruch et al. found it beat RRF with little training data."
+      "Each hit scores 1/(k + rank) in every list it appears in, and the scores are summed. With the default k=60 a rank-1 hit scores 1/61, so no score calibration is needed. Milvus 3.0.1+ also accepts per-path weights on RRF."
     ],
     [
-      "Hybrid search vs vector search: does hybrid always win?",
-      "Not on every query: Microsoft measured BM25 alone at 79.2 vs hybrid 61.0 on keyword-only queries. Compare dense-only, BM25-only and hybrid on your own queries."
+      "How do I tune the balance between keyword and semantic search?",
+      "Use the weighted ranker, the equivalent of a hybrid search alpha parameter: scores are normalized to [0, 1] with arctan and each path gets a weight in [0, 1]. Bruch et al. found weighted fusion beats RRF with a small labeled set."
+    ],
+    [
+      "What is the difference between hybrid and vector search, and does hybrid search always outperform vector-only search?",
+      "Not on every query: Microsoft measured BM25 alone at 79.2 vs hybrid 61.0 on keyword-only queries. Compare dense-only, BM25-only and hybrid on your own queries with recall@k or NDCG before you choose."
+    ],
+    [
+      "Can I use hybrid search from LangChain or LlamaIndex?",
+      "Yes. langchain-milvus adds BM25BuiltInFunction to the Milvus vector store with weighted or RRF ranking, and LlamaIndex has a full-text search guide for Milvus. Both call the same hybrid_search underneath."
     ]
   ],
   "final": {
-    "h2": "Ship keyword and semantic search on one database",
-    "body": "Add a BM25 Function to your schema, send two requests, fuse with RRF. Start from the hybrid search guide, or run it on managed Milvus."
+    "h2": "Ship keyword and vector search on one database",
+    "body": "Add a BM25 Function to your schema, send two requests, fuse with RRF or weights, rerank if you need to. Start from the hybrid search guide, or run it on managed Milvus."
   },
   "sources": [
     "https://techcommunity.microsoft.com/blog/azure-ai-foundry-blog/azure-ai-search-outperforming-vector-search-with-hybrid-retrieval-and-reranking/3929167",
@@ -205,7 +228,15 @@
     "https://milvus.io/docs/weighted-ranker.md",
     "https://milvus.io/docs/keyword-match.md",
     "https://raw.githubusercontent.com/milvus-io/pymilvus/master/pymilvus/client/abstract.py",
-    "https://github.com/milvus-io/milvus"
+    "https://github.com/milvus-io/milvus",
+    "https://milvus.io/docs/analyzer-overview.md",
+    "https://milvus.io/docs/chinese-analyzer.md",
+    "https://milvus.io/docs/sparse_vector.md",
+    "https://milvus.io/docs/model-ranker-overview.md",
+    "https://milvus.io/docs/filtered-search.md",
+    "https://milvus.io/docs/milvus_hybrid_search_retriever.md",
+    "https://milvus.io/docs/llamaindex_milvus_full_text_search.md",
+    "https://milvus.io/docs/release_notes.md"
   ],
   "notes": [
     "Evidence numbers quoted verbatim: Microsoft Azure AI Search hybrid retrieval post (Tables 1-2; Ada-002 embeddings, BM25, RRF, 512-token chunks w/25% overlap; customer data NDCG@3, BEIR/MIRACL NDCG@10); Anthropic Contextual Retrieval (1 minus recall@20, codebases/fiction/ArXiv/science papers); BEIR abstract; Bruch et al. abstract.",
@@ -216,7 +247,8 @@
     "Dense rows from leaderboard_v2.json: Cohere (Medium) = Cohere 1M 768d, filter_ratio 0: ZillizCloud-8cu-perf 13316.2336 QPS / 2.0 ms / 0.9383; Milvus-16c64g-sq4u-fp16-force_merge 9575.6863 QPS / 2.3 ms / 0.9189.",
     "Dense and BM25 charts use different datasets and systems; do not compare their bars with each other.",
     "Snippet needs a Milvus server (BM25 Function); not executed against a live server. RRFRanker(60) still in pymilvus; docs also show Function(FunctionType.RERANK).",
-    "Keyword pass 2026-10-21: keywords rebuilt from Google/Baidu autocomplete (WebSearch budget exhausted); research: https://suggestqueries.google.com (autocomplete, hl=en); https://www.baidu.com/sugrec (autocomplete). Primary kept as \"hybrid search vector database\" (head term \"hybrid search\" is dominated by Azure/Elastic/OpenSearch docs and definitional intent). \"Is there a managed option?\" FAQ dropped; managed CTA stays in the bench block."
+    "SERP pass 2026-10-21: studied 21 EN / 19 ZH results (Medium x2, Couchbase, 6 CSDN and 1 Zhihu hits were blocked and not counted). Gaps closed: weighted fusion / alpha-style tuning with arctan normalization (13 results), step-by-step how-it-works (9), worked RRF k=60 example (9), three-way keyword vs vector vs hybrid table from Microsoft Table 2 verbatim (8), rerank after fusion incl. Microsoft 'Hybrid + Semantic ranker' row (10), pre-filtering inside hybrid search (6), learned sparse (SPLADE) vs BM25 full-text as distinct paths (6), LangChain/LlamaIndex (5), analyzers / jieba tokenization (4). Dropped keywords: EN 'BM25 and dense retrieval', 'keyword search vs semantic search' (SERP says 'lexical search vs semantic search'), 'keyword and semantic search' (-> 'keyword and vector search'); ZH '混合检索 向量检索 区别', '多路召回' as a keyword (SERP titles use 双路召回; 多路召回 stays in body). Not verifiable: Google PAA boxes themselves (no SERP API); questions taken from result titles/H2s/FAQ blocks. Microsoft Table 2 columns: Keyword / Vector (Ada-002) / Hybrid (Keyword + Vector) / Hybrid + Semantic ranker, NDCG@3: Keyword queries 79.2/11.7/61.0/66.9; Exact snippet 51.1/41.5/51.0/60.8; Low query/doc term overlap 23.0/36.1/35.9/49.1; Misspellings 28.8/39.1/40.6/54.6; Long queries 42.7/41.6/48.1/59.4; summary Hybrid + Semantic ranker 60.1 (customer) / 50.0 (BEIR) / 72.0 (MIRACL). Limitations/when-not-to-use (7 results) deliberately not added per SPEC-v3 §7.",
+    "Retain previously reviewed executable example changes and sample prerequisites."
   ],
   "benefits_h2": "Why Milvus as a hybrid search vector database",
   "bench": [
@@ -346,6 +378,48 @@
       "cta_zilliz_signup_click"
     ]
   },
+  "research": [
+    "https://weaviate.io/blog/hybrid-search-explained",
+    "https://www.mongodb.com/resources/products/capabilities/hybrid-search",
+    "https://docs.oracle.com/en/database/oracle/oracle-database/26/vecse/understand-hybrid-search.html",
+    "https://docs.oracle.com/en/database/oracle/oracle-database/26/vecse/perform-hybrid-search.html",
+    "https://docs.cloud.google.com/gemini-enterprise-agent-platform/build/vector-search/about-hybrid-search",
+    "https://www.singlestore.com/blog/hybrid-search-vector-full-text-search/",
+    "https://www.dataquest.io/blog/metadata-filtering-and-hybrid-search-for-vector-databases/",
+    "https://theneuralbase.com/vector-databases/qna/what-is-hybrid-search-in-vector-databases/",
+    "https://supabase.com/docs/guides/ai/hybrid-search",
+    "https://redis.io/blog/hybrid-search-explained/",
+    "https://redis.io/blog/hybrid-search-benefits-rag-systems/",
+    "https://www.meilisearch.com/blog/hybrid-search-rag",
+    "https://www.meilisearch.com/products/hybrid-search",
+    "https://www.tigerdata.com/docs/build/examples/hybrid-search",
+    "https://kx.com/blog/tutorial-hybrid-search-with-bm25-in-kdb-x-ai-libraries/",
+    "https://atlan.com/know/hybrid-rag/",
+    "https://ubuntu.com/blog/hybrid-search-and-reranking-a-deeper-look-at-rag",
+    "https://www.analyticsvidhya.com/blog/2024/12/contextual-rag-systems-with-hybrid-search-and-reranking/",
+    "https://www.keyvalue.systems/blog/hybrid-rag-architecture/",
+    "https://manticoresearch.com/blog/hybrid-search/",
+    "https://www.zenml.io/llmops-database/bm25-vs-vector-search-for-large-scale-code-repository-search",
+    "https://blog.csdn.net/weixin_45422672/article/details/148064863",
+    "https://blog.csdn.net/neweastsun/article/details/157292982",
+    "https://www.cnblogs.com/OBCE666/p/19462542",
+    "https://www.cnblogs.com/OBCE666/p/19197515",
+    "https://www.smallyoung.cn/docs/028-RAG%E6%B7%B7%E5%90%88%E6%A3%80%E7%B4%A2%E4%B8%8ERRF%E7%AE%97%E6%B3%95%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90",
+    "https://www.poeticcoder.com/tutorials/rag/retrieval/hybrid-search",
+    "https://www.cnblogs.com/muzinan110/p/18541469",
+    "https://help.aliyun.com/zh/analyticdb/analyticdb-for-postgresql/user-guide/fusion-search-use-guide",
+    "https://help.aliyun.com/zh/redis/use-cases/tairvector-hybrid-retrieval-practice",
+    "https://cloud.tencent.com/document/product/1709/111418",
+    "https://cloud.tencent.com/developer/article/2655895",
+    "https://cloud.tencent.com/developer/article/2400870",
+    "https://cloud.baidu.com/article/1227977",
+    "https://cloud.baidu.com/article/3373214",
+    "https://www.cnblogs.com/ExMan/p/18762905",
+    "https://www.cnblogs.com/ExMan/p/18762305",
+    "https://www.53ai.com/news/RAG/2024080632561.html",
+    "https://www.53ai.com/news/RAG/2024082897368.html",
+    "https://www.53ai.com/news/qianyanjishu/1377.html"
+  ],
   "lang": "en",
   "reviewedOn": "2026-10-21"
 }

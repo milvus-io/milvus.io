@@ -1,29 +1,32 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 718" width="640" height="718" role="img" aria-labelledby="title desc">
-<title id="title">Diagnose a recall plateau step by step</title>
-<desc id="desc">Validate ground truth: Use the same corpus, metric, normalization and filter.. Compare plain HNSW: Hold graph build settings and workload constant.. Test higher-precision refine: Recovery suggests a final-ranking problem.. Investigate routing: If needed, test quantizer precision and connectivity.. The shape of a recall curve alone does not identify the cause.</desc>
-<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M1 1 L6 4 L1 7" fill="none" stroke="#1E5F70" stroke-width="1.5"/></marker></defs>
-<rect width="640" height="718" fill="#FAF6EE"/>
-<text x="28" y="30" font-family="Arial, sans-serif" font-size="12" font-weight="400" fill="#6B6356"><tspan x="28" dy="0">MILVUS / AI REFERENCE / SCHEMATIC</tspan></text>
-<text x="28" y="72" font-family="Georgia, serif" font-size="28" font-weight="700" fill="#0F1F2E"><tspan x="28" dy="0">Diagnose a recall plateau step by</tspan><tspan x="28" dy="36.4">step</tspan></text>
-<rect x="28" y="146" width="584" height="112" fill="#F4ECDC" stroke="#0F1F2E" stroke-width="1.5"/>
-<rect x="28" y="146" width="5" height="112" fill="#1E5F70"/>
-<text x="48" y="177" font-family="Arial, sans-serif" font-size="23" font-weight="700" fill="#0F1F2E"><tspan x="48" dy="0">Validate ground truth</tspan></text>
-<text x="48" y="207" font-family="Arial, sans-serif" font-size="20" font-weight="400" fill="#6B6356"><tspan x="48" dy="0">Use the same corpus, metric, normalization and</tspan><tspan x="48" dy="26">filter.</tspan></text>
-<path d="M320 261 V280" fill="none" stroke="#1E5F70" stroke-width="2" marker-end="url(#arrow)"/>
-<rect x="28" y="284" width="584" height="86" fill="#F4ECDC" stroke="#0F1F2E" stroke-width="1.5"/>
-<rect x="28" y="284" width="5" height="86" fill="#1E5F70"/>
-<text x="48" y="315" font-family="Arial, sans-serif" font-size="23" font-weight="700" fill="#0F1F2E"><tspan x="48" dy="0">Compare plain HNSW</tspan></text>
-<text x="48" y="345" font-family="Arial, sans-serif" font-size="20" font-weight="400" fill="#6B6356"><tspan x="48" dy="0">Hold graph build settings and workload constant.</tspan></text>
-<path d="M320 373 V392" fill="none" stroke="#1E5F70" stroke-width="2" marker-end="url(#arrow)"/>
-<rect x="28" y="396" width="584" height="86" fill="#F4ECDC" stroke="#0F1F2E" stroke-width="1.5"/>
-<rect x="28" y="396" width="5" height="86" fill="#1E5F70"/>
-<text x="48" y="427" font-family="Arial, sans-serif" font-size="23" font-weight="700" fill="#0F1F2E"><tspan x="48" dy="0">Test higher-precision refine</tspan></text>
-<text x="48" y="457" font-family="Arial, sans-serif" font-size="20" font-weight="400" fill="#6B6356"><tspan x="48" dy="0">Recovery suggests a final-ranking problem.</tspan></text>
-<path d="M320 485 V504" fill="none" stroke="#1E5F70" stroke-width="2" marker-end="url(#arrow)"/>
-<rect x="28" y="508" width="584" height="112" fill="#F4ECDC" stroke="#0F1F2E" stroke-width="1.5"/>
-<rect x="28" y="508" width="5" height="112" fill="#E85A2B"/>
-<text x="48" y="539" font-family="Arial, sans-serif" font-size="23" font-weight="700" fill="#0F1F2E"><tspan x="48" dy="0">Investigate routing</tspan></text>
-<text x="48" y="569" font-family="Arial, sans-serif" font-size="20" font-weight="400" fill="#6B6356"><tspan x="48" dy="0">If needed, test quantizer precision and</tspan><tspan x="48" dy="26">connectivity.</tspan></text>
-<path d="M28 642 H612" stroke="#0F1F2E" stroke-width="1.5"/>
-<text x="28" y="668" font-family="Arial, sans-serif" font-size="18" font-weight="400" fill="#6B6356"><tspan x="28" dy="0">The shape of a recall curve alone does not identify the</tspan><tspan x="28" dy="23.4">cause.</tspan></text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 830" width="640" height="830" role="img" aria-labelledby="title desc">
+<title id="title">Coverage errors and scoring errors differ</title>
+<desc id="desc">If a true neighbor was never visited, refinement cannot recover it. If the neighbor is in the retrieved candidate pool but scored poorly, higher-precision reranking can improve its order. A recall plateau alone cannot distinguish them.</desc>
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M1 1 L7 4 L1 7" fill="none" stroke="#1E5F70" stroke-width="1.5"/></marker></defs>
+<rect width="640" height="830" fill="#FAF6EE"/>
+<text x="28" y="30" text-anchor="start" font-family="Arial, sans-serif" font-size="12" fill="#6B6356" font-weight="400"><tspan x="28" dy="0">MILVUS / AI REFERENCE / MECHANISM</tspan></text>
+<text x="28" y="72" text-anchor="start" font-family="Georgia, serif" font-size="27" fill="#0F1F2E" font-weight="700"><tspan x="28" dy="0">Coverage errors and scoring errors</tspan><tspan x="28" dy="35.1">differ</tspan></text>
+<text x="28" y="155" text-anchor="start" font-family="Arial, sans-serif" font-size="22" fill="#0F1F2E" font-weight="700"><tspan x="28" dy="0">1  Coverage miss: the item is absent</tspan></text>
+<rect x="45" y="185" width="360" height="160" fill="#FAF6EE" stroke="#1E5F70" stroke-width="1.5" stroke-dasharray="6 5"/>
+<circle cx="100" cy="230" r="10" fill="#E5DDD0" stroke="#0F1F2E" stroke-width="1.5"/>
+<circle cx="180" cy="280" r="10" fill="#E5DDD0" stroke="#0F1F2E" stroke-width="1.5"/>
+<circle cx="280" cy="225" r="10" fill="#E5DDD0" stroke="#0F1F2E" stroke-width="1.5"/>
+<circle cx="345" cy="300" r="10" fill="#E5DDD0" stroke="#0F1F2E" stroke-width="1.5"/>
+<text x="65" y="328" text-anchor="start" font-family="Arial, sans-serif" font-size="20" fill="#1E5F70" font-weight="400"><tspan x="65" dy="0">visited candidate pool</tspan></text>
+<circle cx="510" cy="245" r="13" fill="#F4B860" stroke="#0F1F2E" stroke-width="1.5"/>
+<text x="455" y="288" text-anchor="start" font-family="Arial, sans-serif" font-size="20" fill="#0F1F2E" font-weight="400"><tspan x="455" dy="0">not visited</tspan></text>
+<text x="28" y="385" text-anchor="start" font-family="Arial, sans-serif" font-size="21" fill="#6B6356" font-weight="400"><tspan x="28" dy="0">Refinement cannot add the missing neighbor.</tspan></text>
+<text x="28" y="450" text-anchor="start" font-family="Arial, sans-serif" font-size="22" fill="#0F1F2E" font-weight="700"><tspan x="28" dy="0">2  Scoring error: the item is in the pool</tspan></text>
+<rect x="45" y="480" width="210" height="150" fill="#FAF6EE" stroke="#1E5F70" stroke-width="1.5" stroke-dasharray="6 5"/>
+<circle cx="95" cy="520" r="10" fill="#E5DDD0" stroke="#0F1F2E" stroke-width="1.5"/>
+<circle cx="195" cy="530" r="10" fill="#E5DDD0" stroke="#0F1F2E" stroke-width="1.5"/>
+<circle cx="110" cy="590" r="10" fill="#E5DDD0" stroke="#0F1F2E" stroke-width="1.5"/>
+<circle cx="185" cy="585" r="13" fill="#F4B860" stroke="#0F1F2E" stroke-width="1.5"/>
+<path d="M263 555 L337 555" fill="none" stroke="#1E5F70" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="350" y="480" width="240" height="150" fill="#F4ECDC" stroke="#0F1F2E" stroke-width="1.5"/>
+<text x="370" y="520" text-anchor="start" font-family="Arial, sans-serif" font-size="21" fill="#0F1F2E" font-weight="700"><tspan x="370" dy="0">Refine the</tspan><tspan x="370" dy="27.3">shortlist</tspan></text>
+<text x="370" y="580" text-anchor="start" font-family="Arial, sans-serif" font-size="20" fill="#0F1F2E" font-weight="400"><tspan x="370" dy="0">Reorder existing</tspan></text>
+<text x="370" y="608" text-anchor="start" font-family="Arial, sans-serif" font-size="20" fill="#0F1F2E" font-weight="400"><tspan x="370" dy="0">candidates</tspan></text>
+<text x="28" y="677" text-anchor="start" font-family="Arial, sans-serif" font-size="20" fill="#0F1F2E" font-weight="400"><tspan x="28" dy="0">Check exact ground truth, plain HNSW, then refine.</tspan></text>
+<path d="M28 754 L612 754" fill="none" stroke="#0F1F2E" stroke-width="2"/>
+<text x="28" y="782" text-anchor="start" font-family="Arial, sans-serif" font-size="18" fill="#6B6356" font-weight="400"><tspan x="28" dy="0">A flat recall curve does not uniquely identify routing</tspan><tspan x="28" dy="23.4">error.</tspan></text>
 </svg>

@@ -115,6 +115,40 @@
 }
 
 .detailContainer {
+  .readingLayout {
+    margin-top: 24px;
+    margin-bottom: 64px;
+
+    .referenceHeader {
+      margin-top: 0;
+      margin-bottom: 24px;
+
+      .referenceToolbar {
+        gap: 12px;
+        margin-bottom: 16px;
+      }
+
+      .referenceTitle {
+        margin-bottom: 0;
+        max-width: 920px;
+        font-size: 36px;
+        line-height: 1.2;
+      }
+    }
+
+    @media (--phone) {
+      margin-top: 20px;
+
+      .referenceHeader {
+        margin-bottom: 20px;
+
+        .referenceTitle {
+          font-size: 28px;
+        }
+      }
+    }
+  }
+
   .articleColumn {
     flex: 1;
     min-width: 0;

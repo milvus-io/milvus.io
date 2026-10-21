@@ -67,3 +67,48 @@
   border: 1px solid var(--color-black3) !important;
   color: var(--color-black1) !important;
 }
+
+.mobileNotice {
+  display: none;
+}
+
+/* Keep the full notice and both choices available without covering the article. */
+@media (--phone) {
+  .consentContainer.referenceConsent {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+
+    .fullNotice {
+      display: none;
+    }
+
+    .mobileNotice {
+      display: block;
+
+      summary {
+        cursor: pointer;
+        color: var(--color-black1);
+        font-size: 12px;
+        line-height: 18px;
+      }
+
+      p {
+        margin-top: 8px;
+      }
+    }
+
+    .contentWrapper {
+      min-width: 0;
+      margin-bottom: 0 !important;
+    }
+
+    .buttonsWrapper {
+      width: auto;
+      gap: 8px;
+      align-self: start;
+    }
+  }
+}

@@ -82,4 +82,6 @@ if __name__ == '__main__':
     OUTPUT.mkdir(exist_ok=True, parents=True)
     for diagram in diagrams:
         (OUTPUT / (diagram['id'] + '.svg')).write_text(render(diagram))
-    print(f'Rendered {len(diagrams)} original SVG schematics.')
+    from ai_reference_mechanisms import render_mechanisms
+    mechanisms = render_mechanisms(OUTPUT)
+    print(f'Rendered {len(diagrams)} base schematics and {len(mechanisms)} mechanism diagrams.')

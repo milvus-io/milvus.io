@@ -1304,5 +1304,23 @@
         "external-refresh"
       ]
     }
-  ]
+  ],
+  "mechanismOverrides": {
+    "generator": "scripts/ai_reference_mechanisms.py",
+    "assets": [
+      "retrieval.svg",
+      "hnsw.svg",
+      "ivf.svg",
+      "ann-families.svg",
+      "similarity-metrics.svg",
+      "quantization.svg",
+      "maxsim.svg",
+      "diskann-tier.svg",
+      "cagra-parallel.svg",
+      "hnsw-recall-diagnosis.svg",
+      "bm25-pipeline.svg",
+      "range-candidates.svg"
+    ],
+    "note": "Original visual mechanisms replace generic flows where useful. Article text and Markdown image placements are unchanged."
+  }
 }

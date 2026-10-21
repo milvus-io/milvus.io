@@ -88,10 +88,11 @@ organic traffic and destination availability have been checked.
   four topics. Each page distinguishes product editions and describes when the
   other system fits; adding a machine or corpus size alone is not a hard product
   boundary.
-- The July 2023 pgvector runs are displayed in separate historical charts with
-  their instance, index, date and serial P99 labels. They do not establish a
-  speed ratio against current Milvus/Cloud runs. The existing Qdrant
-  and Elasticsearch/OpenSearch charts retain their published configuration labels.
+- The pgvector performance section uses one side-by-side table for Milvus,
+  Zilliz Cloud and pgvector, including unfiltered and filtered results. Instance,
+  configuration and the historical pgvector date stay visible; the table is not
+  a same-condition ranking. The Qdrant and Elasticsearch/OpenSearch charts retain
+  their published configuration labels.
 - Standalone still needs its data infrastructure; embedded Woodpecker does not
   mean etcd and object storage vanish. Moving from Postgres also requires schema,
   index and query changes even when embeddings can be reused.
@@ -119,13 +120,9 @@ promise that Google will show an FAQ rich result.
 
 - Withdraw the English/Chinese Vespa and Weaviate landing pages, their local assets,
   related links and sitemap entries. Removed routes return 404 without an unrelated redirect.
-- The pgvector page adds AWS May 2025 pgvector 0.8.0 latency/configuration data
-  separately from VectorDBBench. The source has inconsistent latency terminology,
-  so the page uses reported latency, does not derive QPS or a Milvus speed ratio,
-  and distinguishes result completeness from ANN recall.
-- The latest owner copy adds PostgreSQL capabilities, migration/coexistence and
-  a dated survey of published pgvector tests. Raw 2023 VectorDBBench metrics are
-  recorded in the evidence ledger; vendor results remain attributed and separate.
+- The pgvector page removes the standalone benchmark charts, external benchmark
+  survey and AWS scan-configuration section at the owner's request. All retained
+  table metrics are formatted from the existing benchmark evidence ledger.
 - The LanceDB page now explains Lance format versus LanceDB, Milvus external
   collections over Lance, embedded/distributed deployment and serving tradeoffs.
   Cloud external collections are qualified as Public Preview and on-demand only.

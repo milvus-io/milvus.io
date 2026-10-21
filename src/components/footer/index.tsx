@@ -303,9 +303,6 @@ const Footer = (props: Props) => {
                   </p>
                   <ul className="mt-[20px] space-y-[8px]">
                     {item.children.map((child) => {
-                      if (child.display === false) {
-                        return null;
-                      }
                       if (child.to.startsWith('http')) {
                         return (
                           <li key={child.id} className="list-none">

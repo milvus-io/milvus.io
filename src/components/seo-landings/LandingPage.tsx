@@ -6,6 +6,7 @@ import { useStore } from '@/hooks/use-store';
 import { LanguageEnum } from '@/types/localization';
 import i18n, { loadI18nResources } from '@/i18n/client';
 import styles from './landing.module.css';
+import { parseCloudEntryUrl } from '@/utils/cloud-attribution';
 
 type Cta = { label: string; href: string };
 type Table = { h2?: string; caption: string; heads: string[]; rows: string[][]; note?: string };
@@ -95,16 +96,17 @@ function DataTable({ table }: { table?: Table }) {
   </div>;
 }
 
-function CodeBlock({ code, zh }: { code: PageData['code']; zh: boolean }) {
+function CodeBlock({ code, zh, onCopy }: { code: PageData['code']; zh: boolean; onCopy: (success: boolean) => void }) {
   const [status, setStatus] = useState('');
   if (!code) return null;
   const copy = async () => {
-    try { await navigator.clipboard.writeText(code.code); setStatus(zh ? '已复制' : 'Copied'); }
-    catch { setStatus(zh ? '无法自动复制，请选择代码复制。' : 'Unable to copy automatically. Select the code to copy it.'); }
+    try { await navigator.clipboard.writeText(code.code); }
+    catch { setStatus(zh ? '无法自动复制，请选择代码复制。' : 'Unable to copy automatically. Select the code to copy it.'); onCopy(false); return; }
+    setStatus(zh ? '已复制' : 'Copied'); onCopy(true);
   };
   return <div className="code-section"><h2>{code.h2}</h2><p className="section-lead">{code.intro}</p>
     <div className="code-card"><div className="code-bar"><span>{code.lang}</span>
-      <button type="button" className="copy-btn" data-track="copy_code_snippet" onClick={copy}>{zh ? '复制代码' : 'Copy code'}</button>
+      <button type="button" className="copy-btn" onClick={copy}>{zh ? '复制代码' : 'Copy code'}</button>
     </div><pre><code>{code.code}</code></pre></div>
     <p className="copy-status" role="status">{status}</p><p className="code-note">{code.note}</p>
   </div>;
@@ -124,9 +126,27 @@ export default function LandingPage({ page: p, twinPath, related, references, la
     }
     return u.toString();
   };
-  const cta = (c: Cta, secondary = false, event = 'cta_docs_click') => <a href={href(c.href)}
-    className={`button${secondary ? ' secondary' : ''}`} data-track={secondary ? 'cta_zilliz_signup_click' : event}
-    data-entry-button={`seo_${p.slug}_${event}${secondary ? '_cloud' : ''}`}>{c.label}</a>;
+  const destination = (value: string) => {
+    const cloud = parseCloudEntryUrl(value);
+    if (cloud) return cloud.pathname.replace(/\/$/, '') === '/signup' ? 'cloud_signup' : 'cloud_signin';
+    const url = new URL(value, HOST);
+    if (url.hostname === 'milvus.io') return /^\/docs(?:\/|$)/.test(url.pathname) ? 'docs' : 'milvus';
+    if (url.hostname === 'github.com') return 'github';
+    return 'external';
+  };
+  const emit = (event: string, location: string, target: string, entryButton = '', url = '') => {
+    const w = window as Window & { dataLayer?: Record<string, unknown>[] };
+    (w.dataLayer = w.dataLayer || []).push({ event, landing_page: p.path, landing_topic: p.slug,
+      cta_location: location, cta_destination: target, entry_button: entryButton,
+      link_url: url.split(/[?#]/)[0] });
+  };
+  const cta = (c: Cta, secondary = false, event?: string, location = 'hero') => {
+    const target = destination(c.href);
+    const name = event || (target === 'cloud_signup' ? 'cta_zilliz_signup_click' : target === 'docs' ? 'cta_docs_click' : 'cta_link_click');
+    return <a href={href(c.href)} className={`button${secondary ? ' secondary' : ''}`}
+      data-track={name} data-cta-location={location} data-cta-destination={target}
+      data-entry-button={`seo_${p.slug}_${name}${target === 'cloud_signup' ? '_cloud' : ''}`}>{c.label}</a>;
+  };
   const bench = (b: Bench, i: number) => <div key={i}><figure className="bench">
     <figcaption><strong>{b.title}</strong><span>{b.caption}</span></figcaption>
     <ul className="bench-list">{b.rows.map((r, j) => <li className={`bench-row${r.highlight ? ' is-hl' : ''}`} key={j}>
@@ -135,16 +155,16 @@ export default function LandingPage({ page: p, twinPath, related, references, la
         <span className="bench-val">{r.value.toLocaleString('en-US', { maximumFractionDigits: 2 })} <small>{b.unit}</small></span></span>
       <span className="bench-detail">{r.detail}</span>
     </li>)}</ul><p className="bench-source"><a href={href(b.sourceUrl)}>{b.source}</a></p>
-  </figure>{b.cta && <div className="bench-cta"><p>{b.cta.text}</p>{cta(b.cta, true, 'cta_benchmark_click')}</div>}</div>;
+  </figure>{b.cta && <div className="bench-cta"><p>{b.cta.text}</p>{cta(b.cta, true, 'cta_benchmark_click', 'benchmark')}</div>}</div>;
   const stats = p.stats?.length ? <div className={`stat-grid count-${p.stats.length}`}>{p.stats.map((s, i) => <div className="stat-card" key={i}>
     <strong className="stat-value">{s.value}</strong><span className="stat-label">{s.label}</span><a className="stat-source" href={href(s.source)}>{zh ? '查看来源' : 'View source'}</a>
   </div>)}</div> : null;
   const track = (e: React.MouseEvent<HTMLElement>) => {
-    const target = (e.target as HTMLElement).closest<HTMLElement>('[data-track]');
+    const target = (e.target as Element)?.closest?.<HTMLElement>('[data-track]');
     if (!target) return;
-    const w = window as Window & { dataLayer?: Record<string, unknown>[] };
-    (w.dataLayer = w.dataLayer || []).push({event: target.dataset.track, landing_page: p.path, landing_topic: p.slug,
-      link_url: target.getAttribute('href')?.split('?')[0] || ''});
+    const url = target.getAttribute('href') || '';
+    emit(target.dataset.track, target.dataset.ctaLocation || '', url ? destination(url) : '',
+      target.dataset.entryButton || '', url);
   };
   return <Layout canonicalUrl={HOST + p.path} disableSelfHreflang disableLangSelector>
     <LandingHead title={p.title} description={p.description} path={p.path} twinPath={twinPath} zh={zh}
@@ -173,11 +193,12 @@ export default function LandingPage({ page: p, twinPath, related, references, la
         <div className={`feature-blocks count-${p.feature_blocks.length}`}>{p.feature_blocks.map((b,i) => <article className="feature-block" key={i}><h3>{b.title}</h3><p>{b.body}</p>
           {!!b.bullets?.length && <ul className="prose-list">{b.bullets.map((v,j) => <li key={j}>{v}</li>)}</ul>}</article>)}</div></div></section>}
       {p.compare && <section className="section" id="compare"><div className="wrap"><h2>{p.compare.h2}</h2><DataTable table={p.compare} />{p.compare.note && <p className="table-note">{p.compare.note}</p>}</div></section>}
-      {p.code && <section className="section shaded" id="code"><div className="wrap"><CodeBlock code={p.code} zh={zh} /></div></section>}
-      {!!p.stories?.length && <section className="section" id="customers"><div className="wrap"><h2>{zh ? '用户案例' : 'Customer stories'}</h2><div className="story-grid">{p.stories.map(s => <a className="story-card" href={href(s.href)} key={s.name} data-track="customer_story_click"><h3>{s.name}</h3><p>{s.text}</p><span>{zh ? '阅读案例' : 'Read the story'}</span></a>)}</div></div></section>}
+      {p.code && <section className="section shaded" id="code"><div className="wrap"><CodeBlock code={p.code} zh={zh}
+        onCopy={success => emit(success ? 'copy_code_snippet' : 'copy_code_snippet_failed', 'code', 'clipboard')} /></div></section>}
+      {!!p.stories?.length && <section className="section" id="customers"><div className="wrap"><h2>{zh ? '用户案例' : 'Customer stories'}</h2><div className="story-grid">{p.stories.map(s => <a className="story-card" href={href(s.href)} key={s.name} data-track="customer_story_click" data-cta-location="customer_story"><h3>{s.name}</h3><p>{s.text}</p><span>{zh ? '阅读案例' : 'Read the story'}</span></a>)}</div></div></section>}
       {!!references.length && <section className="section shaded" id="learn"><div className="wrap"><h2>{zh ? '延伸阅读' : 'Explore the concepts'}</h2><ul className="aiq-list">{references.map(r => <li key={r.slug}><a href={`/ai-quick-reference/${r.slug}`}>{r.title}</a></li>)}</ul></div></section>}
       <section className="section" id="faq"><div className="wrap faq-grid"><h2>{zh ? '常见问题' : 'Frequently asked questions'}</h2><div className="faq-list">{p.faqs.map(([q,a],i) => <details className="faq-item" key={i} open={i===0}><summary>{q}</summary><p>{a}</p></details>)}</div></div></section>
-      {(p.final || p.managed) && <section className="final-cta"><div className="wrap"><h2>{(p.final || p.managed).h2}</h2><p>{(p.final || p.managed).body}</p><div className="actions">{cta(p.primary_cta, false, 'cta_final_click')}{cta(p.secondary_cta, true, 'cta_final_click')}</div></div></section>}
+      {(p.final || p.managed) && <section className="final-cta"><div className="wrap"><h2>{(p.final || p.managed).h2}</h2><p>{(p.final || p.managed).body}</p><div className="actions">{cta(p.primary_cta, false, 'cta_final_click', 'final')}{cta(p.secondary_cta, true, 'cta_final_click', 'final')}</div></div></section>}
       {!!related.length && <nav className="related" aria-label={zh ? '相关页面' : 'Related pages'}><div className="wrap"><strong>{zh ? '相关页面' : 'Related pages'}</strong>{related.map(r => <Link href={r.path} key={r.path}>{r.title}</Link>)}</div></nav>}
       <section className="section" id="sources"><div className="wrap"><details><summary>{zh ? '资料来源与技术文档' : 'Sources and technical documentation'} ({p.sources.length})</summary><ul className="sources-list">{p.sources.map((s,i) => <li key={i}><a href={href(s)}>{s}</a></li>)}</ul></details></div></section>
     </main>

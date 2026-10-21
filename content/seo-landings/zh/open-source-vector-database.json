@@ -317,7 +317,6 @@
   "related": [
     "distributed-vector-database",
     "milvus-vs-qdrant",
-    "milvus-vs-weaviate",
     "milvus-vs-pgvector",
     "vector-database-for-rag",
     "hybrid-search"

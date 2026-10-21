@@ -340,6 +340,10 @@
     [
       "Lance vs Iceberg vs Parquet: which should hold embeddings?",
       "Milvus reads all three. Lance suits AI datasets needing fast random access, versioning and frequent column additions; Iceberg adds table-level snapshots, schema evolution and SQL-engine governance over Parquet files; Parquet alone has the broadest tool compatibility."
+    ],
+    [
+      "Does Zilliz Cloud support external collections?",
+      "Zilliz Cloud external collections are in Public Preview and supported only in on-demand compute databases. See the linked Zilliz Cloud documentation for current limits."
     ]
   ],
   "aiq": [

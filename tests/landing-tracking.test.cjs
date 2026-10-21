@@ -59,7 +59,14 @@ test('all actual landing pages preserve CTA placement and target, with one event
   for (const lang of ['en', 'zh']) for (const page of readPages(lang)) {
     const r = render(page);
     const ctas = r.all.filter(node => node.type === 'a' && ['hero', 'benchmark', 'final'].includes(node.props['data-cta-location']));
-    assert.ok(ctas.length >= 4, page.path);
+    assert.equal(ctas.length, 3, page.path);
+    const final = ctas.filter(n => n.props['data-cta-location'] === 'final');
+    assert.equal(final.length, 1, page.path);
+    assert.equal(new URL(final[0].props.href).hostname, lang === 'zh' ? 'cloud.zilliz.com.cn' : 'cloud.zilliz.com');
+    const main = r.all.find(n => n.type === 'main');
+    const lastSection = main.props.children.filter(Boolean).at(-1);
+    assert.equal(lastSection.props.id, 'managed-cloud', 'Cloud banner follows sources and related links');
+    assert.equal(r.all.filter(n => n.props?.className === 'bench-cta').length, 1, 'No repeated in-content Cloud banner');
     for (const cta of ctas) {
       const before = r.events.length;
       const cloud = attribution.parseCloudEntryUrl(cta.props.href);

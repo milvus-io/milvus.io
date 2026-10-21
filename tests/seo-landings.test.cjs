@@ -5,9 +5,9 @@ const { readPages, getLandingProps, getLandingPaths, getLandingSitemapPaths } = 
 const evidence = require('../content/seo-landings/benchmark-evidence.json');
 const aiq = require('../content/seo-landings/aiq-index.json');
 
-test('six solution and six comparison pages have reciprocal Chinese twins', () => {
+test('six solution and four comparison pages have reciprocal Chinese twins', () => {
   const en = readPages('en'), zh = readPages('zh');
-  assert.equal(en.length, 12); assert.equal(zh.length, 12);
+  assert.equal(en.length, 10); assert.equal(zh.length, 10);
   for (const p of en) {
     const twin = zh.find(t => t.slug === p.slug);
     assert.equal(twin.path, '/zh' + p.path);
@@ -15,7 +15,7 @@ test('six solution and six comparison pages have reciprocal Chinese twins', () =
   }
   for (const lang of ['en', 'zh']) {
     assert.equal(getLandingPaths(lang, 'solutions').paths.length, 6);
-    assert.equal(getLandingPaths(lang, 'compare').paths.length, 6);
+    assert.equal(getLandingPaths(lang, 'compare').paths.length, 4);
     assert.equal(getLandingPaths(lang, 'solutions').fallback, false);
   }
 });
@@ -23,8 +23,8 @@ test('six solution and six comparison pages have reciprocal Chinese twins', () =
 test('all canonical destinations and hubs enter the sitemap exactly once', async () => {
   const sitemap = require('../sitemap.config');
   const landingPaths = getLandingSitemapPaths();
-  assert.equal(landingPaths.length, 28);
-  assert.equal(new Set(landingPaths.map(p => p.loc)).size, 28);
+  assert.equal(landingPaths.length, 24);
+  assert.equal(new Set(landingPaths.map(p => p.loc)).size, 24);
   const paths = await sitemap.additionalPaths(sitemap);
   for (const p of landingPaths) {
     assert.equal(paths.filter(x => x.loc === p.loc).length, 1);

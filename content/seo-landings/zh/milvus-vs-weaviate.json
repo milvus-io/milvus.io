@@ -1,0 +1,593 @@
+{
+  "site": "milvus-zh",
+  "kind": "seo",
+  "slug": "milvus-vs-weaviate",
+  "nav": "对比 Weaviate",
+  "path": "/zh/compare/milvus-vs-weaviate",
+  "title": "Milvus 和 Weaviate 对比：扩展性、性能与功能",
+  "description": "Milvus 和 Weaviate 对比：存算分离 vs 本地盘分片、索引与混合检索、多租户、成本与运维、许可证，附 VectorDBBench 数据，帮你做向量数据库选型。",
+  "keywords": {
+    "primary": "Milvus 和 Weaviate 对比",
+    "secondary": [
+      "Weaviate 和 Milvus 对比",
+      "Weaviate 对比 Milvus",
+      "Weaviate Milvus 哪个好",
+      "Weaviate Milvus Qdrant",
+      "Milvus 和 Weaviate 区别",
+      "向量数据库对比",
+      "向量数据库选型",
+      "开源向量数据库选型",
+      "RAG 向量数据库选型",
+      "Dify 知识库 Weaviate 还是 Milvus",
+      "Weaviate 向量数据库",
+      "Weaviate 混合检索",
+      "Weaviate 多租户",
+      "Weaviate 集群部署",
+      "Milvus 不用 Kubernetes 部署",
+      "Weaviate 迁移到 Milvus",
+      "向量数据库成本",
+      "存算分离"
+    ],
+    "questions": [
+      "Weaviate 和 Milvus 哪个好？",
+      "Milvus 和 Weaviate 谁更快？",
+      "Weaviate 和 Milvus 谁的扩展性更好？",
+      "Weaviate 是开源的吗？",
+      "Weaviate 支持混合检索吗？",
+      "Milvus 生产环境可以不用 Kubernetes 吗？",
+      "从 Weaviate 迁移到 Milvus 能直接切换吗？",
+      "Weaviate 和 Milvus 哪个更便宜？",
+      "Dify 知识库选 Weaviate 还是 Milvus？",
+      "LangChain、LlamaIndex 对 Milvus 和 Weaviate 的支持有差别吗？",
+      "Milvus 和 Zilliz Cloud 有什么区别？"
+    ]
+  },
+  "research": [
+    "https://cloud.tencent.com/developer/article/2490862",
+    "https://zhuanlan.zhihu.com/p/19898949117",
+    "https://www.cnblogs.com/bonelee/p/18246278",
+    "https://www.zair.top/post/vector-database-compare/",
+    "https://www.syndataworks.cn/blog/blog/2024-10-29-milvus-vs-weaviate/",
+    "https://cloud.tencent.com/developer/article/2412486",
+    "https://www.cnblogs.com/vipsoft/p/20396195",
+    "https://developer.baidu.com/article/details/3195877",
+    "https://yomxxx.com/posts/2026-05-12-vector-database-comparison-2026",
+    "https://blog.csdn.net/gs80140/article/details/146237385",
+    "https://blog.csdn.net/qinglingye/article/details/131707685",
+    "https://zhuanlan.zhihu.com/p/663545125",
+    "https://zilliz.com.cn/comparison/milvus-vs-weaviate",
+    "https://is4.ai/blog/our-blog-1/weaviate-vs-milvus-comparison-2026-383",
+    "https://theneuralbase.com/vector-search-advanced/qna/weaviate-vs-milvus-comparison/",
+    "https://zenvanriel.com/ai-engineer-blog/weaviate-vs-milvus-enterprise/",
+    "https://aiml.qa/blog/weaviate-vs-milvus/",
+    "https://markaicode.com/vs/weaviate-vs-milvus/",
+    "https://www.myscale.com/blog/milvus-vs-weaviate-open-source-vector-databases-battle/",
+    "https://dev.to/krunalkanojiya/pinecone-vs-weaviate-vs-milvus-vs-qdrant-which-vector-db-in-2026-26dc",
+    "https://blog.elest.io/qdrant-vs-weaviate-vs-milvus-which-vector-database-for-your-rag-pipeline/",
+    "https://nanobase.ai/answers/rag/milvus-vs-weaviate-vs-qdrant",
+    "https://www.avarc.nl/en/vergelijking/milvus-vs-weaviate",
+    "https://gautamkhorana.com/vector-databases/compare/milvus-vs-weaviate/",
+    "https://gigagpu.com/milvus-vs-weaviate-distributed-search/",
+    "https://medium.com/@aefselinates/milvus-vs-weaviate-a-deep-dive-into-two-top-vector-databases-for-nlp-and-semantic-search-edcb874f3fdb",
+    "https://zilliz.com/comparison/milvus-vs-weaviate",
+    "https://github.com/giorgostzamouranis/Vector-DB-Benchmark-milvus-weaviate"
+  ],
+  "h1": "Milvus 和 Weaviate 对比：开源向量数据库怎么选",
+  "intro": "Milvus 和 Weaviate 的主要区别在架构与运维模型：Milvus 将持久数据放在对象存储，分别扩缩查询、写入与索引资源；Weaviate 按节点管理 collection 的分片和副本，并提供 vectorizer 模块、GraphQL 和原生多租户。两者都支持调用模型生成 embedding，也都有多种索引与压缩选择。应结合工作负载、已有接口和团队经验选型。",
+  "primary_cta": {
+    "label": "开始 Milvus 快速入门",
+    "href": "https://milvus.io/docs/zh/quickstart.md"
+  },
+  "secondary_cta": {
+    "label": "试用 Zilliz Cloud 托管 Milvus",
+    "href": "https://cloud.zilliz.com.cn/signup"
+  },
+  "proof": [
+    "Apache-2.0，GitHub 40K+ star",
+    "可扩展到数百亿向量",
+    "存储与计算分离",
+    "多租户向量数据库：partition key 支持百万级租户"
+  ],
+  "logos": [
+    "Salesforce",
+    "Walmart",
+    "NVIDIA",
+    "eBay",
+    "IBM",
+    "Cisco",
+    "Roblox",
+    "Reddit",
+    "Exa.ai",
+    "OpenEvidence",
+    "Read.ai",
+    "Plaud",
+    "Filevine"
+  ],
+  "diagram": {
+    "type": "compare",
+    "caption": "Milvus 各类节点在共享对象存储上独立扩缩；Weaviate 每个节点持有分片，元数据走 Raft，数据走无主复制。",
+    "left": {
+      "title": "Milvus：存算分离",
+      "sub": "无状态 worker，按类型各自扩缩",
+      "nodes": [
+        {
+          "title": "Streaming",
+          "sub": "写入 · WAL"
+        },
+        {
+          "title": "Query",
+          "sub": "检索 · 副本"
+        },
+        {
+          "title": "Data",
+          "sub": "建索引"
+        }
+      ],
+      "storage": {
+        "title": "共享对象存储",
+        "sub": "S3 / MinIO / Azure / GCS，按需分层加载"
+      },
+      "verdict": "加节点：直接从存储加载 segment。可到数百亿向量。"
+    },
+    "right": {
+      "title": "Weaviate：分片落在各节点",
+      "sub": "每个节点自己存、自己建索引、自己服务",
+      "nodes": [
+        {
+          "title": "Node 1",
+          "sub": "分片 · 本地索引"
+        },
+        {
+          "title": "Node 2",
+          "sub": "分片 · 本地索引"
+        },
+        {
+          "title": "Node 3",
+          "sub": "分片 · 本地索引"
+        }
+      ],
+      "storage": {
+        "title": "各节点本地磁盘",
+        "sub": "分片数固定；副本靠 API 手动迁移"
+      },
+      "verdict": "扩容后通过 API 管理已有副本的放置。"
+    }
+  },
+  "sections": [
+    {
+      "id": "scalability",
+      "nav": "扩展性",
+      "h2": "Milvus 和 Weaviate 扩展性对比：十亿级向量检索怎么撑？",
+      "paragraphs": [
+        "Milvus 是存算分离架构。segment 和 WAL 都在对象存储里，新加的 query 节点直接加载分配给它的 segment，不用从别的节点拷盘；写入、检索、建索引分别由不同类型的节点承担，各自扩缩。tiered storage 还能让单个节点服务超过自身内存和磁盘的数据量。",
+        "Weaviate 将 collection 切分为分片，每个分片在节点本地盘维护对象和索引。collection 的分片配置需预先规划；新增节点后的已有副本可通过 MOVE/COPY API 迁移或复制。容量规划需要区分索引：HNSW 的内存需求与向量缓存和量化配置有关，HFresh 则提供基于磁盘的索引路径，不能用统一的内存倍数概括。"
+      ],
+      "table": {
+        "caption": "扩展性与大规模多租户（依据双方官方文档）",
+        "heads": [
+          "能力",
+          "Milvus",
+          "Weaviate（自建）"
+        ],
+        "rows": [
+          [
+            "架构",
+            "存算分离：proxy、streaming、query、data 节点",
+            "本地对象和索引；HNSW 或基于磁盘的 HFresh 等选择"
+          ],
+          [
+            "数据存放",
+            "对象存储（S3、MinIO、Azure Blob、GCS），WAL 也在其中",
+            "LSM 对象存储和倒排索引在本地盘；HNSW 索引在内存"
+          ],
+          [
+            "节点独立扩缩",
+            "query、streaming、data 节点分别扩缩",
+            "每个节点同时负责存储、建索引和查询"
+          ],
+          [
+            "新增节点",
+            "从对象存储加载 segment",
+            "已有分片不动，需通过 API 迁移副本"
+          ],
+          [
+            "分片与 resharding",
+            "分片数建表时设定；segment 可分布到任意数量的 query 节点",
+            "collection 的分片与默认副本配置需预先规划；v1.32 起可用 MOVE/COPY 管理单分片副本"
+          ],
+          [
+            "数据超过单节点容量",
+            "tiered storage 按需拉取字段数据",
+            "HFresh 磁盘索引；inactive 租户落盘，offloaded 租户放 S3"
+          ],
+          [
+            "大规模多租户",
+            "partition key 支持百万级租户；也可按 database、collection、partition 隔离",
+            "原生多租户：一个租户一个分片；文档称约 20 节点可承载 100 万活跃租户"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "performance",
+      "nav": "性能",
+      "h2": "Milvus 和 Weaviate 性能对比：谁更快？",
+      "paragraphs": [
+        "图中仅展示当前已核对的 Milvus 与 Zilliz Cloud VectorDBBench 配置。这里没有同条件、同版本的对手结果，不能据此推断谁更快。使用相同数据集、过滤比例、召回目标和硬件重测后再比较。"
+      ],
+      "bench": [
+        {
+          "title": "向量检索吞吐（QPS，越高越好）",
+          "caption": "Cohere 1M 数据集，768 维",
+          "unit": "QPS",
+          "rows": [
+            {
+              "system": "Zilliz Cloud",
+              "label": "ZillizCloud-8cu-perf",
+              "value": 13316.23,
+              "detail": "P99 2 ms · 召回率 0.9383",
+              "highlight": true
+            },
+            {
+              "system": "Milvus",
+              "label": "Milvus-16c64g-sq4u-fp16-force_merge",
+              "value": 9575.69,
+              "detail": "P99 2.3 ms · 召回率 0.9189"
+            }
+          ],
+          "source": "来源：VectorDBBench，仅列 Milvus 与 Zilliz Cloud 的已核对配置；不构成对竞品的性能结论。",
+          "sourceUrl": "https://github.com/zilliztech/VectorDBBench/blob/main/vectordb_bench/results/leaderboard_v2.json"
+        },
+        {
+          "title": "过滤检索吞吐（QPS，过滤后保留 1% 数据）",
+          "caption": "Cohere 1M 数据集，768 维，filter ratio 0.99",
+          "unit": "QPS",
+          "rows": [
+            {
+              "system": "Zilliz Cloud",
+              "label": "ZillizCloud-8cu-perf-partition_key",
+              "value": 10020.53,
+              "detail": "P99 2.6 ms · 召回率 0.9788",
+              "highlight": true
+            },
+            {
+              "system": "Milvus",
+              "label": "Milvus-16c64g-sq8-partition_key",
+              "value": 11280.08,
+              "detail": "P99 1.6 ms · 召回率 0.9507"
+            }
+          ],
+          "source": "来源：VectorDBBench，仅列 Milvus 与 Zilliz Cloud 的已核对配置；不构成对竞品的性能结论。",
+          "cta": {
+            "text": "Zilliz Cloud 就是全托管的 Milvus：同样的引擎、同一梯队的性能，不用自己规划集群、升级和扩容。",
+            "label": "免费试用 Zilliz Cloud",
+            "href": "https://cloud.zilliz.com.cn/signup"
+          },
+          "sourceUrl": "https://github.com/zilliztech/VectorDBBench/blob/main/vectordb_bench/results/leaderboard_v2.json"
+        }
+      ]
+    },
+    {
+      "id": "features",
+      "nav": "功能",
+      "h2": "Weaviate 和 Milvus 功能对比：向量数据库对比表",
+      "paragraphs": [
+        "两者都覆盖稠密、稀疏和混合检索，也都支持元数据过滤。Weaviate 的特色是模型集成和原生多租户；Milvus 的索引家族更全，横跨内存、磁盘和 GPU，并内置服务端 BM25。做开源向量数据库选型（尤其是 RAG 向量数据库选型）时，同时在看 Weaviate、Milvus、Qdrant 的读者，可以把这张表和 Qdrant 对比页一起看。",
+        "LangChain、LlamaIndex 对 Milvus 和 Weaviate 的支持有差别吗？两者都有官方维护的 LangChain、LlamaIndex、Haystack 集成，RAG 框架很少成为决定因素；Dify 默认用 Weaviate，也内置 Milvus 支持。"
+      ],
+      "table": {
+        "caption": "向量数据库技术选型对照：索引类型、量化、混合检索、多租户、RAG 框架集成、部署方式、许可证、SDK 与社区",
+        "heads": [
+          "功能",
+          "Milvus",
+          "Weaviate"
+        ],
+        "rows": [
+          [
+            "稠密向量索引类型",
+            "HNSW、IVF（FLAT、SQ8、PQ、RaBitQ）、SCANN、DiskANN、GPU（CAGRA、IVF）",
+            "HNSW、flat、dynamic（flat 自动转 HNSW）、HFresh 磁盘索引"
+          ],
+          [
+            "量化",
+            "SQ8、PQ、PRQ、RaBitQ；HNSW_SQ、HNSW_PQ、HNSW_PRQ",
+            "PQ、BQ、SQ、RQ（1 bit、4 bit、8 bit 旋转量化）"
+          ],
+          [
+            "BM25 与全文检索",
+            "内置 BM25 函数，服务端把原始文本转成稀疏向量",
+            "基于倒排索引的 BM25F 关键词检索，支持多种分词器和字段加权"
+          ],
+          [
+            "混合检索",
+            "单次查询多个向量字段，RRF 或加权 ranker 融合",
+            "向量 + BM25，alpha 调权重；relativeScoreFusion（默认）或 rankedFusion"
+          ],
+          [
+            "多向量",
+            "每 collection 默认最多 10 个向量字段；StructArray EmbeddingList 用 MAX_SIM* 做文档级晚交互检索",
+            "named vectors；ColBERT 式多向量 embedding，可选 MUVERA"
+          ],
+          [
+            "过滤",
+            "标量索引（INVERTED、BITMAP、STL_SORT）和 JSON path 索引，与 ANN 检索一体执行",
+            "倒排索引生成 allow-list 做预过滤；HNSW 走 ACORN 策略"
+          ],
+          [
+            "多租户",
+            "database、collection、partition 或 partition key",
+            "collection 级原生多租户；租户可 active、inactive 或 offload 到 S3"
+          ],
+          [
+            "Embedding 生成",
+            "客户端生成，或用 Milvus Function 调外部模型服务",
+            "内置 vectorizer、generative、reranker 模块：OpenAI、Cohere、Google、AWS、Ollama 等"
+          ],
+          [
+            "接口与查询语言",
+            "gRPC 和 RESTful",
+            "REST、gRPC 和 GraphQL 查询语言"
+          ],
+          [
+            "部署方式",
+            "Milvus Lite、Standalone、Distributed、Zilliz Cloud",
+            "Docker、Kubernetes（Helm）、Embedded Weaviate、Weaviate Cloud（serverless 或独占）"
+          ],
+          [
+            "RAG 框架集成",
+            "LangChain、LlamaIndex、Haystack、Dify、DSPy、n8n 等",
+            "LangChain、LlamaIndex、Haystack、DSPy、Semantic Kernel、CrewAI 等；Dify 的默认向量库"
+          ],
+          [
+            "许可证与语言",
+            "Apache-2.0；Go 和 C++",
+            "核心 BSD-3-Clause，wl/ 目录为商业许可证；Go"
+          ],
+          [
+            "SDK 语言",
+            "Python、Java、Go、Node.js、C#、C++、Rust、RESTful",
+            "Python、TypeScript/JavaScript、Go、Java、C#"
+          ],
+          [
+            "社区与治理",
+            "LF AI & Data 基金会毕业项目；GitHub 40K+ star",
+            "Weaviate B.V. 公司维护；GitHub 15K+ star"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "operations",
+      "nav": "成本与运维",
+      "h2": "Milvus 和 Weaviate 成本与运维对比：各自要跑些什么？",
+      "paragraphs": [
+        "成本需一起评估计算、内存、存储、网络与运维。Weaviate 的 HNSW、量化、HFresh 和租户 offload 提供不同资源取舍；Milvus 的量化 HNSW、DiskANN 和 tiered storage 也分别改变内存、磁盘和对象存储需求。应在相同召回率和延迟目标下比较，不能仅按原始向量大小估算。两者起步都不需要 Kubernetes。"
+      ],
+      "table": {
+        "caption": "Milvus 和 Weaviate 成本与运维对比：Kubernetes、依赖、安全与备份",
+        "heads": [
+          "项目",
+          "Milvus",
+          "Weaviate"
+        ],
+        "rows": [
+          [
+            "生产环境不用 Kubernetes",
+            "Milvus Standalone：单个 Docker 镜像，内嵌 Woodpecker WAL，可到 1 亿向量",
+            "Docker Compose 单节点；多节点集群用 Helm"
+          ],
+          [
+            "依赖组件",
+            "etcd 和对象存储（MinIO 或 S3）；Woodpecker 取代 Kafka / Pulsar",
+            "单二进制、内嵌 Raft；备份和 offload 模块对接 S3、GCS 或 Azure"
+          ],
+          [
+            "成本从哪来",
+            "query 节点内存；量化、DiskANN、tiered storage 用磁盘和对象存储换内存",
+            "每个节点的 HNSW 内存；PQ、BQ、SQ、RQ 量化、HFresh 和租户 offload 可以降低"
+          ],
+          [
+            "安全与备份",
+            "RBAC（支持权限组）和 TLS；milvus-backup 在集群在线时备份到 S3、GCS、Azure 或本地盘",
+            "RBAC，API key 或 OIDC 认证；backup-s3、backup-gcs、backup-azure、backup-filesystem 模块"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "weaviate-fit",
+      "nav": "选 Weaviate",
+      "h2": "Weaviate 和 Milvus 哪个好？什么情况下 Weaviate 更合适",
+      "paragraphs": [
+        "选择取决于工作负载与团队习惯。Weaviate 提供模型集成、原生多租户和 GraphQL；Milvus 将检索、写入与索引资源分开扩缩。应以实际数据上的召回率、延迟、吞吐与运维成本判断，而不是把某个向量数当作两者的硬边界。"
+      ],
+      "bullets": [
+        "想用内置的 vectorizer、generative、reranker 模块，不想自己维护 embedding 流水线。",
+        "应用已经在用 GraphQL，或者更习惯 Weaviate 以对象为中心的数据模型。",
+        "数据放得进小集群，分片数和副本数一开始就能定好。",
+        "成千上万的小租户，每个租户一个分片，冷租户 offload 到 S3。",
+        "已经在用 Weaviate Cloud，想要 serverless 计费和一致的客户端 API。"
+      ]
+    },
+    {
+      "id": "adopters",
+      "nav": "客户",
+      "h2": "哪些 AI 公司和大型企业在生产环境用 Milvus？",
+      "paragraphs": [
+        "从 AI 原生公司到大型企业，都在生产环境运行 Milvus 或 Zilliz Cloud（托管 Milvus）。milvus.io 用户墙上有 Salesforce、Walmart、NVIDIA、eBay、IBM、Cisco、Roblox、Reddit，也有 Exa.ai、OpenEvidence、Read.ai、Notta.ai、Plaud、Filevine。公开案例中的结果："
+      ],
+      "bullets": [
+        "OpenEvidence：基于 Zilliz Cloud，检索延迟低于 10 ms，峰值 4,000 QPS。",
+        "Plaud：每个区域 100 亿+ 向量块，平均召回延迟低于 200 ms。",
+        "Exa：借助混合检索，神经搜索延迟从秒级降到 200 ms 以内。",
+        "Airtable：在 Kubernetes 上用 Milvus Operator 自建 Milvus，支撑语义检索。"
+      ]
+    }
+  ],
+  "code": null,
+  "stats": [
+    {
+      "value": "数百亿",
+      "label": "Milvus Distributed 支持的向量规模",
+      "source": "https://milvus.io/docs/zh/install-overview.md"
+    },
+    {
+      "value": "百万级",
+      "label": "partition key 支持的单 collection 租户数",
+      "source": "https://milvus.io/docs/zh/multi_tenancy.md"
+    },
+    {
+      "value": "40K+",
+      "label": "milvus-io/milvus GitHub star",
+      "source": "https://github.com/milvus-io/milvus"
+    }
+  ],
+  "faqs": [
+    [
+      "Weaviate 和 Milvus 哪个好？",
+      "Milvus 和 Weaviate 的主要区别在架构与运维模型：Milvus 将持久数据放在对象存储，分别扩缩查询、写入与索引资源；Weaviate 按节点管理 collection 的分片和副本，并提供 vectorizer 模块、GraphQL 和原生多租户。两者都支持调用模型生成 embedding，也都有多种索引与压缩选择。应结合工作负载、已有接口和团队经验选型。"
+    ],
+    [
+      "Milvus 和 Weaviate 谁更快？",
+      "图中仅展示当前已核对的 Milvus 与 Zilliz Cloud VectorDBBench 配置。这里没有同条件、同版本的对手结果，不能据此推断谁更快。使用相同数据集、过滤比例、召回目标和硬件重测后再比较。"
+    ],
+    [
+      "Weaviate 和 Milvus 谁的扩展性更好？",
+      "Weaviate 将 collection 切分为分片，每个分片在节点本地盘维护对象和索引。collection 的分片配置需预先规划；新增节点后的已有副本可通过 MOVE/COPY API 迁移或复制。容量规划需要区分索引：HNSW 的内存需求与向量缓存和量化配置有关，HFresh 则提供基于磁盘的索引路径，不能用统一的内存倍数概括。"
+    ],
+    [
+      "Weaviate 是开源的吗？",
+      "是的。Weaviate 核心仓库采用 BSD-3-Clause 许可证，wl/ 目录单独使用商业许可证；Milvus 是 Apache-2.0，也是 LF AI & Data 基金会的毕业项目。两者都能自建，托管服务分别是 Weaviate Cloud 和 Zilliz Cloud。"
+    ],
+    [
+      "Weaviate 支持混合检索吗？",
+      "支持。Weaviate 混合检索把 BM25F 关键词查询和向量查询用 alpha 加权，再用 relativeScoreFusion 或 rankedFusion 融合。Milvus 的混合检索跨多个向量字段，包括服务端 BM25 生成的稀疏向量，用 RRF 或加权 ranker 融合。"
+    ],
+    [
+      "Milvus 生产环境可以不用 Kubernetes 吗？",
+      "可以。Milvus Standalone 把全部组件打进一个 Docker 镜像，内嵌 Woodpecker WAL，文档标称可到 1 亿向量；Milvus Lite 是 Python 库，适合几百万向量。Kubernetes（Helm 或 Milvus Operator）是给 Milvus Distributed 用的。"
+    ],
+    [
+      "从 Weaviate 迁移到 Milvus 能直接切换吗？",
+      "不能。Weaviate 的 collection 对应 Milvus 的 collection 加标量字段，named vectors 对应多个向量字段。把对象连同向量导出、批量写入 Milvus、建索引，再把混合查询从 alpha 融合改成 RRF 或加权 ranker。"
+    ],
+    [
+      "Dify 知识库选 Weaviate 还是 Milvus？",
+      "Dify 默认 VECTOR_STORE 是 weaviate，也内置 milvus 支持。小规模两者都行；语料和租户持续增长时切到 milvus，用 partition key 承载多租户。"
+    ],
+    [
+      "Milvus 和 Zilliz Cloud 有什么区别？",
+      "Zilliz Cloud 是 Milvus 原班团队提供的全托管 Milvus，客户端 API 一致。基于 Milvus Lite 或 Standalone 写的代码，可以直接迁到 Zilliz Cloud，不用重写。"
+    ]
+  ],
+  "stories": [
+    {
+      "name": "Filevine",
+      "text": "在 Zilliz Cloud 上管理 300 亿向量，覆盖数百万份法律文档。",
+      "href": "https://zilliz.com/customers/filevine"
+    },
+    {
+      "name": "美团",
+      "text": "自建 Milvus 生产环境承载 100 亿+ 向量，单个 collection 超过 20 亿。",
+      "href": "https://zilliz.com/customers/meituan"
+    },
+    {
+      "name": "Read AI",
+      "text": "基于 Milvus 为数百万月活用户提供 20–50 ms 检索延迟，活跃租户达百万级。",
+      "href": "https://zilliz.com/customers/read-ai"
+    }
+  ],
+  "aiq": [
+    "how-does-a-vector-database-handle-scaling-up-to-millions-or-billions-of-vectors-and-what-architectural-features-enable-this-scalability",
+    "how-do-distributed-vector-databases-handle-sharding-and-replication",
+    "how-do-you-choose-the-right-index-type-for-your-workload",
+    "what-is-vector-quantization-in-embeddings",
+    "what-is-hybrid-search-and-when-should-i-use-it",
+    "what-is-the-role-of-multitenancy-in-scalability-considerations-for-vector-databases-and-how-might-resource-isolation-be-handled-when-multiple-applications-share-the-same-infrastructure",
+    "what-tools-help-benchmark-vector-search-performance"
+  ],
+  "related": [
+    "milvus-vs-qdrant",
+    "milvus-vs-elasticsearch",
+    "distributed-vector-database",
+    "open-source-vector-database",
+    "hybrid-search"
+  ],
+  "managed": {
+    "h2": "不想自己运维集群？",
+    "body": "Zilliz Cloud 是 Milvus 原班团队提供的全托管服务，MilvusClient API 与本地一致。可以先用开源 Milvus 起步，再迁到托管服务，应用代码不用重写。"
+  },
+  "sources": [
+    "https://milvus.io",
+    "https://github.com/milvus-io/milvus",
+    "https://milvus.io/docs/architecture_overview.md",
+    "https://milvus.io/docs/install-overview.md",
+    "https://milvus.io/docs/tiered-storage-overview.md",
+    "https://milvus.io/docs/index-explained.md",
+    "https://milvus.io/docs/full-text-search.md",
+    "https://milvus.io/docs/multi-vector-search.md",
+    "https://milvus.io/docs/multi_tenancy.md",
+    "https://milvus.io/docs/dify_with_milvus.md",
+    "https://github.com/weaviate/weaviate",
+    "https://github.com/weaviate/weaviate/blob/main/LICENSE",
+    "https://docs.weaviate.io/weaviate/concepts/cluster",
+    "https://docs.weaviate.io/weaviate/concepts/replication-architecture/cluster-architecture",
+    "https://docs.weaviate.io/weaviate/concepts/replication-architecture",
+    "https://docs.weaviate.io/weaviate/concepts/storage",
+    "https://docs.weaviate.io/weaviate/config-refs/collections",
+    "https://docs.weaviate.io/weaviate/concepts/vector-index",
+    "https://docs.weaviate.io/weaviate/concepts/vector-quantization",
+    "https://docs.weaviate.io/weaviate/search/hybrid",
+    "https://docs.weaviate.io/weaviate/search/bm25",
+    "https://docs.weaviate.io/weaviate/concepts/data",
+    "https://docs.weaviate.io/weaviate/manage-collections/multi-tenancy",
+    "https://docs.weaviate.io/weaviate/starter-guides/managing-resources/tenant-states",
+    "https://docs.weaviate.io/weaviate/model-providers",
+    "https://docs.weaviate.io/weaviate/concepts/filtering",
+    "https://docs.weaviate.io/deploy",
+    "https://weaviate.io/deployment",
+    "https://docs.weaviate.io/weaviate/client-libraries",
+    "https://docs.weaviate.io/weaviate/api",
+    "https://docs.weaviate.io/weaviate/concepts/resources",
+    "https://zilliz.com/vdbbench-leaderboard",
+    "https://github.com/zilliztech/VectorDBBench",
+    "https://github.com/zilliztech/VectorDBBench/blob/main/vectordb_bench/results/leaderboard_v2.json",
+    "https://github.com/zilliztech/VectorDBBench/blob/main/vectordb_bench/results/leaderboard.json",
+    "https://github.com/zilliztech/VectorDBBench/blob/main/vectordb_bench/results/WeaviateCloud/result_20230727_standard_weaviatecloud.json",
+    "https://zilliz.com/customers/filevine",
+    "https://zilliz.com/customers/openevidence",
+    "https://zilliz.com/customers/exa",
+    "https://zilliz.com/customers/airtable",
+    "https://zilliz.com/customers/plaud",
+    "https://zilliz.com/customers/read-ai",
+    "https://zilliz.com/customers/meituan",
+    "https://milvus.io/docs/zh/quickstart.md",
+    "https://cloud.zilliz.com.cn/signup",
+    "https://milvus.io/docs/rbac.md",
+    "https://milvus.io/docs/integrations_overview.md",
+    "https://milvus.io/docs/woodpecker_architecture.md",
+    "https://milvus.io/docs/install_cluster-helm.md",
+    "https://milvus.io/docs/install_cluster-milvusoperator.md",
+    "https://milvus.io/docs/upsert-entities.md",
+    "https://github.com/zilliztech/milvus-backup",
+    "https://lfaidata.foundation/projects/",
+    "https://docs.weaviate.io/weaviate/configuration/rbac",
+    "https://docs.weaviate.io/deploy/configuration/backups",
+    "https://weaviate.io/product/integrations",
+    "https://github.com/langgenius/dify/blob/main/docker/.env.example",
+    "https://docs.weaviate.io/deploy/configuration/replica-movement",
+    "https://milvus.io/docs/search-with-embedding-lists.md",
+    "https://milvus.io/docs/index-structarray-fields.md"
+  ],
+  "notes": [
+    "SERP pass 2026-10-21: studied 13 ZH / 15 EN results (8 ZH + 11 EN fetched). Chinese demand is real but thin: three dedicated pieces (syndataworks 2024-10, CSDN gs80140 'Weaviate vs Milvus：哪款向量数据库更适合你的需求' whose slug reveals the intent 'dify 构建知识库应用,向量数据库选择weaviate还是milvus', CSDN ModaHub 2023 report); the rest are N-way 向量数据库选型 roundups, one syndicated verbatim across Tencent/Zhihu/CSDN with stale star counts. Same structural changes as the English page (成本与运维 section, RAG 框架集成 and 社区与治理 rows, GraphQL wording, FAQ rebuilt around 哪个好/谁更快/扩展性/不用 Kubernetes/迁移/Dify). Dify default store now verified (docker/.env.example VECTOR_STORE=weaviate), so the Dify answer moved from a bullet to a FAQ and states it. Dropped: 'Weaviate 替代', 'Weaviate 缺点' (no evidence); added: 'Milvus 和 Weaviate 区别', 'Dify 向量数据库 Weaviate 还是 Milvus', 'Milvus 不用 Kubernetes 部署', 'Weaviate 迁移到 Milvus', '向量数据库成本'. Caveat: WebSearch is Google-style; Baidu was not queried directly this pass.",
+    "Facts verified 2026-10-21 for the new rows: Weaviate GitHub shows 16.9k stars (page says 15K+), BSD-3-Clause; Weaviate RBAC page exists (API-key and OIDC auth), backups via backup-s3/backup-gcs/backup-azure/backup-filesystem modules, whole-instance or per-collection; weaviate.io/product/integrations lists LangChain, LlamaIndex, Haystack, DSPy, Semantic Kernel, CrewAI, Composio, n8n, Mem0; Dify docker/.env.example defaults VECTOR_STORE=weaviate. Milvus: install-overview says Lite handles 'up to a few million vectors', Standalone is 'a single Docker image' up to 100 million vectors and 'runs Woodpecker (embedded) as its message queue', every instance relies on 'Woodpecker, MinIO, and etcd' by default; woodpecker_architecture.md: 'In Milvus 2.6, Woodpecker replaces Kafka and Pulsar'; rbac.md: roles, privileges, privilege groups at collection/database/instance level; milvus-backup: backup/restore to MinIO, S3, GCS, Azure Blob, local disk 'while the Milvus cluster remains available'; integrations_overview lists LlamaIndex, LangChain, Haystack, Dify, DSPy, n8n; lfaidata.foundation/projects lists Milvus under GRADUATED. 'Single binary' for Weaviate is from its docs (embedded Raft, no external metadata store); not claimed: Weaviate RBAC GA version (not on the docs page).",
+    "Weaviate facts verified 2026-10-21 on docs.weaviate.io / GitHub (same set as the English page): BSD-3-Clause outside wl/, commercial license inside wl/; shard count and replication factor immutable after creation, replica movement API v1.32+; Raft metadata, leaderless data replication; HNSW in memory, LSM store on local disk, memory ~2x raw vectors; indexes HNSW/flat/dynamic/HFresh; quantization PQ/BQ/SQ/RQ; hybrid alpha + relativeScoreFusion/rankedFusion; tenant = shard with ACTIVE/INACTIVE/OFFLOADED (S3); docs cite 1M active tenants on ~20 nodes; filtering ACORN; APIs REST/GraphQL/gRPC; SDKs Python, TS/JS, Go, Java, C#; deployment Docker, Helm, Embedded, Weaviate Cloud serverless/dedicated. BYOC and GPU index not claimed.",
+    "Customer facts reused from the Qdrant page (fetched 2026-10-21 from zilliz.com/customers). Meituan appears only as a story.",
+    "2023 v1 competitor row removed from charts (not same-condition); mentioned in prose only.",
+    "Distinguish collection defaults from per-shard replica changes; document Milvus late-interaction multivectors.",
+    "Remove stale or unlike-for-like competitor benchmark numbers from prose and FAQs."
+  ],
+  "lang": "zh",
+  "reviewedOn": "2026-10-21"
+}

@@ -15,24 +15,24 @@
       "Apache Iceberg vector search",
       "lakehouse vector search",
       "vector lakehouse",
+      "multimodal lakehouse",
       "data lake vs vector database",
       "Lance vs Parquet",
+      "Lance vs Iceberg",
       "LanceDB vs Milvus",
       "Milvus external collection",
       "zero-copy vector search",
-      "vector search on object storage",
-      "single source of truth",
-      "Spark Ray Lance Iceberg pipeline"
+      "vector search on object storage"
     ],
     "questions": [
       "Does Apache Iceberg support vector search?",
       "Can Milvus search a Lance dataset without importing it?",
       "Do I need a separate vector database if I have a lakehouse?",
+      "What are the ways to run vector search on a lakehouse?",
       "How do you keep a vector index in sync with lake tables?",
-      "Lance vs Parquet: what is the difference?",
-      "Can you run vector search on object storage, and what does it cost?",
-      "LanceDB vs Milvus: which should I use?",
-      "Does Milvus copy my lake data?"
+      "Lance vs Iceberg vs Parquet: which should hold embeddings?",
+      "Does Lance have its own vector index, and why index it with Milvus?",
+      "LanceDB vs Milvus: which should I use?"
     ]
   },
   "h1": "Vector search on your data lake: Lance and Iceberg, without copying data",
@@ -131,7 +131,7 @@
           ],
           [
             "Freshness",
-            "Visible on write",
+            "Visibility follows the selected consistency level",
             "Visible after refresh_external_collection"
           ],
           [
@@ -148,18 +148,55 @@
       }
     },
     {
+      "id": "lakehouse-approaches",
+      "nav": "Approaches",
+      "h2": "What are the ways to run vector search on a lakehouse?",
+      "paragraphs": [
+        "Lakehouse vector search comes in three shapes that differ in where the index lives and who serves the query. Milvus takes the third: a serving layer that indexes the table in place."
+      ],
+      "table": {
+        "caption": "Lakehouse vector search approaches: where the vector index lives and what each fits",
+        "heads": [
+          "Approach",
+          "Where the index lives",
+          "Examples",
+          "Fits when"
+        ],
+        "rows": [
+          [
+            "Vector column plus SQL functions in the table format",
+            "In the table's own services and query engine",
+            "Apache Hudi VECTOR type with hudi_vector_search",
+            "SQL-first teams running batch top-k beside joins"
+          ],
+          [
+            "Index files owned by the table or file format",
+            "Next to the data files, built by the format's tooling",
+            "Lance datasets with native IVF_PQ or IVF_HNSW indexes read by LanceDB or DuckDB; Paimon 2.0 vector index read by Doris or StarRocks",
+            "Analytics engines that already read the table, in batches"
+          ],
+          [
+            "Serving layer that indexes the table in place",
+            "In the serving system; the table stays read-only",
+            "Milvus external collection over Lance, Iceberg, Parquet or Vortex",
+            "Online retrieval with filters, BM25 and hybrid search"
+          ]
+        ]
+      }
+    },
+    {
       "id": "lance",
       "nav": "Lance",
       "h2": "Lance vector search: how do you serve a Lance dataset with Milvus?",
       "paragraphs": [
-        "Lance is an open columnar format built for AI data: fast random access, versioned datasets, and cheap column additions on object storage. That random access matters at serving time, because after the ANN step Milvus fetches output fields from the source rows. Point external_source at the dataset directory and set format to lance-table.",
+        "Lance is an open columnar format for AI data with random row access and versioned datasets. Milvus maps existing Lance columns and fetches requested output fields after retrieval. Point external_source at the dataset directory and set format to lance-table.",
         "Lance vs Parquet comes down to access pattern: Parquet is tuned for sequential scans, while Lance also serves row lookups by position, which suits post-search fetches and training samplers. Milvus reads both without conversion."
       ],
       "bullets": [
         "Write and append with Lance's Python, Spark, or Ray integrations as usual.",
-        "Milvus maps the dataset's fragments into a manifest; no rows are copied.",
+        "Milvus maps the dataset's fragments into a manifest and builds its own HNSW, IVF or DiskANN index in Milvus storage; it never writes into the dataset, so Lance's native indexes and versions are untouched.",
         "After new fragments land, refresh: unchanged data keeps its segments and indexes.",
-        "Store images, text, and embeddings in one table; Milvus maps only the columns you need."
+        "Store images, text, and embeddings in one table, the multimodal lakehouse pattern; Milvus maps only the columns you need."
       ]
     },
     {
@@ -286,7 +323,11 @@
     ],
     [
       "Can Milvus search a Lance dataset without importing it?",
-      "Yes. Point external_source at the Lance dataset directory, set \"format\": \"lance-table\", map fields with external_field, then refresh, index, and search. The rows stay in Lance."
+      "Yes. Point external_source at the Lance dataset directory, set \"format\": \"lance-table\", map fields with external_field, then refresh, index, and search. The rows stay in Lance, read-only; Milvus stores only the mapping, manifests, indexes, and caches."
+    ],
+    [
+      "Does Lance have its own vector index, and why index it with Milvus?",
+      "Lance datasets can carry native indexes (IVF_PQ, IVF_RQ, IVF_HNSW_SQ, IVF_HNSW_FLAT) that LanceDB queries in-process. Milvus builds its own HNSW, IVF or DiskANN index in Milvus storage, so one cluster serves many clients with filters, BM25 and hybrid search."
     ],
     [
       "LanceDB vs Milvus: which should I use?",
@@ -297,12 +338,8 @@
       "Call refresh_external_collection after the lake changes. It is asynchronous and incremental: unchanged data keeps its segments and indexes, and queries serve the previous state until the refresh completes."
     ],
     [
-      "Lance vs Parquet: which format should hold my embeddings, and what is the difference?",
-      "Milvus reads both. Lance suits AI datasets that need fast random access, versioning, and frequent column additions; Parquet suits broad tool compatibility. Iceberg adds table-level snapshots over Parquet data files."
-    ],
-    [
-      "Does Milvus copy my lake data?",
-      "No. External sources are read-only. Milvus stores the schema mapping, manifests, indexes, and caches only."
+      "Lance vs Iceberg vs Parquet: which should hold embeddings?",
+      "Milvus reads all three. Lance suits AI datasets needing fast random access, versioning and frequent column additions; Iceberg adds table-level snapshots, schema evolution and SQL-engine governance over Parquet files; Parquet alone has the broadest tool compatibility."
     ]
   ],
   "aiq": [
@@ -320,22 +357,28 @@
     "hybrid-search",
     "distributed-vector-database",
     "open-source-vector-database",
-    "database-for-ai-agents"
+    "database-for-ai-agents",
+    "milvus-vs-lancedb"
   ],
   "managed": {
     "h2": "Prefer a managed lake-search service?",
     "body": "Zilliz Cloud, the managed Milvus service, offers external collections over Lance, Iceberg, Parquet, and Vortex in Public Preview, with the same MilvusClient API."
   },
   "research": [
-    "https://hudi.apache.org/blog/2026/07/06/bringing-vector-search-to-the-lakehouse-with-apache-hudi/",
-    "https://www.lancedb.com/blog/the-future-of-open-source-table-formats-iceberg-and-lance",
+    "https://agentset.ai/vector-databases/compare/lancedb-vs-milvus",
+    "https://builderai.tools/blog/vector-database-benchmarks-qdrant-milvus-weaviate-lancedb",
+    "https://aimultiple.com/open-source-vector-databases",
+    "https://markaicode.com/alternatives/milvus-alternatives/",
+    "https://encore.dev/articles/best-vector-databases",
+    "https://github.com/lance-format/lance",
+    "https://motherduck.com/glossary/lance-format/",
+    "https://www.dremio.com/blog/exploring-the-evolving-file-format-landscape-in-ai-era-parquet-lance-nimble-and-vortex-and-what-it-means-for-apache-iceberg/",
+    "https://tuts.alexmercedcoder.dev/2026/2026-05-24-lance-iceberg-multimodal/",
+    "https://duckdblab.org/en/post/duckdb-ai-data-lake-lance-iceberg/",
     "https://www.lancedb.com/blog/multimodal-lakehouse",
-    "https://duckdb.org/2026/05/21/test-driving-lance",
-    "https://docs.lancedb.com/lance",
-    "https://tontinton.com/posts/lance/",
-    "https://www.starburst.io/blog/vector-storage/",
-    "https://arxiv.org/pdf/2608.05441",
-    "https://dev.to/jangwook_kim_e31e7291ad98/lancedb-review-promising-object-storage-vector-search-production-benchmarks-still-unverified-n0m",
+    "https://blogs.oracle.com/database/how-to-run-similarity-search-on-apache-iceberg",
+    "https://hudi.apache.org/blog/2026/07/06/bringing-vector-search-to-the-lakehouse-with-apache-hudi/",
+    "https://e6data.com/blog/vector-semantic-search-lakehouse-faster-insight-unstructured-data",
     "https://github.com/PhVHoang/likhadb"
   ],
   "sources": [
@@ -353,7 +396,13 @@
     "https://github.com/milvus-io/milvus-docs/tree/v3.0.x/site/en",
     "https://docs.lancedb.com/lance",
     "https://docs.zilliz.com/docs/external-collection-limits",
-    "https://github.com/milvus-io/milvus"
+    "https://github.com/milvus-io/milvus",
+    "https://github.com/lance-format/lance",
+    "https://docs.lancedb.com/indexing/vector-index",
+    "https://hudi.apache.org/blog/2026/07/06/bringing-vector-search-to-the-lakehouse-with-apache-hudi/",
+    "https://juejin.cn/post/7684064249389105204",
+    "https://forum.mirrorship.cn/t/topic/21772",
+    "https://github.com/lancedb/lancedb/blob/main/LICENSE"
   ],
   "notes": [
     "FORMAT STRING CONFLICT: create-an-external-collection.md says 'iceberg_table' (underscore); the Milvus source (pkg/util/externalspec/specutil/spec.go at v3.0.3: FormatIcebergTable = \"iceberg-table\", validated against a fixed set), storage-v3.md, the pymilvus API reference, and both 3.0 blogs use 'iceberg-table'. 'iceberg_table' would be rejected. Page uses 'iceberg-table'; recommend fixing the docs page.",
@@ -368,7 +417,9 @@
     "Zilliz Cloud external collections are Public Preview, created in an on-demand compute database; Dedicated cluster support is not yet available (docs.zilliz.com, 2026-10-21). Re-check before publishing; do not add 'coming soon' to the copy.",
     "wanted, unverified: Iceberg v3 deletion vectors; pinning Lance versions/tags; latency of external vs native collections (no VectorDBBench result exists).",
     "v3.1 rewrite (2026-10-21): limits section removed per owner; added Lance, Iceberg, cost, lake-stack sections and LanceDB/Lance-vs-Parquet FAQs from SERP research.",
-    "v3.1 keyword pass (2026-10-21): Google autocomplete prefers 'data lake vector search' word order and 'lancedb vs milvus' is the strongest query in the set; 'lance format' dropped as a target (autocomplete dominated by the geological Lance Formation); 'embeddings in iceberg' has no autocomplete. FAQ questions rewritten to SERP phrasing; 'zero-copy vector search' placed in intro."
+    "SERP pass 2026-10-21: studied 15 EN / 6 ZH results ('lancedb vs milvus': agentset, builderai, aimultiple benchmark, markaicode alternatives, encore; 'lance vector search': lance README, motherduck glossary, dremio file-format landscape; 'iceberg vector search': Oracle blog, LikhaDB (SERP otherwise vector-art noise); 'lakehouse vector search': Hudi blog, e6data, alexmerced Lance+Iceberg, duckdblab, LanceDB multimodal lakehouse). Gaps closed: 'approaches' table (table-format SQL functions / format-owned index files / serving layer indexing in place: Hudi, Lance native IVF_PQ + Paimon 2.0 via Doris/StarRocks, Milvus external collection) since ≥4 results frame lakehouse vector search as 'no separate vector DB'; Lance described as file + table + catalog format with the project's own 100x random-access claim attributed; FAQ on Lance native indexes vs Milvus indexes (LanceDB index names from docs.lancedb.com/indexing/vector-index); Lance vs Iceberg vs Parquet FAQ. Dropped: 'single source of truth', 'Spark Ray Lance Iceberg pipeline' (no SERP evidence); 'Does Milvus copy my lake data?' folded into the Lance FAQ. Paimon docs page 404'd; the Paimon row cites the Kuaishou 掘金 article and StarRocks forum post only. Hudi's current brute-force implementation is not stated in copy (would go stale).",
+    "Retain previously reviewed executable example changes and sample prerequisites.",
+    "Remove generalized Lance/Parquet speed ratio; retain separate index/cache storage costs and refresh prerequisites."
   ],
   "lang": "en",
   "reviewedOn": "2026-10-21"

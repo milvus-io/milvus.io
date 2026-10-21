@@ -1,0 +1,605 @@
+{
+  "site": "milvus-zh",
+  "kind": "seo",
+  "slug": "milvus-vs-lancedb",
+  "nav": "对比 LanceDB",
+  "path": "/zh/compare/milvus-vs-lancedb",
+  "title": "Milvus 和 LanceDB 对比：扩展性、性能与功能",
+  "description": "Milvus 和 LanceDB 对比：分布式向量数据库 vs 基于 Lance 格式的嵌入式库，并发写入、VectorDBBench 性能、功能、成本与运维，以及 LanceDB 更合适的场景。",
+  "keywords": {
+    "primary": "Milvus 和 LanceDB 对比",
+    "secondary": [
+      "LanceDB 和 Milvus 对比",
+      "LanceDB 和 Milvus 区别",
+      "LanceDB 是什么",
+      "LanceDB 介绍",
+      "LanceDB 向量数据库",
+      "LanceDB 本地部署",
+      "LanceDB 性能",
+      "LanceDB 最大数据量",
+      "嵌入式向量数据库",
+      "Serverless 向量数据库",
+      "多模态数据湖",
+      "Lance 格式",
+      "零运维向量数据库",
+      "向量数据库对比",
+      "向量数据库选型",
+      "Milvus 不用 Kubernetes 部署",
+      "存算分离",
+      "十亿级向量检索",
+      "多租户向量数据库",
+      "VectorDBBench"
+    ],
+    "questions": [
+      "LanceDB 是什么、什么时候该用？",
+      "Lance 和 LanceDB 有什么区别？",
+      "LanceDB 最大能处理多少数据？",
+      "LanceDB 支持并发读写吗？",
+      "Milvus 和 LanceDB 谁更快？",
+      "Milvus 能直接检索 Lance 数据吗？",
+      "Milvus 生产环境必须用 Kubernetes 吗？",
+      "Milvus 和 Zilliz Cloud 有什么区别？"
+    ]
+  },
+  "research": [
+    "https://developer.volcengine.com/articles/7454505489758748691",
+    "https://www.cnblogs.com/deeplearningmachine/p/18136746",
+    "https://lqhl.me/blog/lancedb/",
+    "https://cloud.tencent.com/developer/article/2509327",
+    "https://adg.csdn.net/694cfd385b9f5f31781abda5.html",
+    "https://blog.csdn.net/oscar999/article/details/145622353",
+    "https://blog.csdn.net/inthat/article/details/144780760",
+    "https://zhuanlan.zhihu.com/p/692637675",
+    "https://zhuanlan.zhihu.com/p/648837403",
+    "https://www.zhihu.com/question/602365692",
+    "https://www.peerspot.com/products/comparisons/lancedb_vs_milvus",
+    "https://medium.com/@oliversmithth852/lancedb-vs-milvus-hands-on-lessons",
+    "https://x.com/Stephen4171127/status/1853054492586942819",
+    "https://agentset.ai/vector-databases/compare/lancedb-vs-milvus",
+    "https://lancedb.com/lp/vs-milvus-zilliz",
+    "https://builderai.tools/blog/vector-database-benchmarks-qdrant-milvus-weaviate-lancedb",
+    "https://encore.dev/articles/best-vector-databases",
+    "https://www.firecrawl.dev/blog/best-vector-databases",
+    "https://dev.to/jangwook_kim/lancedb-review",
+    "https://sprytnyk.dev/posts/running-lancedb-in-production/",
+    "https://markaicode.com/alternatives/milvus-alternatives/",
+    "https://langcopilot.com/posts/2025-10-14-best-vector-databases-milvus-vs-pinecone",
+    "https://thedataquarry.com/blog/vector-db-1/",
+    "https://appstackbuilder.com/tool-alternatives/lancedb",
+    "https://yage.ai/share/lancedb-selection-guide-en-20260327.html",
+    "https://aicoolies.com/comparisons/lancedb-vs-chromadb",
+    "https://docs.lancedb.com/faq/faq-oss"
+  ],
+  "h1": "Milvus 和 LanceDB 对比：开源向量数据库怎么选",
+  "intro": "Milvus 和 LanceDB 对比，首先要分清两者是不同形态的软件：都是 Apache-2.0 开源，但 Milvus 是存算分离的分布式向量数据库服务，LanceDB OSS 是跑在你应用进程里的嵌入式库，底层是 Lance 格式。Milvus 用一个集群服务多个客户端、副本和写入方；LanceDB 是单进程的 Serverless 向量数据库，零服务做本地检索。多个服务、写入方或租户共用数据、规模会长到十亿级，选 Milvus；单进程、本地优先、Lance 原生的流水线，选 LanceDB。",
+  "primary_cta": {
+    "label": "开始 Milvus 快速入门",
+    "href": "https://milvus.io/docs/zh/quickstart.md"
+  },
+  "secondary_cta": {
+    "label": "试用 Zilliz Cloud 托管 Milvus",
+    "href": "https://cloud.zilliz.com.cn/signup"
+  },
+  "proof": [
+    "Apache-2.0，GitHub 40K+ star",
+    "可扩展到数百亿向量",
+    "存储与计算分离",
+    "外部集合可直接检索 Lance 数据集"
+  ],
+  "logos": [
+    "Salesforce",
+    "Walmart",
+    "NVIDIA",
+    "eBay",
+    "IBM",
+    "Cisco",
+    "Roblox",
+    "Reddit",
+    "Exa.ai",
+    "OpenEvidence",
+    "Read.ai",
+    "Plaud",
+    "Filevine"
+  ],
+  "diagram": {
+    "type": "compare",
+    "caption": "Milvus 是服务：各类无状态节点在共享对象存储上独立扩缩。LanceDB OSS 是库：CPU、内存、存储都归宿主进程。",
+    "left": {
+      "title": "Milvus：存算分离",
+      "sub": "无状态 worker，按类型各自扩缩",
+      "nodes": [
+        {
+          "title": "Streaming",
+          "sub": "写入 · WAL"
+        },
+        {
+          "title": "Query",
+          "sub": "检索 · 副本"
+        },
+        {
+          "title": "Data",
+          "sub": "建索引"
+        }
+      ],
+      "storage": {
+        "title": "共享对象存储",
+        "sub": "S3 / MinIO / Azure / GCS，按需分层加载"
+      },
+      "verdict": "加节点：直接从存储加载 segment。可到数百亿向量。"
+    },
+    "right": {
+      "title": "LanceDB：嵌入式库",
+      "sub": "跑在你的应用进程里",
+      "nodes": [
+        {
+          "title": "你的应用",
+          "sub": "LanceDB 进程内"
+        },
+        {
+          "title": "Lance 表",
+          "sub": "版本化 fragment"
+        },
+        {
+          "title": "索引",
+          "sub": "IVF_PQ · BM25 FTS"
+        }
+      ],
+      "storage": {
+        "title": "本地盘或对象存储",
+        "sub": "NVMe、EBS、EFS、S3；手动 optimize()"
+      },
+      "verdict": "规模 = 宿主进程。Enterprise 版才有 query 节点、执行器和索引器。"
+    }
+  },
+  "sections": [
+    {
+      "id": "scalability",
+      "nav": "扩展性",
+      "h2": "Milvus 和 LanceDB 扩展性对比：服务还是库，十亿级向量检索怎么撑？",
+      "paragraphs": [
+        "Milvus 是存算分离架构。segment 和 WAL 都在对象存储；streaming 节点接写入，query 节点负责检索，并用内存副本提升吞吐、故障时切换，data 节点建索引。每类节点各自扩缩，Milvus Distributed 文档标称支持数百亿向量。",
+        "LanceDB OSS 是读取 Lance 表的嵌入式库，查询资源由承载它的应用进程提供；数据可在本地盘或对象存储中。容量和并发应按索引、存储与宿主资源实测。LanceDB Cloud 和 Enterprise 提供不同的服务化部署，不能与 OSS 库混为一谈。"
+      ],
+      "table": {
+        "caption": "扩展性、并发写入、副本与多租户（依据双方官方文档）",
+        "heads": [
+          "能力",
+          "Milvus",
+          "LanceDB（OSS）"
+        ],
+        "rows": [
+          [
+            "架构",
+            "分布式服务：proxy、streaming、query、data 节点",
+            "嵌在应用进程里的库，没有服务端"
+          ],
+          [
+            "数据存放",
+            "对象存储（S3、MinIO、Azure Blob、GCS），WAL 也在其中",
+            "Lance 表放在本地 NVMe、EBS、EFS 或 S3 / GCS / Azure Blob"
+          ],
+          [
+            "LanceDB 最大数据量 / 文档标称规模",
+            "1 亿到数百亿向量（Distributed）",
+            "依索引、存储与宿主资源评估；Cloud/Enterprise 单独评估"
+          ],
+          [
+            "并发写入",
+            "多个客户端经 proxy 与 WAL 并发写入，受集群资源及限额约束",
+            "支持；每次 add() 提交一个版本，提交重试次数有限"
+          ],
+          [
+            "副本与故障切换",
+            "内存副本：QPS 更高，query 节点故障时请求转到其他节点",
+            "等于宿主进程；Enterprise 的 plan executor 跑 2 个以上副本"
+          ],
+          [
+            "扩容",
+            "加 query 节点，直接从对象存储加载 segment",
+            "扩容应用的查询资源，或选用独立服务部署"
+          ],
+          [
+            "一致性",
+            "每次请求可选 Strong、Bounded（默认）、Session、Eventually",
+            "read_consistency_interval；默认不做跨进程刷新检查"
+          ],
+          [
+            "多租户向量数据库",
+            "database、collection、partition 或 partition key，百万级租户",
+            "用 namespace 组织多张 Lance 表"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "performance",
+      "nav": "性能",
+      "h2": "Milvus 和 LanceDB 性能对比：VectorDBBench 怎么看？",
+      "paragraphs": [
+        "图中仅展示当前已核对的 Milvus 与 Zilliz Cloud VectorDBBench 配置。这里没有同条件、同版本的对手结果，不能据此推断谁更快。使用相同数据集、过滤比例、召回目标和硬件重测后再比较。"
+      ],
+      "bench": [
+        {
+          "title": "向量检索吞吐（QPS，越高越好）",
+          "caption": "Cohere 1M 数据集，768 维",
+          "unit": "QPS",
+          "rows": [
+            {
+              "system": "Zilliz Cloud",
+              "label": "ZillizCloud-8cu-perf",
+              "value": 13316.23,
+              "detail": "P99 2 ms · 召回率 0.9383",
+              "highlight": true
+            },
+            {
+              "system": "Milvus",
+              "label": "Milvus-16c64g-sq4u-fp16-force_merge",
+              "value": 9575.69,
+              "detail": "P99 2.3 ms · 召回率 0.9189"
+            }
+          ],
+          "source": "来源：VectorDBBench，仅列 Milvus 与 Zilliz Cloud 的已核对配置；不构成对竞品的性能结论。",
+          "sourceUrl": "https://github.com/zilliztech/VectorDBBench/blob/main/vectordb_bench/results/leaderboard_v2.json"
+        },
+        {
+          "title": "过滤检索吞吐（QPS，过滤后保留 1% 数据）",
+          "caption": "Cohere 1M 数据集，768 维，filter ratio 0.99",
+          "unit": "QPS",
+          "rows": [
+            {
+              "system": "Zilliz Cloud",
+              "label": "ZillizCloud-8cu-perf-partition_key",
+              "value": 10020.53,
+              "detail": "P99 2.6 ms · 召回率 0.9788",
+              "highlight": true
+            },
+            {
+              "system": "Milvus",
+              "label": "Milvus-16c64g-sq8-partition_key",
+              "value": 11280.08,
+              "detail": "P99 1.6 ms · 召回率 0.9507"
+            }
+          ],
+          "source": "来源：VectorDBBench，仅列 Milvus 与 Zilliz Cloud 的已核对配置；不构成对竞品的性能结论。",
+          "cta": {
+            "text": "Zilliz Cloud 就是全托管的 Milvus：同样的引擎、同一梯队的性能，不用自己规划集群、升级和扩容。",
+            "label": "免费试用 Zilliz Cloud",
+            "href": "https://cloud.zilliz.com.cn/signup"
+          },
+          "sourceUrl": "https://github.com/zilliztech/VectorDBBench/blob/main/vectordb_bench/results/leaderboard_v2.json"
+        }
+      ]
+    },
+    {
+      "id": "features",
+      "nav": "功能",
+      "h2": "LanceDB 和 Milvus 功能对比：向量数据库对比表",
+      "paragraphs": [
+        "两者都有向量检索、BM25 全文检索、混合检索和过滤。Milvus 索引类型更多、混合排序在服务端完成、新数据自动建索引；LanceDB 把所有东西放在一张带版本的 Lance 表里，定位是多模态数据湖。两者也能接上：向量已经在 Lance 数据集里时，Milvus 外部集合（Milvus 3.0+）可以原地建索引、直接提供检索，一行数据都不用拷（见数据湖向量检索）。"
+      ],
+      "table": {
+        "caption": "功能对比：索引类型、量化、全文与混合检索、Lance 格式与版本、多模态数据、数据湖互操作、部署方式与 SDK",
+        "heads": [
+          "功能",
+          "Milvus",
+          "LanceDB"
+        ],
+        "rows": [
+          [
+            "稠密向量索引类型",
+            "HNSW、IVF（FLAT、SQ8、PQ、RaBitQ）、SCANN、DiskANN、GPU（CAGRA、IVF）",
+            "IVF_PQ、IVF_RQ、IVF_HNSW_SQ、IVF_HNSW_PQ、IVF_HNSW_FLAT；约 10 万向量以下默认暴力扫描"
+          ],
+          [
+            "量化",
+            "SQ8、PQ、PRQ、RaBitQ；HNSW_SQ、HNSW_PQ、HNSW_PRQ",
+            "PQ、SQ、RaBitQ（每维 1 到 8 bit）"
+          ],
+          [
+            "GPU",
+            "GPU 建索引与检索（CAGRA、GPU IVF）",
+            "GPU 建索引：OSS 用 PyTorch 手动建 IVF_PQ；Enterprise 自动"
+          ],
+          [
+            "BM25 与全文检索",
+            "内置 BM25 函数，服务端把原始文本转成稀疏向量",
+            "Lance 原生 BM25 FTS 索引；分词器含 jieba、lindera、ICU"
+          ],
+          [
+            "混合检索",
+            "单次查询多个向量字段，服务端 RRF 或加权 ranker 融合",
+            "向量 + FTS 查询再过 reranker：默认 RRF，可选 Cohere、cross-encoder、ColBERT"
+          ],
+          [
+            "多向量",
+            "默认每个 collection 最多 10 个向量字段；StructArray 的 EmbeddingList 字段用 MAX_SIM 检索，适配 ColBERT、ColPali",
+            "multivector 列，MaxSim 打分，适配 ColBERT 类模型"
+          ],
+          [
+            "过滤与标量索引",
+            "过滤表达式，JSON 字段 + JSON path 索引；INVERTED、BITMAP、STL_SORT",
+            "经 DataFusion 的 SQL WHERE，默认前置过滤；BTREE、BITMAP、LABEL_LIST"
+          ],
+          [
+            "索引新鲜度",
+            "data 节点自动给 sealed segment 建索引；新写入的数据立即可查",
+            "OSS 需手动 optimize() 做 compaction 和增量建索引，之前新行走暴力扫描；Enterprise 后台自动"
+          ],
+          [
+            "Lance 格式与版本",
+            "外部集合原地检索 Lance 数据集，零拷贝",
+            "原生存储格式；每次写入生成新版本，支持时间旅行、tag 和分支"
+          ],
+          [
+            "多模态数据",
+            "向量加标量、JSON、数组、文本和 StructArray 字段；原始媒体留在你的对象存储",
+            "图片、音频、视频、文本和向量放在同一张 Lance 表"
+          ],
+          [
+            "DataFrame 与数据湖互操作",
+            "从 Parquet、JSON、CSV 批量导入；外部集合直接读 Lance、Iceberg、Parquet、Vortex",
+            "pandas、PyArrow、Polars、DuckDB、Pydantic、dlt；PyTorch 直接读同一张表"
+          ],
+          [
+            "部署方式",
+            "Milvus Lite、Standalone、Distributed、Zilliz Cloud",
+            "嵌入你的二进制、容器或 serverless 函数；LanceDB Cloud 与 Enterprise（托管或 BYOC）"
+          ],
+          [
+            "RAG 框架集成",
+            "LangChain、LlamaIndex、Haystack、Dify、DSPy、n8n 等",
+            "LangChain、LlamaIndex、Hugging Face"
+          ],
+          [
+            "许可证与语言",
+            "Apache-2.0；Go 和 C++",
+            "Apache-2.0；Rust"
+          ],
+          [
+            "SDK 语言",
+            "Python、Java、Go、Node.js、C#、C++、Rust、RESTful",
+            "Python、TypeScript/JavaScript、Rust、Java；Cloud 与 Enterprise 提供 REST API"
+          ],
+          [
+            "社区与治理",
+            "LF AI & Data 基金会毕业项目；GitHub 40K+ star",
+            "LanceDB 公司维护；GitHub 10K+ star"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "operations",
+      "nav": "成本与运维",
+      "h2": "Milvus 和 LanceDB 成本与运维对比：各自要跑些什么？",
+      "paragraphs": [
+        "向量数据库选型先看你要运维什么。LanceDB OSS 是零运维向量数据库：pip install，然后一个目录或一个存储桶。Milvus Lite 同样是 pip install，Milvus Standalone 是一个 Docker 镜像，只有 Milvus Distributed 才需要 Kubernetes。之后的成本都是内存：谁在服务索引，内存就在谁那里。"
+      ],
+      "table": {
+        "caption": "Milvus 和 LanceDB 成本与运维对比：Kubernetes、依赖服务、成本来源、版本与备份",
+        "heads": [
+          "项目",
+          "Milvus",
+          "LanceDB（OSS）"
+        ],
+        "rows": [
+          [
+            "生产环境不用 Kubernetes",
+            "Milvus Standalone：单个 Docker 镜像，内嵌 Woodpecker WAL，可到 1 亿向量",
+            "库直接嵌在你的服务里；要集群用 LanceDB Enterprise"
+          ],
+          [
+            "要运维的服务",
+            "Distributed：etcd 和对象存储（MinIO 或 S3），用 Helm 或 Milvus Operator 部署；Woodpecker 取代 Kafka / Pulsar",
+            "没有：一个 Lance 目录，放本地 NVMe、EBS、EFS 或 S3、GCS、Azure 存储桶"
+          ],
+          [
+            "成本从哪来",
+            "query 节点内存；量化、DiskANN、tiered storage 用磁盘和对象存储换内存",
+            "宿主进程的内存和 CPU；IVF_PQ 索引放磁盘，官方文档建议低延迟场景用本地 NVMe 而非对象存储"
+          ],
+          [
+            "版本与备份",
+            "milvus-backup 在集群在线时备份到 S3、GCS、Azure 或本地盘；RBAC 和 TLS",
+            "每次写入生成新的 Lance 版本：时间旅行、tag、分支；optimize() 清理旧版本"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "lancedb-fit",
+      "nav": "选 LanceDB",
+      "h2": "LanceDB 是什么、什么时候该用 LanceDB？",
+      "paragraphs": [
+        "LanceDB 介绍一句话：做得不错的嵌入式向量数据库库，单进程场景下直接省掉一整层基础设施。想换掉它的团队，通常是需要多个服务、写入方或租户共用同一份数据；一个应用独占这张表时，LanceDB 是合理的选择。"
+      ],
+      "bullets": [
+        "单进程应用、notebook、CLI 或边缘函数，想要检索但不想运维任何服务。",
+        "本地优先的开发：LanceDB 本地部署就是 pip install，数据集放得进一台机器，跟代码一起分发。",
+        "Lance 原生流水线：PyTorch、Ray 或 Spark 作业在同一张版本化表上训练和查询。",
+        "没有 Kubernetes 的小团队，宁要一个库加一个存储桶，不要一个集群。",
+        "图片、音频和向量放在同一张表里的多模态数据集。"
+      ]
+    },
+    {
+      "id": "adopters",
+      "nav": "客户",
+      "h2": "哪些 AI 公司和大型企业在生产环境用 Milvus？",
+      "paragraphs": [
+        "从 AI 原生公司到大型企业，都在生产环境运行 Milvus 或 Zilliz Cloud（托管 Milvus）。milvus.io 用户墙上有 Salesforce、Walmart、NVIDIA、eBay、IBM、Cisco、Roblox、Reddit，也有 Exa.ai、OpenEvidence、Read.ai、Notta.ai、Plaud、Filevine。公开案例中的结果："
+      ],
+      "bullets": [
+        "OpenEvidence：基于 Zilliz Cloud，检索延迟低于 10 ms，峰值 4,000 QPS。",
+        "Plaud：每个区域 100 亿+ 向量块，平均召回延迟低于 200 ms。",
+        "Exa：借助混合检索，神经搜索延迟从秒级降到 200 ms 以内。",
+        "Airtable：在 Kubernetes 上用 Milvus Operator 自建 Milvus，支撑语义检索。"
+      ]
+    }
+  ],
+  "code": null,
+  "stats": [
+    {
+      "value": "数百亿",
+      "label": "Milvus Distributed 支持的向量规模",
+      "source": "https://milvus.io/docs/zh/install-overview.md"
+    },
+    {
+      "value": "百万级",
+      "label": "partition key 支持的单 collection 租户数",
+      "source": "https://milvus.io/docs/zh/multi_tenancy.md"
+    },
+    {
+      "value": "40K+",
+      "label": "milvus-io/milvus GitHub star",
+      "source": "https://github.com/milvus-io/milvus"
+    }
+  ],
+  "faqs": [
+    [
+      "LanceDB 是什么、什么时候该用？",
+      "LanceDB OSS 自称面向多模态 AI 的开源嵌入式检索库：跑在你的 Python、TypeScript 或 Rust 进程里，读磁盘或对象存储上的 Lance 表。一个应用独占数据时用它；多个客户端、写入方或租户共用数据时用 Milvus。"
+    ],
+    [
+      "Lance 和 LanceDB 有什么区别？",
+      "Lance 是 Apache-2.0 的列式存储格式：带版本的表、支持随机访问，为向量和媒体数据设计。LanceDB 是在 Lance 表上建索引、做查询的库和服务。Milvus 通过外部集合也能直接读 Lance 数据集。"
+    ],
+    [
+      "LanceDB 最大能处理多少数据？",
+      "LanceDB OSS 是读取 Lance 表的嵌入式库，查询资源由承载它的应用进程提供；数据可在本地盘或对象存储中。容量和并发应按索引、存储与宿主资源实测。LanceDB Cloud 和 Enterprise 提供不同的服务化部署，不能与 OSS 库混为一谈。"
+    ],
+    [
+      "LanceDB 支持并发读写吗？",
+      "读随进程数扩展。并发写入可以但有限制：每次 add() 都提交一个新的表版本，FAQ 写明并发写入方太多时提交重试耗尽会写失败。Milvus 通过 streaming WAL 接收任意数量客户端的写入。"
+    ],
+    [
+      "Milvus 和 LanceDB 谁更快？",
+      "图中仅展示当前已核对的 Milvus 与 Zilliz Cloud VectorDBBench 配置。这里没有同条件、同版本的对手结果，不能据此推断谁更快。使用相同数据集、过滤比例、召回目标和硬件重测后再比较。"
+    ],
+    [
+      "Milvus 能直接检索 Lance 数据吗？",
+      "能。Milvus 3.0+ 的外部集合把 external_source 指向 Lance 数据集目录、format 设为 lance-table，映射字段后 refresh、建索引、检索。数据留在 Lance 里只读，不产生第二份拷贝。"
+    ],
+    [
+      "Milvus 生产环境必须用 Kubernetes 吗？",
+      "不是。Milvus Standalone 把全部组件打进一个 Docker 镜像，内嵌 Woodpecker WAL，文档标称可到 1 亿向量。Kubernetes（Helm 或 Milvus Operator）是给 Milvus Distributed 用的。"
+    ],
+    [
+      "Milvus 和 Zilliz Cloud 有什么区别？",
+      "Zilliz Cloud 是 Milvus 原班团队提供的全托管 Milvus，客户端 API 一致。基于 Milvus Lite 或 Standalone 写的代码，可以直接迁到 Zilliz Cloud，不用重写。"
+    ]
+  ],
+  "stories": [
+    {
+      "name": "Filevine",
+      "text": "在 Zilliz Cloud 上管理 300 亿向量，覆盖数百万份法律文档。",
+      "href": "https://zilliz.com/customers/filevine"
+    },
+    {
+      "name": "美团",
+      "text": "自建 Milvus 生产环境承载 100 亿+ 向量，单个 collection 超过 20 亿。",
+      "href": "https://zilliz.com/customers/meituan"
+    },
+    {
+      "name": "Read AI",
+      "text": "基于 Milvus 为数百万月活用户提供 20–50 ms 检索延迟，活跃租户达百万级。",
+      "href": "https://zilliz.com/customers/read-ai"
+    }
+  ],
+  "aiq": [
+    "how-does-a-vector-database-handle-scaling-up-to-millions-or-billions-of-vectors-and-what-architectural-features-enable-this-scalability",
+    "how-do-distributed-vector-databases-handle-sharding-and-replication",
+    "how-do-you-choose-the-right-index-type-for-your-workload",
+    "how-can-milvus-search-lance-data",
+    "lance-iceberg-parquet-for-vector-data-lakes",
+    "what-is-hybrid-search-and-when-should-i-use-it",
+    "what-is-the-role-of-multitenancy-in-scalability-considerations-for-vector-databases-and-how-might-resource-isolation-be-handled-when-multiple-applications-share-the-same-infrastructure",
+    "what-tools-help-benchmark-vector-search-performance"
+  ],
+  "related": [
+    "search-on-the-lake",
+    "milvus-vs-qdrant",
+    "milvus-vs-elasticsearch",
+    "distributed-vector-database",
+    "open-source-vector-database"
+  ],
+  "managed": {
+    "h2": "不想自己运维集群？",
+    "body": "Zilliz Cloud 是 Milvus 原班团队提供的全托管服务，MilvusClient API 与本地一致。可以先用开源 Milvus 起步，再迁到托管服务，应用代码不用重写。"
+  },
+  "sources": [
+    "https://milvus.io",
+    "https://github.com/milvus-io/milvus",
+    "https://milvus.io/docs/architecture_overview.md",
+    "https://milvus.io/docs/install-overview.md",
+    "https://milvus.io/docs/replica.md",
+    "https://milvus.io/docs/consistency.md",
+    "https://milvus.io/docs/scaleout.md",
+    "https://milvus.io/docs/index-explained.md",
+    "https://milvus.io/docs/full-text-search.md",
+    "https://milvus.io/docs/multi-vector-search.md",
+    "https://milvus.io/docs/json-indexing.md",
+    "https://milvus.io/docs/multi_tenancy.md",
+    "https://milvus.io/docs/create-an-external-collection.md",
+    "https://github.com/lancedb/lancedb",
+    "https://docs.lancedb.com/",
+    "https://docs.lancedb.com/faq/faq-oss",
+    "https://docs.lancedb.com/faq/faq-enterprise",
+    "https://docs.lancedb.com/enterprise",
+    "https://docs.lancedb.com/enterprise/architecture",
+    "https://docs.lancedb.com/enterprise/benchmarks",
+    "https://docs.lancedb.com/storage",
+    "https://docs.lancedb.com/tables/consistency",
+    "https://docs.lancedb.com/tables/versioning",
+    "https://docs.lancedb.com/indexing/vector-index",
+    "https://docs.lancedb.com/indexing/quantization",
+    "https://docs.lancedb.com/indexing/gpu-indexing",
+    "https://docs.lancedb.com/indexing/fts-index",
+    "https://docs.lancedb.com/indexing/scalar-index",
+    "https://docs.lancedb.com/indexing/reindexing",
+    "https://docs.lancedb.com/search/hybrid-search",
+    "https://docs.lancedb.com/search/multivector-search",
+    "https://docs.lancedb.com/search/filtering",
+    "https://docs.lancedb.com/namespaces",
+    "https://docs.lancedb.com/performance",
+    "https://zilliz.com/vdbbench-leaderboard",
+    "https://github.com/zilliztech/VectorDBBench",
+    "https://github.com/zilliztech/VectorDBBench/blob/main/vectordb_bench/results/leaderboard_v2.json",
+    "https://github.com/zilliztech/VectorDBBench/tree/main/vectordb_bench/backend/clients/lancedb",
+    "https://zilliz.com/customers/filevine",
+    "https://zilliz.com/customers/openevidence",
+    "https://zilliz.com/customers/exa",
+    "https://zilliz.com/customers/airtable",
+    "https://zilliz.com/customers/plaud",
+    "https://zilliz.com/customers/read-ai",
+    "https://zilliz.com/customers/meituan",
+    "https://milvus.io/docs/zh/quickstart.md",
+    "https://cloud.zilliz.com.cn/signup",
+    "https://milvus.io/docs/rbac.md",
+    "https://milvus.io/docs/integrations_overview.md",
+    "https://milvus.io/docs/woodpecker_architecture.md",
+    "https://milvus.io/docs/install_cluster-helm.md",
+    "https://milvus.io/docs/install_cluster-milvusoperator.md",
+    "https://milvus.io/docs/prepare-source-data.md",
+    "https://milvus.io/docs/array-of-structs.md",
+    "https://milvus.io/docs/search-with-embedding-lists.md",
+    "https://github.com/zilliztech/milvus-backup",
+    "https://lfaidata.foundation/projects/",
+    "https://github.com/lancedb/lance",
+    "https://docs.lancedb.com/tables/multimodal",
+    "https://docs.lancedb.com/integrations/ai/langchain",
+    "https://docs.lancedb.com/integrations/ai/llamaIndex",
+    "https://docs.lancedb.com/integrations/data/duckdb",
+    "https://docs.lancedb.com/integrations/data/polars_arrow",
+    "https://docs.lancedb.com/integrations/data/pandas_and_pyarrow",
+    "https://docs.lancedb.com/training/torch"
+  ],
+  "notes": [
+    "SERP pass 2026-10-21: studied 10 ZH / 17 EN results (5 ZH + 14 EN fetched; zhihu 403, CSDN 521). Honest finding: there is no dedicated Chinese LanceDB-vs-Milvus article; Chinese comparison queries return English pages, one X thread (熊布朗, 2024-11) and generic 向量数据库选型 roundups, while 'LanceDB 是什么 / 向量数据库 / RAG 实战' is served by intros and tutorials (volcengine, CSDN, cnblogs=zhihu cross-post, lqhl.me, the only one mentioning Milvus). Demand is informational, not comparative, so the ZH keyword set leans on 'LanceDB 是什么/介绍/本地部署/性能/最大数据量', '嵌入式向量数据库', 'Serverless 向量数据库', '多模态数据湖', '零运维向量数据库' and the 'fit' h2 is phrased as the intro question. Same structural changes as the English page (成本与运维 section, 多模态数据 / DataFrame 与数据湖互操作 / RAG 框架集成 / 社区与治理 rows, FAQ rebuilt). Dropped: 'LanceDB 替代' (no evidence). Caveat: WebSearch is Google-style; Baidu was not queried directly this pass.",
+    "Facts verified 2026-10-21 for the new rows: lancedb/lancedb on GitHub shows 11.7k stars (page says 10K+), Apache-2.0, Rust, description 'Developer-friendly OSS embedded retrieval library for multimodal AI'; lancedb/lance README: 'Open Lakehouse Format for Multimodal AI', 'Zero-copy versioning: Automatic versioning with ACID transactions, time travel, tags, and branches', 'Store images, videos, audio, text, and embeddings in a single unified format' (its '100x faster than Parquet' claim is a vendor number and is not reused); docs.lancedb.com llms.txt lists integrations/ai/langchain, llamaIndex, huggingface, integrations/data/duckdb, polars_arrow, pandas_and_pyarrow, pydantic, dlt, training/torch, tables/multimodal, tables/versioning. Milvus: install-overview (Lite 'up to a few million vectors'; Standalone 'a single Docker image', up to 100 million, 'runs Woodpecker (embedded) as its message queue'; default dependencies 'Woodpecker, MinIO, and etcd'); woodpecker_architecture.md ('In Milvus 2.6, Woodpecker replaces Kafka and Pulsar'); rbac.md; milvus-backup README (MinIO, S3, GCS, Azure Blob, local disk, 'while the Milvus cluster remains available'); integrations_overview (LlamaIndex, LangChain, Haystack, Dify, DSPy, n8n); prepare-source-data.md (bulk import from JSON, Parquet, CSV); array-of-structs.md and search-with-embedding-lists.md (StructArray EmbeddingList with MAX_SIM_* for ColBERT/ColPali; blog 'Milvus 3.0 StructArray'); lfaidata.foundation/projects lists Milvus under GRADUATED.",
+    "Same facts, sources and caveats as content/milvus/milvus-vs-lancedb.json (see its notes): no VectorDBBench result for LanceDB, LanceDB facts from docs.lancedb.com (2026-10-21), FTS is Lance-native (tantivy wording not used), 'LanceDB Cloud' only on the GitHub README.",
+    "Remove stale or unlike-for-like competitor benchmark numbers from prose and FAQs.",
+    "Avoid unsupported LanceDB OSS capacity ceiling and unbounded Milvus writer claims."
+  ],
+  "lang": "zh",
+  "reviewedOn": "2026-10-21"
+}

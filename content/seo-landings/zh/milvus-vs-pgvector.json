@@ -1,0 +1,559 @@
+{
+  "site": "milvus-zh",
+  "kind": "seo",
+  "slug": "milvus-vs-pgvector",
+  "nav": "对比 pgvector",
+  "path": "/zh/compare/milvus-vs-pgvector",
+  "title": "Milvus 和 pgvector 对比：扩展性、性能与功能",
+  "description": "Milvus 与 pgvector：比较独立向量数据库与 Postgres 扩展的架构、过滤、混合检索、部署运维和迁移，按工作负载选择。",
+  "keywords": {
+    "primary": "Milvus 和 pgvector 对比",
+    "secondary": [
+      "pgvector 和 Milvus 对比",
+      "pgvector 和 Milvus 区别",
+      "pgvector 向量数据库",
+      "pgvector 支持多少维度",
+      "pgvector 性能测试",
+      "PGSQL 和 Milvus",
+      "pgvector 迁移 Milvus",
+      "向量数据库对比",
+      "向量数据库选型",
+      "运维复杂度",
+      "存算分离",
+      "分布式向量数据库",
+      "十亿级向量检索",
+      "混合检索 BM25",
+      "VectorDBBench"
+    ],
+    "questions": [
+      "pgvector 和 Milvus 哪个好？",
+      "Milvus 一定比 pgvector 好吗？",
+      "Milvus 和 pgvector 谁更快？",
+      "pgvector 支持多少条向量？",
+      "pgvector 支持多少维度？",
+      "pgvector 支持混合检索吗？",
+      "什么时候该从 pgvector 迁移到 Milvus？",
+      "什么情况下该选 pgvector？"
+    ]
+  },
+  "research": [
+    "https://www.instaclustr.com/education/vector-database/pgvector-vs-milvus-5-key-differences-and-how-to-choose/",
+    "https://myscale.com/blog/pgvector-vs-milvus-choosing-right-vector-database/",
+    "https://dev.to/linou518/pgvector-vs-qdrant-vs-milvus-2026",
+    "https://markaicode.com/vs/milvus-vs-pgvector/",
+    "https://markaicode.com/vs/milvus-vs-postgres/",
+    "https://www.c-sharpcorner.com/article/vector-db-dilemma-pgvector-vs-milvus/",
+    "https://dev.to/devrudals/enterprise-vector-database-2026",
+    "https://www.paradedb.com/learn/postgresql/pgvector-limitations",
+    "https://www.pinecone.io/blog/pinecone-vs-pgvector/",
+    "https://www.tigerdata.com/blog/pgvector-vs-pinecone",
+    "https://supabase.com/blog/pgvector-vs-pinecone",
+    "https://zilliz.com/comparison/milvus-vs-pgvector",
+    "https://cloud.tencent.cn/developer/article/2658089",
+    "https://cloud.tencent.com/developer/article/2655980",
+    "https://saturn.pub/insights/15/article-704",
+    "https://blog.deptrip.com/2026/07/14/vector-database-comparison/",
+    "https://tobyqin.cn/posts/2025-11-24/vector-database",
+    "https://kaiyan.net/blog/vector-database-selection-2026/",
+    "https://www.cnblogs.com/itqinls/p/20832126"
+  ],
+  "h1": "Milvus 和 pgvector 对比：数据持续增长时该怎么选",
+  "intro": "pgvector 把向量检索加入 Postgres，可复用关系数据、事务和 JOIN；扩容方式包括纵向扩展、只读副本和额外的分片方案。Milvus 是专门的向量数据库，将持久数据放在对象存储，并分别扩缩写入、索引与检索资源。选择取决于是否需要关系能力，以及实际过滤、吞吐、延迟和运维要求。",
+  "primary_cta": {
+    "label": "开始 Milvus 快速入门",
+    "href": "https://milvus.io/docs/zh/quickstart.md"
+  },
+  "secondary_cta": {
+    "label": "试用 Zilliz Cloud 托管 Milvus",
+    "href": "https://cloud.zilliz.com.cn/signup"
+  },
+  "proof": [
+    "Apache-2.0，GitHub 40K+ star",
+    "可扩展到数百亿向量",
+    "存储与计算分离",
+    "单字段最高 32,768 维，17 种稠密向量索引"
+  ],
+  "logos": [
+    "Salesforce",
+    "Walmart",
+    "NVIDIA",
+    "eBay",
+    "IBM",
+    "Cisco",
+    "Roblox",
+    "Reddit",
+    "Exa.ai",
+    "OpenEvidence",
+    "Read.ai",
+    "Plaud",
+    "Filevine"
+  ],
+  "diagram": {
+    "type": "compare",
+    "caption": "Milvus 各类节点在共享对象存储上独立扩缩；pgvector 运行在一个 Postgres 主库里，只能靠只读副本分担查询。",
+    "left": {
+      "title": "Milvus：存算分离",
+      "sub": "无状态 worker，按类型各自扩缩",
+      "nodes": [
+        {
+          "title": "Streaming",
+          "sub": "写入 · WAL"
+        },
+        {
+          "title": "Query",
+          "sub": "检索 · 副本"
+        },
+        {
+          "title": "Data",
+          "sub": "建索引"
+        }
+      ],
+      "storage": {
+        "title": "共享对象存储",
+        "sub": "S3 / MinIO / Azure / GCS，按需分层加载"
+      },
+      "verdict": "加节点：直接从存储加载 segment。可到数百亿向量。"
+    },
+    "right": {
+      "title": "pgvector：Postgres 扩展",
+      "sub": "一个主库负责写入、建索引和查询",
+      "nodes": [
+        {
+          "title": "主库",
+          "sub": "堆表 + HNSW"
+        },
+        {
+          "title": "只读副本 1",
+          "sub": "WAL 同步，只读"
+        },
+        {
+          "title": "只读副本 2",
+          "sub": "WAL 同步，只读"
+        }
+      ],
+      "storage": {
+        "title": "本地磁盘 + WAL",
+        "sub": "单机磁盘；分片需 Citus / PgDog"
+      },
+      "verdict": "扩容靠升配或加只读副本；写入和建索引都压在主库。"
+    }
+  },
+  "sections": [
+    {
+      "id": "scalability",
+      "nav": "扩展性",
+      "h2": "Milvus 和 pgvector 扩展性对比：向量表超过一台 Postgres 之后怎么办？",
+      "paragraphs": [
+        "Milvus 是存算分离架构。segment 和 WAL 都在对象存储里，新加的 query 节点直接加载分配给它的 segment，不用从别的节点拷盘；写入、检索、建索引分别由不同类型的节点承担，各自扩缩。tiered storage 还能让单个节点服务超过自身内存和磁盘的数据量。",
+        "pgvector 的扩展性就是 Postgres 的扩展性。README 写明：纵向扩展靠给单实例加内存、CPU 和磁盘；横向扩展靠只读副本，或者用 Citus、PgDog 这类分片方案。Postgres 副本只读，所有写入和 HNSW 建索引都落在主库；一旦图结构超出 maintenance_work_mem，HNSW 建索引会明显变慢。"
+      ],
+      "table": {
+        "caption": "十亿级向量检索的扩展性（依据双方官方文档）",
+        "heads": [
+          "能力",
+          "Milvus",
+          "pgvector"
+        ],
+        "rows": [
+          [
+            "架构",
+            "存算分离：proxy、streaming、query、data 节点",
+            "Postgres 进程内的扩展；堆表加 HNSW 或 IVFFlat 索引"
+          ],
+          [
+            "数据存放",
+            "对象存储（S3、MinIO、Azure Blob、GCS），WAL 也在其中",
+            "主库本地磁盘，WAL 流式同步到副本"
+          ],
+          [
+            "写入与建索引扩展",
+            "增加 streaming 或 data 节点",
+            "单主库；只能靠本机并行 worker"
+          ],
+          [
+            "查询扩展",
+            "增加 query 节点和副本，segment 从对象存储加载",
+            "只读 hot standby 副本，每个都是全量拷贝"
+          ],
+          [
+            "数据超过单节点容量",
+            "tiered storage 按需拉取字段数据",
+            "换更大的机器，或用 Citus / PgDog 分片"
+          ],
+          [
+            "建索引内存",
+            "在 data 节点上构建，与查询服务分离",
+            "HNSW 图放得进 maintenance_work_mem 才快"
+          ],
+          [
+            "可建索引的维度",
+            "单个向量字段最高 32,768 维",
+            "vector 最高 2,000 维；halfvec 4,000；bit 64,000"
+          ],
+          [
+            "大规模多租户",
+            "partition key 支持百万级租户；也可按 database、collection、partition 隔离",
+            "按租户做 list 分区或拆表"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "performance",
+      "nav": "性能",
+      "h2": "Milvus 和 pgvector 性能对比：谁更快？",
+      "paragraphs": [
+        "图中仅展示当前已核对的 Milvus 与 Zilliz Cloud VectorDBBench 配置。这里没有同条件、同版本的对手结果，不能据此推断谁更快。使用相同数据集、过滤比例、召回目标和硬件重测后再比较。"
+      ],
+      "bench": [
+        {
+          "title": "向量检索吞吐（QPS，越高越好）",
+          "caption": "Cohere 1M 数据集，768 维",
+          "unit": "QPS",
+          "rows": [
+            {
+              "system": "Zilliz Cloud",
+              "label": "ZillizCloud-8cu-perf",
+              "value": 13316.23,
+              "detail": "P99 2 ms · 召回率 0.9383",
+              "highlight": true
+            },
+            {
+              "system": "Milvus",
+              "label": "Milvus-16c64g-sq4u-fp16-force_merge",
+              "value": 9575.69,
+              "detail": "P99 2.3 ms · 召回率 0.9189"
+            }
+          ],
+          "source": "来源：VectorDBBench，仅列 Milvus 与 Zilliz Cloud 的已核对配置；不构成对竞品的性能结论。",
+          "sourceUrl": "https://github.com/zilliztech/VectorDBBench/blob/main/vectordb_bench/results/leaderboard_v2.json"
+        },
+        {
+          "title": "过滤检索吞吐（QPS，过滤后保留 1% 数据）",
+          "caption": "Cohere 1M 数据集，768 维，filter ratio 0.99",
+          "unit": "QPS",
+          "rows": [
+            {
+              "system": "Zilliz Cloud",
+              "label": "ZillizCloud-8cu-perf-partition_key",
+              "value": 10020.53,
+              "detail": "P99 2.6 ms · 召回率 0.9788",
+              "highlight": true
+            },
+            {
+              "system": "Milvus",
+              "label": "Milvus-16c64g-sq8-partition_key",
+              "value": 11280.08,
+              "detail": "P99 1.6 ms · 召回率 0.9507"
+            }
+          ],
+          "source": "来源：VectorDBBench，仅列 Milvus 与 Zilliz Cloud 的已核对配置；不构成对竞品的性能结论。",
+          "cta": {
+            "text": "Zilliz Cloud 就是全托管的 Milvus：同样的引擎、同一梯队的性能，不用自己规划集群、升级和扩容。",
+            "label": "免费试用 Zilliz Cloud",
+            "href": "https://cloud.zilliz.com.cn/signup"
+          },
+          "sourceUrl": "https://github.com/zilliztech/VectorDBBench/blob/main/vectordb_bench/results/leaderboard_v2.json"
+        }
+      ]
+    },
+    {
+      "id": "features",
+      "nav": "功能",
+      "h2": "pgvector 和 Milvus 功能对比：索引类型、过滤与混合检索",
+      "paragraphs": [
+        "pgvector 给 Postgres 加了两种 ANN 索引，外加 SQL 的全部工具。Milvus 是专门的向量数据库：索引家族更多，标量索引在向量检索之前先过滤，服务端内置 BM25 函数和 ranker 做混合检索。做向量数据库选型时，先看这张向量数据库对比表，pgvector 和 Milvus 区别一目了然。"
+      ],
+      "table": {
+        "caption": "功能对比：pgvector HNSW / IVFFlat 与 Milvus 的索引类型、元数据过滤、混合检索、部署方式与 SDK",
+        "heads": [
+          "功能",
+          "Milvus",
+          "pgvector"
+        ],
+        "rows": [
+          [
+            "稠密向量索引类型",
+            "HNSW、IVF（FLAT、SQ8、PQ、RaBitQ）、SCANN、DiskANN、GPU（CAGRA、IVF、暴力检索）",
+            "HNSW、IVFFlat"
+          ],
+          [
+            "向量类型",
+            "float32、float16、bfloat16、int8、二值、稀疏",
+            "vector、halfvec、bit、sparsevec"
+          ],
+          [
+            "量化",
+            "SQ8、PQ、PRQ、RaBitQ；HNSW_SQ、HNSW_PQ、HNSW_PRQ",
+            "halfvec 存储；表达式索引做二值量化，再用精确距离重排"
+          ],
+          [
+            "元数据过滤",
+            "先用标量索引（INVERTED、BITMAP、STL_SORT）或 partition key 过滤，再做 ANN 检索；复杂表达式可用 iterative_filter hint",
+            "WHERE 条件在索引扫描之后应用：README 的例子是条件命中 10% 的行时，默认 hnsw.ef_search 为 40 只能平均返回约 4 行；0.8.0+ 的迭代索引扫描会继续扫到凑够 k 行"
+          ],
+          [
+            "全文检索 / BM25",
+            "内置 BM25 函数，服务端把原始文本转成稀疏向量",
+            "Postgres 全文检索：tsvector、tsquery、ts_rank_cd"
+          ],
+          [
+            "混合检索",
+            "一次 hybrid_search 查多个向量字段，RRFRanker 或 WeightedRanker 融合",
+            "两条查询分别执行，在 SQL 或应用层用 RRF 或 cross-encoder 合并"
+          ],
+          [
+            "多租户",
+            "database、collection、partition 或 partition key",
+            "list 分区或拆表"
+          ],
+          [
+            "事务与 JOIN",
+            "collection 级一致性级别；不支持跨表 JOIN",
+            "Postgres 自带 ACID 事务、JOIN 和时间点恢复"
+          ],
+          [
+            "部署方式",
+            "Milvus Lite、Standalone、Distributed、Zilliz Cloud",
+            "任意 Postgres 13+；Amazon RDS、Supabase、Neon、Crunchy Bridge 等托管服务"
+          ],
+          [
+            "许可证与社区",
+            "Apache-2.0；Go 和 C++；LF AI & Data 毕业项目；GitHub 40K+ star",
+            "PostgreSQL License；C；GitHub 20K+ star"
+          ],
+          [
+            "SDK 语言",
+            "Python、Java、Go、Node.js、C#、C++、Rust、RESTful",
+            "任何带 Postgres 客户端的语言"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "setup",
+      "nav": "部署运维",
+      "h2": "Milvus 比 pgvector 难部署吗？运维复杂度对比",
+      "paragraphs": [
+        "Milvus Lite 可用 pip 在进程内启动，CPU 是默认路径，GPU 索引可选。已有 Postgres 的团队可以先用 pgvector，迁移时通常能复用模型与维度一致的向量，但仍需映射 schema、创建索引并改写检索调用。两者都应按索引内存、存储、查询量和可用性要求评估成本。"
+      ],
+      "table": {
+        "caption": "PGSQL 和 Milvus 的部署、调参与迁移（依据官方文档）",
+        "heads": [
+          "阶段",
+          "Milvus",
+          "pgvector"
+        ],
+        "rows": [
+          [
+            "起步",
+            "pip install pymilvus 即进程内运行 Milvus Lite，数百万向量以内",
+            "在现有 Postgres 13+ 上 CREATE EXTENSION vector"
+          ],
+          [
+            "单机",
+            "Standalone：使用 Docker 部署，并配置 etcd 与对象存储；Woodpecker 可嵌入运行",
+            "单主库；HNSW 图放进 maintenance_work_mem 才建得快，默认 2 个并行 worker"
+          ],
+          [
+            "集群",
+            "Distributed：Kubernetes 上用 Milvus Operator 或 Helm 部署，数据在对象存储；1 亿到数百亿",
+            "只读副本；分片靠 Citus 或 PgDog"
+          ],
+          [
+            "调参入口",
+            "按字段设索引参数（M、efConstruction、nlist），按查询设搜索参数",
+            "默认 m 16、ef_construction 64、hnsw.ef_search 40；hnsw.iterative_scan、hnsw.max_scan_tuples"
+          ],
+          [
+            "GPU",
+            "可选 GPU_CAGRA、GPU_IVF 索引",
+            "无"
+          ],
+          [
+            "框架与 SDK",
+            "langchain-milvus、LlamaIndex、Haystack、Dify、n8n；SDK 覆盖 Python、Java、Go、Node.js、C#、C++、Rust",
+            "langchain-postgres（PGVector）；任意 ORM 或 Postgres 驱动"
+          ],
+          [
+            "托管服务",
+            "Zilliz Cloud，MilvusClient API 一致",
+            "Amazon RDS、Supabase、Neon、Crunchy Bridge"
+          ],
+          [
+            "以后迁移",
+            "VTS（Vector Transport Service）有 Postgres Vector 源端（pg_to_milvus）：向量和列直接拷贝，不用重新生成向量",
+            "关系表留在 Postgres，按主键关联"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "pgvector-fit",
+      "nav": "选 pgvector",
+      "h2": "pgvector 和 Milvus 哪个好？什么情况下该选 pgvector",
+      "paragraphs": [
+        "pgvector 的优势是复用已有 Postgres 的事务、JOIN 与运维体系。是否需要迁移，应按向量索引、过滤负载和读写扩展的实测结果判断；扩展路径也包括只读副本及 Citus、PgDog 等分片方案。"
+      ],
+      "bullets": [
+        "数据本来就在 Postgres 里，向量表一个主库装得下。",
+        "需要向量和关系行之间的 ACID 事务或 JOIN。",
+        "Agent 记忆或 checkpoint 这类要事务更新的数据；大语料检索交给 Milvus，两者并用。",
+        "已经在用 RDS、Supabase、Neon 等托管 Postgres，不想多运维一个服务。",
+        "团队以 SQL 为主，只想要一个连接串，不想引入新的客户端库。"
+      ]
+    },
+    {
+      "id": "adopters",
+      "nav": "客户",
+      "h2": "哪些 AI 公司和大型企业在生产环境用 Milvus？",
+      "paragraphs": [
+        "从 AI 原生公司到大型企业，都在生产环境运行 Milvus 或 Zilliz Cloud（托管 Milvus）。milvus.io 用户墙上有 Salesforce、Walmart、NVIDIA、eBay、IBM、Cisco、Roblox、Reddit，也有 Exa.ai、OpenEvidence、Read.ai、Notta.ai、Plaud、Filevine。公开案例中的结果："
+      ],
+      "bullets": [
+        "OpenEvidence：基于 Zilliz Cloud，检索延迟低于 10 ms，峰值 4,000 QPS。",
+        "Plaud：每个区域 100 亿+ 向量块，平均召回延迟低于 200 ms。",
+        "Exa：借助混合检索，神经搜索延迟从秒级降到 200 ms 以内。",
+        "Airtable：在 Kubernetes 上用 Milvus Operator 自建 Milvus，支撑语义检索。"
+      ]
+    }
+  ],
+  "code": null,
+  "stats": [
+    {
+      "value": "数百亿",
+      "label": "Milvus Distributed 支持的向量规模",
+      "source": "https://milvus.io/docs/zh/install-overview.md"
+    },
+    {
+      "value": "32,768",
+      "label": "Milvus 单个向量字段的最高维度",
+      "source": "https://milvus.io/docs/zh/limitations.md"
+    },
+    {
+      "value": "40K+",
+      "label": "milvus-io/milvus GitHub star",
+      "source": "https://github.com/milvus-io/milvus"
+    }
+  ],
+  "faqs": [
+    [
+      "Milvus 和 pgvector 谁更快？",
+      "图中仅展示当前已核对的 Milvus 与 Zilliz Cloud VectorDBBench 配置。这里没有同条件、同版本的对手结果，不能据此推断谁更快。使用相同数据集、过滤比例、召回目标和硬件重测后再比较。"
+    ],
+    [
+      "pgvector 支持多少条向量？",
+      "README 没有给条数上限，容量就是主库的容量：HNSW 图放进 maintenance_work_mem 才建得快，每个副本都是全量拷贝，超过一台机器要靠 Citus 或 PgDog 分片。Milvus Standalone 文档标称约 1 亿向量，Distributed 到数百亿。"
+    ],
+    [
+      "pgvector 支持混合检索吗？",
+      "支持：向量查询配合 Postgres 全文检索（tsvector），再在 SQL 或应用层用 RRF 合并两份结果。Milvus 的 BM25 函数在服务端运行，一次 hybrid_search 就能用 RRF 或加权 ranker 融合稠密和稀疏结果。"
+    ],
+    [
+      "pgvector 支持多少维度？",
+      "pgvector 的 vector 类型最多存 16,000 维，但 HNSW 和 IVFFlat 只能给 2,000 维以内的 vector 建索引；halfvec 可索引到 4,000 维，bit 到 64,000 维。Milvus 单个向量字段最高 32,768 维，可直接建索引。"
+    ],
+    [
+      "什么情况下该选 pgvector？",
+      "向量和需要事务更新、JOIN 的关系行放在一起，且表一台 Postgres 实例装得下时，选 pgvector；规模、过滤检索性能或租户数成为瓶颈时，选 Milvus。PGSQL 和 Milvus 也可以并存：业务数据留在 Postgres，向量检索交给 Milvus。"
+    ],
+    [
+      "什么时候该从 pgvector 迁移到 Milvus？",
+      "HNSW 建索引超出 maintenance_work_mem、读扩展只能靠全量副本、或租户数和过滤吞吐成为瓶颈时。迁移是拷贝：VTS 的 Postgres Vector 源端（pg_to_milvus）原样搬向量和列，不用重新生成向量；列映射成标量或 JSON 字段，建好索引后双写切流。"
+    ]
+  ],
+  "stories": [
+    {
+      "name": "Filevine",
+      "text": "在 Zilliz Cloud 上管理 300 亿向量，覆盖数百万份法律文档。",
+      "href": "https://zilliz.com/customers/filevine"
+    },
+    {
+      "name": "美团",
+      "text": "自建 Milvus 生产环境承载 100 亿+ 向量，单个 collection 超过 20 亿。",
+      "href": "https://zilliz.com/customers/meituan"
+    },
+    {
+      "name": "Read AI",
+      "text": "基于 Milvus 为数百万月活用户提供 20–50 ms 检索延迟，活跃租户达百万级。",
+      "href": "https://zilliz.com/customers/read-ai"
+    }
+  ],
+  "aiq": [
+    "how-does-a-vector-database-handle-scaling-up-to-millions-or-billions-of-vectors-and-what-architectural-features-enable-this-scalability",
+    "how-do-distributed-vector-databases-handle-sharding-and-replication",
+    "how-does-applying-boolean-filters-or-metadatabased-prefiltering-alongside-vector-similarity-search-influence-the-overall-query-performance",
+    "what-is-hnsw",
+    "how-do-you-choose-the-right-index-type-for-your-workload",
+    "what-is-hybrid-search-and-when-should-i-use-it",
+    "what-is-the-role-of-multitenancy-in-scalability-considerations-for-vector-databases-and-how-might-resource-isolation-be-handled-when-multiple-applications-share-the-same-infrastructure",
+    "what-tools-help-benchmark-vector-search-performance"
+  ],
+  "related": [
+    "milvus-vs-qdrant",
+    "milvus-vs-elasticsearch",
+    "distributed-vector-database",
+    "open-source-vector-database",
+    "hybrid-search"
+  ],
+  "managed": {
+    "h2": "不想自己运维集群？",
+    "body": "Zilliz Cloud 是 Milvus 原班团队提供的全托管服务，MilvusClient API 与本地一致。可以先用开源 Milvus 起步，再迁到托管服务，应用代码不用重写。"
+  },
+  "sources": [
+    "https://milvus.io",
+    "https://github.com/milvus-io/milvus",
+    "https://milvus.io/docs/architecture_overview.md",
+    "https://milvus.io/docs/install-overview.md",
+    "https://milvus.io/docs/scaleout.md",
+    "https://milvus.io/docs/tiered-storage-overview.md",
+    "https://milvus.io/docs/index-explained.md",
+    "https://milvus.io/docs/limitations.md",
+    "https://milvus.io/docs/schema.md",
+    "https://milvus.io/docs/filtered-search.md",
+    "https://milvus.io/docs/use-partition-key.md",
+    "https://milvus.io/docs/full-text-search.md",
+    "https://milvus.io/docs/multi-vector-search.md",
+    "https://milvus.io/docs/reranking.md",
+    "https://milvus.io/docs/multi_tenancy.md",
+    "https://github.com/pgvector/pgvector",
+    "https://github.com/pgvector/pgvector/blob/master/LICENSE",
+    "https://github.com/pgvector/pgvector/issues/54",
+    "https://www.postgresql.org/docs/current/high-availability.html",
+    "https://zilliz.com/vdbbench-leaderboard",
+    "https://github.com/zilliztech/VectorDBBench",
+    "https://github.com/zilliztech/VectorDBBench/blob/main/vectordb_bench/results/leaderboard_v2.json",
+    "https://github.com/zilliztech/VectorDBBench/blob/main/vectordb_bench/results/leaderboard.json",
+    "https://github.com/zilliztech/VectorDBBench/blob/main/vectordb_bench/results/PgVector/result_20230727_standard_pgvector.json",
+    "https://github.com/zilliztech/VectorDBBench/tree/main/vectordb_bench/backend/clients/pgvector",
+    "https://zilliz.com/customers/filevine",
+    "https://zilliz.com/customers/openevidence",
+    "https://zilliz.com/customers/exa",
+    "https://zilliz.com/customers/airtable",
+    "https://zilliz.com/customers/plaud",
+    "https://zilliz.com/customers/read-ai",
+    "https://zilliz.com/customers/meituan",
+    "https://milvus.io/docs/zh/quickstart.md",
+    "https://cloud.zilliz.com.cn/signup",
+    "https://github.com/pgvector/pgvector/blob/master/CHANGELOG.md",
+    "https://docs.langchain.com/oss/python/integrations/vectorstores/pgvector",
+    "https://docs.langchain.com/oss/python/integrations/vectorstores/milvus",
+    "https://milvus.io/docs/integrations_overview.md",
+    "https://milvus.io/docs/install_standalone-docker.md",
+    "https://milvus.io/docs/gpu_index.md",
+    "https://github.com/zilliztech/vts",
+    "https://github.com/zilliztech/VectorDBBench/tree/main/vectordb_bench/backend/clients",
+    "https://lfaidata.foundation/projects/"
+  ],
+  "notes": [
+    "pgvector facts verified 2026-10-21 from the README on github.com/pgvector/pgvector (see English page notes); hosted providers from issue #54; read-only replicas / single primary from postgresql.org high-availability docs. Milvus 32,768 dims from docs/limitations.md (the /docs/zh/limitations.md stat source is the Chinese variant of the same page).",
+    "Customer facts reused from the Qdrant page (fetched 2026-10-21 from zilliz.com/customers). Meituan is not on the milvus.io logo wall, so it appears only as a story.",
+    "Wanted, unverified: pgvector version that introduced HNSW; pgvectorscale / pgvecto.rs not covered.",
+    "2023 v1 competitor row removed from charts (not same-condition); mentioned in prose only.",
+    "SERP pass 2026-10-21: studied 12 EN / 7 ZH results (same list as the English page; Zhihu 和 CSDN 140876718 返回 403/521，只读到标题). 中文结果共同点：运维复杂度星级（苏三 '一行 SQL ★☆☆☆☆ vs ★★★★☆'、'8GB+ 内存门槛'，这里用 Milvus Lite / Standalone 单容器事实回应）、规模阈值（'500万'、'100万–1亿'，按规范不写数字，只引 Milvus 文档的 Lite/Standalone/Distributed 档位）、'先用 pgvector 再迁 Milvus'、'PGVector 支持多少条向量'、'Milvus 一定比 PGVector 好吗'、混合检索一条 SQL。Gaps closed: 部署运维表、迁移（VTS pg_to_milvus）、README 过滤召回例子、HNSW 默认参数、框架与 star、并用模式。Dropped: 'pgvector 能扩展到十亿级向量吗' FAQ（改为 '支持多少条向量'）、Zilliz Cloud FAQ。新增关键词 'pgvector 迁移 Milvus'、'运维复杂度'。Not used: 各家价格（RDS、Supabase、Zilliz）、自测数字、'百万级 30 分钟内' 迁移耗时。",
+    "Correct Standalone dependency claim; migration reuses embeddings but is not a query/API drop-in.",
+    "Remove stale or unlike-for-like competitor benchmark numbers from prose and FAQs."
+  ],
+  "lang": "zh",
+  "reviewedOn": "2026-10-21"
+}

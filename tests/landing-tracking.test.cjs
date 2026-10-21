@@ -55,7 +55,7 @@ function render(page, clipboard = async () => {}, overrides = {}) {
   return { all, click, events: window.dataLayer };
 }
 
-test('all 16 actual landing pages preserve CTA placement and target, with one event per click', () => {
+test('all actual landing pages preserve CTA placement and target, with one event per click', () => {
   for (const lang of ['en', 'zh']) for (const page of readPages(lang)) {
     const r = render(page);
     const ctas = r.all.filter(node => node.type === 'a' && ['hero', 'benchmark', 'final'].includes(node.props['data-cta-location']));

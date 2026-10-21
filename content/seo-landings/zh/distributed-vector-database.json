@@ -5,7 +5,7 @@
   "nav": "分布式架构",
   "path": "/zh/solutions/distributed-vector-database",
   "title": "Milvus 架构：存算分离的分布式向量数据库",
-  "description": "Milvus 架构详解：存算分离的分布式向量数据库，计算节点无状态、对象存储做唯一数据源，配合 RaBitQ 量化、DiskANN 磁盘索引和冷热分层，支撑十亿级乃至百亿级向量检索。",
+  "description": "Milvus 架构详解：存算分离的分布式向量数据库，计算节点无状态、对象存储做唯一数据源；讲清写入与查询链路、一致性级别，以及 RaBitQ、DiskANN、冷热分层如何支撑百亿级向量检索。",
   "keywords": {
     "primary": "Milvus 架构",
     "secondary": [
@@ -13,14 +13,19 @@
       "Milvus 架构详解",
       "向量数据库架构",
       "存算分离 向量数据库",
+      "Milvus 写入流程",
+      "Milvus 查询流程",
+      "Growing Segment Sealed Segment",
+      "Milvus 一致性级别",
+      "流批分离",
+      "读写分离",
       "十亿级向量检索",
       "Milvus 分布式部署",
+      "Milvus 单机版 分布式 区别",
       "Milvus 集群扩容",
       "向量数据库 分片 副本",
-      "读写分离",
       "向量量化",
       "RaBitQ 量化",
-      "DiskANN 磁盘索引",
       "DiskANN 和 HNSW 区别",
       "冷热分层",
       "向量数据库 内存占用"
@@ -28,28 +33,27 @@
     "questions": [
       "什么是分布式向量数据库？",
       "向量数据库为什么要做存算分离？",
+      "Milvus 的写入流程和查询流程是怎样的？",
       "Milvus 的分片和分区有什么区别？",
       "十亿级向量检索需要多少内存？",
-      "RaBitQ 和 PQ 有什么区别？",
       "DiskANN 和 HNSW 有什么区别，怎么选？",
-      "Milvus 还需要 Kafka 或 Pulsar 吗？"
+      "Milvus 有哪些一致性级别？"
     ]
   },
   "research": [
-    "https://cloud.tencent.cn/document/product/1709/95010",
-    "https://blog.csdn.net/qinglingye/article/details/132832493",
-    "https://www.cnblogs.com/xfuture/p/18308851",
-    "https://segmentfault.com/a/1190000043566155",
-    "https://blog.csdn.net/m0_37586991/article/details/157509940",
-    "https://github.com/datawhalechina/easy-vecdb",
-    "https://www.tmtpost.com/7969744.html",
-    "https://cloud.baidu.com/article/1359314",
-    "https://developer.aliyun.com/article/1589770",
-    "https://cloud.tencent.com/developer/article/2338267",
-    "https://juejin.cn/post/7646978976925892649"
+    "https://milvus.io/docs/zh/architecture_overview.md",
+    "https://github.com/datawhalechina/easy-vecdb/blob/main/docs/Milvus/chapter6/Milvus%E5%BA%95%E5%B1%82%E6%9E%B6%E6%9E%84%E8%AF%A6%E8%A7%A3.md",
+    "https://juejin.cn/post/7671219839776653322",
+    "https://help.aliyun.com/zh/milvus/getting-started/quickly-create-a-milvus-instance",
+    "https://zhuanlan.zhihu.com/p/476025527",
+    "https://blog.csdn.net/qq_15821487/article/details/125078885",
+    "https://bossagyu.com/en/blog/052-milvus-architecture/",
+    "https://markaicode.com/architecture/milvus-vector-database-architecture/",
+    "https://adhdecode.com/ai-infrastructure/vector-databases-and-embeddings/milvus-architecture-deep-dive/",
+    "https://www.technolynx.com/post/milvus-docker-standalone-vs-distributed-deployment-and-when-each-fits/"
   ],
   "h1": "Milvus 架构：基于存算分离的分布式向量数据库",
-  "intro": "Milvus 架构的核心是存算分离：proxy 和各类 worker 都是无状态的，所有 segment 和索引以对象存储为准。作为分布式向量数据库，它把向量数据、写入和检索分散到多个节点上，各自按需扩展；再配合量化和磁盘索引，可扩展到数百亿向量。",
+  "intro": "Milvus 架构的核心是存算分离：proxy 和各类 worker 都是无状态的，所有 segment 和索引以对象存储为准。作为分布式向量数据库，它把向量数据、写入和检索分散到多个节点上，各自按需扩展。本文讲清分层、写入与查询流程，以及把规模推到数百亿向量的量化和磁盘索引。",
   "primary_cta": {
     "label": "部署 Milvus Distributed",
     "href": "https://milvus.io/docs/zh/install-overview.md"
@@ -189,11 +193,64 @@
       ]
     },
     {
+      "id": "data-flow",
+      "nav": "读写链路",
+      "h2": "Milvus 的写入流程和查询流程是怎样的？",
+      "paragraphs": [
+        "写入路径与检索路径在 segment 处衔接。新数据先进入 WAL 和 growing segment，何时可被某次查询看到取决于一致性级别。segment 封存并落到对象存储后，由 data 节点建索引、query 节点加载；compaction 在后台合并数据并处理删除。"
+      ],
+      "table": {
+        "caption": "Milvus 写入流程：streaming node、data node、query node 各自的职责（按架构概述文档）",
+        "heads": [
+          "阶段",
+          "发生了什么",
+          "组件"
+        ],
+        "rows": [
+          [
+            "路由",
+            "proxy 校验请求，按主键哈希到 shard（vchannel）",
+            "Proxy"
+          ],
+          [
+            "写日志",
+            "分配时间戳，追加到 WAL，写入即确认",
+            "Streaming node → WAL 存储"
+          ],
+          [
+            "Growing segment",
+            "驻留内存；可见性由一致性级别决定",
+            "Streaming node"
+          ],
+          [
+            "封存与落盘",
+            "达到阈值后变为不可变的 sealed segment，写入对象存储",
+            "Streaming node → 对象存储"
+          ],
+          [
+            "建索引与 compaction",
+            "构建索引；合并小 segment；落实删除",
+            "Data node"
+          ],
+          [
+            "加载",
+            "加载 sealed segment 和索引，释放对应的 growing 数据",
+            "Query node"
+          ]
+        ]
+      },
+      "bullets": [
+        "查询流程：proxy 把请求发给每个 shard 的 streaming node，后者检索自己的 growing segment，并把 sealed segment 的子任务分发给 query node。",
+        "各节点返回本地 top-k，先按 shard 合并，再在 proxy 跨 shard 合并。",
+        "一致性级别按请求指定：Strong、Bounded（默认）、Session、Eventually。"
+      ]
+    },
+    {
       "id": "scaling",
       "nav": "弹性扩展",
       "h2": "Milvus 集群扩容：读、写、建索引怎么分别扩？",
       "paragraphs": [
-        "写入路径是 proxy → streaming node → WAL，写完即可检索。sealed segment 进入对象存储，由 data node 建索引、query node 加载。每一步都有独立的扩容手段。"
+        "写入经 proxy、streaming node 和 WAL 接收；growing 与 sealed 数据按查询的一致性级别共同提供检索。封存数据在对象存储中持久化，由 data 节点建索引、query 节点加载，各阶段可分别扩缩。"
       ],
       "table": {
         "caption": "向量数据库的分片、副本与 resource group：按瓶颈选扩容手段",
@@ -326,7 +383,7 @@
       "nav": "规模",
       "h2": "Milvus 能扩展到多大？",
       "paragraphs": [
-        "Milvus 分布式部署（Milvus Distributed）和单机版 Standalone 用的是同一套组件，差别只在是否把它们分散到多台机器。单个 collection 的实体数不设上限，容量随 segment、shard 和节点增长。下面的默认值来自 Milvus 文档和配置。"
+        "Milvus 单机版（Standalone）和 Milvus 分布式部署（Distributed）的区别只在于是否把同一套组件分散到多台机器。单个 collection 的实体数不设上限，容量随 segment、shard 和节点增长。下面的默认值来自 Milvus 文档和配置。"
       ],
       "table": {
         "caption": "Milvus 规模：文档中的默认值与上限",
@@ -390,6 +447,10 @@
       "持久数据放在对象存储里，计算节点只做无状态的缓存和执行。加 query、streaming 或 data node 都不用搬数据，节点坏了直接替换，不用修复。"
     ],
     [
+      "Milvus 的写入流程和查询流程是怎样的？",
+      "写入：proxy → streaming node → WAL，随后进入 growing segment 即可检索；封存后写入对象存储，data node 建索引，query node 加载。查询：proxy → streaming node（增量数据）和 query node（sealed segment）→ 合并 top-k。"
+    ],
+    [
       "Milvus 的分片和分区有什么区别？",
       "shard 按主键哈希切分写入通道（每个 collection 最多 16 个），各由一个 streaming node 持有，决定写入并行度；partition 是按业务含义划分的数据子集（每个 collection 最多 1,024 个），查询时指定 partition 可缩小扫描范围。partition key 则让某个字段自动映射到 partition，一个 collection 承载百万级租户。"
     ],
@@ -398,16 +459,12 @@
       "float32 原始向量每条占 维度 × 4 字节，另加索引开销。SQ8、PQ、RaBitQ 等量化，加上 DiskANN 和分层存储，都能减少必须常驻内存的部分；可用 milvus.io/tools/sizing 估算。"
     ],
     [
-      "RaBitQ 和 PQ 有什么区别？",
-      "RaBitQ 每维只用 1 bit，并有理论误差界，IVF_RABITQ 压缩比 1:32。PQ 把向量切成子向量、存码本编号，压缩 4–32 倍。两者都能用 refine 重排补召回。"
-    ],
-    [
       "DiskANN 和 HNSW 有什么区别，怎么选？",
       "原始向量放得进内存、延迟最敏感时用 HNSW。数据远超内存时用 DiskANN：图和原始向量在 NVMe SSD 上，内存里只放 PQ 码。"
     ],
     [
-      "Milvus 还需要 Kafka 或 Pulsar 吗？",
-      "不需要。从 Milvus 2.6 起，Woodpecker 预写日志直接写对象存储；Kafka 和 Pulsar 仍然兼容。"
+      "Milvus 有哪些一致性级别？",
+      "四种，按 search 或 query 请求指定：Strong 读最新数据；Bounded（默认）允许短暂的陈旧窗口；Session 保证同一客户端读到自己的写入；Eventually 以新鲜度换最快的读。"
     ]
   ],
   "aiq": [
@@ -460,7 +517,11 @@
     "https://zilliz.com/customers/kling-ai",
     "https://zilliz.com/customers/filevine",
     "https://github.com/milvus-io/milvus",
-    "https://github.com/milvus-io/milvus-docs/tree/v3.0.x"
+    "https://github.com/milvus-io/milvus-docs/tree/v3.0.x",
+    "https://milvus.io/docs/consistency.md",
+    "https://milvus.io/docs/glossary.md",
+    "https://milvus.io/docs/zh/architecture_overview.md",
+    "https://milvus.io/docs/install-overview.md"
   ],
   "notes": [
     "v3.1 rewrite 2026-10-21: headline = storage-compute separation; quantization/disk-index breadth; no code block, no limitations section.",
@@ -468,10 +529,11 @@
     "Released-only: no HNSW/graph RaBitQ variant in released docs (only IVF_RABITQ). IVF_RABITQ, AISAQ and Tiered Storage carry a 'beta' label in docs front-matter; copy does not say beta. Decide whether to show it.",
     "milvus.io doc ids confirmed from milvus-docs v3.0.x front-matter (gpu-index-overview.md, gcs.md, scaleout.md, multi_tenancy.md, mmap.md); milvus.io pages themselves not opened this session.",
     "Customer facts from zilliz.com pages fetched this session: Meituan (10B+, 100+ use cases, 2B+ collection, DiskANN, self-run), Kling AI (10B+ largest cluster, 400+ query nodes, 10,000+ QPS, SQ8/DiskANN, storage and compute scale separately), Filevine (30B+ vectors on Zilliz Cloud).",
-    "中文 SERP 参考：https://cloud.tencent.cn/document/product/1709/95010, https://blog.csdn.net/qinglingye/article/details/132832493, https://www.cnblogs.com/xfuture/p/18308851, https://segmentfault.com/a/1190000043566155, https://blog.csdn.net/m0_37586991/article/details/157509940, https://github.com/datawhalechina/easy-vecdb, https://www.tmtpost.com/7969744.html, https://cloud.baidu.com/article/1359314, https://developer.aliyun.com/article/1589770, https://cloud.tencent.com/developer/article/2338267, https://juejin.cn/post/7646978976925892649",
     "中文版 /docs/zh/install-overview.md 链接未单独核实；客户案例页为英文。",
     "wanted, unverified: VectorDBBench multi-node 100M+ results; documented max nodes per cluster; HNSW_RABITQ if/when released.",
-    "v3.1 关键词优化（2026-10-21）：主词改为 'Milvus 架构'（360/Sogou SERP：'分布式向量数据库' 被分词成泛'分布式'结果；'Milvus 架构详解' 是高频标题句式），'分布式向量数据库' 保留在 title/h1/h2。新增 '分片和分区的区别' FAQ（相关搜索原句；事实来自 scaleout/multi_tenancy 文档：16 shard、1,024 partition、百万租户）。"
+    "v3.1 关键词优化（2026-10-21）：主词改为 'Milvus 架构'（360/Sogou SERP：'分布式向量数据库' 被分词成泛'分布式'结果；'Milvus 架构详解' 是高频标题句式），'分布式向量数据库' 保留在 title/h1/h2。新增 '分片和分区的区别' FAQ（相关搜索原句；事实来自 scaleout/multi_tenancy 文档：16 shard、1,024 partition、百万租户）。",
+    "SERP pass 2026-10-21: studied 12 EN / 6 ZH results（中文：milvus.io/docs/zh 架构概述、datawhale easy-vecdb 底层架构详解（写入/查询流程、TSO、checkpoint）、掘金 7671219839776653322 内部机制（segment/binlog/剪枝/一致性）、阿里云 Milvus 版组件与扩容建议、知乎 476025527、CSDN 125078885（后两者仅标题，正文被拦截）；英文见 EN 文件）. Gaps closed: 新增'写入流程 / 查询流程'一节（growing / sealed segment、flush、compaction、流批分离）和'一致性级别'FAQ；关键词补'Milvus 写入流程'、'Milvus 查询流程'、'Milvus 单机版 分布式 区别'. Dropped: RaBitQ 与 PQ 区别 FAQ（量化表已覆盖）。未采用：最小高可用拓扑节点数、segment 剪枝 / bitset 过滤细节（仅单一来源）。",
+    "Preserve architecture/consistency boundaries; WAL acknowledgment is not universal immediate query visibility."
   ],
   "lang": "zh",
   "reviewedOn": "2026-10-21"

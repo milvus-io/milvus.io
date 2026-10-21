@@ -1,0 +1,348 @@
+{
+  "site": "milvus",
+  "kind": "seo",
+  "slug": "vector-database-for-rag",
+  "nav": "Vector database for RAG",
+  "path": "/solutions/vector-database-for-rag",
+  "title": "Vector Database for RAG | Milvus, Open Source",
+  "description": "Milvus is an open-source vector database for RAG (retrieval-augmented generation): BM25 + dense hybrid search, regex filters, reranking, multi-tenancy, disk indexes.",
+  "keywords": {
+    "primary": "vector database for RAG",
+    "secondary": [
+      "best vector database for RAG",
+      "RAG vector store",
+      "vector store for RAG",
+      "RAG database",
+      "retrieval augmented generation database",
+      "open source vector database for RAG",
+      "hybrid search for RAG",
+      "hybrid search RAG BM25",
+      "RAG reranking",
+      "vector database for RAG LangChain",
+      "local vector database for RAG",
+      "RAG vector database example",
+      "multi-tenant RAG"
+    ],
+    "questions": [
+      "What does a vector database for RAG have to do well?",
+      "What is the best vector database for RAG?",
+      "Do I need Elasticsearch for keyword matching in RAG?",
+      "Can I rerank RAG results with my own model?",
+      "Can I run a vector database for RAG locally?",
+      "Does Milvus work with LangChain and LlamaIndex?"
+    ]
+  },
+  "h1": "The vector database for RAG: retrieval that holds up in production",
+  "sub": "Milvus is an open-source vector database for RAG: keyword, grep-style and semantic search, tenant filters, in-database reranking and disk indexes in one Apache-2.0 package, from a laptop to billions of chunks.",
+  "primary_cta": {
+    "label": "Build RAG with the Milvus Quickstart",
+    "href": "https://milvus.io/docs/quickstart.md"
+  },
+  "secondary_cta": {
+    "label": "Prefer managed? Try Zilliz Cloud free",
+    "href": "https://cloud.zilliz.com/signup"
+  },
+  "proof": [
+    "40K+ GitHub stars, Apache-2.0 open source",
+    "BM25 full-text search built in",
+    "Meituan: 10B+ vectors, RAG to agent memory",
+    "Read AI: sub 20-50 ms retrieval"
+  ],
+  "logos": [
+    "Read.ai",
+    "OpenEvidence",
+    "Filevine",
+    "Notta.ai",
+    "Airtable",
+    "Salesforce",
+    "NVIDIA",
+    "IBM"
+  ],
+  "diagram": {
+    "top": {
+      "title": "User question",
+      "sub": "text + tenant / metadata context"
+    },
+    "branches": [
+      {
+        "title": "Dense ANN search",
+        "sub": "meaning: paraphrases, synonyms"
+      },
+      {
+        "title": "BM25 + grep filters",
+        "sub": "exact terms, regex: error codes, SKUs"
+      },
+      {
+        "title": "Metadata + tenant filter",
+        "sub": "partition key, ACL, date, source"
+      }
+    ],
+    "bottom": {
+      "title": "Fuse + rerank chain → top-k chunks",
+      "sub": "RRF / weighted, model or XGBoost rerank → LLM prompt"
+    },
+    "caption": "Milvus covers the retrieval half of a RAG pipeline."
+  },
+  "benefits": [
+    {
+      "title": "Keyword plus meaning",
+      "body": "Built-in BM25 full-text search fuses with dense vectors in one hybrid search, so one vector store for RAG retrieves exact IDs and paraphrased questions alike."
+    },
+    {
+      "title": "Multi-tenant RAG retrieval",
+      "body": "Filter expressions run inside vector search; a partition key lets many tenants share one collection, millions per the docs."
+    },
+    {
+      "title": "Answers stay current",
+      "body": "Upsert replaces chunks by primary key, deletes remove them, and per-request consistency levels decide how fresh each read must be."
+    },
+    {
+      "title": "Large knowledge bases, smaller bill",
+      "body": "Disk-based indexes, mmap and tiered storage keep most of a large knowledge base on SSD or object storage instead of RAM."
+    }
+  ],
+  "feature_blocks": [
+    {
+      "title": "Hybrid search for RAG, plus grep",
+      "body": "RAG questions mix meaning with exact strings: error codes, SKUs, clause numbers. Hybrid search for RAG runs dense and BM25 retrieval in one hybrid_search request, and pattern filters narrow both routes.",
+      "bullets": [
+        "Fuse dense and BM25 results with RRF or weighted rankers",
+        "Regex filters (=~, !~, RE2) on VARCHAR, JSON strings and arrays; LIKE accelerated by NGRAM indexes",
+        "TEXT_MATCH, PHRASE_MATCH and TEXT_MATCH_FUZZY for term, phrase and typo-tolerant matching"
+      ]
+    },
+    {
+      "title": "RAG reranking pipelines with Function Chain",
+      "body": "Since Milvus 3.0, a Function Chain runs an ordered rerank pipeline inside the search request, per segment, per query node and after the global merge, with no client-side requery round trip.",
+      "bullets": [
+        "Blend vector score with freshness (decay) and popularity (weighted combine)",
+        "Call a model reranker such as Cohere, Voyage AI, vLLM or TEI",
+        "Sort and trim candidates; works in search and hybrid search"
+      ]
+    },
+    {
+      "title": "Learning to rerank",
+      "body": "Train an XGBoost ranking model offline on relevance or click labels, register it with Milvus, and let a Function Chain score recalled chunks.",
+      "bullets": [
+        "Features come from scalar fields: recency, source authority, usage counts",
+        "Native XGBoost scoring runs on query nodes, next to the data",
+        "Rule-based options too: boost ranker and decay rankers"
+      ]
+    },
+    {
+      "title": "Disk indexes to cut cost",
+      "body": "Not every chunk needs to live in memory; pick the footprint for your latency budget.",
+      "bullets": [
+        "DiskANN keeps the graph and raw vectors on SSD; AISAQ moves nearly everything to SSD",
+        "mmap and tiered storage load data from disk or object storage on demand",
+        "Quantized indexes: IVF_RABITQ (up to 1:32 compression), IVF_SQ8, IVF_PQ"
+      ]
+    }
+  ],
+  "code": {
+    "h2": "RAG vector database example: tenant-scoped retrieval",
+    "intro": "Store chunks with a tenant field, then retrieve the top matches for one customer and pass them to your LLM.",
+    "lang": "python",
+    "code": "# pip install -U \"pymilvus[milvus-lite]\"\nfrom pymilvus import MilvusClient\n\nclient = MilvusClient(\"rag_demo.db\")  # same code against http://localhost:19530 or Zilliz Cloud\nclient.create_collection(collection_name=\"chunks\", dimension=768)\n\n# embed() is your embedding model (768 dimensions here)\nclient.insert(collection_name=\"chunks\", data=[\n    {\"id\": 1, \"vector\": embed(\"Rotate API keys under Settings > Security.\"), \"tenant\": \"acme\",\n     \"text\": \"Rotate API keys under Settings > Security.\"},\n])\n\nhits = client.search(\n    collection_name=\"chunks\",\n    data=[embed(\"How do I rotate API keys?\")],\n    filter='tenant == \"acme\"',          # retrieve only this customer's documents\n    limit=5,\n    output_fields=[\"text\"],\n)\ncontext = \"\\n\\n\".join(h[\"entity\"][\"text\"] for h in hits[0])  # put into your LLM prompt",
+    "note": "embed() is your embedding model. For BM25 + dense hybrid retrieval and regex filters, see the hybrid search and pattern matching guides."
+  },
+  "compare": {
+    "h2": "Retrieval-augmented generation database needs, mapped to Milvus",
+    "caption": "RAG database requirements mapped to Milvus features (milvus.io/docs)",
+    "heads": [
+      "RAG requirement",
+      "Milvus feature"
+    ],
+    "rows": [
+      [
+        "Exact codes + semantic recall (hybrid search)",
+        "BM25 + dense hybrid_search, regex / LIKE / TEXT_MATCH filters"
+      ],
+      [
+        "Scoped, multi-tenant retrieval",
+        "Filter expressions, partition key"
+      ],
+      [
+        "Better top-k ordering (RAG reranking)",
+        "RRF / weighted rankers, model rankers, Function Chain, XGBoost scoring"
+      ],
+      [
+        "Fresh knowledge",
+        "Upsert, delete, consistency levels"
+      ],
+      [
+        "Growth at sane cost",
+        "Lite → Standalone → Distributed; DiskANN, mmap, tiered storage"
+      ]
+    ],
+    "note": null
+  },
+  "stats": [
+    {
+      "value": "10B+",
+      "label": "vectors on self-run open-source Milvus at Meituan, across 100+ use cases",
+      "source": "https://zilliz.com/customers/meituan"
+    },
+    {
+      "value": "Sub 20-50 ms",
+      "label": "retrieval latency at Read AI for millions of monthly users",
+      "source": "https://zilliz.com/customers/read-ai"
+    }
+  ],
+  "faqs": [
+    [
+      "What is the best vector database for RAG?",
+      "One that covers retrieval end to end: keyword plus semantic search, tenant filters, reranking, storage that fits the corpus. Milvus ships all four, open source, one API from Lite to Distributed."
+    ],
+    [
+      "Do I need Elasticsearch for keyword matching in RAG?",
+      "Not for retrieval. Milvus runs BM25 natively, adds regex, LIKE and TEXT_MATCH filters, and hybrid_search fuses keyword and dense results in one request."
+    ],
+    [
+      "Can I rerank RAG results with my own model?",
+      "Yes. In Milvus 3.0+, a Function Chain can score candidates with your XGBoost model over scalar features, or call a hosted reranker, inside the search request."
+    ],
+    [
+      "Can I run a vector database for RAG locally? Does Milvus work with LangChain and LlamaIndex?",
+      "Yes to both. pip install Milvus Lite for a local vector database for RAG, then use the official LangChain, LlamaIndex, Haystack or Dify integrations; the same code later targets a cluster or Zilliz Cloud."
+    ]
+  ],
+  "final": {
+    "h2": "Put a production-grade RAG vector store behind your LLM",
+    "body": "Start with Milvus Lite in a notebook, plug it into LangChain or LlamaIndex, then add hybrid search, grep filters, rerank chains and disk indexes as your corpus grows."
+  },
+  "sources": [
+    "https://milvus.io/docs/full-text-search.md",
+    "https://milvus.io/docs/multi-vector-search.md",
+    "https://milvus.io/docs/filtered-search.md",
+    "https://milvus.io/docs/multi_tenancy.md",
+    "https://milvus.io/docs/use-partition-key.md",
+    "https://milvus.io/docs/rerankers-overview.md",
+    "https://milvus.io/docs/model-ranker-overview.md",
+    "https://milvus.io/docs/upsert-entities.md",
+    "https://milvus.io/docs/tune_consistency.md",
+    "https://milvus.io/docs/integrate_with_langchain.md",
+    "https://milvus.io/docs/integrate_with_llamaindex.md",
+    "https://milvus.io/docs/integrate_with_haystack.md",
+    "https://milvus.io/docs/dify_with_milvus.md",
+    "https://milvus.io/docs/quickstart.md",
+    "https://zilliz.com/customers/meituan",
+    "https://zilliz.com/customers/read-ai",
+    "https://github.com/milvus-io/milvus",
+    "https://milvus.io/docs/pattern-matching.md",
+    "https://milvus.io/docs/ngram.md",
+    "https://milvus.io/docs/keyword-match.md",
+    "https://milvus.io/docs/phrase-match.md",
+    "https://milvus.io/docs/rrf-ranker.md",
+    "https://milvus.io/docs/weighted-ranker.md",
+    "https://milvus.io/docs/boost-ranker.md",
+    "https://milvus.io/docs/decay-ranker-overview.md",
+    "https://milvus.io/docs/release_notes.md",
+    "https://github.com/milvus-io/milvus/pull/47919",
+    "https://github.com/milvus-io/milvus/pull/50786",
+    "https://github.com/milvus-io/milvus/pull/51317",
+    "https://github.com/milvus-io/milvus/pull/53541",
+    "https://github.com/milvus-io/milvus/blob/3.0/docs/design-docs/design_docs/20260624-function-chain-api.md",
+    "https://github.com/milvus-io/milvus/blob/3.0/docs/design-docs/design_docs/20260708-xgboost-function-chain.md",
+    "https://github.com/milvus-io/pymilvus/blob/v3.0.2/pymilvus/function_chain/fn.py",
+    "https://milvus.io/docs/diskann.md",
+    "https://milvus.io/docs/aisaq.md",
+    "https://milvus.io/docs/mmap.md",
+    "https://milvus.io/docs/tiered-storage-overview.md",
+    "https://milvus.io/docs/ivf-rabitq.md",
+    "https://milvus.io/docs/ivf-sq8.md",
+    "https://milvus.io/docs/ivf-pq.md"
+  ],
+  "notes": [
+    "Meituan (10B+ vectors, 100+ use cases, 2B+ single collection, self-run open-source Milvus, quote 'from RAG to agent memory') and Read AI (sub 20-50 ms, millions of monthly users) re-checked on zilliz.com customer pages 2026-10-21. Read AI page does not say RAG explicitly; copy says 'retrieval'.",
+    "Snippet is quick-setup MilvusClient on Milvus Lite with a dynamic 'tenant' field filter; partition key is described in copy, not shown, to keep the snippet short. Not executed end to end.",
+    "Model ranker provider list trimmed to four of the providers named in model-ranker-overview.",
+    "Partition key 'millions of tenants' is the docs' wording; partition-key isolation is HNSW-only per use-partition-key docs.",
+    "Read AI story names other vector databases as rejected alternatives; omitted on purpose.",
+    "Function Chain: released in Milvus 3.0.0 (release notes 'Function Chain reranking'; PRs #47919, #50786), L1 stage in 3.0.1 (#52745), Hybrid Search support in 3.0.3 (#53541), dynamic fields in 3.0.3 (#54011). PyMilvus API FunctionChain / FunctionChainStage / function_chain.fn (decay, num_combine, round_decimal, rerank_model, xgboost) ships in pymilvus 3.0.1+. It is a rerank/scoring pipeline, NOT an embedding pipeline. DOCS MISSING: milvus-docs v3.0.x has no user guide page for Function Chain (only release notes + roadmap) - confirm a doc page exists before launch, or link release notes.",
+    "Learning to rank: released as the native `xgboost` Function Chain expression (milvus #51317 in v3.0.0; design doc 20260708-xgboost-function-chain.md; issue #51192). Scope: L0 rerank only (per segment on QueryNode), UBJ-format XGBoost models registered as a FileResource, features = scalar columns in argument order, output raw|default. No training inside Milvus; no L2 support yet. Not documented on milvus.io (docs missing - confirm before launch). Copy says 'learning-to-rank' because the design doc frames it that way; we do not claim a generic LTR framework.",
+    "Grep: regex =~ / !~ (RE2) is labelled 'Milvus 3.0.x' in pattern-matching docs, targets VARCHAR, JSON string paths and ARRAY elements; NGRAM accelerates LIKE and eligible regex filters; TEXT_MATCH_FUZZY is 'Milvus 3.0.0+' in keyword-match docs. FMINDEX intentionally not mentioned.",
+    "Weighted RRF (per-request weights) shipped in 3.0.1 (#52926); copy just says RRF / weighted.",
+    "Docs label AISAQ (Milvus 2.6.4+), Tiered Storage (2.6.4+) and Boost Ranker (2.6.2+) as beta. Copy does not say beta; decide before launch. Memory facts used only as documented: DiskANN keeps PQ codes in RAM and raw vectors + graph on SSD; AISAQ keeps all index data on SSD; IVF_RABITQ docs state a 1-to-32 compression ratio; SQ8 = 8-bit ints instead of 32-bit floats.",
+    "Code snippet kept (approved tenant-scoped MilvusClient example); hybrid_search + regex example not added because a runnable BM25 schema makes it ~30 lines.",
+    "Keyword pass 2026-10-21: keywords.primary/secondary/questions rebuilt from Google/Bing/Baidu autocomplete (WebSearch budget exhausted in session). research: https://suggestqueries.google.com (autocomplete, hl=en / zh-CN); https://api.bing.com/osjson.aspx (autocomplete, en-US / zh-CN); https://www.baidu.com/sugrec (autocomplete). \"Do I have to run it myself?\" and \"Will it scale without a huge memory bill?\" FAQs dropped (facts remain in benefits, disk-index block and stats); benefits_h2 is a question-style h2."
+  ],
+  "layout": "pillar",
+  "aiq": [
+    "what-is-rag-retrievalaugmented-generation-in-nlp",
+    "what-is-the-optimal-chunk-size-for-rag-applications",
+    "what-factors-should-be-considered-when-selecting-an-embedding-model-for-a-rag-pipeline-such-as-the-models-domain-training-data-embedding-dimensionality-and-semantic-accuracy",
+    "what-is-vector-reranking-and-when-should-you-apply-it",
+    "reranking-model-catalog",
+    "how-can-we-measure-the-accuracy-of-the-retrieval-component-in-a-rag-system-for-example-using-metrics-like-precisionk-and-recallk-on-the-documents-retrieved",
+    "how-does-milvus-enable-graph-rag-for-multihop-agent-reasoning",
+    "llamaindex-with-milvus"
+  ],
+  "related": [
+    "hybrid-search",
+    "database-for-ai-agents",
+    "distributed-vector-database",
+    "search-on-the-lake"
+  ],
+  "sem_seed_for_zilliz": {
+    "ad_groups": [
+      {
+        "name": "Vector database for RAG",
+        "keywords": [
+          "vector database for rag",
+          "\"vector database for rag\"",
+          "[vector database for rag]",
+          "\"best vector database for rag\"",
+          "\"rag vector database\"",
+          "\"open source vector database for rag\""
+        ]
+      },
+      {
+        "name": "RAG vector store",
+        "keywords": [
+          "\"rag vector store\"",
+          "[rag vector store]",
+          "\"vector store for rag\"",
+          "\"rag database\"",
+          "[rag database]",
+          "\"database for rag\""
+        ]
+      },
+      {
+        "name": "Retrieval augmented generation database",
+        "keywords": [
+          "\"retrieval augmented generation database\"",
+          "[retrieval augmented generation database]",
+          "\"retrieval augmented generation vector database\"",
+          "\"hybrid search rag\"",
+          "\"rag hybrid search database\""
+        ]
+      }
+    ],
+    "negative_keywords": [
+      "rag rug",
+      "rag doll",
+      "rag quilt",
+      "rag status",
+      "red amber green",
+      "rag report",
+      "jobs",
+      "salary",
+      "course",
+      "certification",
+      "free download pdf"
+    ],
+    "conversion_events": [
+      "cta_quickstart_click",
+      "copy_install_command",
+      "copy_code_snippet",
+      "cta_integration_doc_click",
+      "cta_github_click",
+      "cta_zilliz_signup_click"
+    ]
+  },
+  "benefits_h2": "What does a vector database for RAG have to do well?",
+  "feature_blocks_h2": "Hybrid search, RAG reranking and disk indexes",
+  "lang": "en",
+  "reviewedOn": "2026-10-21"
+}

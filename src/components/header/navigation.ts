@@ -46,6 +46,14 @@ export const useHeaderNavItems = ({
             label: t('intro.cases'),
             href: getLocalePath('/use-cases'),
           },
+          {
+            label: getLocalePath('/solutions').startsWith('/zh/') ? '解决方案' : 'Solutions',
+            href: getLocalePath('/solutions').startsWith('/zh/') ? '/zh/solutions' : '/solutions',
+          },
+          {
+            label: getLocalePath('/compare').startsWith('/zh/') ? '产品对比' : 'Compare databases',
+            href: getLocalePath('/compare').startsWith('/zh/') ? '/zh/compare' : '/compare',
+          },
         ],
       },
       { label: t('docs'), href: getLocalePath('/docs') },

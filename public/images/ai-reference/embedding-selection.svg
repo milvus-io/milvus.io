@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 694" width="640" height="694" role="img" aria-labelledby="title desc">
+<title id="title">Shortlist models by the workload</title>
+<desc id="desc">Representation: Dense, sparse or multi-vector: Match the retrieval mechanism.. Input contract: Text, image, audio or document: Check language and length limits.. Deployment: Local weights or hosted API: Check rights, privacy and versioning.. Application evaluation: Your queries and evidence: Compare quality, latency and cost.. Keep model revisions separate; equal dimensions do not mean equal spaces.</desc>
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M1 1 L6 4 L1 7" fill="none" stroke="#1E5F70" stroke-width="1.5"/></marker></defs>
+<rect width="640" height="694" fill="#FAF6EE"/>
+<text x="28" y="30" font-family="Arial, sans-serif" font-size="12" font-weight="400" fill="#6B6356"><tspan x="28" dy="0">MILVUS / AI REFERENCE / SCHEMATIC</tspan></text>
+<text x="28" y="72" font-family="Georgia, serif" font-size="28" font-weight="700" fill="#0F1F2E"><tspan x="28" dy="0">Shortlist models by the workload</tspan></text>
+<rect x="28" y="110" width="584" height="94" fill="#F4ECDC" stroke="#0F1F2E" stroke-width="1.5"/>
+<path d="M230 110 V204" stroke="#0F1F2E" stroke-width="1.5"/>
+<text x="44" y="142" font-family="Arial, sans-serif" font-size="23" font-weight="700" fill="#1E5F70"><tspan x="44" dy="0">Representation</tspan></text>
+<text x="248" y="141" font-family="Arial, sans-serif" font-size="21" font-weight="700" fill="#0F1F2E"><tspan x="248" dy="0">Dense, sparse or multi-vector</tspan></text>
+<text x="248" y="177" font-family="Arial, sans-serif" font-size="19" font-weight="400" fill="#6B6356"><tspan x="248" dy="0">Match the retrieval mechanism.</tspan></text>
+<rect x="28" y="216" width="584" height="120" fill="#F4ECDC" stroke="#0F1F2E" stroke-width="1.5"/>
+<path d="M230 216 V336" stroke="#0F1F2E" stroke-width="1.5"/>
+<text x="44" y="248" font-family="Arial, sans-serif" font-size="23" font-weight="700" fill="#1E5F70"><tspan x="44" dy="0">Input contract</tspan></text>
+<text x="248" y="247" font-family="Arial, sans-serif" font-size="21" font-weight="700" fill="#0F1F2E"><tspan x="248" dy="0">Text, image, audio or</tspan><tspan x="248" dy="27.3">document</tspan></text>
+<text x="248" y="309" font-family="Arial, sans-serif" font-size="19" font-weight="400" fill="#6B6356"><tspan x="248" dy="0">Check language and length limits.</tspan></text>
+<rect x="28" y="348" width="584" height="118" fill="#F4ECDC" stroke="#0F1F2E" stroke-width="1.5"/>
+<path d="M230 348 V466" stroke="#0F1F2E" stroke-width="1.5"/>
+<text x="44" y="380" font-family="Arial, sans-serif" font-size="23" font-weight="700" fill="#1E5F70"><tspan x="44" dy="0">Deployment</tspan></text>
+<text x="248" y="379" font-family="Arial, sans-serif" font-size="21" font-weight="700" fill="#0F1F2E"><tspan x="248" dy="0">Local weights or hosted API</tspan></text>
+<text x="248" y="415" font-family="Arial, sans-serif" font-size="19" font-weight="400" fill="#6B6356"><tspan x="248" dy="0">Check rights, privacy and</tspan><tspan x="248" dy="24.7">versioning.</tspan></text>
+<rect x="28" y="478" width="584" height="118" fill="#F4ECDC" stroke="#0F1F2E" stroke-width="1.5"/>
+<path d="M230 478 V596" stroke="#0F1F2E" stroke-width="1.5"/>
+<text x="44" y="510" font-family="Arial, sans-serif" font-size="23" font-weight="700" fill="#1E5F70"><tspan x="44" dy="0">Application</tspan><tspan x="44" dy="29.9">evaluation</tspan></text>
+<text x="248" y="509" font-family="Arial, sans-serif" font-size="21" font-weight="700" fill="#0F1F2E"><tspan x="248" dy="0">Your queries and evidence</tspan></text>
+<text x="248" y="545" font-family="Arial, sans-serif" font-size="19" font-weight="400" fill="#6B6356"><tspan x="248" dy="0">Compare quality, latency and</tspan><tspan x="248" dy="24.7">cost.</tspan></text>
+<path d="M28 618 H612" stroke="#0F1F2E" stroke-width="1.5"/>
+<text x="28" y="644" font-family="Arial, sans-serif" font-size="18" font-weight="400" fill="#6B6356"><tspan x="28" dy="0">Keep model revisions separate; equal dimensions do not mean</tspan><tspan x="28" dy="23.4">equal spaces.</tspan></text>
+</svg>

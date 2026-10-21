@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 656" width="640" height="656" role="img" aria-labelledby="title desc">
+<title id="title">DiskANN: compact routing, SSD graph</title>
+<desc id="desc">Query in RAM: Compare against compact PQ codes and cached nodes.. Choose promising nodes: A graph traversal selects what to read next.. Fetch from local SSD: Read graph neighbors and full vectors as needed.. Refine the shortlist: Return neighbors under the chosen search budget.. Measure recall, memory and cold / warm tail latency together.</desc>
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M1 1 L6 4 L1 7" fill="none" stroke="#1E5F70" stroke-width="1.5"/></marker></defs>
+<rect width="640" height="656" fill="#FAF6EE"/>
+<text x="28" y="30" font-family="Arial, sans-serif" font-size="12" font-weight="400" fill="#6B6356"><tspan x="28" dy="0">MILVUS / AI REFERENCE / SCHEMATIC</tspan></text>
+<text x="28" y="72" font-family="Georgia, serif" font-size="28" font-weight="700" fill="#0F1F2E"><tspan x="28" dy="0">DiskANN: compact routing, SSD graph</tspan></text>
+<rect x="28" y="110" width="584" height="112" fill="#F4ECDC" stroke="#0F1F2E" stroke-width="1.5"/>
+<rect x="28" y="110" width="5" height="112" fill="#1E5F70"/>
+<text x="48" y="141" font-family="Arial, sans-serif" font-size="23" font-weight="700" fill="#0F1F2E"><tspan x="48" dy="0">Query in RAM</tspan></text>
+<text x="48" y="171" font-family="Arial, sans-serif" font-size="20" font-weight="400" fill="#6B6356"><tspan x="48" dy="0">Compare against compact PQ codes and cached</tspan><tspan x="48" dy="26">nodes.</tspan></text>
+<path d="M320 225 V244" fill="none" stroke="#1E5F70" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="28" y="248" width="584" height="86" fill="#F4ECDC" stroke="#0F1F2E" stroke-width="1.5"/>
+<rect x="28" y="248" width="5" height="86" fill="#1E5F70"/>
+<text x="48" y="279" font-family="Arial, sans-serif" font-size="23" font-weight="700" fill="#0F1F2E"><tspan x="48" dy="0">Choose promising nodes</tspan></text>
+<text x="48" y="309" font-family="Arial, sans-serif" font-size="20" font-weight="400" fill="#6B6356"><tspan x="48" dy="0">A graph traversal selects what to read next.</tspan></text>
+<path d="M320 337 V356" fill="none" stroke="#1E5F70" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="28" y="360" width="584" height="86" fill="#F4ECDC" stroke="#0F1F2E" stroke-width="1.5"/>
+<rect x="28" y="360" width="5" height="86" fill="#1E5F70"/>
+<text x="48" y="391" font-family="Arial, sans-serif" font-size="23" font-weight="700" fill="#0F1F2E"><tspan x="48" dy="0">Fetch from local SSD</tspan></text>
+<text x="48" y="421" font-family="Arial, sans-serif" font-size="20" font-weight="400" fill="#6B6356"><tspan x="48" dy="0">Read graph neighbors and full vectors as needed.</tspan></text>
+<path d="M320 449 V468" fill="none" stroke="#1E5F70" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="28" y="472" width="584" height="86" fill="#F4ECDC" stroke="#0F1F2E" stroke-width="1.5"/>
+<rect x="28" y="472" width="5" height="86" fill="#E85A2B"/>
+<text x="48" y="503" font-family="Arial, sans-serif" font-size="23" font-weight="700" fill="#0F1F2E"><tspan x="48" dy="0">Refine the shortlist</tspan></text>
+<text x="48" y="533" font-family="Arial, sans-serif" font-size="20" font-weight="400" fill="#6B6356"><tspan x="48" dy="0">Return neighbors under the chosen search budget.</tspan></text>
+<path d="M28 580 H612" stroke="#0F1F2E" stroke-width="1.5"/>
+<text x="28" y="606" font-family="Arial, sans-serif" font-size="18" font-weight="400" fill="#6B6356"><tspan x="28" dy="0">Measure recall, memory and cold / warm tail latency</tspan><tspan x="28" dy="23.4">together.</tspan></text>
+</svg>

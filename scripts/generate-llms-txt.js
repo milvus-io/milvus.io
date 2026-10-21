@@ -184,7 +184,7 @@ const CURATED = {
         [
           'AI Quick Reference',
           `${ORIGIN}/ai-quick-reference`,
-          'Short Q&A pages on vector search and AI topics, at `/ai-quick-reference/<question-slug>`.',
+          'Core concepts for vector search, indexing, RAG, data preparation, and production operations, with implementation guides and sources.',
         ],
         [
           'Learn AI and Vector DB',

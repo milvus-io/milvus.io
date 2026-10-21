@@ -1,0 +1,170 @@
+{
+  "checked_at": "2026-10-20",
+  "source": "https://mteb-leaderboard-backend.hf.space/v1/benchmarks/MTEB%28Multilingual%2C%20v2%29/scores",
+  "benchmark": "MTEB(Multilingual, v2)",
+  "task_count": 131,
+  "complete_result_rows": 88,
+  "sort": "meanTask descending, complete task coverage only; not the API rank field or a reranker leaderboard",
+  "models": [
+    {
+      "position": 1,
+      "name": "microsoft/harrier-oss-v1-27b",
+      "mean_task": 0.7427199384685496,
+      "retrieval": 0.7826541941720541,
+      "embedding_dim": 5376,
+      "zero_shot_pct": 78
+    },
+    {
+      "position": 2,
+      "name": "tencent/KaLM-Embedding-Gemma3-12B-2511",
+      "mean_task": 0.7231813660530395,
+      "retrieval": 0.7565970746841881,
+      "embedding_dim": 3840,
+      "zero_shot_pct": 73
+    },
+    {
+      "position": 3,
+      "name": "Qwen/Qwen3-Embedding-8B",
+      "mean_task": 0.7058388101663448,
+      "retrieval": 0.7087702987397678,
+      "embedding_dim": 4096,
+      "zero_shot_pct": 99
+    },
+    {
+      "position": 4,
+      "name": "Bytedance/Seed1.6-embedding-1215",
+      "mean_task": 0.7025908463665076,
+      "retrieval": 0.660455045344773,
+      "embedding_dim": 2048,
+      "zero_shot_pct": 89
+    },
+    {
+      "position": 5,
+      "name": "nvidia/llama-embed-nemotron-8b",
+      "mean_task": 0.6946133785217075,
+      "retrieval": 0.6869422523476492,
+      "embedding_dim": 4096,
+      "zero_shot_pct": 99
+    },
+    {
+      "position": 6,
+      "name": "Qwen/Qwen3-Embedding-4B",
+      "mean_task": 0.6944564599964329,
+      "retrieval": 0.6960449432587259,
+      "embedding_dim": 2560,
+      "zero_shot_pct": 99
+    },
+    {
+      "position": 7,
+      "name": "microsoft/harrier-oss-v1-0.6b",
+      "mean_task": 0.6901251361787604,
+      "retrieval": 0.7075393197714468,
+      "embedding_dim": 1024,
+      "zero_shot_pct": 78
+    },
+    {
+      "position": 8,
+      "name": "codefuse-ai/F2LLM-v2-14B",
+      "mean_task": 0.6873617278219415,
+      "retrieval": 0.6650490588513774,
+      "embedding_dim": 5120,
+      "zero_shot_pct": 88
+    },
+    {
+      "position": 9,
+      "name": "google/gemini-embedding-001",
+      "mean_task": 0.683679871875291,
+      "retrieval": 0.6770753736353683,
+      "embedding_dim": 3072,
+      "zero_shot_pct": 99
+    },
+    {
+      "position": 10,
+      "name": "codefuse-ai/F2LLM-v2-8B",
+      "mean_task": 0.6808569286689072,
+      "retrieval": 0.6614607120275218,
+      "embedding_dim": 4096,
+      "zero_shot_pct": 88
+    },
+    {
+      "position": 11,
+      "name": "Octen/Octen-Embedding-8B",
+      "mean_task": 0.6784164425782021,
+      "retrieval": 0.7161284597636336,
+      "embedding_dim": 4096,
+      "zero_shot_pct": 99
+    },
+    {
+      "position": 12,
+      "name": "codefuse-ai/F2LLM-v2-4B",
+      "mean_task": 0.6706344049973809,
+      "retrieval": 0.6483662065767007,
+      "embedding_dim": 2560,
+      "zero_shot_pct": 88
+    },
+    {
+      "position": 13,
+      "name": "jinaai/jina-embeddings-v5-omni-small",
+      "mean_task": 0.6699977102085275,
+      "retrieval": 0.6487566807736687,
+      "embedding_dim": 1024,
+      "zero_shot_pct": -1
+    },
+    {
+      "position": 14,
+      "name": "microsoft/harrier-oss-v1-270m",
+      "mean_task": 0.6654696953128199,
+      "retrieval": 0.6637835960040044,
+      "embedding_dim": 640,
+      "zero_shot_pct": 78
+    },
+    {
+      "position": 15,
+      "name": "ai-sage/Giga-Embeddings-instruct-10B-A1.8B-0826",
+      "mean_task": 0.6563722604096605,
+      "retrieval": 0.6407919116855765,
+      "embedding_dim": 1536,
+      "zero_shot_pct": -1
+    },
+    {
+      "position": 16,
+      "name": "jinaai/jina-embeddings-v5-omni-nano",
+      "mean_task": 0.6552339420490167,
+      "retrieval": 0.6326010977814096,
+      "embedding_dim": 768,
+      "zero_shot_pct": -1
+    },
+    {
+      "position": 17,
+      "name": "jinaai/jina-embeddings-v5-text-nano",
+      "mean_task": 0.6552339420490167,
+      "retrieval": 0.6326010977814096,
+      "embedding_dim": 768,
+      "zero_shot_pct": -1
+    },
+    {
+      "position": 18,
+      "name": "codefuse-ai/F2LLM-v2-1.7B",
+      "mean_task": 0.6521461038204966,
+      "retrieval": 0.6196778018724235,
+      "embedding_dim": 2048,
+      "zero_shot_pct": 88
+    },
+    {
+      "position": 19,
+      "name": "Qwen/Qwen3-Embedding-0.6B",
+      "mean_task": 0.643355192676886,
+      "retrieval": 0.6464702360447725,
+      "embedding_dim": 1024,
+      "zero_shot_pct": 99
+    },
+    {
+      "position": 20,
+      "name": "ai-sage/Giga-Embeddings-instruct-3B-0826",
+      "mean_task": 0.6389016744352065,
+      "retrieval": 0.6082298084724433,
+      "embedding_dim": 2048,
+      "zero_shot_pct": -1
+    }
+  ]
+}

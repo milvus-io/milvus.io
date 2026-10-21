@@ -1,0 +1,1308 @@
+{
+  "baseline": "d2523a24f1603cc512b928da6069215848a3bddc",
+  "license": "Original schematic illustrations for this repository. No measured performance is implied.",
+  "diagrams": [
+    {
+      "id": "bm25-pipeline",
+      "title": "From words to ranked documents",
+      "kind": "flow",
+      "rows": [
+        [
+          "Analyze text",
+          "Tokenize and normalize documents and queries."
+        ],
+        [
+          "Read posting lists",
+          "Find documents sharing analyzed query terms."
+        ],
+        [
+          "Score with BM25",
+          "Combine IDF, saturating term frequency and length."
+        ],
+        [
+          "Return top-k",
+          "Scores rank matches; they are not probabilities."
+        ]
+      ],
+      "note": "Lexical overlap and semantic similarity are complementary signals.",
+      "pages": [
+        "fulltext",
+        "sparse-inverted"
+      ]
+    },
+    {
+      "id": "chunking-context",
+      "title": "Chunk boundaries change the evidence",
+      "kind": "flow",
+      "rows": [
+        [
+          "Preserve structure",
+          "Keep headings, source IDs and document boundaries."
+        ],
+        [
+          "Create chunks",
+          "Balance complete meaning against context length."
+        ],
+        [
+          "Embed and retrieve",
+          "Use the same chunking revision in the evaluation."
+        ],
+        [
+          "Evaluate answers",
+          "Check evidence coverage, noise and context cost."
+        ]
+      ],
+      "note": "Overlap can protect boundaries, but also introduces duplicate evidence.",
+      "pages": [
+        "chunking"
+      ]
+    },
+    {
+      "id": "diskann-tier",
+      "title": "DiskANN: compact routing, SSD graph",
+      "kind": "flow",
+      "rows": [
+        [
+          "Query in RAM",
+          "Compare against compact PQ codes and cached nodes."
+        ],
+        [
+          "Choose promising nodes",
+          "A graph traversal selects what to read next."
+        ],
+        [
+          "Fetch from local SSD",
+          "Read graph neighbors and full vectors as needed."
+        ],
+        [
+          "Refine the shortlist",
+          "Return neighbors under the chosen search budget."
+        ]
+      ],
+      "note": "Measure recall, memory and cold / warm tail latency together.",
+      "pages": [
+        "diskann"
+      ]
+    },
+    {
+      "id": "mmap-vs-index",
+      "title": "mmap and DiskANN act at different layers",
+      "kind": "compare",
+      "rows": [
+        [
+          "mmap",
+          "Kernel pages local files",
+          "Index algorithm is unchanged."
+        ],
+        [
+          "DiskANN",
+          "Index controls SSD reads",
+          "Graph traversal uses RAM codes."
+        ],
+        [
+          "Tiered storage",
+          "Fetch remote objects",
+          "Local cache and eviction are separate."
+        ]
+      ],
+      "note": "A mapped file still consumes physical memory when its pages are resident.",
+      "pages": [
+        "mmap"
+      ]
+    },
+    {
+      "id": "cagra-parallel",
+      "title": "CAGRA uses parallel GPU graph search",
+      "kind": "flow",
+      "rows": [
+        [
+          "Build a neighbor graph",
+          "Choose graph degree and build configuration."
+        ],
+        [
+          "Explore on the GPU",
+          "Parallel work expands candidate neighborhoods."
+        ],
+        [
+          "Keep a candidate pool",
+          "Search width and pool size trade work for recall."
+        ],
+        [
+          "Measure the workload",
+          "Include batches, transfers and GPU memory."
+        ]
+      ],
+      "note": "A GPU needs enough useful work; compare at the same recall target.",
+      "pages": [
+        "gpu-cagra"
+      ]
+    },
+    {
+      "id": "index-workload-choice",
+      "title": "Choose the index by the binding constraint",
+      "kind": "compare",
+      "rows": [
+        [
+          "Exact or tiny eligible set",
+          "FLAT",
+          "Cost grows with the searched data."
+        ],
+        [
+          "RAM + high recall",
+          "HNSW",
+          "Budget for both vectors and graph."
+        ],
+        [
+          "Compression / larger k",
+          "IVF variants",
+          "Tune probes and representation."
+        ],
+        [
+          "Data exceeds RAM",
+          "DISKANN",
+          "Trade memory for local SSD I/O."
+        ],
+        [
+          "Sustained GPU work",
+          "GPU_CAGRA / GPU IVF",
+          "Check VRAM and supported limits."
+        ]
+      ],
+      "note": "These are candidates to benchmark, not universal performance rankings.",
+      "pages": [
+        "index-selection"
+      ]
+    },
+    {
+      "id": "faiss-knowhere-stack",
+      "title": "Library, index layer and database",
+      "kind": "stack",
+      "rows": [
+        [
+          "Applications",
+          "Use SDKs to write, filter and search collections."
+        ],
+        [
+          "Milvus",
+          "Owns schemas, distributed serving and lifecycle."
+        ],
+        [
+          "Knowhere",
+          "Provides the vector-index abstraction and integration."
+        ],
+        [
+          "Index implementations",
+          "FAISS and other engines supply search algorithms."
+        ]
+      ],
+      "note": "An ANN library supplies algorithms; a database adds operational semantics.",
+      "pages": [
+        "faiss",
+        "knowhere"
+      ]
+    },
+    {
+      "id": "range-candidates",
+      "title": "Range search adds a score condition",
+      "kind": "flow",
+      "rows": [
+        [
+          "Search the eligible corpus",
+          "Apply the chosen metric, index and filters."
+        ],
+        [
+          "Explore candidates",
+          "ANN search may miss qualifying neighbors."
+        ],
+        [
+          "Keep scores in the band",
+          "For L2: range_filter <= distance < radius."
+        ],
+        [
+          "Return up to limit",
+          "A full result may be truncated; it is not a census."
+        ]
+      ],
+      "note": "For COSINE / IP the band is radius < score <= range_filter.",
+      "pages": [
+        "range-search"
+      ]
+    },
+    {
+      "id": "rerank-cascade",
+      "title": "Retrieve broadly, rerank a shortlist",
+      "kind": "flow",
+      "rows": [
+        [
+          "Candidate retrieval",
+          "Dense, lexical or hybrid search finds a pool."
+        ],
+        [
+          "Pairwise scoring",
+          "A reranker reads each query-document pair."
+        ],
+        [
+          "Reorder and select",
+          "Keep the best evidence within the context budget."
+        ],
+        [
+          "Evaluate end to end",
+          "Measure relevance, answer quality and added latency."
+        ]
+      ],
+      "note": "A reranker cannot recover a document absent from its candidate pool.",
+      "pages": [
+        "reranking",
+        "reranking-model-catalog"
+      ]
+    },
+    {
+      "id": "hnsw-recall-diagnosis",
+      "title": "Diagnose a recall plateau step by step",
+      "kind": "flow",
+      "rows": [
+        [
+          "Validate ground truth",
+          "Use the same corpus, metric, normalization and filter."
+        ],
+        [
+          "Compare plain HNSW",
+          "Hold graph build settings and workload constant."
+        ],
+        [
+          "Test higher-precision refine",
+          "Recovery suggests a final-ranking problem."
+        ],
+        [
+          "Investigate routing",
+          "If needed, test quantizer precision and connectivity."
+        ]
+      ],
+      "note": "The shape of a recall curve alone does not identify the cause.",
+      "pages": [
+        "hnsw-compression"
+      ]
+    },
+    {
+      "id": "clustering-workflow",
+      "title": "Application clusters are explicit labels",
+      "kind": "flow",
+      "rows": [
+        [
+          "Read vectors and IDs",
+          "Use Spark or a bounded data-export workflow."
+        ],
+        [
+          "Run clustering outside ANN",
+          "Fit k-means, HDBSCAN or another chosen method."
+        ],
+        [
+          "Write versioned labels",
+          "Keep record ID, cluster_id and algorithm revision."
+        ],
+        [
+          "Use labels in Milvus",
+          "Filter, sample or analyze application groups."
+        ]
+      ],
+      "note": "Internal IVF centroid assignments are not application cluster IDs.",
+      "pages": [
+        "clustering"
+      ]
+    },
+    {
+      "id": "dedup-verify",
+      "title": "Similarity proposes a duplicate; rules decide",
+      "kind": "flow",
+      "rows": [
+        [
+          "Block obvious non-matches",
+          "Use scope, hashes and stable source identifiers."
+        ],
+        [
+          "Retrieve similar candidates",
+          "Dense search or MinHash supplies possible pairs."
+        ],
+        [
+          "Verify the pair",
+          "Check thresholds, content and task-specific evidence."
+        ],
+        [
+          "Record the decision",
+          "Keep provenance and an explicit survivor policy."
+        ]
+      ],
+      "note": "Approximate similarity is candidate generation, not proof of identity.",
+      "pages": [
+        "deduplication",
+        "entity-resolution"
+      ]
+    },
+    {
+      "id": "hard-negative-mining",
+      "title": "Mine difficult non-matches, then verify",
+      "kind": "flow",
+      "rows": [
+        [
+          "Start with labeled queries",
+          "Keep development and final test data separate."
+        ],
+        [
+          "Retrieve near the positives",
+          "Find high-scoring candidates that look relevant."
+        ],
+        [
+          "Verify they are negatives",
+          "Remove unlabeled positives and ambiguous cases."
+        ],
+        [
+          "Train and re-evaluate",
+          "Version the mining setup and inspect regressions."
+        ]
+      ],
+      "note": "A highly ranked unlabeled document is not automatically a negative.",
+      "pages": [
+        "hard-negatives"
+      ]
+    },
+    {
+      "id": "diversity-selection",
+      "title": "Select useful variety, not only distant points",
+      "kind": "flow",
+      "rows": [
+        [
+          "Apply eligibility rules",
+          "Enforce rights, quality, version and safety scope."
+        ],
+        [
+          "Suppress near-duplicates",
+          "Treat capped ANN results as incomplete evidence."
+        ],
+        [
+          "Select for coverage",
+          "Balance task strata, relevance and diversity."
+        ],
+        [
+          "Audit the selection",
+          "Keep IDs, criteria and a versioned manifest."
+        ]
+      ],
+      "note": "Outliers may be corrupt data; distance alone does not establish value.",
+      "pages": [
+        "diversity-sampling"
+      ]
+    },
+    {
+      "id": "data-quality-gates",
+      "title": "Quality gates before the vector index",
+      "kind": "flow",
+      "rows": [
+        [
+          "Validate source records",
+          "Check rights, stable IDs, freshness and completeness."
+        ],
+        [
+          "Validate representation",
+          "Check model version, dimensions and finite values."
+        ],
+        [
+          "Validate metadata",
+          "Enforce tenant, timestamps and filterable field types."
+        ],
+        [
+          "Validate retrieval",
+          "Test queries, labels and failure slices before release."
+        ]
+      ],
+      "note": "A faster index does not repair an incorrect or stale representation.",
+      "pages": [
+        "data-quality"
+      ]
+    },
+    {
+      "id": "multimodal-pair-check",
+      "title": "Two required signals need two explicit checks",
+      "kind": "compare",
+      "rows": [
+        [
+          "Visual candidates",
+          "Image similarity",
+          "Find visually related assets."
+        ],
+        [
+          "Text candidates",
+          "Caption similarity",
+          "Find semantically related descriptions."
+        ],
+        [
+          "Required agreement",
+          "Check both scores",
+          "Intersect or verify the same pair."
+        ],
+        [
+          "Decision record",
+          "Keep reasons and IDs",
+          "Review uncertain cases before exclusion."
+        ]
+      ],
+      "note": "Rank fusion alone does not enforce a visual AND text threshold.",
+      "pages": [
+        "multimodal-curation"
+      ]
+    },
+    {
+      "id": "stable-lake-identity",
+      "title": "Join by stable identity, not file position",
+      "kind": "compare",
+      "rows": [
+        [
+          "Source record",
+          "source_id + source version",
+          "Identifies the underlying content."
+        ],
+        [
+          "Search row",
+          "primary key + chunk_id",
+          "Identifies a searchable representation."
+        ],
+        [
+          "Embedding",
+          "model + preprocessing version",
+          "Identifies its vector space."
+        ],
+        [
+          "Physical location",
+          "file + row position",
+          "Can change during compaction."
+        ]
+      ],
+      "note": "Keep a versioned mapping so refresh, deletion and replay remain traceable.",
+      "pages": [
+        "lake-source-identifiers"
+      ]
+    },
+    {
+      "id": "lake-delete-propagation",
+      "title": "Deletion must reach every derived copy",
+      "kind": "flow",
+      "rows": [
+        [
+          "Record the source deletion",
+          "Keep stable IDs and a durable event or tombstone."
+        ],
+        [
+          "Remove from serving",
+          "Delete or exclude all corresponding search rows."
+        ],
+        [
+          "Reach derived stores",
+          "Apply policy to exports, caches and other replicas."
+        ],
+        [
+          "Reconcile and verify",
+          "Track replay progress and test that content is absent."
+        ]
+      ],
+      "note": "A curation exclusion and an erasure request have different semantics.",
+      "pages": [
+        "lake-deletions"
+      ]
+    },
+    {
+      "id": "lake-format-roles",
+      "title": "File formats and table layers solve different jobs",
+      "kind": "compare",
+      "rows": [
+        [
+          "Arrow",
+          "In-memory columnar batches",
+          "Moves typed data between compute stages."
+        ],
+        [
+          "Parquet",
+          "Columnar files",
+          "Efficient scans and analytical interchange."
+        ],
+        [
+          "Iceberg",
+          "Table metadata + snapshots",
+          "Tracks schema, files and table versions."
+        ],
+        [
+          "Lance",
+          "Data format and dataset tools",
+          "Supports AI-oriented data workflows."
+        ]
+      ],
+      "note": "Choose an integration against its documented version and capabilities.",
+      "pages": [
+        "lance-iceberg-choice",
+        "arrow-parquet"
+      ]
+    },
+    {
+      "id": "storage-manifest",
+      "title": "Storage readers follow a committed manifest",
+      "kind": "flow",
+      "rows": [
+        [
+          "Prepare typed batches",
+          "Compute stages exchange Arrow-compatible data."
+        ],
+        [
+          "Write data files",
+          "Persist columnar data in the supported storage layout."
+        ],
+        [
+          "Commit a manifest",
+          "Record the visible files and version metadata."
+        ],
+        [
+          "Read the chosen version",
+          "Resolve logical rows through the committed state."
+        ]
+      ],
+      "note": "milvus-storage is a storage layer; Knowhere serves vector-index algorithms.",
+      "pages": [
+        "milvus-storage"
+      ]
+    },
+    {
+      "id": "snapshot-contract",
+      "title": "Reproduce the experiment, not just the data",
+      "kind": "stack",
+      "rows": [
+        [
+          "Data and membership",
+          "Pin lake and collection versions; retain the files."
+        ],
+        [
+          "Representation",
+          "Pin model revision, preprocessing and chunk boundaries."
+        ],
+        [
+          "Search and labels",
+          "Pin index settings, queries, labels and metric code."
+        ],
+        [
+          "Execution environment",
+          "Pin software and hardware; repeat and record variance."
+        ]
+      ],
+      "note": "A data snapshot alone does not guarantee identical ANN result order.",
+      "pages": [
+        "reproducible-snapshots"
+      ]
+    },
+    {
+      "id": "serving-tiers",
+      "title": "Separate remote storage from the hot working set",
+      "kind": "stack",
+      "rows": [
+        [
+          "RAM",
+          "Hot index structures, cached pages and query execution."
+        ],
+        [
+          "Local SSD",
+          "Larger indexes, fetched chunks and mapped field files."
+        ],
+        [
+          "Object storage / lake",
+          "Durable source data, snapshots and cold objects."
+        ],
+        [
+          "Access policy",
+          "Warm up, fetch and evict according to the workload."
+        ]
+      ],
+      "note": "Benchmark cold starts and shifted traffic, not only a warm cache.",
+      "pages": [
+        "lake-serving-tiers"
+      ]
+    },
+    {
+      "id": "memory-budget",
+      "title": "Vector bytes are only one part of memory",
+      "kind": "stack",
+      "rows": [
+        [
+          "Vector representation",
+          "Count x dimension x bytes, or compressed code size."
+        ],
+        [
+          "Index and payload",
+          "Add graph links, centroids, IDs and scalar fields."
+        ],
+        [
+          "Serving copies",
+          "Include the actual shard and replica placement."
+        ],
+        [
+          "Runtime headroom",
+          "Budget for queries, ingestion, caches and maintenance."
+        ]
+      ],
+      "note": "Payload compression ratios are not whole-service memory reductions.",
+      "pages": [
+        "memory-capacity"
+      ]
+    },
+    {
+      "id": "memory-lifecycle-flow",
+      "title": "Eligibility comes before memory ranking",
+      "kind": "flow",
+      "rows": [
+        [
+          "Record provenance",
+          "Keep source, tenant, time, version and memory type."
+        ],
+        [
+          "Apply lifecycle rules",
+          "Exclude expired, deleted and superseded facts."
+        ],
+        [
+          "Retrieve and rank",
+          "Normalize score direction before blending signals."
+        ],
+        [
+          "Correct with history",
+          "Update current state; preserve decision history separately."
+        ]
+      ],
+      "note": "Down-ranking an obsolete fact is not the same as making it ineligible.",
+      "pages": [
+        "memory-lifecycle"
+      ]
+    },
+    {
+      "id": "agent-memory-types",
+      "title": "Agent memory has different jobs and owners",
+      "kind": "compare",
+      "rows": [
+        [
+          "Working",
+          "Current task state",
+          "Keep a bounded prompt or explicit state store."
+        ],
+        [
+          "Episodic",
+          "Past experiences",
+          "Retrieve applicable episodes and outcomes."
+        ],
+        [
+          "Semantic",
+          "Reusable facts",
+          "Track provenance, validity and corrections."
+        ],
+        [
+          "Procedural",
+          "Skills and routines",
+          "Version instructions and verify applicability."
+        ]
+      ],
+      "note": "One vector collection does not replace every state or persistence mechanism.",
+      "pages": [
+        "memory-types"
+      ]
+    },
+    {
+      "id": "trajectory-flow",
+      "title": "Reuse applicable experience, not raw traces",
+      "kind": "flow",
+      "rows": [
+        [
+          "Keep the original trace",
+          "Store ordered steps, tool results and outcome."
+        ],
+        [
+          "Index useful representations",
+          "Embed task, summary or selected step windows."
+        ],
+        [
+          "Filter and retrieve",
+          "Match tenant, tools, environment and applicability."
+        ],
+        [
+          "Present compact evidence",
+          "Verify and summarize before giving it to the agent."
+        ]
+      ],
+      "note": "Similarity proposes experience; context and outcome determine usefulness.",
+      "pages": [
+        "trajectory-retrieval"
+      ]
+    },
+    {
+      "id": "rollout-selection-flow",
+      "title": "A training example needs an explicit selection rule",
+      "kind": "flow",
+      "rows": [
+        [
+          "Keep eligible rollouts",
+          "Pin policy, task, environment and outcome evidence."
+        ],
+        [
+          "Remove leakage and duplicates",
+          "Protect evaluation tasks and dataset boundaries."
+        ],
+        [
+          "Select for the objective",
+          "SFT successes or task-matched preference pairs."
+        ],
+        [
+          "Record the dataset",
+          "Keep selected IDs, reasons, versions and coverage."
+        ]
+      ],
+      "note": "Reward is a quality signal; embeddings help with similarity and coverage.",
+      "pages": [
+        "rollout-selection"
+      ]
+    },
+    {
+      "id": "semantic-cache-gate",
+      "title": "A similar question is not enough for a cache hit",
+      "kind": "flow",
+      "rows": [
+        [
+          "Check hard cache scope",
+          "Match tenant, permissions, model and source version."
+        ],
+        [
+          "Retrieve similar questions",
+          "Use a calibrated threshold for the task."
+        ],
+        [
+          "Validate freshness",
+          "Reject expired or invalidated evidence and answers."
+        ],
+        [
+          "Serve or recompute",
+          "Reuse only if every validity condition passes."
+        ]
+      ],
+      "note": "Measure false hits and stale answers, not only cache-hit rate.",
+      "pages": [
+        "semantic-cache"
+      ]
+    },
+    {
+      "id": "graph-rag-evidence",
+      "title": "Graph and vector retrieval supply different evidence",
+      "kind": "compare",
+      "rows": [
+        [
+          "Vector retrieval",
+          "Find semantically related passages",
+          "Useful for paraphrases and context."
+        ],
+        [
+          "Graph retrieval",
+          "Follow modeled entities and relations",
+          "Useful for explicit relationships."
+        ],
+        [
+          "Evidence assembly",
+          "Join source-backed results",
+          "Preserve provenance and permissions."
+        ],
+        [
+          "Answer generation",
+          "Use the selected evidence",
+          "Evaluate against an ordinary RAG baseline."
+        ]
+      ],
+      "note": "Milvus stores searchable representations; graph traversal needs its own layer.",
+      "pages": [
+        "graph-rag"
+      ]
+    },
+    {
+      "id": "code-retrieval-flow",
+      "title": "Coding agents need lexical and semantic evidence",
+      "kind": "flow",
+      "rows": [
+        [
+          "Index a repository revision",
+          "Keep paths, symbols, language and commit IDs."
+        ],
+        [
+          "Route the question",
+          "Use grep / exact lookup for names and identifiers."
+        ],
+        [
+          "Retrieve conceptual matches",
+          "Use embeddings for behavior and intent."
+        ],
+        [
+          "Expand and verify context",
+          "Read definitions, callers and current source."
+        ]
+      ],
+      "note": "Vector similarity complements exact code search; it does not prove behavior.",
+      "pages": [
+        "code-search"
+      ]
+    },
+    {
+      "id": "framework-milvus-roles",
+      "title": "Framework orchestration and vector storage",
+      "kind": "flow",
+      "rows": [
+        [
+          "Application or agent",
+          "Defines the task, access scope and expected outcome."
+        ],
+        [
+          "Framework integration",
+          "Loads data, calls models and orchestrates retrieval."
+        ],
+        [
+          "Milvus collection",
+          "Stores vectors and metadata; filters and retrieves."
+        ],
+        [
+          "Application response",
+          "Assembles evidence and evaluates the final output."
+        ]
+      ],
+      "note": "Framework state, checkpoints and model inference have separate owners.",
+      "pages": [
+        "agno-with-milvus",
+        "dify-with-milvus",
+        "haystack-with-milvus",
+        "langchain-with-milvus",
+        "llamaindex-with-milvus",
+        "choose-ai-framework-for-milvus"
+      ]
+    },
+    {
+      "id": "dspy-evaluation-loop",
+      "title": "Optimize a program on a development set",
+      "kind": "flow",
+      "rows": [
+        [
+          "Define the retrieval program",
+          "Choose signatures, tools and the Milvus retriever."
+        ],
+        [
+          "Create development examples",
+          "Specify a metric and representative questions."
+        ],
+        [
+          "Optimize and compare",
+          "Tune the program while holding data versions fixed."
+        ],
+        [
+          "Run the final test",
+          "Use held-out examples and inspect failure slices."
+        ]
+      ],
+      "note": "An optimizer changes application behavior; it does not replace the database.",
+      "pages": [
+        "dspy-with-milvus"
+      ]
+    },
+    {
+      "id": "model-evaluation-contract",
+      "title": "A benchmark score needs its evaluation contract",
+      "kind": "flow",
+      "rows": [
+        [
+          "Read the task definition",
+          "Check modality, language, dataset and metric."
+        ],
+        [
+          "Match the model revision",
+          "Check checkpoint, prompts and preprocessing."
+        ],
+        [
+          "Compare compatible results",
+          "Do not mix protocols or assume equal coverage."
+        ],
+        [
+          "Test your application",
+          "Measure relevance, latency, cost and operating limits."
+        ]
+      ],
+      "note": "MTEB and MMEB summarize tasks; neither guarantees production suitability.",
+      "pages": [
+        "mteb-embedding-leaderboards",
+        "mmeb-multimodal-evaluation"
+      ]
+    },
+    {
+      "id": "embedding-selection",
+      "title": "Shortlist models by the workload",
+      "kind": "compare",
+      "rows": [
+        [
+          "Representation",
+          "Dense, sparse or multi-vector",
+          "Match the retrieval mechanism."
+        ],
+        [
+          "Input contract",
+          "Text, image, audio or document",
+          "Check language and length limits."
+        ],
+        [
+          "Deployment",
+          "Local weights or hosted API",
+          "Check rights, privacy and versioning."
+        ],
+        [
+          "Application evaluation",
+          "Your queries and evidence",
+          "Compare quality, latency and cost."
+        ]
+      ],
+      "note": "Keep model revisions separate; equal dimensions do not mean equal spaces.",
+      "pages": [
+        "embedding-reranking-model-catalog",
+        "dense-sparse-model-families"
+      ]
+    },
+    {
+      "id": "model-inference-ownership",
+      "title": "Three places to generate a representation",
+      "kind": "compare",
+      "rows": [
+        [
+          "Client library",
+          "Your process calls an encoder",
+          "Produces vectors before insert / search."
+        ],
+        [
+          "Model endpoint",
+          "A separate service runs inference",
+          "Owns batching, capacity and revisions."
+        ],
+        [
+          "Milvus Function",
+          "Server-side configured transformation",
+          "Availability depends on version / provider."
+        ],
+        [
+          "Milvus index",
+          "Stores and searches representations",
+          "Does not imply arbitrary model support."
+        ]
+      ],
+      "note": "A wrapper export is not proof of executed inference or universal compatibility.",
+      "pages": [
+        "milvus-model-library-support",
+        "milvus-model-functions",
+        "sentence-transformers-with-milvus"
+      ]
+    },
+    {
+      "id": "deployment-responsibility",
+      "title": "Choose the operational responsibility boundary",
+      "kind": "compare",
+      "rows": [
+        [
+          "Self-hosted Milvus",
+          "Your team operates the deployment",
+          "Own capacity, upgrades and recovery."
+        ],
+        [
+          "Managed service",
+          "Provider runs the database service",
+          "Check the documented service boundary."
+        ],
+        [
+          "BYOC",
+          "Service runs in your cloud account",
+          "Clarify network, IAM and shared duties."
+        ],
+        [
+          "Decision criteria",
+          "Data control + SLO + total cost",
+          "Validate the support and compliance scope."
+        ]
+      ],
+      "note": "Account ownership alone does not describe every operational responsibility.",
+      "pages": [
+        "byoc-deployment"
+      ]
+    },
+    {
+      "id": "total-cost-layers",
+      "title": "Compare total cost at a matched service target",
+      "kind": "stack",
+      "rows": [
+        [
+          "Serving resources",
+          "Compute, RAM, SSD, replicas and required headroom."
+        ],
+        [
+          "Storage and movement",
+          "Object storage, requests, networking and backups."
+        ],
+        [
+          "Representation pipeline",
+          "Embedding inference, refresh jobs and reranking."
+        ],
+        [
+          "Operations",
+          "Engineering, on-call, upgrades, recovery and support."
+        ]
+      ],
+      "note": "Match recall, latency, availability and workload before comparing prices.",
+      "pages": [
+        "cost",
+        "milvus-capacity-planning"
+      ]
+    },
+    {
+      "id": "backup-restore-proof",
+      "title": "A backup is useful when a restore succeeds",
+      "kind": "flow",
+      "rows": [
+        [
+          "Define the recovery target",
+          "Choose acceptable data loss and recovery time."
+        ],
+        [
+          "Capture the required state",
+          "Back up data, metadata and configuration safely."
+        ],
+        [
+          "Restore in isolation",
+          "Check IDs, counts, indexes, filters and query behavior."
+        ],
+        [
+          "Rehearse the cutover",
+          "Record timing, replay steps and rollback evidence."
+        ]
+      ],
+      "note": "Replication, CDC, snapshots and backup solve different recovery problems.",
+      "pages": [
+        "backup"
+      ]
+    },
+    {
+      "id": "first-query-check",
+      "title": "A deployment is verified by a working query",
+      "kind": "flow",
+      "rows": [
+        [
+          "Connect and authenticate",
+          "Pin server and SDK versions; verify the endpoint."
+        ],
+        [
+          "Define and populate a schema",
+          "Use stable IDs and a known embedding contract."
+        ],
+        [
+          "Build, load and search",
+          "Apply the chosen index, metric and filter."
+        ],
+        [
+          "Verify the result",
+          "Read known rows and compare expected neighbors."
+        ]
+      ],
+      "note": "A running process alone does not prove a usable retrieval workflow.",
+      "pages": [
+        "milvus-installation-path",
+        "milvusclient"
+      ]
+    },
+    {
+      "id": "access-control-layers",
+      "title": "Authorization and retrieval filters are separate",
+      "kind": "flow",
+      "rows": [
+        [
+          "Authenticate the caller",
+          "Establish an identity at the service boundary."
+        ],
+        [
+          "Authorize operations",
+          "Use RBAC and service-side permission checks."
+        ],
+        [
+          "Derive a trusted scope",
+          "Apply tenant and document-access constraints."
+        ],
+        [
+          "Search and audit",
+          "Return only authorized evidence and record access."
+        ]
+      ],
+      "note": "An untrusted caller-supplied tenant filter is not an access-control boundary.",
+      "pages": [
+        "milvus-security-rbac"
+      ]
+    },
+    {
+      "id": "shards-and-replicas",
+      "title": "Shards divide data; replicas copy serving capacity",
+      "kind": "compare",
+      "rows": [
+        [
+          "Shard A",
+          "Data subset A",
+          "Parallelizes ownership and processing."
+        ],
+        [
+          "Shard B",
+          "Data subset B",
+          "Adds another part of the corpus."
+        ],
+        [
+          "Replica 1",
+          "Serves the full intended scope",
+          "Has one set of serving copies."
+        ],
+        [
+          "Replica 2",
+          "Another serving copy",
+          "Uses additional resources for availability / load."
+        ]
+      ],
+      "note": "More shards and more replicas have different resource and routing costs.",
+      "pages": [
+        "sharding-replication"
+      ]
+    },
+    {
+      "id": "scaling-bottlenecks",
+      "title": "Scale the stage that limits the workload",
+      "kind": "flow",
+      "rows": [
+        [
+          "Measure the request path",
+          "Separate routing, filtering, search and payload I/O."
+        ],
+        [
+          "Locate saturation",
+          "Check CPU, memory, SSD, GPU, queues and network."
+        ],
+        [
+          "Change one resource or plan",
+          "Adjust index, shards, replicas or ingestion capacity."
+        ],
+        [
+          "Re-test under load",
+          "Include writes, failures, cold caches and skew."
+        ]
+      ],
+      "note": "Vector count alone does not determine useful throughput or latency.",
+      "pages": [
+        "scalability"
+      ]
+    },
+    {
+      "id": "attu-inspection",
+      "title": "Use Attu to inspect a reproducible retrieval case",
+      "kind": "flow",
+      "rows": [
+        [
+          "Connect to the right instance",
+          "Confirm endpoint, identity and permissions."
+        ],
+        [
+          "Inspect the collection",
+          "Check schema, indexes, loaded state and row metadata."
+        ],
+        [
+          "Run a known query",
+          "Keep the vector, filter and search parameters."
+        ],
+        [
+          "Cross-check with the SDK",
+          "Use the same case in a reproducible script."
+        ]
+      ],
+      "note": "A UI inspection complements metrics and logs; it does not replace them.",
+      "pages": [
+        "attu"
+      ]
+    },
+    {
+      "id": "minhash-candidates",
+      "title": "MinHash approximates set overlap",
+      "kind": "flow",
+      "rows": [
+        [
+          "Tokenize into shingles",
+          "Represent each document as a set of text fragments."
+        ],
+        [
+          "Build MinHash signatures",
+          "Use the same hashing and signature configuration."
+        ],
+        [
+          "Retrieve LSH candidates",
+          "Compare signatures under the supported metric."
+        ],
+        [
+          "Verify duplicates",
+          "Check content overlap and an explicit decision threshold."
+        ]
+      ],
+      "note": "This is lexical set similarity, not a dense semantic embedding.",
+      "pages": [
+        "minhash-lsh"
+      ]
+    },
+    {
+      "id": "anomaly-neighborhood",
+      "title": "Sparse neighborhoods flag candidates for review",
+      "kind": "flow",
+      "rows": [
+        [
+          "Define an ordinary reference set",
+          "Use the same metric, filters and data version."
+        ],
+        [
+          "Inspect nearby vectors",
+          "kNN distances or capped range hits provide signals."
+        ],
+        [
+          "Calibrate on reviewed examples",
+          "ANN misses can change the apparent local density."
+        ],
+        [
+          "Review potential anomalies",
+          "Separate novelty, corruption and real incidents."
+        ]
+      ],
+      "note": "A capped range-search count is a lower bound, not a complete density.",
+      "pages": [
+        "anomaly-discovery"
+      ]
+    },
+    {
+      "id": "external-refresh-release",
+      "title": "Refresh is a small data release",
+      "kind": "flow",
+      "rows": [
+        [
+          "Commit a coherent source version",
+          "Finish the source write and record the snapshot or version."
+        ],
+        [
+          "Trigger and observe refresh",
+          "Keep the job ID; wait for completion and handle failures."
+        ],
+        [
+          "Check serving readiness",
+          "Inspect indexes and verify added, changed and deleted IDs."
+        ],
+        [
+          "Report verified freshness",
+          "Measure source commit to validated search results."
+        ]
+      ],
+      "note": "An accepted refresh request does not prove that the new data is searchable.",
+      "pages": [
+        "external-refresh"
+      ]
+    }
+  ]
+}

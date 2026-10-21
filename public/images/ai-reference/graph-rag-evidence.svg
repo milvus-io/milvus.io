@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 804" width="640" height="804" role="img" aria-labelledby="title desc">
+<title id="title">Graph and vector retrieval supply different evidence</title>
+<desc id="desc">Vector retrieval: Find semantically related passages: Useful for paraphrases and context.. Graph retrieval: Follow modeled entities and relations: Useful for explicit relationships.. Evidence assembly: Join source-backed results: Preserve provenance and permissions.. Answer generation: Use the selected evidence: Evaluate against an ordinary RAG baseline.. Milvus stores searchable representations; graph traversal needs its own layer.</desc>
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M1 1 L6 4 L1 7" fill="none" stroke="#1E5F70" stroke-width="1.5"/></marker></defs>
+<rect width="640" height="804" fill="#FAF6EE"/>
+<text x="28" y="30" font-family="Arial, sans-serif" font-size="12" font-weight="400" fill="#6B6356"><tspan x="28" dy="0">MILVUS / AI REFERENCE / SCHEMATIC</tspan></text>
+<text x="28" y="72" font-family="Georgia, serif" font-size="28" font-weight="700" fill="#0F1F2E"><tspan x="28" dy="0">Graph and vector retrieval supply</tspan><tspan x="28" dy="36.4">different evidence</tspan></text>
+<rect x="28" y="146" width="584" height="144" fill="#F4ECDC" stroke="#0F1F2E" stroke-width="1.5"/>
+<path d="M230 146 V290" stroke="#0F1F2E" stroke-width="1.5"/>
+<text x="44" y="178" font-family="Arial, sans-serif" font-size="23" font-weight="700" fill="#1E5F70"><tspan x="44" dy="0">Vector</tspan><tspan x="44" dy="29.9">retrieval</tspan></text>
+<text x="248" y="177" font-family="Arial, sans-serif" font-size="21" font-weight="700" fill="#0F1F2E"><tspan x="248" dy="0">Find semantically related</tspan><tspan x="248" dy="27.3">passages</tspan></text>
+<text x="248" y="239" font-family="Arial, sans-serif" font-size="19" font-weight="400" fill="#6B6356"><tspan x="248" dy="0">Useful for paraphrases and</tspan><tspan x="248" dy="24.7">context.</tspan></text>
+<rect x="28" y="302" width="584" height="144" fill="#F4ECDC" stroke="#0F1F2E" stroke-width="1.5"/>
+<path d="M230 302 V446" stroke="#0F1F2E" stroke-width="1.5"/>
+<text x="44" y="334" font-family="Arial, sans-serif" font-size="23" font-weight="700" fill="#1E5F70"><tspan x="44" dy="0">Graph</tspan><tspan x="44" dy="29.9">retrieval</tspan></text>
+<text x="248" y="333" font-family="Arial, sans-serif" font-size="21" font-weight="700" fill="#0F1F2E"><tspan x="248" dy="0">Follow modeled entities and</tspan><tspan x="248" dy="27.3">relations</tspan></text>
+<text x="248" y="395" font-family="Arial, sans-serif" font-size="19" font-weight="400" fill="#6B6356"><tspan x="248" dy="0">Useful for explicit</tspan><tspan x="248" dy="24.7">relationships.</tspan></text>
+<rect x="28" y="458" width="584" height="118" fill="#F4ECDC" stroke="#0F1F2E" stroke-width="1.5"/>
+<path d="M230 458 V576" stroke="#0F1F2E" stroke-width="1.5"/>
+<text x="44" y="490" font-family="Arial, sans-serif" font-size="23" font-weight="700" fill="#1E5F70"><tspan x="44" dy="0">Evidence</tspan><tspan x="44" dy="29.9">assembly</tspan></text>
+<text x="248" y="489" font-family="Arial, sans-serif" font-size="21" font-weight="700" fill="#0F1F2E"><tspan x="248" dy="0">Join source-backed results</tspan></text>
+<text x="248" y="525" font-family="Arial, sans-serif" font-size="19" font-weight="400" fill="#6B6356"><tspan x="248" dy="0">Preserve provenance and</tspan><tspan x="248" dy="24.7">permissions.</tspan></text>
+<rect x="28" y="588" width="584" height="118" fill="#F4ECDC" stroke="#0F1F2E" stroke-width="1.5"/>
+<path d="M230 588 V706" stroke="#0F1F2E" stroke-width="1.5"/>
+<text x="44" y="620" font-family="Arial, sans-serif" font-size="23" font-weight="700" fill="#1E5F70"><tspan x="44" dy="0">Answer</tspan><tspan x="44" dy="29.9">generation</tspan></text>
+<text x="248" y="619" font-family="Arial, sans-serif" font-size="21" font-weight="700" fill="#0F1F2E"><tspan x="248" dy="0">Use the selected evidence</tspan></text>
+<text x="248" y="655" font-family="Arial, sans-serif" font-size="19" font-weight="400" fill="#6B6356"><tspan x="248" dy="0">Evaluate against an ordinary RAG</tspan><tspan x="248" dy="24.7">baseline.</tspan></text>
+<path d="M28 728 H612" stroke="#0F1F2E" stroke-width="1.5"/>
+<text x="28" y="754" font-family="Arial, sans-serif" font-size="18" font-weight="400" fill="#6B6356"><tspan x="28" dy="0">Milvus stores searchable representations; graph traversal</tspan><tspan x="28" dy="23.4">needs its own layer.</tspan></text>
+</svg>

@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 666" width="640" height="666" role="img" aria-labelledby="title desc">
+<title id="title">Mine difficult non-matches, then verify</title>
+<desc id="desc">Start with labeled queries: Keep development and final test data separate.. Retrieve near the positives: Find high-scoring candidates that look relevant.. Verify they are negatives: Remove unlabeled positives and ambiguous cases.. Train and re-evaluate: Version the mining setup and inspect regressions.. A highly ranked unlabeled document is not automatically a negative.</desc>
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M1 1 L6 4 L1 7" fill="none" stroke="#1E5F70" stroke-width="1.5"/></marker></defs>
+<rect width="640" height="666" fill="#FAF6EE"/>
+<text x="28" y="30" font-family="Arial, sans-serif" font-size="12" font-weight="400" fill="#6B6356"><tspan x="28" dy="0">MILVUS / AI REFERENCE / SCHEMATIC</tspan></text>
+<text x="28" y="72" font-family="Georgia, serif" font-size="28" font-weight="700" fill="#0F1F2E"><tspan x="28" dy="0">Mine difficult non-matches, then</tspan><tspan x="28" dy="36.4">verify</tspan></text>
+<rect x="28" y="146" width="584" height="86" fill="#F4ECDC" stroke="#0F1F2E" stroke-width="1.5"/>
+<rect x="28" y="146" width="5" height="86" fill="#1E5F70"/>
+<text x="48" y="177" font-family="Arial, sans-serif" font-size="23" font-weight="700" fill="#0F1F2E"><tspan x="48" dy="0">Start with labeled queries</tspan></text>
+<text x="48" y="207" font-family="Arial, sans-serif" font-size="20" font-weight="400" fill="#6B6356"><tspan x="48" dy="0">Keep development and final test data separate.</tspan></text>
+<path d="M320 235 V254" fill="none" stroke="#1E5F70" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="28" y="258" width="584" height="86" fill="#F4ECDC" stroke="#0F1F2E" stroke-width="1.5"/>
+<rect x="28" y="258" width="5" height="86" fill="#1E5F70"/>
+<text x="48" y="289" font-family="Arial, sans-serif" font-size="23" font-weight="700" fill="#0F1F2E"><tspan x="48" dy="0">Retrieve near the positives</tspan></text>
+<text x="48" y="319" font-family="Arial, sans-serif" font-size="20" font-weight="400" fill="#6B6356"><tspan x="48" dy="0">Find high-scoring candidates that look relevant.</tspan></text>
+<path d="M320 347 V366" fill="none" stroke="#1E5F70" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="28" y="370" width="584" height="86" fill="#F4ECDC" stroke="#0F1F2E" stroke-width="1.5"/>
+<rect x="28" y="370" width="5" height="86" fill="#1E5F70"/>
+<text x="48" y="401" font-family="Arial, sans-serif" font-size="23" font-weight="700" fill="#0F1F2E"><tspan x="48" dy="0">Verify they are negatives</tspan></text>
+<text x="48" y="431" font-family="Arial, sans-serif" font-size="20" font-weight="400" fill="#6B6356"><tspan x="48" dy="0">Remove unlabeled positives and ambiguous cases.</tspan></text>
+<path d="M320 459 V478" fill="none" stroke="#1E5F70" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="28" y="482" width="584" height="86" fill="#F4ECDC" stroke="#0F1F2E" stroke-width="1.5"/>
+<rect x="28" y="482" width="5" height="86" fill="#E85A2B"/>
+<text x="48" y="513" font-family="Arial, sans-serif" font-size="23" font-weight="700" fill="#0F1F2E"><tspan x="48" dy="0">Train and re-evaluate</tspan></text>
+<text x="48" y="543" font-family="Arial, sans-serif" font-size="20" font-weight="400" fill="#6B6356"><tspan x="48" dy="0">Version the mining setup and inspect regressions.</tspan></text>
+<path d="M28 590 H612" stroke="#0F1F2E" stroke-width="1.5"/>
+<text x="28" y="616" font-family="Arial, sans-serif" font-size="18" font-weight="400" fill="#6B6356"><tspan x="28" dy="0">A highly ranked unlabeled document is not automatically a</tspan><tspan x="28" dy="23.4">negative.</tspan></text>
+</svg>

@@ -34,6 +34,6 @@ const get = async path => {
   }
   for (const path of assets) await get(path);
   for (const path of ['/solutions/unknown-topic', '/fr/solutions/hybrid-search']) assert.equal((await fetch(base + path)).status, 404);
-  assert.equal(pages.length, 16);
-  console.log(JSON.stringify({ pages: 16, hubs: 4, assets: assets.size, status: 'passed' }));
+  assert.equal(pages.length, 24);
+  console.log(JSON.stringify({ pages: pages.length, hubs: 4, assets: assets.size, status: 'passed' }));
 })().catch(e => { console.error(e); process.exitCode = 1; });

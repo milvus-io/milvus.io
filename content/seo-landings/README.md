@@ -1,7 +1,8 @@
 # Milvus SEO landing pages
 
-Imported from the owner's `milvus-landing-handoff-2026-10-21.zip`. The JSON files in
-`en/` and `zh/` are the editable source for eight themes in two languages. The
+Imported from the owner's landing handoff and its revised
+`milvus-landing-studio-2026-10-20/content` materials. The JSON files in
+`en/` and `zh/` are the editable source for twelve themes in two languages. The
 site renders them as native Next.js static pages, with four navigable comparison
 and solution indexes. The standalone HTML in the handoff is a visual reference,
 not a production route.
@@ -11,7 +12,7 @@ not a production route.
 - Each page has one H1, a self-canonical, reciprocal English/Simplified Chinese
   alternates, an English x-default, visible FAQ content matching FAQPage JSON-LD,
   a breadcrumb pointing to a real index, and local social/diagram assets.
-- All 16 pages and four indexes are advertised by the sitemap. `reviewedOn` is
+- All 24 pages and four indexes are advertised by the sitemap. `reviewedOn` is
   the actual content review date; a build does not advance that date.
 - Header and footer link visibly to the solution and comparison indexes. Related
   pages and concept references use actual canonical paths. This change does not
@@ -34,8 +35,9 @@ not a production route.
   tenant boundary. The agent page requires a tenant filter on every request.
 - Architecture prose no longer promises that ingestion and search never share
   machines, or that new data is visible independently of consistency settings.
-- Four comparison SVGs had duplicate style attributes in the HTML export; these
-  are merged and all 16 figures have their own SVG namespace and styles.
+- All 24 figures have their own SVG namespace and styles. Figures are generated
+  from reviewed JSON, so enterprise qualifications and architecture corrections
+  also appear in the diagrams, independently of the handoff's older HTML renders.
 - Comparison recommendations describe architecture and operational tradeoffs, rather than presenting a small/stable corpus as a hard limit of Qdrant.
 - Every benchmark chart links to the underlying VectorDBBench results. QPS,
   P99 and recall were checked against the public files on 2026-10-21. The small
@@ -75,10 +77,35 @@ paid campaigns and third-party docs edits are **not** applied by this PR. In
 particular, don't redirect an existing comparison until the old/new intents,
 organic traffic and destination availability have been checked.
 
+### Revised capability coverage
+
+- Six solution topics now include deployment and operations choices, index and
+  quantization tradeoffs, the write/search lifecycle, consistency, embedding
+  functions, agent memory and framework integration, and Lance/Iceberg external
+  collections with refresh and Spark/Ray/DuckDB roles.
+- Added English/Chinese pgvector, Weaviate, LanceDB and Vespa comparisons. Together
+  with Qdrant and Elasticsearch/OpenSearch, the comparison indexes now contain
+  six topics. Each page distinguishes product editions and describes when the
+  other system fits; adding a machine or corpus size alone is not a hard product
+  boundary.
+- Do not compare the old 2023 pgvector/Weaviate runs to current Milvus results.
+  Those pages' charts show only verified Milvus/Zilliz Cloud configurations and
+  explicitly do not establish a competitor speed advantage. The existing Qdrant
+  and Elasticsearch/OpenSearch charts retain their published configuration labels.
+- Standalone still needs its data infrastructure; embedded Woodpecker does not
+  mean etcd and object storage vanish. Moving from Postgres also requires schema,
+  index and query changes even when embeddings can be reused.
+- Weaviate collection defaults and per-shard replica MOVE/COPY are separate.
+  LanceDB OSS is an embedded library; Cloud/Enterprise serving architectures are
+  separate products, not proof of an OSS corpus ceiling.
+- The revised handoff's analytics and redirect suggestions are not configuration
+  instructions: there is no second analytics installation, no click-as-signup
+  conversion, and no automatic cross-site redirect in this update.
+
 ## Verification
 
 ```
-node --test tests/seo-landings.test.cjs tests/ai-reference-catalog.test.cjs
+node --test tests/seo-landings.test.cjs tests/landing-tracking.test.cjs tests/landing-locale.test.cjs tests/ai-reference-catalog.test.cjs
 pnpm exec tsc --noEmit --incremental false
 LANDING_TEST_URL=http://127.0.0.1:8033 node scripts/smoke-seo-landings.js
 ```

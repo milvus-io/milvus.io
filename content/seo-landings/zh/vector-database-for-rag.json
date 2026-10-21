@@ -5,30 +5,33 @@
   "nav": "RAG 向量库",
   "path": "/zh/solutions/vector-database-for-rag",
   "title": "RAG 向量数据库选型：开源 Milvus 混合检索与重排",
-  "description": "Milvus 是开源 RAG 向量数据库：BM25 与稠密向量混合检索、正则过滤、库内重排流水线、多租户和磁盘索引，大模型知识库从笔记本一路扩到数十亿 chunk。",
+  "description": "Milvus 是开源 RAG 向量数据库：BM25 与稠密向量混合检索、元数据过滤、库内重排、多租户和磁盘索引，大模型知识库从本地部署一路扩到数十亿 chunk，也可托管。",
   "keywords": {
     "primary": "RAG 向量数据库",
     "secondary": [
-      "RAG 用什么向量数据库",
       "RAG 向量数据库选型",
+      "向量数据库怎么选",
       "开源 RAG 向量数据库",
       "知识库 向量数据库",
       "本地知识库 向量数据库",
-      "大模型知识库 向量检索",
       "大模型知识库搭建",
-      "检索增强生成 数据库",
       "RAG 混合检索",
       "RAG 多路召回",
       "RAG 重排序",
-      "LangChain 向量数据库"
+      "LangChain 向量数据库",
+      "元数据过滤",
+      "向量数据库 上生产",
+      "本地部署 托管",
+      "知识图谱 GraphRAG"
     ],
     "questions": [
-      "RAG 用什么向量数据库",
-      "RAG 就是向量数据库吗",
-      "向量数据库和知识库的区别",
-      "RAG 混合检索还需要 Elasticsearch 吗",
-      "RAG 重排序能用自己的模型吗",
-      "大模型知识库搭建怎么起步"
+      "为什么 RAG 要用向量数据库？其他数据库不行吗？",
+      "搭建 RAG 系统，向量数据库怎么选？",
+      "RAG 混合检索还需要 Elasticsearch 吗？",
+      "分块和 Embedding 由谁来做？",
+      "RAG 重排序能用自己的模型吗？检索效果怎么评估？",
+      "如何基于大模型搭建自己的知识库？",
+      "知识库、知识图谱与向量数据库有什么区别？"
     ]
   },
   "h1": "RAG 向量数据库：经得起生产考验的检索",
@@ -88,12 +91,12 @@
       "body": "内置 BM25 全文检索，与稠密向量在一次混合检索里融合，精确 ID 和换了说法的问题都能命中对的 chunk。"
     },
     {
-      "title": "按租户检索",
-      "body": "过滤表达式在向量检索内部执行。partition key 让多个租户共享一个 collection，官方文档给的规模是百万级租户。"
+      "title": "元数据过滤，按租户检索",
+      "body": "过滤表达式（==、in、范围、JSON 路径）与向量检索在一次请求中执行；使用分区键时，每次请求仍需包含正确的租户过滤。"
     },
     {
       "title": "答案不过期",
-      "body": "upsert 按主键替换 chunk，delete 直接移除，每个请求可指定一致性级别，决定读到的数据多新。"
+      "body": "upsert 按主键替换 chunk，delete 直接移除，每个请求可指定一致性级别，决定读到的数据多新。没有第二套索引要同步。"
     },
     {
       "title": "知识库大，账单小",
@@ -130,7 +133,7 @@
     },
     {
       "title": "磁盘索引降成本",
-      "body": "不是每个 chunk 都得常驻内存，按延迟预算选内存占用。",
+      "body": "不是每个 chunk 都得常驻内存：热数据用 HNSW，其余交给磁盘和量化索引，按延迟预算选内存占用。",
       "bullets": [
         "DiskANN 把图和原始向量放 SSD；AISAQ 几乎全部放 SSD",
         "mmap 与分层存储按需从磁盘或对象存储加载",
@@ -146,32 +149,38 @@
     "note": "embed() 换成你的 embedding 模型。BM25 + 稠密混合检索和正则过滤见混合检索与模式匹配文档。"
   },
   "compare": {
-    "h2": "RAG 向量数据库选型：需求与 Milvus 功能对照",
-    "caption": "检索需求与 Milvus 功能对照（来源：milvus.io/docs）",
+    "h2": "搭建 RAG 系统，向量数据库怎么选？五条选型清单",
+    "caption": "RAG 向量数据库选型清单：查什么、为什么重要、Milvus 怎么答（来源：milvus.io/docs）",
     "heads": [
-      "RAG 需求",
-      "Milvus 功能"
+      "选型要点",
+      "对 RAG 的意义",
+      "Milvus"
     ],
     "rows": [
       [
-        "精确编码 + 语义召回",
-        "BM25 + 稠密 hybrid_search，正则 / LIKE / TEXT_MATCH 过滤"
+        "混合检索（关键词 + 向量）",
+        "错误码、SKU、条款编号只靠 embedding 会漏",
+        "BM25 + 稠密 hybrid_search；正则 / LIKE / TEXT_MATCH 过滤"
       ],
       [
-        "限定范围检索",
-        "过滤表达式、partition key"
+        "元数据过滤与多租户",
+        "每个用户只能查到自己的文档，且在查询时生效",
+        "ANN 内部的过滤表达式；partition key 承载百万级租户"
       ],
       [
-        "更准的 top-k 排序",
+        "重排序",
+        "top-k 的顺序决定 LLM 读到什么",
         "RRF / 加权 ranker、模型 ranker、Function Chain、XGBoost 打分"
       ],
       [
-        "知识实时更新",
+        "知识更新",
+        "过期 chunk 会生成自信的错误答案",
         "upsert、delete、一致性级别"
       ],
       [
-        "规模增长、成本可控",
-        "Lite → Standalone → Distributed；DiskANN、mmap、分层存储"
+        "规模、成本、本地部署还是托管",
+        "原型很小，上生产要到数十亿 chunk",
+        "Milvus Lite → Standalone → Distributed，或 Zilliz Cloud；DiskANN、mmap、分层存储"
       ]
     ],
     "note": null
@@ -190,29 +199,33 @@
   ],
   "faqs": [
     [
-      "RAG 知识库用什么向量数据库？",
-      "选能把检索全包的：关键词加语义检索、租户过滤、重排、匹配语料规模的存储层。Milvus 开源版四样都有，Lite 到 Distributed 一套 API。"
+      "为什么 RAG 要用向量数据库？其他数据库不行吗？",
+      "RAG 靠语义相似度找 chunk，这是 ANN 索引的活。pgvector 适合语料小且本来就在 PostgreSQL 里的场景；要混合检索、大规模过滤检索、租户隔离和磁盘索引时，专用向量数据库更合适，Milvus Lite 起步同样轻。"
     ],
     [
-      "RAG 就是向量数据库吗？向量数据库和知识库的区别在哪？",
-      "不是。知识库是文档和 chunk，向量数据库存向量并检索出相关 chunk，RAG 是“检索 + 大模型生成”整条链路，Milvus 管检索这一半。"
+      "知识库、知识图谱与向量数据库有什么区别？",
+      "知识库是文档和 chunk，知识图谱存实体和关系，向量数据库存向量并检索出相关 chunk；RAG 是“检索 + 大模型生成”整条链路，Milvus 管检索这一半，文档里还有 GraphRAG 教程处理多跳问题。"
     ],
     [
       "RAG 混合检索还需要 Elasticsearch 吗？",
-      "不需要。Milvus 原生支持 BM25，还有正则、LIKE、TEXT_MATCH 过滤，hybrid_search 一次请求就把关键词和稠密结果融合。"
+      "不需要。Milvus 原生支持 BM25，还有正则、LIKE、TEXT_MATCH 过滤，hybrid_search 一次请求就把关键词和稠密结果多路召回后融合。"
     ],
     [
-      "RAG 重排序能用自己的模型吗？",
-      "可以。Milvus 3.0+ 的 Function Chain 能在检索请求内用你的 XGBoost 模型基于标量特征打分，也能调用托管重排模型。"
+      "分块和 Embedding 由谁来做？",
+      "分块留在加载端（LangChain、LlamaIndex、Dify）。Embedding 可以进库：Embedding Function（Milvus 2.6+）在写入和查询时调用 OpenAI、Cohere、Voyage AI、Gemini 等模型，存文本、用文本查。"
     ],
     [
-      "大模型知识库搭建怎么起步？",
-      "pip 装 Milvus Lite 先做本地知识库，向量数据库 API 与集群一致；接 LangChain 或 Dify，数据量大了换 Distributed 或 Zilliz Cloud，代码不改。"
+      "RAG 重排序能用自己的模型吗？检索效果怎么评估？",
+      "可以。Milvus 3.0+ 的 Function Chain 能在检索请求内用你的 XGBoost 模型打分，也能调用托管重排模型。用标注过的查询测 recall@k 和 NDCG，改前改后各测一次。"
+    ],
+    [
+      "如何基于大模型搭建自己的知识库？",
+      "大模型知识库搭建的起步：pip 装 Milvus Lite 先做本地知识库，本地部署的 API 与集群一致；接 LangChain 或 Dify，数据量大了、向量数据库要上生产时换 Distributed 或托管的 Zilliz Cloud，代码不改。"
     ]
   ],
   "final": {
     "h2": "给大模型知识库配一个生产级的向量检索器",
-    "body": "先在 notebook 里用 Milvus Lite，接入 LangChain、LlamaIndex 或 Dify，向量数据库这层不用换；再随语料增长加上混合检索、grep 过滤、重排链和磁盘索引。"
+    "body": "先在 notebook 里用 Milvus Lite，接入 LangChain、LlamaIndex 或 Dify，向量数据库这层不用换；再随语料增长加上混合检索、元数据过滤、重排链和磁盘索引。"
   },
   "sources": [
     "https://milvus.io/docs/full-text-search.md",
@@ -220,10 +233,10 @@
     "https://milvus.io/docs/filtered-search.md",
     "https://milvus.io/docs/multi_tenancy.md",
     "https://milvus.io/docs/use-partition-key.md",
-    "https://milvus.io/docs/rerankers-overview.md",
+    "https://milvus.io/docs/reranking.md",
     "https://milvus.io/docs/model-ranker-overview.md",
     "https://milvus.io/docs/upsert-entities.md",
-    "https://milvus.io/docs/tune_consistency.md",
+    "https://milvus.io/docs/consistency.md",
     "https://milvus.io/docs/integrate_with_langchain.md",
     "https://milvus.io/docs/integrate_with_llamaindex.md",
     "https://milvus.io/docs/integrate_with_haystack.md",
@@ -256,7 +269,12 @@
     "https://milvus.io/docs/tiered-storage-overview.md",
     "https://milvus.io/docs/ivf-rabitq.md",
     "https://milvus.io/docs/ivf-sq8.md",
-    "https://milvus.io/docs/ivf-pq.md"
+    "https://milvus.io/docs/ivf-pq.md",
+    "https://milvus.io/docs/embedding-function-overview.md",
+    "https://milvus.io/docs/graph_rag_with_milvus.md",
+    "https://milvus.io/docs/milvus_lite.md",
+    "https://milvus.io/docs/boolean.md",
+    "https://milvus.io/docs/delete-entities.md"
   ],
   "notes": [
     "Meituan (10B+ vectors, 100+ use cases, 2B+ single collection, self-run open-source Milvus, quote 'from RAG to agent memory') and Read AI (sub 20-50 ms, millions of monthly users) re-checked on zilliz.com customer pages 2026-10-21. Read AI page does not say RAG explicitly; copy says 'retrieval'.",
@@ -270,7 +288,8 @@
     "Weighted RRF (per-request weights) shipped in 3.0.1 (#52926); copy just says RRF / weighted.",
     "Docs label AISAQ (Milvus 2.6.4+), Tiered Storage (2.6.4+) and Boost Ranker (2.6.2+) as beta. Copy does not say beta; decide before launch. Memory facts used only as documented: DiskANN keeps PQ codes in RAM and raw vectors + graph on SSD; AISAQ keeps all index data on SSD; IVF_RABITQ docs state a 1-to-32 compression ratio; SQ8 = 8-bit ints instead of 32-bit floats.",
     "Code snippet kept (approved tenant-scoped MilvusClient example); hybrid_search + regex example not added because a runnable BM25 schema makes it ~30 lines.",
-    "Keyword pass 2026-10-21: keywords.primary/secondary/questions rebuilt from Google/Bing/Baidu autocomplete (WebSearch budget exhausted in session). research: https://suggestqueries.google.com (autocomplete, hl=en / zh-CN); https://api.bing.com/osjson.aspx (autocomplete, en-US / zh-CN); https://www.baidu.com/sugrec (autocomplete). 「必须自己运维吗」FAQ 并入大模型知识库搭建 FAQ。"
+    "SERP pass 2026-10-21: studied 16 EN / 18 ZH results (2 Medium, learnopencv, 1 Zhihu, 1 segmentfault, 1 adg.csdn hits blocked, not counted). Primary SERP is table-first and decision-oriented (dronahq decision guide, pingcap 10-DB table, zenml/braintrust/liveblocks listicles); code is rare. Gaps closed: how-to-choose checklist as the compare table (8 results) with a managed vs self-hosted row (8) and scale bands (4 ZH); 'dedicated vector DB vs pgvector' fair FAQ (9); chunking + embedding model via Embedding Functions (5); evaluation metrics recall@k / NDCG inside the rerank FAQ (5); Graph RAG tutorial mention (5); metadata filtering operators (4); freshness / no second index to sync (3); ZH '为什么 RAG 要用向量数据库' and '知识库、知识图谱与向量数据库的区别' FAQs. Not added: competitor comparison table / pricing (SPEC-v3: no competitor x-times claims, no pricing), index-parameter tuning (HNSW ef etc.). Dropped keywords (no title/H2 evidence): EN 'RAG vector store', 'RAG database', 'retrieval augmented generation database', 'vector database for RAG LangChain', 'local vector database for RAG' (SERP says 'local RAG'), 'RAG vector database example'; ZH 'RAG 用什么向量数据库' (SERP says 怎么选 / 如何选择), '检索增强生成 数据库', '大模型知识库 向量检索'. Not verifiable: Google PAA boxes (no SERP API); questions taken from result titles/H2s/FAQ blocks. Embedding Function providers per embedding-function-overview (label 'Compatible with Milvus 2.6.x'): OpenAI, Azure OpenAI, DashScope, Bedrock, Vertex AI, Voyage AI, Cohere, SiliconFlow, TEI, Hugging Face, Gemini, Yandex; applies on insert and on query text. pgvector line is a fair 'when X fits' statement, not a benchmark claim.",
+    "Retain previously reviewed executable example changes and sample prerequisites."
   ],
   "layout": "pillar",
   "aiq": [
@@ -346,8 +365,44 @@
       "cta_zilliz_signup_click"
     ]
   },
-  "benefits_h2": "检索增强生成（RAG）数据库要解决的四件事",
+  "benefits_h2": "RAG 为什么要用向量数据库：它得做好的四件事",
   "feature_blocks_h2": "混合检索、RAG 重排序、磁盘索引",
+  "research": [
+    "https://www.dronahq.com/vector-database-rag/",
+    "https://www.pingcap.com/compare/best-vector-database/",
+    "https://docs.cloud.google.com/gemini-enterprise-agent-platform/build/rag-engine/vector-db-choices",
+    "https://writer.com/engineering/rag-vector-database/",
+    "https://www.zenml.io/blog/vector-databases-for-rag",
+    "https://developers.cloudflare.com/vectorize/reference/what-is-a-vector-database/",
+    "https://n8n.io/rag/",
+    "https://www.braintrust.dev/articles/best-vector-databases-for-rag-2026",
+    "https://liveblocks.io/blog/whats-the-best-vector-database-for-building-ai-products",
+    "https://www.analyticsinsight.net/database/best-vector-database-options-for-rag-in-2026-explained",
+    "https://alphacorp.ai/blog/best-vector-databases-for-rag-2026-top-7-picks",
+    "https://pecollective.com/tools/best-vector-databases/",
+    "https://airbyte.com/agentic-data/what-is-a-vector-store",
+    "https://community.n8n.io/t/building-rag-in-2025-vector-stores-as-tools-is-here/75166",
+    "https://www.infoq.com/articles/vector-search-hybrid-retrieval-rag/",
+    "https://truto.one/blog/how-to-architect-strict-data-isolation-in-multi-tenant-rag-pipelines/",
+    "https://cloud.tencent.com/developer/article/2432140",
+    "https://javaguide.cn/ai/rag/rag-vector-store.html",
+    "https://jimmysong.io/zh/book/ai-handbook/rag/vector-databases/",
+    "https://www.cnblogs.com/hohoa/p/18456986",
+    "https://blog.csdn.net/m0_59235945/article/details/142067781",
+    "https://blog.csdn.net/qq_31142761/article/details/161358996",
+    "https://developer.aliyun.com/article/1740657",
+    "https://blog.csdn.net/m0_59164520/article/details/146200857",
+    "https://blog.csdn.net/AAI666666/article/details/160339583",
+    "https://quanxiaoha.com/java-interview/why-rag-uses-vector-database",
+    "https://cloud.tencent.com/product/vdb",
+    "https://blog.csdn.net/2301_81940605/article/details/155488221",
+    "https://blog.csdn.net/weixin_43440181/article/details/149029293",
+    "https://www.53ai.com/news/RAG/2024070227395.html",
+    "https://blog.csdn.net/Yunyi_Chi/article/details/157506581",
+    "https://www.53ai.com/news/RAG/2025082574298.html",
+    "https://cloud.baidu.com/article/3365381",
+    "https://www.cnblogs.com/N3ptune/p/17978538"
+  ],
   "lang": "zh",
   "reviewedOn": "2026-10-21"
 }

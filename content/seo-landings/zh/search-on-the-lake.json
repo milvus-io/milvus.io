@@ -10,15 +10,18 @@
     "primary": "数据湖 向量检索",
     "secondary": [
       "向量数据湖",
+      "湖上向量检索",
       "Lance 向量检索",
       "Lance 存储格式",
       "Lance vs Parquet",
+      "Lance 和 Iceberg 对比",
       "Iceberg 向量检索",
       "湖仓一体 向量检索",
       "湖仓一体 向量数据库",
       "多模态数据湖",
+      "多模态湖仓",
+      "Paimon 向量索引",
       "Milvus 外部集合",
-      "Milvus 3.0 外部集合",
       "外部表 向量检索",
       "零拷贝 向量检索",
       "存算分离 向量数据库",
@@ -26,11 +29,11 @@
     ],
     "questions": [
       "数据湖里的向量能直接检索，还是必须导入向量数据库？",
+      "湖上向量检索有哪几种做法？",
       "Iceberg 表能直接做向量检索吗？",
-      "Spark / Ray 写湖后怎么接入向量检索？",
       "外部表做向量检索，湖表更新后索引怎么刷新？",
-      "Lance 和 Parquet 有什么区别，向量该放哪种格式？",
-      "湖仓一体和向量数据库是替代还是互补？",
+      "Lance、Iceberg、Parquet，向量该放哪种格式？",
+      "Lance 自带向量索引，为什么还要用 Milvus 建索引？",
       "LanceDB 和 Milvus 对比，怎么选？"
     ]
   },
@@ -147,18 +150,55 @@
       }
     },
     {
+      "id": "lakehouse-approaches",
+      "nav": "三种做法",
+      "h2": "湖上向量检索有哪几种做法？",
+      "paragraphs": [
+        "湖仓一体的向量检索有三种形态，差别在索引放在哪、由谁服务查询。Milvus 走第三种：独立服务层，直接在湖表上建索引、回答在线查询。"
+      ],
+      "table": {
+        "caption": "湖上向量检索的三种做法：向量索引放在哪、适合什么场景",
+        "heads": [
+          "做法",
+          "索引在哪",
+          "例子",
+          "适合"
+        ],
+        "rows": [
+          [
+            "表格式自带向量列和 SQL 函数",
+            "表格式自己的服务和查询引擎里",
+            "Apache Hudi 的 VECTOR 类型 + hudi_vector_search",
+            "SQL 优先的团队，在 join、聚合旁边跑批量 top-k"
+          ],
+          [
+            "索引文件由表格式 / 文件格式持有",
+            "与数据文件放在一起，由格式自身的工具构建",
+            "Paimon 2.0 向量索引，Doris、StarRocks 直查；Lance 数据集自带 IVF_PQ、IVF_HNSW 索引，LanceDB、DuckDB 读取",
+            "已经在读这张表的分析引擎，批量查询"
+          ],
+          [
+            "独立服务层在原表上建索引",
+            "服务系统里，湖表保持只读",
+            "Milvus 外部集合（外部表），支持 Lance、Iceberg、Parquet、Vortex",
+            "面向大量并发客户端的在线检索，带过滤、BM25 和混合检索"
+          ]
+        ]
+      }
+    },
+    {
       "id": "lance",
       "nav": "Lance",
       "h2": "Lance 向量检索：怎样用 Milvus 服务 Lance 数据集？",
       "paragraphs": [
-        "Lance 是为 AI 数据设计的开放列式存储格式：随机读快、数据集自带版本、在对象存储上加列成本低。随机读在在线检索时很关键，因为 ANN 召回之后，Milvus 要回源读取输出字段（回表）。external_source 指向数据集目录，format 设为 lance-table 即可。",
+        "Lance 是面向 AI 数据的开放列式格式，支持随机行访问、数据集版本和对象存储上的列操作。Milvus 可直接映射已有 Lance 列，在检索后按需读取输出字段。将 external_source 指向数据集目录，format 设为 lance-table。",
         "Lance vs Parquet 的差别主要在随机读：Parquet 为顺序扫描优化，Lance 在列式布局之上兼顾按行号取数，更适合检索后回表、训练采样这类随机访问。两种格式 Milvus 都能直接读，不需要为检索专门转换格式。"
       ],
       "bullets": [
         "照常用 Lance 的 Python、Spark 或 Ray 集成写入和追加。",
-        "Milvus 把数据集的 fragment 映射进 manifest，不复制任何行。",
+        "Milvus 把数据集的 fragment 映射进 manifest，并在自己的存储里建 HNSW、IVF 或 DiskANN 索引；不往数据集里写任何东西，Lance 自带的索引和版本原样保留。",
         "新 fragment 写入后 refresh：没变的数据沿用原有 segment 和索引。",
-        "多模态数据湖里的图片、文本、向量放同一张表，Milvus 只映射需要的列。"
+        "多模态湖仓（多模态数据湖）里的图片、文本、向量放同一张表，Milvus 只映射需要的列。"
       ]
     },
     {
@@ -284,8 +324,12 @@
       "可以。Milvus 3.0+ 创建外部集合，设置 \"format\": \"iceberg-table\"，指向表的 metadata JSON 文件和 snapshot_id，然后 refresh、建索引、检索。存成 float list 的向量映射为 FLOAT_VECTOR。"
     ],
     [
-      "Spark / Ray 写湖后怎么接入向量检索？",
-      "不用导入。继续用 Spark、Ray 把行和向量写进 Lance 数据集或 Iceberg 表，然后在 Milvus 里创建外部集合：external_source 指向数据集目录或表的 metadata 文件，用 external_field 映射字段，再 refresh、建索引、检索。数据始终留在湖里。"
+      "湖上向量检索有哪几种做法？",
+      "三种：表格式自带向量列和 SQL 函数（如 Hudi）；索引文件由表格式持有、分析引擎直查（Paimon 向量索引 + Doris/StarRocks，Lance 自带索引 + LanceDB/DuckDB）；独立服务层在原表上建索引（Milvus 外部集合）。在线高并发、要过滤和混合检索，选第三种。"
+    ],
+    [
+      "Lance 自带向量索引，为什么还要用 Milvus 建索引？",
+      "Lance 数据集可以自带 IVF_PQ、IVF_RQ、IVF_HNSW_SQ、IVF_HNSW_FLAT 索引，由 LanceDB 在进程内查询。Milvus 在自己的存储里另建 HNSW、IVF 或 DiskANN 索引，一个集群可以把同一份数据集服务给大量客户端，并叠加过滤、BM25 和混合检索。"
     ],
     [
       "LanceDB 和 Milvus 对比，怎么选？",
@@ -296,12 +340,8 @@
       "湖上数据变化后调用 refresh_external_collection。它是异步、增量的：没变的数据沿用原有 segment 和索引，刷新完成前查询继续读旧状态。"
     ],
     [
-      "Lance 和 Parquet 有什么区别，向量该放哪种格式？",
-      "Milvus 两种都能读。需要快速随机读、版本管理、频繁加列的 AI 数据集适合 Lance；看重工具生态兼容的适合 Parquet。Iceberg 则在 Parquet 数据文件之上提供表级快照。"
-    ],
-    [
-      "Milvus 会拷贝或修改湖里的数据吗？",
-      "不会。外部数据源只读，Milvus 只保存字段映射、manifest、索引和缓存。"
+      "Lance、Iceberg、Parquet，向量该放哪种格式？",
+      "Milvus 三种都能读。需要快速随机读、版本管理、频繁加列的 AI 数据集适合 Lance；Iceberg 在 Parquet 数据文件之上提供表级快照、schema 演进和 SQL 引擎的治理；只用 Parquet 则工具生态最广。"
     ]
   ],
   "aiq": [
@@ -319,22 +359,26 @@
     "hybrid-search",
     "distributed-vector-database",
     "open-source-vector-database",
-    "database-for-ai-agents"
+    "database-for-ai-agents",
+    "milvus-vs-lancedb"
   ],
   "managed": {
     "h2": "想用全托管的湖上检索？",
     "body": "Zilliz Cloud 是全托管的 Milvus 服务，以 Public Preview 形式提供 Lance、Iceberg、Parquet、Vortex 外部集合，API 与 MilvusClient 一致。"
   },
   "research": [
-    "https://www.cnblogs.com/Jackeyzhe/p/22706002",
     "https://juejin.cn/post/7684064249389105204",
-    "https://juejin.cn/post/7678155545884016692",
-    "https://help.aliyun.com/zh/dlf/dlf-2-0/use-cases/end-to-end-guide-multimodal-data-ingestion-and-vector-search",
-    "https://cloud.tencent.com/developer/article/2614389",
-    "https://www.cnblogs.com/Aitozi/p/20065133",
     "https://forum.mirrorship.cn/t/topic/21772",
-    "https://juejin.cn/pin/7696046079676137491",
-    "https://ericfu.me/lancedb-and-binary-data-lake/"
+    "https://juejin.cn/post/7576935292427567146",
+    "https://sharkdtu.github.io/posts/lance-format.html",
+    "https://github.com/Jarrettluo/lakehouse-learning",
+    "https://blog.csdn.net/m0_60025795/article/details/151857939",
+    "https://agentset.ai/vector-databases/compare/lancedb-vs-milvus",
+    "https://builderai.tools/blog/vector-database-benchmarks-qdrant-milvus-weaviate-lancedb",
+    "https://github.com/lance-format/lance",
+    "https://www.dremio.com/blog/exploring-the-evolving-file-format-landscape-in-ai-era-parquet-lance-nimble-and-vortex-and-what-it-means-for-apache-iceberg/",
+    "https://tuts.alexmercedcoder.dev/2026/2026-05-24-lance-iceberg-multimodal/",
+    "https://hudi.apache.org/blog/2026/07/06/bringing-vector-search-to-the-lakehouse-with-apache-hudi/"
   ],
   "sources": [
     "https://milvus.io/docs/create-an-external-collection.md",
@@ -351,7 +395,13 @@
     "https://github.com/milvus-io/milvus-docs/tree/v3.0.x/site/en",
     "https://docs.lancedb.com/lance",
     "https://docs.zilliz.com/docs/external-collection-limits",
-    "https://github.com/milvus-io/milvus"
+    "https://github.com/milvus-io/milvus",
+    "https://github.com/lance-format/lance",
+    "https://docs.lancedb.com/indexing/vector-index",
+    "https://hudi.apache.org/blog/2026/07/06/bringing-vector-search-to-the-lakehouse-with-apache-hudi/",
+    "https://juejin.cn/post/7684064249389105204",
+    "https://forum.mirrorship.cn/t/topic/21772",
+    "https://github.com/lancedb/lancedb/blob/main/LICENSE"
   ],
   "notes": [
     "FORMAT STRING CONFLICT: create-an-external-collection.md says 'iceberg_table' (underscore); the Milvus source (pkg/util/externalspec/specutil/spec.go at v3.0.3: FormatIcebergTable = \"iceberg-table\", validated against a fixed set), storage-v3.md, the pymilvus API reference, and both 3.0 blogs use 'iceberg-table'. 'iceberg_table' would be rejected. Page uses 'iceberg-table'; recommend fixing the docs page.",
@@ -367,7 +417,9 @@
     "wanted, unverified: Iceberg v3 deletion vectors; pinning Lance versions/tags; latency of external vs native collections (no VectorDBBench result exists).",
     "v3.1 rewrite (2026-10-21): limits section removed per owner; added Lance, Iceberg, cost, lake-stack sections and LanceDB/Lance-vs-Parquet FAQs from SERP research.",
     "中文版：/docs/zh/create-an-external-collection.md 链接未单独核实是否存在中文页。Zilliz Cloud 中国站（zilliz.com.cn）是否提供外部集合未核实。中文 SERP：'Iceberg 向量检索' 与 '外部表 向量检索' 基本无相关结果，竞争主要来自 Paimon 2.0 Global Index + Doris/StarRocks。",
-    "v3.1 关键词优化（2026-10-21）：按 360/Sogou SERP 对齐措辞——'Lance vs Parquet'、'向量数据湖'、'多模态数据湖'、'湖仓一体 向量检索'；FAQ 问句改成搜索原句；'Iceberg 向量检索' 中文 SERP 被 IceBerg Benchmark 论文占据，仅作副词。"
+    "SERP pass 2026-10-21: studied 15 EN / 6 ZH results（中文：掘金 7684064249389105204 快手 Doris 直查 Paimon 向量索引、StarRocks 论坛 21772 多模态湖仓、掘金 7576935292427567146 Lance 概览、sharkdtu Lance 格式、Jarrettluo lakehouse-learning、CSDN 火山引擎多模态数据湖（仅标题）；英文见 EN 文件）. Gaps closed: 新增'湖上向量检索的三种做法'表（Hudi SQL 函数 / Paimon 2.0 向量索引 + Doris、StarRocks 直查与 Lance 自带索引 / Milvus 外部集合原地建索引），对应中文 SERP 里 Paimon-Doris-StarRocks 的主流叙事；Lance 描述补'文件格式 + 表格式 + catalog'三层与项目自称的 100 倍随机读；新增'Lance 自带索引 vs Milvus 索引'和'Lance、Iceberg、Parquet 选格式'FAQ. 关键词补'湖上向量检索'、'多模态湖仓'、'Paimon 向量索引'、'Lance 和 Iceberg 对比'. Dropped: 'Milvus 3.0 外部集合'（并入'Milvus 外部集合'）、'Milvus 会拷贝湖里的数据吗'FAQ（并入 Lance FAQ）。Paimon 官方文档页 404，Paimon 行仅引快手文章与 StarRocks 论坛。",
+    "Retain previously reviewed executable example changes and sample prerequisites.",
+    "Remove generalized Lance/Parquet speed ratio; retain separate index/cache storage costs and refresh prerequisites."
   ],
   "lang": "zh",
   "reviewedOn": "2026-10-21"

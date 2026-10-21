@@ -9,32 +9,34 @@
   "keywords": {
     "primary": "database for AI agents",
     "secondary": [
-      "database built for AI agents",
+      "best database for AI agents",
       "AI agent database",
       "agent memory database",
       "AI agent memory",
       "long term memory for AI agents",
-      "best database for AI agents",
-      "agent memory store",
-      "multi tenant database for agents",
-      "per user memory for agents",
-      "RBAC for AI agents",
-      "row level security for agents",
-      "hybrid search for agents",
-      "grep for AI agents",
-      "open source agent database"
+      "short-term vs long-term agent memory",
+      "types of agent memory",
+      "persistent memory for AI agents",
+      "stateful agents",
+      "tenant isolation for AI agents",
+      "row level security for AI agents",
+      "MCP server for agents",
+      "agent memory layer",
+      "hybrid search for agent memory"
     ],
     "questions": [
       "What is the best database for AI agents?",
-      "How do AI agents store long-term memory?",
-      "Can Milvus give every agent or user its own table?",
-      "How do I stop one agent from reading another user's data?",
-      "Can agents search like grep and by meaning at once?",
-      "How does an agent database isolate millions of agents?"
+      "Do AI agents need a vector database, or is Postgres enough?",
+      "What is the difference between short-term and long-term agent memory?",
+      "How do AI agents remember things between sessions?",
+      "How should AI agents forget outdated information?",
+      "How do I prevent cross-tenant data leakage in AI agents?",
+      "Is agent memory the same as RAG?",
+      "Can agents search like grep and by meaning at once?"
     ]
   },
   "h1": "Milvus: the database built for AI agents",
-  "sub": "Milvus is a database built for AI agents, not a vector index bolted onto one: memory for millions of agent, user and session tenants, permissions the database enforces, and hybrid search plus grep in a single query. Apache-2.0 open source.",
+  "sub": "Milvus is an open-source database for AI agents: long-term memory for millions of tenants, RBAC, hybrid search, grep and MCP. Row-level security is available only in Zilliz Cloud enterprise edition.",
   "primary_cta": {
     "label": "Start the Milvus Quickstart",
     "href": "https://milvus.io/docs/quickstart.md"
@@ -86,8 +88,8 @@
   },
   "benefits": [
     {
-      "title": "Per-user memory, millions of tenants",
-      "body": "One scope per agent, user, session or tool: a multi-tenant agent database with millions of tenants per collection via partition key, or 65,536 collections for separate schemas."
+      "title": "Long-term memory per user, millions of tenants",
+      "body": "Short-term memory lives in the context window; long-term memory lands here as rows: millions of tenants per collection via partition key, or 65,536 collections for separate schemas."
     },
     {
       "title": "Permissions agents can't bypass",
@@ -101,29 +103,37 @@
   "feature_blocks": [
     {
       "title": "Long-term agent memory at million-tenant scale",
-      "body": "Make agent_id, user_id or session_id the partition key and one collection serves millions of tenants: vector database multi-tenancy without a table per user. Split into collections when schemas or RBAC differ.",
+      "body": "Use agent_id, user_id or session_id as the partition key to organize millions of tenants in one collection. Include the tenant filter on every request. Episodic, semantic and procedural memories can use a type field; separate collections when schemas or permission boundaries differ.",
       "bullets": [
         "Include the tenant filter on every request; partition-key pruning reduces the data scanned.",
         "65,536 collections and 64 databases per cluster by default, configurable.",
-        "Entity TTL (Milvus 3.0+) expires individual memories on schedule."
+        "Forgetting built in: Entity TTL (Milvus 3.0+) expires memories on schedule; delete by filter erases one user on request."
       ]
     },
     {
-      "title": "RBAC for AI agents, with enterprise-only row-level security",
-      "body": "Open-source Milvus ships users, roles, and privileges at instance, database, and collection level. Zilliz Cloud enterprise edition adds row-level security for many users behind one service account.",
+      "title": "RBAC for agents, plus row-level security in the enterprise edition",
+      "body": "Open-source Milvus provides users, roles and privileges at instance, database and collection levels. Row-level security is available only in Zilliz Cloud enterprise edition; a partition key is not an authorization mechanism.",
       "bullets": [
         "Built-in groups such as COLL_RO and COLL_RW, or custom privilege groups.",
-        "Row-level policies per collection bind filters to the calling principal and its tags.",
-        "Enforced on reads and writes, fail-closed when identity or policy is missing."
+        "Configure row-level policies and caller identity for the enterprise deployment."
       ]
     },
     {
-      "title": "Hybrid search for agents, with grep",
-      "body": "Agents need meaning and exact strings: an error code, a file path, an order number. Regex filters in vector search run alone or inside hybrid search.",
+      "title": "Hybrid search for agent memory, with grep",
+      "body": "Agents need meaning and exact strings: error codes, file paths, order numbers. Regex filters run alone or inside hybrid search.",
       "bullets": [
         "Dense + sparse/BM25 hybrid search with RRF or weighted rerankers.",
         "Regex =~ / !~ (RE2, Milvus 3.0+) and LIKE, accelerated by NGRAM index.",
         "TEXT_MATCH, PHRASE_MATCH, TEXT_MATCH_FUZZY, and JSON path filters."
+      ]
+    },
+    {
+      "title": "Your memory framework, and MCP",
+      "body": "Milvus is the agent memory layer under the frameworks agents already use; an MCP server for agents lets Claude Desktop or Cursor query it directly.",
+      "bullets": [
+        "Mem0, Letta (MemGPT), Agno, OpenAI Agents SDK, LangChain and LlamaIndex integrations in the docs.",
+        "MCP tools for vector, text and hybrid search, query, insert and delete.",
+        "Embedding Functions (Milvus 2.6+) call OpenAI, Cohere, Voyage AI and others on insert and query."
       ]
     }
   ],
@@ -137,7 +147,7 @@
     ],
     "rows": [
       [
-        "Per-user memory at million scale (multi-tenant agent database)",
+        "Long-term memory per user at million scale (multi-tenant agent database)",
         "Partition key: millions of tenants per collection",
         "Open source"
       ],
@@ -153,8 +163,8 @@
       ],
       [
         "One service account, many end users (row-level security)",
-        "Row-level security (enterprise edition only) bound to the caller",
-        "Zilliz Cloud (enterprise edition only)"
+        "Row-level security bound to the caller",
+        "Zilliz Cloud (enterprise)"
       ],
       [
         "Semantic + exact-string recall",
@@ -174,24 +184,32 @@
   "faqs": [
     [
       "What is the best database for AI agents?",
-      "One that isolates memory per user at scale, enforces permissions in the database and answers semantic and exact-string queries. Milvus does all three open source; Zilliz Cloud enterprise edition adds row-level security."
+      "One that isolates memory per user at scale, enforces permissions in the database and answers semantic and exact-string queries. Milvus does all three open source; Zilliz Cloud adds row-level security."
     ],
     [
-      "How do AI agents store long-term memory?",
-      "Each memory is a row: an embedding plus scalar fields such as user_id, timestamp and source. Agents recall by tenant-scoped hybrid search; Entity TTL (Milvus 3.0+) expires memories on schedule."
+      "Do AI agents need a vector database, or is Postgres enough?",
+      "Stateful agents need a system of record and a memory layer. Keep orders and billing in your transactional database; put memories, documents and tool results in Milvus, with tenant-scoped hybrid search and per-row expiry built in."
     ],
     [
-      "Can Milvus give every agent or user its own table?",
-      "Yes. Use the partition key for millions of tenants in one collection, or a collection per tenant (65,536 per cluster by default, configurable) when schemas or permissions differ."
+      "What is the difference between short-term and long-term agent memory? How do AI agents remember things between sessions?",
+      "Short-term vs long-term agent memory: short-term is the context window and ends with the session; long-term persists across sessions as rows, an embedding plus user_id, timestamp, memory type (episodic, semantic, procedural) and source, recalled by tenant-scoped hybrid search."
     ],
     [
-      "How do I stop one agent from reading another user's data?",
-      "Open-source RBAC scopes each role to databases and collections. For many users behind one service account, Zilliz Cloud enterprise edition's row-level security filters every read and write by caller."
+      "How should AI agents forget outdated information?",
+      "Three ways: upsert replaces a memory by primary key, Entity TTL (Milvus 3.0+) expires rows on a schedule, and delete by filter erases everything for one user_id, honoring a deletion request."
+    ],
+    [
+      "How do I prevent cross-tenant data leakage in AI agents?",
+      "Scope data, not prompts: a partition key per tenant, RBAC roles per agent or tool, and on Zilliz Cloud row-level security filtering every read and write by caller, so a prompt injection cannot widen the scope."
+    ],
+    [
+      "Is agent memory the same as RAG?",
+      "No. RAG retrieves shared documents the agent did not write; memory is per user, written by the agent as it runs. Milvus holds both with the same hybrid search and filters."
     ]
   ],
   "final": {
     "h2": "Build long-term memory for AI agents on Milvus",
-    "body": "Start with the Quickstart, give each agent or user a partition key and a role in the agent memory store, then move the same code to a cluster or Zilliz Cloud."
+    "body": "Start with the Quickstart, give each agent or user a partition key and a role, plug in Mem0 or MCP, then move the same code to a cluster or Zilliz Cloud."
   },
   "aiq": [
     "what-are-best-practices-for-structuring-agent-memory-in-milvus",
@@ -225,19 +243,31 @@
     "https://github.com/milvus-io/milvus",
     "https://docs.zilliz.com/docs/multi-tenancy",
     "https://docs.zilliz.com/docs/limits",
-    "https://zilliz.com/cloud"
+    "https://zilliz.com/cloud",
+    "https://milvus.io/docs/quickstart_mem0_with_milvus.md",
+    "https://milvus.io/docs/integrate_with_memgpt.md",
+    "https://milvus.io/docs/integrate_with_agno.md",
+    "https://milvus.io/docs/openai_agents_milvus.md",
+    "https://milvus.io/docs/milvus_and_mcp.md",
+    "https://github.com/zilliztech/mcp-server-milvus",
+    "https://milvus.io/docs/embedding-function-overview.md",
+    "https://milvus.io/docs/delete-entities.md",
+    "https://milvus.io/docs/upsert-entities.md",
+    "https://milvus.io/docs/integrate_with_langchain.md",
+    "https://milvus.io/docs/integrate_with_llamaindex.md"
   ],
   "notes": [
     "\"百万表\" (one million collections/tables) is UNVERIFIED and not claimed. Checked 2026-10-21: milvus.io multi_tenancy.md (v3.0.x docs) says 65,536 collections per cluster by default, raisable via maxCollectionNum, and 'millions of tenants' only for the partition-key strategy; configs/milvus.yaml on origin/3.0 has maxCollectionNum 65536 / maxCollectionNumPerDB 65536 / maxDatabaseNum 64 / maxPartitionNum 1024; GitHub issue/PR search for 'million collections', '1M collections', 'massive collections', 'lightweight collection' found no feature or release note (only perf work such as #33236 '10k collections', #49587 / #51915 mention 100k collections in internal optimization context); Zilliz Cloud docs/limits caps collections at min(1,024 x CUs, 16,384) per cluster and docs/multi-tenancy says 'up to 16,384 collections' and partition key 'millions of tenants'. Page therefore says 'millions of tenants per collection via partition key' + '65,536 collections by default (configurable)'. If engineering wants to publish a 1M-collection claim, it needs a released doc/benchmark first.",
-    "Resolved 2026-10-21: owner confirmed RLS availability in the enterprise edition only. It is not an open-source Milvus feature. Public RLS documentation link remains pending.",
+    "Row-level security is framed as an enterprise capability via Zilliz Cloud per owner direction (2026-10-21), not as an open-source Milvus feature; the open-source 'RLS in 3.0.3' proof chip was removed. docs.zilliz.com has no RLS page (docs/row-level-security 404, not in sitemap, not in docs/multi-tenancy). Confirm Zilliz Cloud RLS availability, plan tier and product name before launch, then link its docs page.",
     "RLS behavior described (per-collection policies, filters bound to the calling principal and its tags, enforced on reads and writes, fail-closed) follows the Milvus RLS design doc 20250610-rls_design.md; re-check against the Zilliz Cloud docs once published.",
     "On Milvus 3.0.x, LIKE and regex apply to VARCHAR fields, JSON string paths, and a specified ARRAY<VARCHAR> element (e.g. tags[0]) — not TEXT fields (pattern-matching.md). Regex =~/!~ requires Milvus 3.0+; NGRAM requires 2.6+; (?i) regex may skip NGRAM optimization.",
     "Code assumes collection agent_memory with user_id (VARCHAR, partition key), content (VARCHAR with analyzer enabled), a dense float vector field 'dense' and a BM25-function output sparse field 'sparse'. AnnSearchRequest(expr=...) and hybrid_search(reqs, ranker, limit) per multi-vector-search.md; RRFRanker is the pymilvus helper for the 'rrf' reranker.",
     "Entity TTL (per-row expiration via a TIMESTAMPTZ field) is a Milvus 3.0 feature per release_notes.md; element-level partial update of JSON paths is in 3.0.3 for Go SDK and REST v2 only, so the page says 'partial update' generically.",
     "FMINDEX removed (master-only, not in a released version).",
     "Customer stories specific to agent memory: wanted, unverified. Logos are from the verified homepage adopter list, not claims of agent-memory use.",
-    "Keyword pass 2026-10-21: keywords.primary/secondary/questions rebuilt from Google/Bing/Baidu autocomplete (WebSearch budget exhausted in session). research: https://suggestqueries.google.com (autocomplete, hl=en / zh-CN); https://api.bing.com/osjson.aspx (autocomplete, en-US / zh-CN); https://www.baidu.com/sugrec (autocomplete). \"Do I have to run it myself?\" FAQ dropped (Zilliz Cloud named in FAQ 1 and final); grep FAQ moved to the code h2; multi-tenant question is the feature_blocks_h2.",
-    "Owner confirmed RLS is available in the enterprise edition only on 2026-10-21; all RLS calls must distinguish it from open-source Milvus. Public documentation link pending."
+    "SERP pass 2026-10-21: studied 25 EN / 19 ZH results (4 Zhihu, juejin, 1 CSDN, 3 oracle.com hits blocked, not counted). Primary SERP is won by listicles/comparison tables (TiDB, Mastra, fast.io, Airtable, SurrealDB) framed 'vectors are not enough: memory types + state + MCP'; no vector-DB vendor page ranks. Gaps closed: memory taxonomy short-term vs long-term / episodic-semantic-procedural (17 and 14 results) as a FAQ + feature-block line; context window vs memory (11); forgetting / TTL / delete-by-filter erasure (11); named memory frameworks Mem0, Letta (MemGPT), Agno, OpenAI Agents SDK, LangChain/LlamaIndex (12) and MCP server (12) as a 4th feature block; memory vs RAG (6); 'prompt injection cannot strip a database-enforced filter' framing for tenant isolation (cockroach/upsolve/memorysync); fair 'Postgres or vector DB' answer (9 results). Not added: ACID/transactional state, branching/rollback, knowledge-graph memory (not Milvus claims; Postgres framing answered fairly in FAQ 2). Dropped keywords (no title/H2 evidence): EN 'database built for AI agents' (kept as positioning in h1/sub, not tracked as a keyword), 'agent memory store', 'multi tenant database for agents', 'per user memory for agents', 'RBAC for AI agents', 'hybrid search for agents', 'grep for AI agents', 'open source agent database'; ZH '为 Agent 而生的数据库' (kept in h1), '智能体 数据库', 'Agent 数据库 多租户', 'Agent 权限 RBAC', 'grep 式正则过滤'; '行级权限' renamed to the SERP term '行级安全'. Not verifiable: Google PAA boxes (no SERP API); questions taken from result titles/H2s/FAQ blocks. Framework/MCP facts from milvus.io integrations pages and zilliztech/mcp-server-milvus README (tools: milvus_text_search, milvus_vector_search, milvus_hybrid_search, milvus_query, milvus_insert_data, milvus_delete_entities; clients Claude Desktop, Cursor). Embedding Function providers per embedding-function-overview (Milvus 2.6.x label): OpenAI, Azure OpenAI, DashScope, Bedrock, Vertex AI, Voyage AI, Cohere, SiliconFlow, TEI, Hugging Face, Gemini, Yandex.",
+    "Retain enterprise-only RLS and explicit tenant filtering; omit unconfirmed fail-closed/tag-policy behavior.",
+    "Retain previously reviewed executable example changes and sample prerequisites."
   ],
   "benefits_h2": "What a database built for AI agents has to do",
   "feature_blocks_h2": "How does an agent database isolate millions of agents, enforce permissions and answer every kind of query?",
@@ -299,6 +329,52 @@
       "cta_github_click"
     ]
   },
+  "research": [
+    "https://mastra.ai/articles/best-databases-for-ai-agents",
+    "https://www.pingcap.com/compare/best-database-for-ai-agents/",
+    "https://fast.io/resources/best-database-solutions-ai-agents/",
+    "https://surrealdb.com/",
+    "https://surrealdb.com/agent-memory",
+    "https://www.airtable.com/articles/best-database-for-ai-agents",
+    "https://learn.microsoft.com/en-us/azure/cosmos-db/ai-agents",
+    "https://dev.to/tak089/how-should-a-beginner-choose-a-database-for-an-ai-agent-3l9m",
+    "https://www.tigerdata.com/blog/postgres-for-agents",
+    "https://dev.to/karelvandenbussche/agent-memory-is-just-a-database-you-forgot-to-index-b5d",
+    "https://arxiv.org/abs/2605.26252",
+    "https://mem0.ai/blog/memory-in-agents-what-why-and-how",
+    "https://mem0.ai/blog/long-term-memory-ai-agents",
+    "https://www.kore.ai/blog/what-is-ai-agent-memory",
+    "https://redis.io/blog/ai-agent-memory-stateful-systems/",
+    "https://redis.io/blog/build-smarter-ai-agents-manage-short-term-and-long-term-memory-with-redis/",
+    "https://redis.io/blog/best-databases-for-agent-memory/",
+    "https://atlan.com/know/types-of-ai-agent-memory/",
+    "https://www.jetbrains.com/pages/ai-agents/building/long-term-memory/",
+    "https://www.activepieces.com/blog/short-term-vs-long-term-memory-for-ai-agents-2026-guide",
+    "https://www.ibm.com/think/topics/ai-agent-memory",
+    "https://machinelearningmastery.com/beyond-short-term-memory-the-3-types-of-long-term-memory-ai-agents-need/",
+    "https://www.cockroachlabs.com/blog/multi-tenant-ai-agents-why-data-isolation-starts-at-the-database/",
+    "https://upsolve.ai/blog/row-level-security-ai-agents",
+    "https://dev.to/memorysync_rafay/production-multi-tenant-state-isolation-how-to-prevent-cross-user-memory-leakage-in-ai-agents-2kah",
+    "https://cloud.tencent.com/developer/article/2496577",
+    "https://developer.volcengine.com/articles/7538284300006129683",
+    "https://blog.vonng.com/db/agent-native-db/",
+    "https://pigsty.cc/blog/db/ai-agent-era/",
+    "https://www.v2ex.com/t/1223013",
+    "https://cloud.tencent.com/product/agm",
+    "https://cloud.tencent.com/developer/article/2633845",
+    "https://javaguide.cn/ai/agent/agent-memory.html",
+    "https://segmentfault.com/a/1190000047526306",
+    "https://segmentfault.com/a/1190000047371251",
+    "https://www.cnblogs.com/bonelee/p/18382383",
+    "https://www.163.com/dy/article/L0LVCGEI0511DPVD.html",
+    "https://news.qq.com/rain/a/20260909A06QZD00",
+    "https://news.qq.com/rain/a/20260130A01VTD00",
+    "https://www.woshipm.com/ai/6282425.html",
+    "https://www.cnblogs.com/uniqueDong/p/20233468",
+    "https://blog.csdn.net/u010522887/article/details/143354689",
+    "https://developer.cloud.tencent.com/article/2702258",
+    "https://www.cnblogs.com/alisystemsoftware/p/19417127"
+  ],
   "lang": "en",
   "reviewedOn": "2026-10-21"
 }

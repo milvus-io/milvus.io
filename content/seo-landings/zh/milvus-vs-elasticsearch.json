@@ -5,12 +5,13 @@
   "nav": "对比 ES",
   "path": "/zh/compare/milvus-vs-elasticsearch-opensearch",
   "title": "Milvus 和 Elasticsearch 向量检索对比",
-  "description": "Milvus 和 Elasticsearch 对比：VectorDBBench 向量与过滤检索结果，索引类型与混合检索，以及 ES 迁移 Milvus 的步骤。",
+  "description": "Milvus 和 Elasticsearch 对比：VectorDBBench 向量与过滤检索结果、索引类型、许可证与维度上限、混合检索、选型清单，以及 ES 迁移 Milvus 的步骤。",
   "keywords": {
     "primary": "Milvus 和 Elasticsearch 对比",
     "secondary": [
       "Milvus 和 ES 对比",
       "Milvus 与 ES 性能对比",
+      "ES 与 Milvus 核心区别",
       "Elasticsearch 向量检索",
       "ES 向量检索 vs Milvus",
       "ES 能做向量数据库吗",
@@ -27,11 +28,13 @@
     ],
     "questions": [
       "ES 能做向量数据库吗？",
+      "ES 与 Milvus 在向量检索上有何核心区别？",
+      "Elasticsearch 与 Milvus 作为 RAG 向量库怎么选？",
       "Milvus 和 ES 向量检索性能差多少？",
       "Milvus 支持 BM25 全文检索吗，能替代 ES 吗？",
       "Elasticsearch 和 Milvus 的混合检索有什么区别？",
       "ES 数据怎么迁移到 Milvus？",
-      "已经在用 ES，要不要再上 Milvus？"
+      "团队已有 ES 集群，还需要 Milvus 吗？"
     ]
   },
   "h1": "Milvus 和 Elasticsearch、OpenSearch 对比：向量检索怎么选",
@@ -151,7 +154,7 @@
               "detail": "P99 17.1 ms · 召回率 0.9143"
             }
           ],
-          "source": "来源：VectorDBBench；配置、召回率及硬件不同。",
+          "source": "来源：VectorDBBench，配置标签按原始结果列出。结果随配置变化，请在自己的数据上复测。",
           "sourceUrl": "https://github.com/zilliztech/VectorDBBench/blob/main/vectordb_bench/results/leaderboard_v2.json"
         },
         {
@@ -194,6 +197,67 @@
           "sourceUrl": "https://github.com/zilliztech/VectorDBBench/blob/main/vectordb_bench/results/leaderboard_v2.json"
         }
       ]
+    },
+    {
+      "id": "at-a-glance",
+      "nav": "一览",
+      "h2": "Milvus、Elasticsearch、OpenSearch 一览：许可证、社区、客户端与上限",
+      "paragraphs": [
+        "ES 与 Milvus 在向量检索上有何核心区别？Elasticsearch 和 OpenSearch 在每个 Lucene segment 里建 HNSW 图，跑在 JVM 数据节点上，Elastic 的调优文档建议把大部分向量数据留在内存；Milvus 的 query 节点从对象存储加载 segment，tiered storage 淘汰冷数据，内存按热数据而不是全量语料来配。"
+      ],
+      "table": {
+        "caption": "向量数据库与 Elasticsearch、OpenSearch 的项目事实（依据官方文档与代码仓库）",
+        "heads": [
+          "",
+          "Milvus",
+          "Elasticsearch",
+          "OpenSearch"
+        ],
+        "rows": [
+          [
+            "许可证",
+            "Apache-2.0；LF AI & Data 毕业项目",
+            "ELv2、SSPL 或 AGPLv3",
+            "Apache-2.0；OpenSearch Software Foundation（Linux 基金会）"
+          ],
+          [
+            "GitHub star",
+            "40K+",
+            "70K+",
+            "10K+"
+          ],
+          [
+            "实现语言",
+            "Go 控制面，C++ 查询引擎",
+            "Java（Lucene）",
+            "Java（Lucene）"
+          ],
+          [
+            "向量最高维度",
+            "32,768",
+            "4,096（dense_vector）",
+            "16,000（knn_vector）"
+          ],
+          [
+            "免费版的混合检索",
+            "hybrid_search 配 RRFRanker 或 WeightedRanker",
+            "RRF retriever 列在 Enterprise 订阅",
+            "search pipeline 的 normalization 或 RRF processor"
+          ],
+          [
+            "客户端与框架",
+            "Python、Java、Go、Node.js、C#、C++、Rust、REST；langchain-milvus、LlamaIndex、Haystack、Dify",
+            "REST 与官方语言客户端；langchain-elasticsearch",
+            "REST 与官方语言客户端"
+          ],
+          [
+            "部署方式",
+            "Lite（pip）、Standalone（单容器）、Distributed（Kubernetes）、Zilliz Cloud",
+            "自建或 Elastic Cloud",
+            "自建或 Amazon OpenSearch Service"
+          ]
+        ]
+      }
     },
     {
       "id": "indexes",
@@ -381,16 +445,52 @@
     },
     {
       "id": "when-elasticsearch-fits",
-      "nav": "ES 适用",
-      "h2": "什么情况下继续用 Elasticsearch / OpenSearch 更合适？",
+      "nav": "怎么选",
+      "h2": "Milvus 还是 Elasticsearch：怎么选，以及 ES 更合适的场景",
       "paragraphs": [
-        "客观地说，Milvus 和 ES 对比不是非此即彼：如果搜索只是现有 Elastic 栈的附属功能，直接在 ES 里加向量也可以。下面三类场景，ES 或 OpenSearch 通常仍是更顺手的选择。"
+        "客观地说，Milvus 和 ES 对比不是非此即彼：搜索只是现有 Elastic 栈的附属功能时，直接在 ES 里加向量也可以。运维也不同：Elasticsearch 要调 JVM 堆和分片规划；Milvus Standalone 是一个内嵌 etcd 的容器，Distributed 在 Kubernetes 上用 Milvus Operator 部署。成本跟着内存走：ES 把 HNSW 图放在数据节点上，Milvus 可以把冷 segment 留在对象存储。Elasticsearch 与 Milvus 作为 RAG 向量库怎么选？按下表对号。"
       ],
-      "bullets": [
-        "基于 Kibana 或 OpenSearch Dashboards 的日志、可观测性与安全分析。",
-        "以聚合和分面统计为主的文本分析，向量只是小补充。",
-        "已有 ELK 链路，向量数据量不大，不值得再引入一套系统。"
-      ]
+      "table": {
+        "caption": "选型清单：按场景看 ES 和 Milvus 选谁",
+        "heads": [
+          "你的情况",
+          "选择"
+        ],
+        "rows": [
+          [
+            "向量检索就是产品本身：RAG、语义搜索、Agent",
+            "Milvus"
+          ],
+          [
+            "基于 Kibana 或 OpenSearch Dashboards 的日志、可观测性、安全分析",
+            "Elasticsearch 或 OpenSearch"
+          ],
+          [
+            "以聚合和分面统计为主的文本分析，向量只是小补充",
+            "Elasticsearch 或 OpenSearch"
+          ],
+          [
+            "已有 ELK 链路，向量数据量不大",
+            "Elasticsearch 或 OpenSearch"
+          ],
+          [
+            "语料增长到数据节点内存装不下",
+            "Milvus，用 tiered storage 或 DiskANN"
+          ],
+          [
+            "单个 collection 里有百万级租户",
+            "Milvus partition key"
+          ],
+          [
+            "要在 Apache-2.0 版本里做 BM25 加向量融合",
+            "Milvus 或 OpenSearch"
+          ],
+          [
+            "两类需求都有",
+            "ES 做分析，Milvus 做检索，按文档 ID 关联"
+          ]
+        ]
+      }
     }
   ],
   "code": {
@@ -422,8 +522,8 @@
       "把 dense_vector 映射为维度、度量一致的 FLOAT_VECTOR，再用 VTS 或 scroll 导出加 BulkWriter 搬数据。切换期间双写，召回率对齐后再切读流量。"
     ],
     [
-      "已经在用 ES，要不要再上 Milvus？",
-      "常见做法是并存：ES 继续做日志和分析，向量与混合检索交给 Milvus，两边从同一数据源写入，按文档 ID 关联结果。"
+      "团队已有 ES 集群，还需要 Milvus 吗？",
+      "看向量是不是主负载。常见做法是并存：ES 继续做日志和分析，向量与混合检索交给 Milvus，两边从同一数据源写入，按文档 ID 关联结果。"
     ]
   ],
   "stories": [],
@@ -442,23 +542,33 @@
     "open-source-vector-database",
     "distributed-vector-database",
     "vector-database-for-rag",
-    "milvus-vs-qdrant"
+    "milvus-vs-qdrant",
+    "milvus-vs-vespa"
   ],
   "managed": {
     "h2": "不想自己运维集群？",
     "body": "Zilliz Cloud 是全托管的 Milvus。VectorDBBench Cohere 1M 测试中，ZillizCloud-8cu-perf 为 13,316.23 QPS（召回率 0.9383），MilvusClient API 与开源 Milvus 一致。"
   },
   "research": [
-    "https://milvus.io/docs/elasticsearch-queries-to-milvus.md",
-    "https://www.elastic.co/docs/solutions/search/vector",
     "https://airbyte.com/data-engineering-resources/elasticsearch-vs-milvus",
-    "https://milvus.io/blog/milvus-26-preview-72-memory-reduction-without-compromising-recall-and-4x-faster-than-elasticsearch.md",
-    "https://dev.to/zilliz/elasticsearch-was-great-but-vector-databases-are-the-future-3lff",
-    "https://talks.simonhearne.com/2026-09-milvus-migration/",
-    "https://zilliz.com.cn/blog/How-to-Migrate-Code-From-ES-to-Milvus",
+    "https://myscale.com/blog/milvus-vs-elasticsearch-vector-database-comparison/",
+    "https://www.peerspot.com/products/comparisons/elastic-search_vs_milvus",
+    "https://www.respan.ai/blog/elasticsearch-vs-milvus",
+    "https://www.capellasolutions.com/blog/vector-databases-vs-elasticsearch",
+    "https://discuss.elastic.co/t/pros-and-cons-of-using-elastic-as-a-vector-database/338733",
+    "https://zilliz.com/comparison/milvus-vs-opensearch",
+    "https://www.elastic.co/elasticsearch/vector-database",
+    "https://github.com/milvus-io/milvus/discussions/47524",
+    "https://milvus.io/docs/elasticsearch-queries-to-milvus.md",
+    "https://www.cnblogs.com/geekbruce/articles/18977715",
     "https://blog.csdn.net/asialee_bird/article/details/146406557",
-    "https://help.aliyun.com/zh/milvus/use-cases/full-text-retrieval-by-milvus-bm25-algorithm-and-application-of-hybrid-retrieval-to-rag-system",
-    "https://www.cnblogs.com/geekbruce/articles/18977715"
+    "https://blog.csdn.net/Luo_Daimeng/article/details/148530989",
+    "https://blog.csdn.net/m0_59235945/article/details/148542488",
+    "https://blog.csdn.net/qianggezhishen/article/details/143890425",
+    "https://blog.csdn.net/sinat_39620217/article/details/148158572",
+    "https://zhuanlan.zhihu.com/p/689477410",
+    "https://juejin.cn/post/7643863484803170330",
+    "https://zilliz.com.cn/blog/How-to-Migrate-Code-From-ES-to-Milvus"
   ],
   "sources": [
     "https://zilliz.com/vdbbench-leaderboard",
@@ -500,7 +610,20 @@
     "https://github.com/zilliztech/vts",
     "https://milvus.io/docs/quickstart.md",
     "https://milvus.io/docs/zh/quickstart.md",
-    "https://zilliz.com.cn/cloud"
+    "https://zilliz.com.cn/cloud",
+    "https://www.elastic.co/pricing/faq/licensing",
+    "https://www.elastic.co/docs/deploy-manage/production-guidance/optimize-performance/approximate-knn-search",
+    "https://opensearch.org/faq/",
+    "https://www.linuxfoundation.org/press/linux-foundation-announces-opensearch-software-foundation",
+    "https://github.com/elastic/elasticsearch",
+    "https://github.com/opensearch-project/OpenSearch",
+    "https://docs.langchain.com/oss/python/integrations/vectorstores/milvus",
+    "https://docs.langchain.com/oss/python/integrations/vectorstores/elasticsearch",
+    "https://milvus.io/docs/integrations_overview.md",
+    "https://milvus.io/docs/install-overview.md",
+    "https://milvus.io/docs/install_standalone-docker.md",
+    "https://milvus.io/docs/limitations.md",
+    "https://lfaidata.foundation/projects/"
   ],
   "notes": [
     "Vector table: leaderboard 1M headline table ('Vector Search Latency and QPS at $1,000 Monthly Cost'), cross-checked with leaderboard_v2.json 2026-10-21. zilliz.com renders via JS; headings/rows from a same-day rendered capture, every number matches JSON. Run metadata: Milvus 2.6.14, Elastic Cloud 8.17, OpenSearch 2.17, Zilliz Cloud v2026.4.",
@@ -512,7 +635,8 @@
     "Wanted, unverified: 'Lucene field indexes set by mapping' row for ES/OpenSearch scalar filters is a summary of mapping behaviour, not a fetched doc quote; OpenSearch neural sparse search from SERP pages, not a fetched OpenSearch doc.",
     "Code validated offline with pymilvus 3.0.1 (schema + index params build); not run against a live cluster. Needs elasticsearch-py and Milvus Standalone, Distributed or Zilliz Cloud (Milvus Lite supports only FLAT).",
     "Perf section simplified 2026-10-21: one config per system; BM25 full-text rows removed (only Zilliz Cloud has published BM25 results).",
-    "Keyword research 2026-10-21 (session web-search budget exhausted, so query phrasings come from Google/Bing/Baidu autocomplete APIs): 真实中文写法是 'milvus和es对比'、'milvus和es做向量数据库'、'milvus与es性能对比'、'es向量检索 vs milvus'、'es向量检索和bm25混用'、'es能做向量数据库吗'、'es能做向量检索吗'、'es支持向量检索'、'elasticsearch可以用来做向量库'、'elasticsearch 向量数据库'、'elasticsearch 向量 检索 性能'。删除 '向量数据库 vs ES'（无人这么搜）；FAQ 首问改为 'ES 能做向量数据库吗？'。"
+    "SERP pass 2026-10-21: studied 10 EN / 9 ZH results (same list as the English page). 中文结果的共同点：许可证/开源状态（qianggezhishen 镜像的旧 Zilliz 对比、zhihu 689477410 '连 RRF 也要收费'）、运维复杂度（m0_59235945 站 ES 一边，称 Milvus '组件太多'，这里用 Standalone 单容器事实回应）、SDK 与生态、维度上限（Luo_Daimeng 写 '≤32,766 维' 有误，官方 dense_vector 上限 4,096）、'已有 ES 要不要再上 Milvus'。Gaps closed: 一览表（许可证、star、语言、维度上限、免费版混合检索、客户端/框架、部署）、双向选型清单。Dropped: 无；新增问题 'ES 与 Milvus 在向量检索上有何核心区别'、'作为 RAG 向量库怎么选'、'团队已有 ES 集群，还需要 Milvus 吗'（替换原 '已经在用 ES，要不要再上 Milvus'）。Not used: asialee_bird 自测三档数据（无命名配置）、唯品会 300 ms→30 ms（二手）、Zilliz 定价（规范不写价格）。",
+    "Retain previously reviewed executable example changes and sample prerequisites."
   ],
   "lang": "zh",
   "reviewedOn": "2026-10-21"

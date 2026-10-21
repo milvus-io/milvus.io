@@ -51,6 +51,25 @@ not a production route.
   GA4 installation. CTA/copy/story events are sent once to the existing dataLayer;
   GTM still needs matching GA4 event mappings if these names are not configured.
 
+### Landing click measurement
+
+- CTA style does not select its event. Benchmark and final buttons retain
+  `cta_benchmark_click` and `cta_final_click`, including Cloud buttons.
+- Every custom event includes `landing_page`, `landing_topic`, `cta_location`,
+  `cta_destination`, `entry_button`, and a query/fragment-free `link_url`.
+  The destination is derived from the actual URL, not from button styling.
+- Hero Cloud signup clicks retain `cta_zilliz_signup_click` with location `hero`.
+  Benchmark/final clicks do not also emit that generic event: count signup-button
+  clicks across locations by `cta_destination=cloud_signup` to avoid double counting.
+- `copy_code_snippet` is emitted only after clipboard success. A denied/failed
+  copy emits `copy_code_snippet_failed`; no code text is sent to analytics.
+- These are interaction events, not successful registration, activation or ICP
+  conversions. Configure GTM triggers/GA4 parameters for the event names and
+  fields above separately. Client dataLayer emission does not prove receipt in
+  GA4; the existing deferred GTM loader can also lose queued events if a visitor
+  leaves before GTM initializes. This change does not alter the global loader,
+  consent settings or Cloud attribution forwarding.
+
 The handoff's suggested zilliz.com redirects, cross-domain GA4 configuration,
 paid campaigns and third-party docs edits are **not** applied by this PR. In
 particular, don't redirect an existing comparison until the old/new intents,

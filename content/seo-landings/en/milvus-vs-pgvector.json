@@ -203,7 +203,7 @@
       "nav": "Performance",
       "h2": "Milvus vs pgvector performance: which is faster?",
       "paragraphs": [
-        "These charts show the verified Milvus and Zilliz Cloud VectorDBBench configurations. They do not include a same-condition result for the other product, so they cannot establish a speed advantage. Benchmark with matching data, filters, recall targets and hardware before comparing."
+        "The pgvector measurements below are separate from the Milvus/Cloud VectorDBBench charts. AWS published this test in May 2025 using Aurora db.r8g.4xlarge, 10 million 384-dimensional vectors and HNSW, comparing scan configurations in pgvector 0.8.0. It is not a matched Milvus comparison and does not establish a speed ratio."
       ],
       "bench": [
         {
@@ -255,7 +255,37 @@
           },
           "sourceUrl": "https://github.com/zilliztech/VectorDBBench/blob/main/vectordb_bench/results/leaderboard_v2.json"
         }
-      ]
+      ],
+      "table": {
+        "caption": "pgvector 0.8.0: AWS-reported query latency (ms, lower is better)",
+        "heads": [
+          "Query",
+          "ef_search=40, scan off",
+          "ef_search=200, strict_order",
+          "ef_search=200, relaxed_order"
+        ],
+        "rows": [
+          [
+            "Top-10 search",
+            "19.3",
+            "28.8",
+            "30.7"
+          ],
+          [
+            "Category filter, top 10",
+            "20.0",
+            "128.5",
+            "85.7"
+          ],
+          [
+            "Category + title filter, top 100",
+            "15.7",
+            "57.9",
+            "70.7"
+          ]
+        ]
+      },
+      "note": "Source: AWS Database Blog, 2025-05-28, Performance improvements / Different iterative scan modes. The article labels latency tables P99 but describes averaging in its methodology; these are reported latencies, not an SLA or a basis for deriving QPS. Disabling scans can return fewer results; result completeness is not recall against exact KNN. Rerun with matching data, filters, concurrency and recall targets."
     },
     {
       "id": "features",
@@ -439,7 +469,7 @@
   "faqs": [
     [
       "Is Milvus faster than pgvector?",
-      "These charts show the verified Milvus and Zilliz Cloud VectorDBBench configurations. They do not include a same-condition result for the other product, so they cannot establish a speed advantage. Benchmark with matching data, filters, recall targets and hardware before comparing."
+      "This page includes published pgvector 0.8.0 query latencies on Aurora and separate Milvus/Cloud VectorDBBench results. They are not matched tests and do not establish which is faster. Evaluate filtering, recall, concurrent throughput and latency together on your workload."
     ],
     [
       "Can pgvector handle 100 million vectors?",
@@ -524,7 +554,6 @@
     "https://github.com/zilliztech/VectorDBBench",
     "https://github.com/zilliztech/VectorDBBench/blob/main/vectordb_bench/results/leaderboard_v2.json",
     "https://github.com/zilliztech/VectorDBBench/blob/main/vectordb_bench/results/leaderboard.json",
-    "https://github.com/zilliztech/VectorDBBench/blob/main/vectordb_bench/results/PgVector/result_20230727_standard_pgvector.json",
     "https://github.com/zilliztech/VectorDBBench/tree/main/vectordb_bench/backend/clients/pgvector",
     "https://zilliz.com/customers/filevine",
     "https://zilliz.com/customers/openevidence",
@@ -542,7 +571,8 @@
     "https://milvus.io/docs/gpu_index.md",
     "https://github.com/zilliztech/vts",
     "https://github.com/zilliztech/VectorDBBench/tree/main/vectordb_bench/backend/clients",
-    "https://lfaidata.foundation/projects/"
+    "https://lfaidata.foundation/projects/",
+    "https://aws.amazon.com/blogs/database/supercharging-vector-search-performance-and-relevance-with-pgvector-0-8-0-on-amazon-aurora-postgresql/"
   ],
   "notes": [
     "pgvector facts verified 2026-10-21 from the README on github.com/pgvector/pgvector: index types HNSW and IVFFlat; indexable dims vector 2,000 / halfvec 4,000 / bit 64,000 / sparsevec 1,000 non-zero (storage up to 16,000 dims); 'Indexes build significantly faster when the graph fits into maintenance_work_mem'; filtering 'applied after the index is scanned', iterative index scans since 0.8.0, partial indexes, partitioning, 'list partitioning or separate tables' for tenants; hybrid search = Postgres full-text search + RRF or cross-encoder examples; scaling section: vertical, replicas, Citus / PgDog sharding; Postgres 13+; 'any language with a Postgres client'. License text is the PostgreSQL License (LICENSE file). Hosted providers from issue #54 (Supabase, Neon, Crunchy Bridge, Amazon RDS, and others). Read-only replicas / single primary from postgresql.org high-availability docs.",
@@ -552,7 +582,8 @@
     "2023 v1 competitor row removed from charts (not same-condition); mentioned in prose only.",
     "SERP pass 2026-10-21: studied 12 EN / 7 ZH results (WebSearch + fetch; instaclustr is #1-2 for both head terms, paradedb #1 for 'pgvector limitations', markaicode ranks for 'performance' and 'benchmark'). Gaps closed: setup/ops ladder (12+ results, with Milvus Lite/Standalone/Distributed facts from milvus.io correcting 'needs etcd+MinIO+Pulsar' claims), 'start with pgvector, migrate later' and the polyglot pattern (6), pgvector-to-Milvus migration via VTS pg_to_milvus (5), post-filter recall mechanics quoted from the pgvector README (4), HNSW defaults and iterative-scan knobs (6), ecosystem/LangChain packages (3), GitHub stars/governance (3), pgvectorscale/pgdiskann clients in VectorDBBench (5), 'does Milvus need a GPU' PAA, TCO framing without numbers (7). Dropped: 'storage compute separation' keyword (phrase stays in intro), Zilliz Cloud FAQ (managed block covers it). Added keywords 'milvus vs postgres', 'pgvectorscale'; questions from PAA ('100 million vectors', 'migrating later', 'overkill for a small RAG prototype', 'require a GPU'). Facts verified today: README filtering example ('If a condition matches 10% of rows, with HNSW and the default hnsw.ef_search of 40, only 4 rows will match on average'), hnsw.iterative_scan strict_order/relaxed_order, hnsw.max_scan_tuples 20,000 default, m 16 / ef_construction 64 / ef_search 40, 2 parallel maintenance workers (github.com/pgvector/pgvector); 23K stars → '20K+'; HNSW since 0.5.0, iterative scans 0.8.0 (CHANGELOG); langchain-postgres PGVector (docs.langchain.com); VTS Postgres Vector source + pg_to_milvus.conf (zilliztech/vts); VectorDBBench clients pgvector, pgvectorscale, pgdiskann, vectorchord (zilliztech/VectorDBBench); Milvus GPU indexes optional (gpu_index.md), Standalone single container (install_standalone-docker.md). Not used: every competitor scale threshold ('<5M', '<10M', '500万', '1 亿') and every price (RDS, Supabase, r6id, Zilliz) per SPEC; self-run benchmarks without named configs; pgvector vacuum/delete behaviour (2 sources only).",
     "Correct Standalone dependency claim; migration reuses embeddings but is not a query/API drop-in.",
-    "Remove stale or unlike-for-like competitor benchmark numbers from prose and FAQs."
+    "Remove stale or unlike-for-like competitor benchmark numbers from prose and FAQs.",
+    "Add AWS May 2025 pgvector 0.8.0 query/configuration latency table, separately from VDBBench; distinguish result completeness from ANN recall and note latency-label ambiguity."
   ],
   "lang": "en",
   "reviewedOn": "2026-10-21"

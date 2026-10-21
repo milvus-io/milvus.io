@@ -5,7 +5,7 @@
   "nav": "Milvus vs pgvector",
   "path": "/compare/milvus-vs-pgvector",
   "title": "Milvus vs pgvector: Scalability, Performance, Features",
-  "description": "Milvus vs pgvector: what a Postgres extension and a purpose-built vector database each do that the other cannot, VectorDBBench and pgvector benchmarks, migration.",
+  "description": "Milvus vs pgvector: compare architecture, capabilities and migration, with published performance data for Milvus, Zilliz Cloud and pgvector in one table.",
   "keywords": {
     "primary": "milvus vs pgvector",
     "secondary": [
@@ -156,198 +156,82 @@
     {
       "id": "performance",
       "nav": "Performance",
-      "h2": "Milvus vs pgvector performance: VectorDBBench results and pgvector's published benchmarks",
+      "h2": "Milvus, Zilliz Cloud and pgvector performance",
       "paragraphs": [
-        "The current Milvus/Cloud VectorDBBench charts are followed by separate historical pgvector charts and published tests. Dates, instances, indexes and recall conditions differ; these are not a cross-test ranking or a basis for speed ratios."
-      ],
-      "bench": [
-        {
-          "title": "Vector search throughput (QPS, higher is better)",
-          "caption": "Cohere 1M, 768 dimensions",
-          "unit": "QPS",
-          "rows": [
-            {
-              "system": "Zilliz Cloud",
-              "label": "ZillizCloud-8cu-perf",
-              "value": 13316.23,
-              "detail": "P99 2 ms · recall 0.9383",
-              "highlight": true
-            },
-            {
-              "system": "Milvus",
-              "label": "Milvus-16c64g-sq4u-fp16-force_merge",
-              "value": 9575.69,
-              "detail": "P99 2.3 ms · recall 0.9189"
-            }
-          ],
-          "source": "Source: VectorDBBench, original configuration labels. Conditions differ from the historical pgvector tests below.",
-          "sourceUrl": "https://github.com/zilliztech/VectorDBBench/blob/main/vectordb_bench/results/leaderboard_v2.json"
-        },
-        {
-          "title": "Filtered search throughput (QPS, filter keeps 1% of data)",
-          "caption": "Cohere 1M, 768 dimensions, filter ratio 0.99",
-          "unit": "QPS",
-          "rows": [
-            {
-              "system": "Zilliz Cloud",
-              "label": "ZillizCloud-8cu-perf-partition_key",
-              "value": 10020.53,
-              "detail": "P99 2.6 ms · recall 0.9788",
-              "highlight": true
-            },
-            {
-              "system": "Milvus",
-              "label": "Milvus-16c64g-sq8-partition_key",
-              "value": 11280.08,
-              "detail": "P99 1.6 ms · recall 0.9507"
-            }
-          ],
-          "source": "Source: VectorDBBench, original configuration labels. Conditions differ from the historical pgvector tests below.",
-          "cta": {
-            "text": "Zilliz Cloud is fully managed Milvus: the same engine and top-tier throughput, with no clusters to size, upgrade or scale.",
-            "label": "Try Zilliz Cloud free",
-            "href": "https://cloud.zilliz.com/signup"
-          },
-          "sourceUrl": "https://github.com/zilliztech/VectorDBBench/blob/main/vectordb_bench/results/leaderboard_v2.json"
-        },
-        {
-          "title": "Historical pgvector test: unfiltered",
-          "caption": "2023-07 · 2 vCPU / 8 GB · IVF_FLAT · Cohere 1M / 768d; not comparable with the charts above",
-          "unit": "QPS",
-          "rows": [
-            {
-              "system": "pgvector",
-              "label": "PgVector-2c8g (Jul 2023, IVF_FLAT, filter=0)",
-              "value": 10.6271,
-              "detail": "serial P99 730.7 ms · recall 0.8898 · 2 vCPU 8 GB"
-            }
-          ],
-          "source": "VectorDBBench v1 · July 2023 · original result",
-          "sourceUrl": "https://github.com/zilliztech/VectorDBBench/blob/main/vectordb_bench/results/PgVector/result_20230727_standard_pgvector.json"
-        },
-        {
-          "title": "Historical pgvector test: filter keeps 1%",
-          "caption": "2023-07 · 2 vCPU / 8 GB · IVF_FLAT · Cohere 1M / 768d; not comparable with the charts above",
-          "unit": "QPS",
-          "rows": [
-            {
-              "system": "pgvector",
-              "label": "PgVector-2c8g (Jul 2023, IVF_FLAT, filter=0.99)",
-              "value": 75.7055,
-              "detail": "serial P99 121.2 ms · recall 0.9999 · 2 vCPU 8 GB"
-            }
-          ],
-          "source": "VectorDBBench v1 · July 2023 · original result",
-          "sourceUrl": "https://github.com/zilliztech/VectorDBBench/blob/main/vectordb_bench/results/PgVector/result_20230727_standard_pgvector.json"
-        }
+        "Cohere 1M, 768 dimensions. Published results for unfiltered search and filtered search retaining 1% of the data."
       ],
       "table": {
-        "caption": "pgvector published benchmarks: different tools and conditions from VectorDBBench, so no cross-ranking",
+        "caption": "Published VectorDBBench results",
         "heads": [
-          "Source",
-          "Dataset",
-          "Instance · index",
-          "QPS / latency",
-          "Recall"
+          "Metric",
+          "Milvus",
+          "Zilliz Cloud",
+          "pgvector"
         ],
         "rows": [
           [
-            "VectorDBBench v1, Jul 2023, PgVector-2c8g",
-            "Cohere 1M, 768 dims",
-            "2 vCPU 8 GB; IVF_FLAT lists 10, probes 2",
-            "10.6271 QPS, serial P99 730.7 ms; filter 0.99: 75.7055 QPS, serial P99 121.2 ms",
-            "0.8898; filtered 0.9999"
+            "Instance",
+            "16 vCPU / 64 GB",
+            "8 CU",
+            "2 vCPU / 8 GB"
           ],
           [
-            "AWS blog, Nov 2023 (pgvector 0.5.1)",
-            "Synthetic 10M, 1,536 dims",
-            "db.m7g.16xlarge; HNSW m 16, ef_construction 64; 64 clients",
-            "ef_search 20: 28,798 TPS; ef_search 800: 1,265 TPS",
-            "Not reported"
+            "Result series",
+            "VectorDBBench v2",
+            "VectorDBBench v2",
+            "VectorDBBench v1 · 2023-07"
           ],
           [
-            "Supabase, Oct 2023 (pgvector 0.5.0)",
-            "dbpedia OpenAI 1M, 1,536 dims",
-            "2XL (8-core, 32 GB); HNSW m 36, ef_construction 128",
-            "1185% more QPS than Pinecone s1 at ef_search 32 (charts only)",
-            "accuracy@10 0.98"
+            "Unfiltered: configuration",
+            "Milvus-16c64g-sq4u-fp16-force_merge",
+            "ZillizCloud-8cu-perf",
+            "PgVector-2c8g (Jul 2023, IVF_FLAT, filter=0)"
           ],
           [
-            "Timescale, Jun 2024 (pgvector 0.7.0 + pgvectorscale)",
-            "Cohere 50M, 768 dims",
-            "r6id.4xlarge (16 vCPU, 128 GB, NVMe); StreamingDiskANN",
-            "28x lower p95 latency, 16x higher throughput than Pinecone s1 (Timescale's claim; charts only)",
-            "0.99"
+            "Unfiltered: QPS",
+            "9,575.69",
+            "13,316.23",
+            "10.63"
           ],
           [
-            "AWS blog, May 2025 (pgvector 0.8.0 iterative scans)",
-            "10M products, 384 dims",
-            "db.r8g.4xlarge; HNSW m 16, ef_construction 128; filter about 10%",
-            "reported latency 123.3 ms to 13.1 ms (Query A); 913.4 ms to 160.3 ms (Query E)",
-            "Source reports result completeness, not recall against exact KNN"
+            "Unfiltered: P99 latency (ms)",
+            "2.3",
+            "2.0",
+            "730.7"
           ],
           [
-            "AWS blog, Aug 2026 (pgvector 0.8.0+, binary quantization)",
-            "OpenAI 5M, 1,536 dims",
-            "r8g.large; HNSW m 16, ef_construction 256; source lists BQ rerank=1,400 but explains the result with 800 candidates",
-            "HNSW: 78 QPS, p99 1,356 ms, build 12 min; HNSW+BQ: 138 QPS, p99 18.9 ms, build 6 min",
-            "0.934 / 0.951"
+            "Unfiltered: Recall",
+            "0.9189",
+            "0.9383",
+            "0.8898"
           ],
           [
-            "Same AWS post",
-            "LAION 100M, 768 dims",
-            "r8g.4xlarge (128 GB RAM); HNSW 367 GB vs BQ 38 GB",
-            "HNSW: 3.4 QPS cold, 3,336 warm, build 16.1 h; BQ: 13.5 cold, 895 warm, build 1.1 h",
-            "0.965 / 0.931"
+            "Filter keeps 1%: configuration",
+            "Milvus-16c64g-sq8-partition_key",
+            "ZillizCloud-8cu-perf-partition_key",
+            "PgVector-2c8g (Jul 2023, IVF_FLAT, filter=0.99)"
           ],
           [
-            "SIGMOD 2026, arXiv 2603.23710 (pgvector 0.8.0)",
-            "sift10M, openai5M, cohere10M, text2image10M; selectivity 0.01 to 0.9",
-            "2 x 32-core EPYC, 240 GB; iterative scan vs filter-first; experiments in a commercial PostgreSQL-compatible system",
-            "QPS at 95% recall@10; database latency up to 10x HNSWLib",
-            "Filter-first wins at low selectivity"
+            "Filter keeps 1%: QPS",
+            "11,280.08",
+            "10,020.53",
+            "75.71"
+          ],
+          [
+            "Filter keeps 1%: P99 latency (ms)",
+            "1.6",
+            "2.6",
+            "121.2"
+          ],
+          [
+            "Filter keeps 1%: Recall",
+            "0.9507",
+            "0.9788",
+            "0.9999"
           ]
         ]
       },
-      "note": "Sources are linked below. Different tools, hardware, versions and cache states cannot be ranked directly. AWS 2025 uses inconsistent P99/average terminology, so we call these reported latencies; result completeness is not exact-KNN recall. Historical tests are not current product limits."
-    },
-    {
-      "id": "pgvector-scan-configurations",
-      "nav": "Scan settings",
-      "h2": "pgvector 0.8.0: how scan settings change latency",
-      "paragraphs": [
-        "AWS 2025-05-28: configuration details for the same instance and dataset."
-      ],
-      "table": {
-        "caption": "pgvector 0.8.0: AWS-reported query latency (ms, lower is better)",
-        "heads": [
-          "Query",
-          "ef_search=40, scan off",
-          "ef_search=200, strict_order",
-          "ef_search=200, relaxed_order"
-        ],
-        "rows": [
-          [
-            "Top-10 search",
-            "19.3",
-            "28.8",
-            "30.7"
-          ],
-          [
-            "Category filter, top 10",
-            "20.0",
-            "128.5",
-            "85.7"
-          ],
-          [
-            "Category + title filter, top 100",
-            "15.7",
-            "57.9",
-            "70.7"
-          ]
-        ]
-      },
-      "note": "Source: AWS Database Blog, 2025-05-28, Performance improvements / Different iterative scan modes. The article labels latency tables P99 but describes averaging in its methodology; these are reported latencies, not an SLA or a basis for deriving QPS. Disabling scans can return fewer results; result completeness is not recall against exact KNN. Rerun with matching data, filters, concurrency and recall targets."
+      "note": "Instances, indexes and test periods differ; these are published results, not a controlled comparison. pgvector uses the July 2023 IVFFlat run and serial P99 latency. Original sources are linked below."
     },
     {
       "id": "pgvector-gives",
@@ -557,7 +441,7 @@
   "faqs": [
     [
       "Is Milvus faster than pgvector?",
-      "No same-condition test answers that. VectorDBBench lists Milvus-16c64g-sq4u-fp16-force_merge at 9,575.69 QPS, P99 2.3 ms on Cohere 1M; its 2023 PgVector-2c8g IVFFlat run lists 10.6271 QPS, P99 730.7 ms on 2 cores. Run the pgvector client yourself."
+      "The table lists published results for all three systems, but instances, indexes and test periods differ. It does not establish a same-condition speed ratio. Benchmark with matching data, hardware, filters and recall targets."
     ],
     [
       "Can pgvector handle 100 million vectors?",
@@ -691,7 +575,8 @@
     "Customer facts reused from the Qdrant page (fetched 2026-10-21 from zilliz.com/customers). Meituan is not on the milvus.io logo wall, so it appears only as a story.",
     "SERP pass 2026-10-21 (unchanged keyword map): studied 12 EN / 7 ZH results; keywords and PAA questions retained from the previous revision.",
     "Separate historical pgvector bars; preserve source dates/conditions, serial P99, AWS terminology caveats and prior configuration table.",
-    "Qualify tenant filtering and HNSW memory requirements; distinguish capability choices from impossible-in-Postgres claims."
+    "Qualify tenant filtering and HNSW memory requirements; distinguish capability choices from impossible-in-Postgres claims.",
+    "Owner requested one side-by-side Milvus/Zilliz Cloud/pgvector performance table; removed standalone charts, published-benchmark survey and scan-configuration section."
   ],
   "lang": "en",
   "reviewedOn": "2026-10-21"

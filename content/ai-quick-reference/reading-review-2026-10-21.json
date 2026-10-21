@@ -1,0 +1,112 @@
+{
+  "baseline": "f734e057abebffc9ceae4edfa1594b27b5bdc8c8",
+  "scope": [
+    "compact first-screen layout and mobile consent notice",
+    "replace 12 generic or undersized SVGs with mechanism diagrams",
+    "remove the transparent global footer entry and its hiding code"
+  ],
+  "articleTextUnchanged": 113,
+  "mechanismFigures": 12,
+  "affectedArticleFiles": [
+    "gpu-cagra.md",
+    "vector-search.md",
+    "rag.md",
+    "ann.md",
+    "hnsw-compression.md",
+    "hnsw.md",
+    "sparse-inverted.md",
+    "multi-vector.md",
+    "fulltext.md",
+    "range-search.md",
+    "diskann.md",
+    "visual-document-models.md",
+    "vector-database.md",
+    "late-interaction.md",
+    "metrics.md",
+    "quantization.md",
+    "rabitq.md",
+    "ivf.md"
+  ],
+  "sources": [
+    "https://milvus.io/docs/hnsw.md",
+    "https://milvus.io/docs/ivf-flat.md",
+    "https://milvus.io/docs/ivf-pq.md",
+    "https://milvus.io/docs/ivf-rabitq.md",
+    "https://milvus.io/docs/metric.md",
+    "https://milvus.io/docs/diskann.md",
+    "https://milvus.io/docs/gpu-cagra.md"
+  ],
+  "limits": [
+    "Diagrams use toy geometry and arithmetic, not measured search performance.",
+    "Existing article claims are preserved; this change does not correct the separately identified top-k wording.",
+    "Production rollout and Google reconsideration are separate steps."
+  ],
+  "layoutChecks": [
+    {
+      "version": "before",
+      "cookieHeight": 162,
+      "footerReferenceLinks": 1,
+      "overflow": false,
+      "paragraphTop": 431.78125,
+      "titleBottom": 339.78125,
+      "width": 1280
+    },
+    {
+      "version": "before",
+      "cookieHeight": 174,
+      "footerReferenceLinks": 1,
+      "overflow": false,
+      "paragraphTop": 521.171875,
+      "titleBottom": 429.171875,
+      "width": 390
+    },
+    {
+      "version": "after",
+      "cookieHeight": 0,
+      "footerReferenceLinks": 0,
+      "overflow": false,
+      "paragraphTop": 310.78125,
+      "titleBottom": 290.78125,
+      "width": 390
+    },
+    {
+      "version": "after",
+      "cookieHeight": 0,
+      "footerReferenceLinks": 0,
+      "overflow": false,
+      "paragraphTop": 297.375,
+      "titleBottom": 273.375,
+      "width": 1280
+    }
+  ],
+  "mobileConsentCheck": {
+    "method": "Isolated preview of the actual consent component, forced visible without changing existing consent cookies.",
+    "width": 390,
+    "collapsedHeight": 58,
+    "expandedNoticeReadable": true,
+    "acceptAndRejectVisible": true,
+    "settingsAndCopyUnchanged": true
+  },
+  "figureChecks": {
+    "renderer": "local native SVG renderer (sharp/librsvg)",
+    "math": "cosine, dot products, squared L2, directional MaxSim, code sizes and BM25 TF example checked",
+    "textBounds": "12 assets checked using local Arial/Georgia glyph metrics; no canvas overflow or text collisions",
+    "noBenchmarksClaimed": true
+  },
+  "catalogTests": {
+    "published": 113,
+    "passed": 10
+  },
+  "httpSmoke": {
+    "retained": 113,
+    "listPages": 5,
+    "merged": 27,
+    "retiredSamples": 7,
+    "topicFilters": 10,
+    "legacyCsv": 404,
+    "demoPages": 3,
+    "illustrations": 70,
+    "status": "passed"
+  },
+  "visualReview": "All 12 mechanism diagrams rendered locally and inspected; final labels checked after spacing refinements."
+}

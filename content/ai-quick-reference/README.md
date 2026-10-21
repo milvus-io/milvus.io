@@ -196,3 +196,13 @@ The ANN overview links to an added FAISS introduction and distinguishes library,
 search structure, and vector representation. The quantization article now defines
 SQ8, PQ, PRQ, and RaBitQ, estimates vector-payload memory, and explains why those
 ratios do not equal total index or service-memory savings.
+
+## Reading and mechanism follow-up, 2026-10-21
+
+The generator now applies 12 original mechanism-diagram overrides from
+`scripts/ai_reference_mechanisms.py` after rendering the base schematics. These
+explain candidate geometry, HNSW traversal, IVF probing, compression codes,
+metric rankings, MaxSim, RAM/SSD residency, GPU expansion, BM25 saturation,
+range bounds, and coverage versus scoring errors. Toy coordinates and
+calculations are not benchmarks. Article Markdown and publication hashes are
+unchanged. `reading-review-2026-10-21.json` records the scoped follow-up.

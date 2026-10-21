@@ -1,1 +1,64 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 400" width="960" height="400" role="img" aria-labelledby="title desc"><title id="title">Treat compression as another approximation</title><desc id="desc">Treat compression as another approximation. Compare at the same quality target; smaller is not automatically better.</desc><defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M1 1L7 4L1 7" fill="none" stroke="#1E5F70" stroke-width="1.5"/></marker></defs><rect width="960" height="400" fill="#FAF6EE"/><g font-family="Georgia, Noto Serif SC, serif"><text x="36" y="42" text-anchor="start" font-size="12" fill="#6B6356" font-weight="400">MILVUS / AI REFERENCE / CONCEPT DIAGRAM</text><text x="36" y="87" text-anchor="start" font-size="26" fill="#0F1F2E" font-weight="700">Treat compression as another approximation</text><rect x="35" y="165" width="200" height="102" fill="#F4ECDC" stroke="#0F1F2E" stroke-width="1.5"/><text x="135.0" y="197" text-anchor="middle" font-size="18" fill="#0F1F2E" font-weight="400">Full-vector baseline</text><text x="47" y="151" text-anchor="start" font-size="14" fill="#E85A2B" font-weight="700">01</text><path d="M235 216 L266 216" fill="none" stroke="#1E5F70" stroke-width="2" marker-end="url(#arrow)"/><rect x="270" y="165" width="200" height="102" fill="#F4ECDC" stroke="#0F1F2E" stroke-width="1.5"/><text x="370.0" y="197" text-anchor="middle" font-size="18" fill="#0F1F2E" font-weight="400">Compressed</text><text x="370.0" y="223" text-anchor="middle" font-size="18" fill="#0F1F2E" font-weight="400">representation</text><text x="282" y="151" text-anchor="start" font-size="14" fill="#E85A2B" font-weight="700">02</text><path d="M470 216 L501 216" fill="none" stroke="#1E5F70" stroke-width="2" marker-end="url(#arrow)"/><rect x="505" y="165" width="200" height="102" fill="#F4ECDC" stroke="#0F1F2E" stroke-width="1.5"/><text x="605.0" y="197" text-anchor="middle" font-size="18" fill="#0F1F2E" font-weight="400">Candidate or score</text><text x="605.0" y="223" text-anchor="middle" font-size="18" fill="#0F1F2E" font-weight="400">approximation</text><text x="517" y="151" text-anchor="start" font-size="14" fill="#E85A2B" font-weight="700">03</text><path d="M705 216 L736 216" fill="none" stroke="#1E5F70" stroke-width="2" marker-end="url(#arrow)"/><rect x="740" y="165" width="200" height="102" fill="#F4ECDC" stroke="#0F1F2E" stroke-width="1.5"/><text x="840.0" y="197" text-anchor="middle" font-size="18" fill="#0F1F2E" font-weight="400">Recall + memory +</text><text x="840.0" y="223" text-anchor="middle" font-size="18" fill="#0F1F2E" font-weight="400">refinement</text><text x="752" y="151" text-anchor="start" font-size="14" fill="#E85A2B" font-weight="700">04</text><path d="M36 356H924" stroke="#0F1F2E" stroke-width="1.5"/><text x="36" y="382" text-anchor="start" font-size="15" fill="#6B6356" font-weight="400">Compare at the same quality target; smaller is not automatically better.</text></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 1120" width="640" height="1120" role="img" aria-labelledby="title desc">
+<title id="title">Quantization replaces values with smaller codes</title>
+<desc id="desc">SQ maps individual coordinates to levels. PQ stores subvector codebook IDs. Residual quantization codes the remaining approximation error. Binary RaBitQ uses rotated directions with correction data. Payload sizes exclude index overhead and refinement.</desc>
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M1 1 L7 4 L1 7" fill="none" stroke="#1E5F70" stroke-width="1.5"/></marker></defs>
+<rect width="640" height="1120" fill="#FAF6EE"/>
+<text x="28" y="30" text-anchor="start" font-family="Arial, sans-serif" font-size="12" fill="#6B6356" font-weight="400"><tspan x="28" dy="0">MILVUS / AI REFERENCE / MECHANISM</tspan></text>
+<text x="28" y="72" text-anchor="start" font-family="Georgia, serif" font-size="27" fill="#0F1F2E" font-weight="700"><tspan x="28" dy="0">Quantization replaces values with</tspan><tspan x="28" dy="35.1">smaller codes</tspan></text>
+<text x="28" y="152" text-anchor="start" font-family="Arial, sans-serif" font-size="22" fill="#0F1F2E" font-weight="700"><tspan x="28" dy="0">SQ: round each coordinate to a level</tspan></text>
+<path d="M80 225 L560 225" fill="none" stroke="#0F1F2E" stroke-width="2"/>
+<circle cx="80" cy="225" r="5" fill="#E5DDD0" stroke="#0F1F2E" stroke-width="1.5"/>
+<circle cx="160" cy="225" r="5" fill="#E5DDD0" stroke="#0F1F2E" stroke-width="1.5"/>
+<circle cx="240" cy="225" r="5" fill="#E5DDD0" stroke="#0F1F2E" stroke-width="1.5"/>
+<circle cx="320" cy="225" r="5" fill="#E5DDD0" stroke="#0F1F2E" stroke-width="1.5"/>
+<circle cx="400" cy="225" r="5" fill="#E5DDD0" stroke="#0F1F2E" stroke-width="1.5"/>
+<circle cx="480" cy="225" r="5" fill="#E5DDD0" stroke="#0F1F2E" stroke-width="1.5"/>
+<circle cx="560" cy="225" r="5" fill="#E5DDD0" stroke="#0F1F2E" stroke-width="1.5"/>
+<circle cx="363.2" cy="196" r="7" fill="#E85A2B" stroke="#0F1F2E" stroke-width="1.5"/>
+<path d="M363.2 196 L400 225" fill="none" stroke="#1E5F70" stroke-width="2" marker-end="url(#arrow)"/>
+<circle cx="400" cy="225" r="8" fill="#1E5F70" stroke="#0F1F2E" stroke-width="1.5"/>
+<text x="65" y="268" text-anchor="start" font-family="Arial, sans-serif" font-size="20" fill="#6B6356" font-weight="400"><tspan x="65" dy="0">Toy value 0.18 → level 0.33</tspan></text>
+<text x="28" y="325" text-anchor="start" font-family="Arial, sans-serif" font-size="22" fill="#0F1F2E" font-weight="700"><tspan x="28" dy="0">PQ: one codebook ID per sub-vector</tspan></text>
+<rect x="50" y="350" width="122" height="34" fill="#1E5F70" stroke="#0F1F2E" stroke-width="1.5"/>
+<path d="M111 384 L111 410" fill="none" stroke="#1E5F70" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="50" y="418" width="122" height="48" fill="#F4ECDC" stroke="#0F1F2E" stroke-width="1.5"/>
+<text x="111" y="450" text-anchor="middle" font-family="Arial, sans-serif" font-size="25" fill="#0F1F2E" font-weight="700"><tspan x="111" dy="0">7</tspan></text>
+<rect x="195" y="350" width="122" height="34" fill="#E85A2B" stroke="#0F1F2E" stroke-width="1.5"/>
+<path d="M256 384 L256 410" fill="none" stroke="#1E5F70" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="195" y="418" width="122" height="48" fill="#F4ECDC" stroke="#0F1F2E" stroke-width="1.5"/>
+<text x="256" y="450" text-anchor="middle" font-family="Arial, sans-serif" font-size="25" fill="#0F1F2E" font-weight="700"><tspan x="256" dy="0">12</tspan></text>
+<rect x="340" y="350" width="122" height="34" fill="#F4B860" stroke="#0F1F2E" stroke-width="1.5"/>
+<path d="M401 384 L401 410" fill="none" stroke="#1E5F70" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="340" y="418" width="122" height="48" fill="#F4ECDC" stroke="#0F1F2E" stroke-width="1.5"/>
+<text x="401" y="450" text-anchor="middle" font-family="Arial, sans-serif" font-size="25" fill="#0F1F2E" font-weight="700"><tspan x="401" dy="0">3</tspan></text>
+<rect x="485" y="350" width="122" height="34" fill="#0F7D4B" stroke="#0F1F2E" stroke-width="1.5"/>
+<path d="M546 384 L546 410" fill="none" stroke="#1E5F70" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="485" y="418" width="122" height="48" fill="#F4ECDC" stroke="#0F1F2E" stroke-width="1.5"/>
+<text x="546" y="450" text-anchor="middle" font-family="Arial, sans-serif" font-size="25" fill="#0F1F2E" font-weight="700"><tspan x="546" dy="0">5</tspan></text>
+<text x="28" y="510" text-anchor="start" font-family="Arial, sans-serif" font-size="22" fill="#0F1F2E" font-weight="700"><tspan x="28" dy="0">PRQ: code the error left by earlier stages</tspan></text>
+<text x="40" y="552" text-anchor="start" font-family="Arial, sans-serif" font-size="21" fill="#0F1F2E" font-weight="400"><tspan x="40" dy="0">x = (0.8, 0.4)</tspan></text>
+<text x="340" y="552" text-anchor="start" font-family="Arial, sans-serif" font-size="21" fill="#0F1F2E" font-weight="400"><tspan x="340" dy="0">c1 = (0.6, 0.3)</tspan></text>
+<path d="M295 548 L330 548" fill="none" stroke="#1E5F70" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="40" y="593" text-anchor="start" font-family="Arial, sans-serif" font-size="21" fill="#1E5F70" font-weight="400"><tspan x="40" dy="0">residual = x − c1 = (0.2, 0.1)</tspan></text>
+<text x="40" y="628" text-anchor="start" font-family="Arial, sans-serif" font-size="20" fill="#6B6356" font-weight="400"><tspan x="40" dy="0">next code approximates that residual</tspan></text>
+<text x="28" y="685" text-anchor="start" font-family="Arial, sans-serif" font-size="22" fill="#0F1F2E" font-weight="700"><tspan x="28" dy="0">RaBitQ: rotate direction, then encode signs</tspan></text>
+<circle cx="125" cy="750" r="43" fill="#FAF6EE" stroke="#E5DDD0" stroke-width="1.5"/>
+<circle cx="335" cy="750" r="43" fill="#FAF6EE" stroke="#E5DDD0" stroke-width="1.5"/>
+<path d="M125 750 L157 726" fill="none" stroke="#1E5F70" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M335 750 L311 718" fill="none" stroke="#1E5F70" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M184 750 L272 750" fill="none" stroke="#1E5F70" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M386 750 L460 750" fill="none" stroke="#1E5F70" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="480" y="758" text-anchor="start" font-family="Arial, sans-serif" font-size="30" fill="#1E5F70" font-weight="700"><tspan x="480" dy="0">0 1</tspan></text>
+<text x="45" y="818" text-anchor="start" font-family="Arial, sans-serif" font-size="20" fill="#6B6356" font-weight="400"><tspan x="45" dy="0">Binary codes also need correction data.</tspan></text>
+<text x="28" y="878" text-anchor="start" font-family="Arial, sans-serif" font-size="22" fill="#0F1F2E" font-weight="700"><tspan x="28" dy="0">768 dimensions: vector payload only</tspan></text>
+<text x="28" y="920" text-anchor="start" font-family="Arial, sans-serif" font-size="20" fill="#0F1F2E" font-weight="400"><tspan x="28" dy="0">FP32</tspan></text>
+<text x="223" y="920" text-anchor="start" font-family="Arial, sans-serif" font-size="22" fill="#1E5F70" font-weight="700"><tspan x="223" dy="0">3,072 B</tspan></text>
+<text x="338" y="920" text-anchor="start" font-family="Arial, sans-serif" font-size="20" fill="#0F1F2E" font-weight="400"><tspan x="338" dy="0">SQ8</tspan></text>
+<text x="533" y="920" text-anchor="start" font-family="Arial, sans-serif" font-size="22" fill="#1E5F70" font-weight="700"><tspan x="533" dy="0">768 B</tspan></text>
+<text x="28" y="974" text-anchor="start" font-family="Arial, sans-serif" font-size="20" fill="#0F1F2E" font-weight="400"><tspan x="28" dy="0">PQ 96 × 8 bits</tspan></text>
+<text x="223" y="974" text-anchor="start" font-family="Arial, sans-serif" font-size="22" fill="#1E5F70" font-weight="700"><tspan x="223" dy="0">96 B</tspan></text>
+<text x="338" y="974" text-anchor="start" font-family="Arial, sans-serif" font-size="20" fill="#0F1F2E" font-weight="400"><tspan x="338" dy="0">1-bit codes</tspan></text>
+<text x="533" y="974" text-anchor="start" font-family="Arial, sans-serif" font-size="22" fill="#1E5F70" font-weight="700"><tspan x="533" dy="0">96 B</tspan></text>
+<path d="M28 1044 L612 1044" fill="none" stroke="#0F1F2E" stroke-width="2"/>
+<text x="28" y="1072" text-anchor="start" font-family="Arial, sans-serif" font-size="18" fill="#6B6356" font-weight="400"><tspan x="28" dy="0">Toy mechanisms. Add graph, IDs, codebooks and refine data to</tspan><tspan x="28" dy="23.4">the budget.</tspan></text>
+</svg>

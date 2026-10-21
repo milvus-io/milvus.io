@@ -122,24 +122,21 @@ function FaqDetail(props: FaqDetailProps) {
         <JsonLd schema={ldSchemas} />
       </main>
       <section className={classes.detailContainer}>
-        <div className={clsx(pageClasses.docContainer, styles.upLayout)}>
-          <section className={styles.blogHeader}>
-            <div className={styles.pageHeaderContainer}>
+        <div className={clsx(pageClasses.docContainer, styles.upLayout, classes.readingLayout)}>
+          <section className={clsx(styles.blogHeader, classes.referenceHeader)}>
+            <div className={clsx(styles.pageHeaderContainer, classes.referenceToolbar)}>
               <Breadcrumb
                 list={[
                   {
                     label: t('faq:detail.name'),
                     href: '/ai-quick-reference',
                   },
-                  {
-                    label: title,
-                  },
                 ]}
               />
               <LLMActions options={faqPageOptions} mdContent={content} />
             </div>
 
-            <h1 className={styles.title}>{title}</h1>
+            <h1 className={clsx(styles.title, classes.referenceTitle)}>{title}</h1>
           </section>
 
           <section className={styles.blogContent}>

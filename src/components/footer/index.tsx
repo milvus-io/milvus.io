@@ -65,13 +65,6 @@ const Footer = (props: Props) => {
           name: t('header:footer.resource.contact'),
           to: getLocalePath('/contact'),
         },
-        {
-          id: 'resource-5',
-          name: t('header:footer.resource.faq'),
-          to: getLocalePath('/ai-quick-reference'),
-          invisibleItem: true,
-          display: locale === LanguageEnum.ENGLISH,
-        },
       ],
     },
     {
@@ -317,12 +310,7 @@ const Footer = (props: Props) => {
                         return (
                           <li key={child.id} className="list-none">
                             <LocalizedAnchor
-                              className={clsx(
-                                'inline-flex items-center gap-[4px] text-[14px] font-[400] leading-[21px] text-black1 hover:opacity-[0.7]',
-                                {
-                                  ['text-transparent']: child.invisibleItem,
-                                }
-                              )}
+                              className="inline-flex items-center gap-[4px] text-[14px] font-[400] leading-[21px] text-black1 hover:opacity-[0.7]"
                               href={child.to}
                               target="_blank"
                               rel="noopener noreferrer"
@@ -339,12 +327,7 @@ const Footer = (props: Props) => {
                         <li key={child.id} className="list-none">
                           <Link
                             href={child.to}
-                            className={clsx(
-                              'text-[14px] font-[400] leading-[21px] text-black1 hover:opacity-[0.7]',
-                              {
-                                ['text-transparent']: child.invisibleItem,
-                              }
-                            )}
+                            className="text-[14px] font-[400] leading-[21px] text-black1 hover:opacity-[0.7]"
                           >
                             {child.name}
                           </Link>

@@ -5,7 +5,7 @@
   "nav": "Milvus vs pgvector",
   "path": "/compare/milvus-vs-pgvector",
   "title": "Milvus vs pgvector: Scalability, Performance, Features",
-  "description": "Milvus vs pgvector: compare architecture, capabilities and migration, with published performance data for Milvus, Zilliz Cloud and pgvector in one table.",
+  "description": "Milvus vs pgvector: compare retrieval performance, independent scaling and hot/cold tiered storage, with benchmark data and a Postgres-to-Milvus migration path.",
   "keywords": {
     "primary": "milvus vs pgvector",
     "secondary": [
@@ -58,7 +58,7 @@
     "https://www.cnblogs.com/itqinls/p/20832126"
   ],
   "h1": "Milvus vs pgvector: a vector database comparison for growing data",
-  "intro": "Milvus vs pgvector is not a contest between two HNSW implementations: pgvector puts vector search inside the Postgres you already run, while Milvus is a purpose-built distributed vector database with storage-compute separation that grows to tens of billions of vectors. pgvector gives you transactions, joins, SQL and row-level security next to your embeddings; Milvus gives you index breadth, server-side BM25 hybrid search, partition-key multi-tenancy and streaming ingestion with separately scalable serving resources. Choose pgvector while the vector table fits one Postgres box, Milvus when vectors, tenants or query load keep growing, or both.",
+  "intro": "Milvus gives production vector search three dedicated advantages: specialized indexes and server-side hybrid retrieval, independently scalable ingestion/indexing/query resources, and tiered storage for hot and cold data. As the corpus grows, prioritize query-node memory and local disk for the active working set while retaining historical data in object storage. Keep Postgres for transactions, joins and business records; use Milvus to scale retrieval.",
   "primary_cta": {
     "label": "Start the Milvus Quickstart",
     "href": "https://milvus.io/docs/quickstart.md"
@@ -68,9 +68,10 @@
     "href": "https://cloud.zilliz.com/signup"
   },
   "proof": [
-    "Apache-2.0, 40K+ GitHub stars",
-    "Scales to tens of billions of vectors",
-    "Storage and compute separated"
+    "Apache-2.0 · GitHub 40K+ stars",
+    "Dedicated vector and hybrid retrieval",
+    "Scale query, ingestion and indexing separately",
+    "Hot/cold tiers · durable object storage"
   ],
   "logos": [
     "Salesforce",
@@ -154,6 +155,20 @@
       ]
     },
     {
+      "id": "hot-cold-storage",
+      "nav": "Hot/cold storage",
+      "h2": "Hot/cold separation: size retrieval resources for the active working set",
+      "paragraphs": [
+        "Milvus Tiered Storage (2.6.4+) separates QueryNode caching from loading. Durable data stays in object storage; field chunks and segment indexes load on demand. Infrequently used cache entries can be evicted, while important fields and indexes can be warmed up.",
+        "For growing knowledge bases, historical documents and agent memory, this helps separate corpus capacity from active serving resources and reduce cold-data cache residency. pgvector also uses Postgres caching and disk-backed indexes; Milvus adds an object-storage-backed tiering mechanism designed for distributed vector retrieval."
+      ],
+      "bullets": [
+        "Keep historical data searchable without keeping every field permanently resident on QueryNodes.",
+        "Scale query resources for traffic; size object storage and active cache for corpus growth."
+      ],
+      "note": "Cold accesses can add latency. Warm critical data or use full-load mode for strict latency targets. Savings depend on access patterns, indexes, cache hit rates and query requirements."
+    },
+    {
       "id": "performance",
       "nav": "Performance",
       "h2": "Milvus, Zilliz Cloud and pgvector performance",
@@ -234,6 +249,59 @@
       "note": "Instances, indexes and test periods differ; these are published results, not a controlled comparison. pgvector uses the July 2023 IVFFlat run and serial P99 latency. Original sources are linked below."
     },
     {
+      "id": "milvus-gives",
+      "nav": "Milvus strengths",
+      "h2": "Why choose Milvus for production retrieval",
+      "paragraphs": [
+        "Milvus combines specialized retrieval, independent scaling and hot/cold tiering in one service. Allocate resources by query, ingestion and indexing demand, and manage cache by access patterns. These controls matter when retrieval becomes a growing production workload rather than a small addition to an existing database."
+      ],
+      "table": {
+        "caption": "Milvus and pgvector capabilities and implementation choices",
+        "heads": [
+          "Capability",
+          "Milvus",
+          "pgvector"
+        ],
+        "rows": [
+          [
+            "Index breadth",
+            "HNSW with SQ, PQ, PRQ; IVF_FLAT, IVF_SQ8, IVF_PQ, IVF_RABITQ; SCANN; DiskANN for data exceeding RAM; GPU_CAGRA, GPU_IVF; up to 32,768 dims",
+            "HNSW and IVFFlat; vector indexable to 2,000 dims, halfvec to 4,000; binary quantization plus re-rank"
+          ],
+          [
+            "Built-in BM25 hybrid search",
+            "BM25 function builds sparse vectors server-side; one hybrid_search call fuses dense and sparse with RRFRanker or WeightedRanker",
+            "tsvector plus a vector query, fused with RRF or a cross-encoder in SQL or application code"
+          ],
+          [
+            "Function Chain reranking",
+            "Decay, Model (TEI, vLLM, Cohere, Voyage) and Boost rankers run server-side; Function Chain in hybrid search on Milvus 3.0+",
+            "Rerank in application code"
+          ],
+          [
+            "Multi-tenancy at millions",
+            "Partition keys prune the search scope; include the correct tenant filter on every request. Database, collection and partition are other tenant layouts.",
+            "List partitioning or a table per tenant"
+          ],
+          [
+            "Storage-compute separation and hot/cold tiering",
+            "Segments and WAL in object storage; query nodes scale independently; tiered storage serves data far beyond node memory or disk",
+            "Heap and index use Postgres storage; HNSW can run beyond cache, with additional I/O and latency."
+          ],
+          [
+            "Streaming ingestion while serving",
+            "Streaming Node appends to a WAL and makes growing data queryable in real time while data nodes index sealed segments",
+            "Writes and HNSW maintenance on the single primary"
+          ],
+          [
+            "Scalar indexes and rich fields",
+            "INVERTED, BITMAP, STL_SORT, Trie, JSON path indexes on VARCHAR, JSON, ARRAY, TEXT (Milvus 3.0+), TIMESTAMPTZ; filter runs before the ANN search, or via the iterative_filter hint",
+            "Filter applies after the index scan; iterative_scan rescans up to hnsw.max_scan_tuples"
+          ]
+        ]
+      }
+    },
+    {
       "id": "pgvector-gives",
       "nav": "pgvector strengths",
       "h2": "What pgvector gives you that Milvus doesn't",
@@ -272,59 +340,6 @@
             "One database, existing tooling",
             "CREATE EXTENSION vector on the Postgres you already run; any ORM or driver; managed on RDS, Aurora, Supabase, Neon, Cloud SQL, AlloyDB, Azure",
             "A separate service (Milvus Lite, Standalone or Kubernetes) with its own SDKs"
-          ]
-        ]
-      }
-    },
-    {
-      "id": "milvus-gives",
-      "nav": "Milvus strengths",
-      "h2": "Milvus capabilities for dedicated retrieval and independent scaling",
-      "paragraphs": [
-        "Milvus scales ingestion, indexing and query resources separately and provides dedicated retrieval indexes and server-side ranking. Postgres can also combine SQL, other extensions and external sharding systems; compare the complete deployment and its operating cost."
-      ],
-      "table": {
-        "caption": "Milvus and pgvector capabilities and implementation choices",
-        "heads": [
-          "Capability",
-          "Milvus",
-          "pgvector"
-        ],
-        "rows": [
-          [
-            "Index breadth",
-            "HNSW with SQ, PQ, PRQ; IVF_FLAT, IVF_SQ8, IVF_PQ, IVF_RABITQ; SCANN; DiskANN for data exceeding RAM; GPU_CAGRA, GPU_IVF; up to 32,768 dims",
-            "HNSW and IVFFlat; vector indexable to 2,000 dims, halfvec to 4,000; binary quantization plus re-rank"
-          ],
-          [
-            "Built-in BM25 hybrid search",
-            "BM25 function builds sparse vectors server-side; one hybrid_search call fuses dense and sparse with RRFRanker or WeightedRanker",
-            "tsvector plus a vector query, fused with RRF or a cross-encoder in SQL or application code"
-          ],
-          [
-            "Function Chain reranking",
-            "Decay, Model (TEI, vLLM, Cohere, Voyage) and Boost rankers run server-side; Function Chain in hybrid search on Milvus 3.0+",
-            "Rerank in application code"
-          ],
-          [
-            "Multi-tenancy at millions",
-            "Partition keys prune the search scope; include the correct tenant filter on every request. Database, collection and partition are other tenant layouts.",
-            "List partitioning or a table per tenant"
-          ],
-          [
-            "Storage-compute separation, tiered storage",
-            "Segments and WAL in object storage; query nodes scale independently; tiered storage serves data far beyond node memory or disk",
-            "Heap and index use Postgres storage; HNSW can run beyond cache, with additional I/O and latency."
-          ],
-          [
-            "Streaming ingestion while serving",
-            "Streaming Node appends to a WAL and makes growing data queryable in real time while data nodes index sealed segments",
-            "Writes and HNSW maintenance on the single primary"
-          ],
-          [
-            "Scalar indexes and rich fields",
-            "INVERTED, BITMAP, STL_SORT, Trie, JSON path indexes on VARCHAR, JSON, ARRAY, TEXT (Milvus 3.0+), TIMESTAMPTZ; filter runs before the ANN search, or via the iterative_filter hint",
-            "Filter applies after the index scan; iterative_scan rescans up to hnsw.max_scan_tuples"
           ]
         ]
       }
@@ -576,7 +591,8 @@
     "SERP pass 2026-10-21 (unchanged keyword map): studied 12 EN / 7 ZH results; keywords and PAA questions retained from the previous revision.",
     "Separate historical pgvector bars; preserve source dates/conditions, serial P99, AWS terminology caveats and prior configuration table.",
     "Qualify tenant filtering and HNSW memory requirements; distinguish capability choices from impossible-in-Postgres claims.",
-    "Owner requested one side-by-side Milvus/Zilliz Cloud/pgvector performance table; removed standalone charts, published-benchmark survey and scan-configuration section."
+    "Owner requested one side-by-side Milvus/Zilliz Cloud/pgvector performance table; removed standalone charts, published-benchmark survey and scan-configuration section.",
+    "Emphasize dedicated retrieval, independent scaling and hot/cold tiered storage; retain cold-miss latency and full-load/warmup tradeoffs without claiming Postgres has no cache."
   ],
   "lang": "en",
   "reviewedOn": "2026-10-21"

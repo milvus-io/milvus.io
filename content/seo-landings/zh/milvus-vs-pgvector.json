@@ -5,7 +5,7 @@
   "nav": "对比 pgvector",
   "path": "/zh/compare/milvus-vs-pgvector",
   "title": "Milvus 和 pgvector 对比：扩展性、性能与功能",
-  "description": "Milvus 与 pgvector：对比架构、能力、迁移方式，以及 Milvus、Zilliz Cloud 和 pgvector 的公开性能数据。",
+  "description": "Milvus 与 pgvector：对比检索性能、独立扩缩和冷热分离，查看三者性能数据、资源成本取舍及 Postgres 与 Milvus 并用方案。",
   "keywords": {
     "primary": "Milvus 和 pgvector 对比",
     "secondary": [
@@ -58,7 +58,7 @@
     "https://www.cnblogs.com/itqinls/p/20832126"
   ],
   "h1": "Milvus 和 pgvector 对比：数据持续增长时该怎么选",
-  "intro": "Milvus 和 pgvector 对比，比的不是两套 HNSW 实现：pgvector 是把向量检索装进你已经在用的 Postgres 的扩展，Milvus 是存算分离的专用分布式向量数据库，可以扩展到数百亿向量。pgvector 让向量和事务、JOIN、SQL、行级安全放在一起；Milvus 提供更多索引类型、服务端 BM25 混合检索、partition key 百万级多租户和边写边查的流式写入，这些资源可以按检索负载独立扩缩。向量表一台 Postgres 放得下，选 pgvector；向量数、租户数或查询量会持续增长，选 Milvus；数据本身就分成两类，就两个一起用。",
+  "intro": "当向量检索成为多个应用共用的生产服务，Milvus 的优势集中在三件事：专用索引和服务端混合检索、写入与索引及查询资源独立扩缩、冷热数据分层存储。数据持续增长时，可把内存和本地盘优先用于活跃检索数据，让历史语料保留在对象存储中按需访问。Postgres 可以继续承担事务、JOIN 和业务记录，Milvus 负责规模化检索。",
   "primary_cta": {
     "label": "开始 Milvus 快速入门",
     "href": "https://milvus.io/docs/zh/quickstart.md"
@@ -68,9 +68,10 @@
     "href": "https://cloud.zilliz.com.cn/signup"
   },
   "proof": [
-    "Apache-2.0，GitHub 40K+ star",
-    "可扩展到数百亿向量",
-    "存储与计算分离"
+    "Apache-2.0 · GitHub 40K+ stars",
+    "专用向量与混合检索",
+    "查询、写入、索引独立扩缩",
+    "冷热分离 · 对象存储持久化"
   ],
   "logos": [
     "Salesforce",
@@ -154,6 +155,20 @@
       ]
     },
     {
+      "id": "hot-cold-storage",
+      "nav": "冷热分离",
+      "h2": "冷热分离：让检索资源跟着活跃数据扩展",
+      "paragraphs": [
+        "Milvus Tiered Storage（2.6.4+）将 QueryNode 缓存与数据加载解耦：持久数据留在对象存储，字段数据按 chunk、索引按 segment 按需加载；低频缓存可淘汰，关键字段和索引可提前预热。",
+        "对于持续累积的知识库、历史文档和 Agent 记忆，这提供了独立控制语料容量与活跃检索资源的空间，减少低频数据长期占用昂贵内存和本地盘的需要。pgvector 也使用 Postgres 缓存并可访问磁盘索引；区别在于 Milvus 原生提供面向分布式向量检索的对象存储与 QueryNode 分层机制。"
+      ],
+      "bullets": [
+        "历史数据继续可检索，无需让每份数据都长期驻留 QueryNode 本地。",
+        "检索流量上升时扩查询资源，语料容量增长时评估对象存储与活跃缓存需求。"
+      ],
+      "note": "冷数据首次访问可能增加延迟；低延迟负载应预热关键数据，或选择全量加载。节省多少资源取决于访问热度、索引、缓存命中率和查询目标。"
+    },
+    {
       "id": "performance",
       "nav": "性能",
       "h2": "Milvus、Zilliz Cloud 与 pgvector 性能数据",
@@ -234,6 +249,59 @@
       "note": "实例、索引和测试时期不同，以上为公开结果并列展示，非同条件对测。pgvector 为 2023 年 IVFFlat 测试，延迟为 serial P99；来源链接见下方资料列表。"
     },
     {
+      "id": "milvus-gives",
+      "nav": "Milvus 优势",
+      "h2": "为什么为生产检索选择 Milvus",
+      "paragraphs": [
+        "Milvus 把专用检索、独立扩缩和冷热分层放在同一套服务中。优势在于可以按查询、写入和索引负载分别配置资源，并按访问热度管理缓存；当检索成为业务主路径时，这些能力决定持续增长的服务如何部署与运维。"
+      ],
+      "table": {
+        "caption": "Milvus 与 pgvector 的能力及实现方式",
+        "heads": [
+          "能力",
+          "Milvus",
+          "pgvector"
+        ],
+        "rows": [
+          [
+            "索引广度",
+            "HNSW 及 SQ、PQ、PRQ 变体；IVF_FLAT、IVF_SQ8、IVF_PQ、IVF_RABITQ；SCANN；超出内存用 DiskANN；GPU_CAGRA、GPU_IVF；最高 32,768 维",
+            "HNSW 和 IVFFlat；vector 可索引 2,000 维，halfvec 4,000 维；二值量化加重排"
+          ],
+          [
+            "内置 BM25 混合检索",
+            "BM25 函数在服务端把文本转成稀疏向量；一次 hybrid_search 用 RRFRanker 或 WeightedRanker 融合稠密与稀疏结果",
+            "tsvector 全文检索加向量查询，在 SQL 或应用层用 RRF 或 cross-encoder 合并"
+          ],
+          [
+            "Function Chain 重排",
+            "Decay、Model（TEI、vLLM、Cohere、Voyage）和 Boost ranker 在服务端执行；Milvus 3.0+ 的混合检索支持 Function Chain",
+            "在应用层重排"
+          ],
+          [
+            "百万级多租户",
+            "partition key 用于裁剪检索范围，每次请求仍须带正确的租户过滤；也可按 database、collection、partition 组织租户",
+            "list 分区或每租户一张表"
+          ],
+          [
+            "存算分离与冷热分层",
+            "segment 和 WAL 在对象存储；query 节点独立扩缩；tiered storage 服务远超节点内存和磁盘的数据",
+            "堆表和索引存放在 Postgres 存储中；HNSW 超出缓存时可能因 I/O 增加而变慢，并非必须完全驻留内存"
+          ],
+          [
+            "边服务边流式写入",
+            "Streaming Node 追加写 WAL，growing 数据实时可查，data 节点同时给 sealed segment 建索引",
+            "写入和 HNSW 维护都在单个主库"
+          ],
+          [
+            "标量索引与丰富字段",
+            "VARCHAR、JSON、ARRAY、TEXT（Milvus 3.0+）、TIMESTAMPTZ 上建 INVERTED、BITMAP、STL_SORT、Trie、JSON path 索引；过滤在 ANN 检索之前执行，或用 iterative_filter hint",
+            "过滤在索引扫描之后执行；iterative_scan 最多重扫到 hnsw.max_scan_tuples"
+          ]
+        ]
+      }
+    },
+    {
       "id": "pgvector-gives",
       "nav": "pgvector 优势",
       "h2": "pgvector 能做、Milvus 做不到的事",
@@ -272,59 +340,6 @@
             "只运维一个数据库、沿用现有工具",
             "在已有 Postgres 上 CREATE EXTENSION vector；任意 ORM 或驱动；RDS、Aurora、Supabase、Neon、Cloud SQL、AlloyDB、Azure 均托管",
             "独立服务（Milvus Lite、Standalone 或 Kubernetes），自带 SDK"
-          ]
-        ]
-      }
-    },
-    {
-      "id": "milvus-gives",
-      "nav": "Milvus 优势",
-      "h2": "Milvus 的专用检索与独立扩缩能力",
-      "paragraphs": [
-        "Milvus 将写入、索引和检索资源分开扩缩，并提供专用检索索引与服务端排序能力。Postgres 也可以通过 SQL、其他扩展或外部分片方案组合能力；选型需要比较完整部署及其运维成本。"
-      ],
-      "table": {
-        "caption": "Milvus 与 pgvector 的能力及实现方式",
-        "heads": [
-          "能力",
-          "Milvus",
-          "pgvector"
-        ],
-        "rows": [
-          [
-            "索引广度",
-            "HNSW 及 SQ、PQ、PRQ 变体；IVF_FLAT、IVF_SQ8、IVF_PQ、IVF_RABITQ；SCANN；超出内存用 DiskANN；GPU_CAGRA、GPU_IVF；最高 32,768 维",
-            "HNSW 和 IVFFlat；vector 可索引 2,000 维，halfvec 4,000 维；二值量化加重排"
-          ],
-          [
-            "内置 BM25 混合检索",
-            "BM25 函数在服务端把文本转成稀疏向量；一次 hybrid_search 用 RRFRanker 或 WeightedRanker 融合稠密与稀疏结果",
-            "tsvector 全文检索加向量查询，在 SQL 或应用层用 RRF 或 cross-encoder 合并"
-          ],
-          [
-            "Function Chain 重排",
-            "Decay、Model（TEI、vLLM、Cohere、Voyage）和 Boost ranker 在服务端执行；Milvus 3.0+ 的混合检索支持 Function Chain",
-            "在应用层重排"
-          ],
-          [
-            "百万级多租户",
-            "partition key 用于裁剪检索范围，每次请求仍须带正确的租户过滤；也可按 database、collection、partition 组织租户",
-            "list 分区或每租户一张表"
-          ],
-          [
-            "存算分离与 tiered storage",
-            "segment 和 WAL 在对象存储；query 节点独立扩缩；tiered storage 服务远超节点内存和磁盘的数据",
-            "堆表和索引存放在 Postgres 存储中；HNSW 超出缓存时可能因 I/O 增加而变慢，并非必须完全驻留内存"
-          ],
-          [
-            "边服务边流式写入",
-            "Streaming Node 追加写 WAL，growing 数据实时可查，data 节点同时给 sealed segment 建索引",
-            "写入和 HNSW 维护都在单个主库"
-          ],
-          [
-            "标量索引与丰富字段",
-            "VARCHAR、JSON、ARRAY、TEXT（Milvus 3.0+）、TIMESTAMPTZ 上建 INVERTED、BITMAP、STL_SORT、Trie、JSON path 索引；过滤在 ANN 检索之前执行，或用 iterative_filter hint",
-            "过滤在索引扫描之后执行；iterative_scan 最多重扫到 hnsw.max_scan_tuples"
           ]
         ]
       }
@@ -578,7 +593,8 @@
     "Customer facts reused from the Qdrant page; Meituan appears only as a story (not on the milvus.io logo wall).",
     "Separate historical pgvector bars; preserve source dates/conditions, serial P99, AWS terminology caveats and prior configuration table.",
     "Qualify tenant filtering and HNSW memory requirements; distinguish capability choices from impossible-in-Postgres claims.",
-    "Owner requested one side-by-side Milvus/Zilliz Cloud/pgvector performance table; removed standalone charts, published-benchmark survey and scan-configuration section."
+    "Owner requested one side-by-side Milvus/Zilliz Cloud/pgvector performance table; removed standalone charts, published-benchmark survey and scan-configuration section.",
+    "Emphasize dedicated retrieval, independent scaling and hot/cold tiered storage; retain cold-miss latency and full-load/warmup tradeoffs without claiming Postgres has no cache."
   ],
   "lang": "zh",
   "reviewedOn": "2026-10-21"

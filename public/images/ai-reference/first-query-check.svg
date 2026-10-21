@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 666" width="640" height="666" role="img" aria-labelledby="title desc">
+<title id="title">A deployment is verified by a working query</title>
+<desc id="desc">Connect and authenticate: Pin server and SDK versions; verify the endpoint.. Define and populate a schema: Use stable IDs and a known embedding contract.. Build, load and search: Apply the chosen index, metric and filter.. Verify the result: Read known rows and compare expected neighbors.. A running process alone does not prove a usable retrieval workflow.</desc>
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M1 1 L6 4 L1 7" fill="none" stroke="#1E5F70" stroke-width="1.5"/></marker></defs>
+<rect width="640" height="666" fill="#FAF6EE"/>
+<text x="28" y="30" font-family="Arial, sans-serif" font-size="12" font-weight="400" fill="#6B6356"><tspan x="28" dy="0">MILVUS / AI REFERENCE / SCHEMATIC</tspan></text>
+<text x="28" y="72" font-family="Georgia, serif" font-size="28" font-weight="700" fill="#0F1F2E"><tspan x="28" dy="0">A deployment is verified by a</tspan><tspan x="28" dy="36.4">working query</tspan></text>
+<rect x="28" y="146" width="584" height="86" fill="#F4ECDC" stroke="#0F1F2E" stroke-width="1.5"/>
+<rect x="28" y="146" width="5" height="86" fill="#1E5F70"/>
+<text x="48" y="177" font-family="Arial, sans-serif" font-size="23" font-weight="700" fill="#0F1F2E"><tspan x="48" dy="0">Connect and authenticate</tspan></text>
+<text x="48" y="207" font-family="Arial, sans-serif" font-size="20" font-weight="400" fill="#6B6356"><tspan x="48" dy="0">Pin server and SDK versions; verify the endpoint.</tspan></text>
+<path d="M320 235 V254" fill="none" stroke="#1E5F70" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="28" y="258" width="584" height="86" fill="#F4ECDC" stroke="#0F1F2E" stroke-width="1.5"/>
+<rect x="28" y="258" width="5" height="86" fill="#1E5F70"/>
+<text x="48" y="289" font-family="Arial, sans-serif" font-size="23" font-weight="700" fill="#0F1F2E"><tspan x="48" dy="0">Define and populate a schema</tspan></text>
+<text x="48" y="319" font-family="Arial, sans-serif" font-size="20" font-weight="400" fill="#6B6356"><tspan x="48" dy="0">Use stable IDs and a known embedding contract.</tspan></text>
+<path d="M320 347 V366" fill="none" stroke="#1E5F70" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="28" y="370" width="584" height="86" fill="#F4ECDC" stroke="#0F1F2E" stroke-width="1.5"/>
+<rect x="28" y="370" width="5" height="86" fill="#1E5F70"/>
+<text x="48" y="401" font-family="Arial, sans-serif" font-size="23" font-weight="700" fill="#0F1F2E"><tspan x="48" dy="0">Build, load and search</tspan></text>
+<text x="48" y="431" font-family="Arial, sans-serif" font-size="20" font-weight="400" fill="#6B6356"><tspan x="48" dy="0">Apply the chosen index, metric and filter.</tspan></text>
+<path d="M320 459 V478" fill="none" stroke="#1E5F70" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="28" y="482" width="584" height="86" fill="#F4ECDC" stroke="#0F1F2E" stroke-width="1.5"/>
+<rect x="28" y="482" width="5" height="86" fill="#E85A2B"/>
+<text x="48" y="513" font-family="Arial, sans-serif" font-size="23" font-weight="700" fill="#0F1F2E"><tspan x="48" dy="0">Verify the result</tspan></text>
+<text x="48" y="543" font-family="Arial, sans-serif" font-size="20" font-weight="400" fill="#6B6356"><tspan x="48" dy="0">Read known rows and compare expected neighbors.</tspan></text>
+<path d="M28 590 H612" stroke="#0F1F2E" stroke-width="1.5"/>
+<text x="28" y="616" font-family="Arial, sans-serif" font-size="18" font-weight="400" fill="#6B6356"><tspan x="28" dy="0">A running process alone does not prove a usable retrieval</tspan><tspan x="28" dy="23.4">workflow.</tspan></text>
+</svg>

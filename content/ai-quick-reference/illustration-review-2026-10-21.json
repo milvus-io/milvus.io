@@ -1,0 +1,386 @@
+{
+  "baseline": "d2523a24f1603cc512b928da6069215848a3bddc",
+  "articleCount": 113,
+  "proseVerified": 113,
+  "approvedProseException": {
+    "file": "rabitq.md",
+    "scope": "Full-precision inner product versus quantized-query popcount; prose sentence and matching table cell only."
+  },
+  "newOriginalDiagrams": 46,
+  "illustratedArticles": 113,
+  "imagePlacements": 117,
+  "uniqueUsedAssets": 70,
+  "placementsChanged": [
+    {
+      "file": "fulltext.md",
+      "asset": "bm25-pipeline.svg",
+      "action": "added"
+    },
+    {
+      "file": "sparse-inverted.md",
+      "asset": "bm25-pipeline.svg",
+      "action": "added"
+    },
+    {
+      "file": "chunking.md",
+      "asset": "chunking-context.svg",
+      "action": "added"
+    },
+    {
+      "file": "diskann.md",
+      "asset": "diskann-tier.svg",
+      "action": "added"
+    },
+    {
+      "file": "mmap.md",
+      "asset": "mmap-vs-index.svg",
+      "action": "added"
+    },
+    {
+      "file": "gpu-cagra.md",
+      "asset": "cagra-parallel.svg",
+      "action": "replaced"
+    },
+    {
+      "file": "index-selection.md",
+      "asset": "index-workload-choice.svg",
+      "action": "replaced"
+    },
+    {
+      "file": "faiss.md",
+      "asset": "faiss-knowhere-stack.svg",
+      "action": "added"
+    },
+    {
+      "file": "knowhere.md",
+      "asset": "faiss-knowhere-stack.svg",
+      "action": "added"
+    },
+    {
+      "file": "range-search.md",
+      "asset": "range-candidates.svg",
+      "action": "added"
+    },
+    {
+      "file": "reranking.md",
+      "asset": "rerank-cascade.svg",
+      "action": "replaced"
+    },
+    {
+      "file": "reranking-model-catalog.md",
+      "asset": "rerank-cascade.svg",
+      "action": "added"
+    },
+    {
+      "file": "hnsw-compression.md",
+      "asset": "hnsw-recall-diagnosis.svg",
+      "action": "replaced"
+    },
+    {
+      "file": "clustering.md",
+      "asset": "clustering-workflow.svg",
+      "action": "replaced"
+    },
+    {
+      "file": "deduplication.md",
+      "asset": "dedup-verify.svg",
+      "action": "replaced"
+    },
+    {
+      "file": "entity-resolution.md",
+      "asset": "dedup-verify.svg",
+      "action": "added"
+    },
+    {
+      "file": "hard-negatives.md",
+      "asset": "hard-negative-mining.svg",
+      "action": "added"
+    },
+    {
+      "file": "diversity-sampling.md",
+      "asset": "diversity-selection.svg",
+      "action": "added"
+    },
+    {
+      "file": "data-quality.md",
+      "asset": "data-quality-gates.svg",
+      "action": "added"
+    },
+    {
+      "file": "multimodal-curation.md",
+      "asset": "multimodal-pair-check.svg",
+      "action": "replaced"
+    },
+    {
+      "file": "lake-source-identifiers.md",
+      "asset": "stable-lake-identity.svg",
+      "action": "replaced"
+    },
+    {
+      "file": "lake-deletions.md",
+      "asset": "lake-delete-propagation.svg",
+      "action": "replaced"
+    },
+    {
+      "file": "lance-iceberg-choice.md",
+      "asset": "lake-format-roles.svg",
+      "action": "replaced"
+    },
+    {
+      "file": "arrow-parquet.md",
+      "asset": "lake-format-roles.svg",
+      "action": "replaced"
+    },
+    {
+      "file": "milvus-storage.md",
+      "asset": "storage-manifest.svg",
+      "action": "replaced"
+    },
+    {
+      "file": "reproducible-snapshots.md",
+      "asset": "snapshot-contract.svg",
+      "action": "replaced"
+    },
+    {
+      "file": "lake-serving-tiers.md",
+      "asset": "serving-tiers.svg",
+      "action": "replaced"
+    },
+    {
+      "file": "memory-capacity.md",
+      "asset": "memory-budget.svg",
+      "action": "replaced"
+    },
+    {
+      "file": "memory-lifecycle.md",
+      "asset": "memory-lifecycle-flow.svg",
+      "action": "added"
+    },
+    {
+      "file": "memory-types.md",
+      "asset": "agent-memory-types.svg",
+      "action": "added"
+    },
+    {
+      "file": "trajectory-retrieval.md",
+      "asset": "trajectory-flow.svg",
+      "action": "added"
+    },
+    {
+      "file": "rollout-selection.md",
+      "asset": "rollout-selection-flow.svg",
+      "action": "added"
+    },
+    {
+      "file": "semantic-cache.md",
+      "asset": "semantic-cache-gate.svg",
+      "action": "added"
+    },
+    {
+      "file": "graph-rag.md",
+      "asset": "graph-rag-evidence.svg",
+      "action": "added"
+    },
+    {
+      "file": "code-search.md",
+      "asset": "code-retrieval-flow.svg",
+      "action": "added"
+    },
+    {
+      "file": "agno-with-milvus.md",
+      "asset": "framework-milvus-roles.svg",
+      "action": "added"
+    },
+    {
+      "file": "dify-with-milvus.md",
+      "asset": "framework-milvus-roles.svg",
+      "action": "added"
+    },
+    {
+      "file": "haystack-with-milvus.md",
+      "asset": "framework-milvus-roles.svg",
+      "action": "added"
+    },
+    {
+      "file": "langchain-with-milvus.md",
+      "asset": "framework-milvus-roles.svg",
+      "action": "added"
+    },
+    {
+      "file": "llamaindex-with-milvus.md",
+      "asset": "framework-milvus-roles.svg",
+      "action": "added"
+    },
+    {
+      "file": "choose-ai-framework-for-milvus.md",
+      "asset": "framework-milvus-roles.svg",
+      "action": "added"
+    },
+    {
+      "file": "dspy-with-milvus.md",
+      "asset": "dspy-evaluation-loop.svg",
+      "action": "added"
+    },
+    {
+      "file": "mteb-embedding-leaderboards.md",
+      "asset": "model-evaluation-contract.svg",
+      "action": "added"
+    },
+    {
+      "file": "mmeb-multimodal-evaluation.md",
+      "asset": "model-evaluation-contract.svg",
+      "action": "added"
+    },
+    {
+      "file": "embedding-reranking-model-catalog.md",
+      "asset": "embedding-selection.svg",
+      "action": "added"
+    },
+    {
+      "file": "dense-sparse-model-families.md",
+      "asset": "embedding-selection.svg",
+      "action": "added"
+    },
+    {
+      "file": "milvus-model-library-support.md",
+      "asset": "model-inference-ownership.svg",
+      "action": "added"
+    },
+    {
+      "file": "milvus-model-functions.md",
+      "asset": "model-inference-ownership.svg",
+      "action": "replaced"
+    },
+    {
+      "file": "sentence-transformers-with-milvus.md",
+      "asset": "model-inference-ownership.svg",
+      "action": "added"
+    },
+    {
+      "file": "byoc-deployment.md",
+      "asset": "deployment-responsibility.svg",
+      "action": "added"
+    },
+    {
+      "file": "cost.md",
+      "asset": "total-cost-layers.svg",
+      "action": "added"
+    },
+    {
+      "file": "milvus-capacity-planning.md",
+      "asset": "total-cost-layers.svg",
+      "action": "added"
+    },
+    {
+      "file": "backup.md",
+      "asset": "backup-restore-proof.svg",
+      "action": "replaced"
+    },
+    {
+      "file": "milvus-installation-path.md",
+      "asset": "first-query-check.svg",
+      "action": "added"
+    },
+    {
+      "file": "milvusclient.md",
+      "asset": "first-query-check.svg",
+      "action": "added"
+    },
+    {
+      "file": "milvus-security-rbac.md",
+      "asset": "access-control-layers.svg",
+      "action": "replaced"
+    },
+    {
+      "file": "sharding-replication.md",
+      "asset": "shards-and-replicas.svg",
+      "action": "added"
+    },
+    {
+      "file": "scalability.md",
+      "asset": "scaling-bottlenecks.svg",
+      "action": "added"
+    },
+    {
+      "file": "attu.md",
+      "asset": "attu-inspection.svg",
+      "action": "added"
+    },
+    {
+      "file": "minhash-lsh.md",
+      "asset": "minhash-candidates.svg",
+      "action": "added"
+    },
+    {
+      "file": "anomaly-discovery.md",
+      "asset": "anomaly-neighborhood.svg",
+      "action": "added"
+    },
+    {
+      "file": "external-refresh.md",
+      "asset": "external-refresh-release.svg",
+      "action": "replaced"
+    }
+  ],
+  "validation": {
+    "catalog": {
+      "published": 113,
+      "sourceChecked": 113
+    },
+    "catalogTests": {
+      "passed": 10,
+      "failed": 0,
+      "includesSitemapParity": true
+    },
+    "httpSmoke": {
+      "retainedArticles": 113,
+      "directoryPages": 5,
+      "mergedRedirects": 27,
+      "retiredReasonSamples": 7,
+      "topicFilters": 10,
+      "demoPages": 3,
+      "legacyCsvStatus": 404,
+      "status": "passed"
+    },
+    "finalHttpAssets": {
+      "referencedSvgs": 70,
+      "status": "passed",
+      "finalRefreshArticle": 200
+    },
+    "svgCanvasChecks": {
+      "usedAssets": 70,
+      "failures": 0
+    },
+    "newFigureRegionChecks": {
+      "diagrams": 46,
+      "failures": 0
+    },
+    "renderedArticleSamples": {
+      "pages": [
+        "fulltext",
+        "index-selection",
+        "clustering",
+        "vector-database"
+      ],
+      "viewportWidths": [
+        1280,
+        390
+      ],
+      "httpStatus": 200,
+      "imagesLoaded": true,
+      "horizontalOverflow": false
+    },
+    "textPreservation": {
+      "articlesCompared": 113,
+      "textIdentical": 112,
+      "approvedException": "rabitq.md: one explanation and its matching table cell"
+    },
+    "diffWhitespace": "passed"
+  },
+  "limits": [
+    "Local Next development preview; full production and Docker/Nginx build not run.",
+    "Existing header statistics and English blog content were supplied from a local cache for preview rendering only; those files are not committed.",
+    "Manual review revisited earlier precision findings and illustration relevance; it is not a fresh execution of every article code sample or model.",
+    "Production status, CDN cache, sitemap output, retired URLs and reconsideration scope still require post-deployment verification."
+  ]
+}

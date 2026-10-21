@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 760" width="640" height="760" role="img" aria-labelledby="title desc">
+<title id="title">A score band is not a complete census</title>
+<desc id="desc">For L2, a lower inclusive bound of 0.2 and upper exclusive radius of 0.7 admits distances in that band. ANN candidate coverage and the result limit are additional constraints. At limit 1 only the closest visited qualifying item is returned.</desc>
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M1 1 L7 4 L1 7" fill="none" stroke="#1E5F70" stroke-width="1.5"/></marker></defs>
+<rect width="640" height="760" fill="#FAF6EE"/>
+<text x="28" y="30" text-anchor="start" font-family="Arial, sans-serif" font-size="12" fill="#6B6356" font-weight="400"><tspan x="28" dy="0">MILVUS / AI REFERENCE / MECHANISM</tspan></text>
+<text x="28" y="72" text-anchor="start" font-family="Georgia, serif" font-size="27" fill="#0F1F2E" font-weight="700"><tspan x="28" dy="0">A score band is not a complete census</tspan></text>
+<text x="28" y="135" text-anchor="start" font-family="Arial, sans-serif" font-size="23" fill="#0F1F2E" font-weight="700"><tspan x="28" dy="0">L2: 0.2 ≤ distance &lt; 0.7</tspan></text>
+<rect x="170.0" y="190" width="250.0" height="90" fill="#F4ECDC" stroke="#E5DDD0" stroke-width="1.5"/>
+<text x="390" y="170" text-anchor="start" font-family="Arial, sans-serif" font-size="18" fill="#6B6356" font-weight="400"><tspan x="390" dy="0">not visited</tspan></text>
+<path d="M390 181 L370.0 222" fill="none" stroke="#6B6356" stroke-width="2" stroke-dasharray="6 5"/>
+<path d="M70 235 L570 235" fill="none" stroke="#0F1F2E" stroke-width="2"/>
+<circle cx="170.0" cy="235" r="9" fill="#1E5F70" stroke="#0F1F2E" stroke-width="1.5"/>
+<circle cx="420.0" cy="235" r="9" fill="#FAF6EE" stroke="#1E5F70" stroke-width="1.5"/>
+<text x="70" y="320" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" fill="#0F1F2E" font-weight="400"><tspan x="70" dy="0">0</tspan></text>
+<text x="170.0" y="320" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" fill="#0F1F2E" font-weight="400"><tspan x="170.0" dy="0">0.2</tspan></text>
+<text x="295.0" y="320" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" fill="#0F1F2E" font-weight="400"><tspan x="295.0" dy="0">0.45</tspan></text>
+<text x="420.0" y="320" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" fill="#0F1F2E" font-weight="400"><tspan x="420.0" dy="0">0.7</tspan></text>
+<text x="570" y="320" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" fill="#0F1F2E" font-weight="400"><tspan x="570" dy="0">1</tspan></text>
+<circle cx="295.0" cy="235" r="7" fill="#1E5F70" stroke="#0F1F2E" stroke-width="1.5"/>
+<circle cx="370.0" cy="235" r="7" fill="#FAF6EE" stroke="#1E5F70" stroke-width="1.5" stroke-dasharray="5 4"/>
+<circle cx="120.0" cy="235" r="6" fill="#E5DDD0" stroke="#0F1F2E" stroke-width="1.5"/>
+<circle cx="495.0" cy="235" r="6" fill="#E5DDD0" stroke="#0F1F2E" stroke-width="1.5"/>
+<text x="28" y="380" text-anchor="start" font-family="Arial, sans-serif" font-size="22" fill="#0F1F2E" font-weight="700"><tspan x="28" dy="0">Band membership</tspan></text>
+<text x="28" y="416" text-anchor="start" font-family="Arial, sans-serif" font-size="20" fill="#0F1F2E" font-weight="400"><tspan x="28" dy="0">A score must satisfy both bounds.</tspan></text>
+<text x="28" y="476" text-anchor="start" font-family="Arial, sans-serif" font-size="22" fill="#0F1F2E" font-weight="700"><tspan x="28" dy="0">Candidate coverage</tspan></text>
+<text x="28" y="512" text-anchor="start" font-family="Arial, sans-serif" font-size="20" fill="#0F1F2E" font-weight="400"><tspan x="28" dy="0">ANN can miss an item inside the band.</tspan></text>
+<text x="28" y="572" text-anchor="start" font-family="Arial, sans-serif" font-size="22" fill="#0F1F2E" font-weight="700"><tspan x="28" dy="0">Result cap: limit = 1</tspan></text>
+<text x="28" y="608" text-anchor="start" font-family="Arial, sans-serif" font-size="20" fill="#0F1F2E" font-weight="400"><tspan x="28" dy="0">Return the closest visited qualifying item.</tspan></text>
+<path d="M28 684 L612 684" fill="none" stroke="#0F1F2E" stroke-width="2"/>
+<text x="28" y="712" text-anchor="start" font-family="Arial, sans-serif" font-size="18" fill="#6B6356" font-weight="400"><tspan x="28" dy="0">COSINE / IP reverse score direction: radius &lt; score ≤</tspan><tspan x="28" dy="23.4">range_filter.</tspan></text>
+</svg>

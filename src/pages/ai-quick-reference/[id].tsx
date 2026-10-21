@@ -17,7 +17,6 @@ import Share from '@/components/share';
 import CustomButton from '@/components/customButton';
 import { RightArrow, RightWholeArrow } from '@/components/icons';
 import { CLOUD_SIGNUP_LINK } from '@/consts';
-import generateSimpleBlogList from '@/utils/simple-blog-list';
 import CloudAdvertisementCard from '@/components/card/advCard';
 import useUtmTrackPath from '@/hooks/use-utm-track-path';
 import LLMActions, { PageAction, OptionItem } from '@/components/LLMActions';
@@ -26,6 +25,8 @@ import { OpenAIIcon, ClaudeAIIcon } from '@/components/icons/AI';
 import JsonLd from '@/components/JsonLd';
 import { buildSchema } from '@/schema';
 import { ABSOLUTE_BASE_URL } from '@/consts';
+import { selectRelated, publication } from '@/server/ai-reference-catalog';
+import RetiredReference from '@/components/faq/RetiredReference';
 
 const FaqDemoCard = dynamic(() => import('@/components/faq/FaqDemoCard'));
 
@@ -50,7 +51,7 @@ const faqPageOptions: OptionItem[] = [
   },
 ];
 
-export default function FaqDetail(props: {
+type FaqDetailProps = {
   data: FAQDetailType;
   html: string;
   recommendFaq: Pick<FAQDetailType, 'title' | 'url'>[];
@@ -64,7 +65,16 @@ export default function FaqDetail(props: {
   nextUrl?: string;
   demo?: DemoTypeEnum;
   demoDescription?: string;
-}) {
+};
+
+export default function FaqReferencePage(
+  props: FaqDetailProps | { retired: true }
+) {
+  if ('retired' in props) return <RetiredReference />;
+  return <FaqDetail {...props} />;
+}
+
+function FaqDetail(props: FaqDetailProps) {
   const { t } = useTranslation('faq');
   const { data, html, recommendFaq, recommendBlogs, previousUrl, nextUrl } =
     props;
@@ -112,28 +122,25 @@ export default function FaqDetail(props: {
         <JsonLd schema={ldSchemas} />
       </main>
       <section className={classes.detailContainer}>
-        <div className={clsx(pageClasses.docContainer, styles.upLayout)}>
-          <section className={styles.blogHeader}>
-            <div className={styles.pageHeaderContainer}>
+        <div className={clsx(pageClasses.docContainer, styles.upLayout, classes.readingLayout)}>
+          <section className={clsx(styles.blogHeader, classes.referenceHeader)}>
+            <div className={clsx(styles.pageHeaderContainer, classes.referenceToolbar)}>
               <Breadcrumb
                 list={[
                   {
                     label: t('faq:detail.name'),
                     href: '/ai-quick-reference',
                   },
-                  {
-                    label: title,
-                  },
                 ]}
               />
               <LLMActions options={faqPageOptions} mdContent={content} />
             </div>
 
-            <h1 className={styles.title}>{title}</h1>
+            <h1 className={clsx(styles.title, classes.referenceTitle)}>{title}</h1>
           </section>
 
           <section className={styles.blogContent}>
-            <div>
+            <div className={classes.articleColumn}>
               <article
                 className={clsx(
                   'doc-style',
@@ -204,7 +211,7 @@ export default function FaqDetail(props: {
                     </li>
                   ))}
                   <li className={classes.allBlogBtn}>
-                    <Link href="/blog">{t('faq:detail.allBlog')}</Link>
+                    <Link href="/docs">{t('faq:detail.allBlog')}</Link>
                   </li>
                 </ul>
               </div>
@@ -262,42 +269,36 @@ export const getServerSideProps: GetServerSideProps = async ({
   res,
 }) => {
   const id = params?.id as string;
+  const record = publication[id];
+  if (record?.status === 'retired') {
+    res.statusCode = 404;
+    res.setHeader('Cache-Control', 'public, s-maxage=300');
+    return { props: { retired: true } };
+  }
+  if (record?.status === 'merged') {
+    return {
+      redirect: {
+        destination: `/ai-quick-reference/${record.target}`,
+        permanent: true,
+      },
+    };
+  }
+  if (!record || record.status !== 'source-checked') return { notFound: true };
   try {
     const { item } = await getFAQById(id);
-    const currentArticleIndex = item?.curIndex || 0;
-    const { tree: html } = markdownToHtml(item.content);
+    // Reference illustrations live at the site root, outside versioned docs.
+    const { tree: html } = markdownToHtml(item.content, { version: '' });
 
     const simpleList = await generateSimpleFaqList();
-    const previousUrl = simpleList[currentArticleIndex - 1]?.url || '';
-    const nextUrl = simpleList[currentArticleIndex + 1]?.url || '';
+    const inTopic = simpleList.filter(faq => faq.topic === item.topic);
+    const topicIndex = inTopic.findIndex(faq => faq.url === item.url);
+    const previousSlug = inTopic[topicIndex - 1]?.url;
+    const nextSlug = inTopic[topicIndex + 1]?.url;
+    const previousUrl = previousSlug
+      ? `/ai-quick-reference/${previousSlug}`
+      : '';
+    const nextUrl = nextSlug ? `/ai-quick-reference/${nextSlug}` : '';
 
-    const blogList = generateSimpleBlogList();
-    const recentlyBlogs = blogList.filter(
-      v =>
-        new Date().getTime() - new Date(v.date).getTime() <
-        12 * 30 * 24 * 60 * 60 * 1000
-    );
-    const blogLength = recentlyBlogs.length;
-    let blogRandomIndexes: number[] = [];
-
-    while (blogRandomIndexes.length < 5) {
-      const index = Math.floor(Math.random() * blogLength);
-      if (!blogRandomIndexes.includes(index)) {
-        blogRandomIndexes.push(index);
-      }
-    }
-    blogRandomIndexes.sort((a, b) => a - b);
-
-    const length = simpleList.length;
-    let randomIndexes: number[] = [];
-
-    while (randomIndexes.length < 4) {
-      const index = Math.floor(Math.random() * length);
-      if (!randomIndexes.includes(index)) {
-        randomIndexes.push(index);
-      }
-    }
-    randomIndexes.sort((a, b) => a - b);
     res.setHeader(
       'Cache-Control',
       'public, s-maxage=86400, stale-while-revalidate=604800'
@@ -307,15 +308,20 @@ export const getServerSideProps: GetServerSideProps = async ({
       props: {
         data: item,
         html,
-        recommendFaq: randomIndexes.map(index => simpleList[index]),
-        recommendBlogs: blogRandomIndexes.map(index => recentlyBlogs[index]),
+        recommendFaq: selectRelated(simpleList, item.url, item.topic),
+        recommendBlogs: record.guides.map(guide => ({
+          title: guide.label,
+          href: guide.url,
+          url: guide.url,
+          id: guide.url,
+        })),
         previousUrl,
         nextUrl,
       },
     };
   } catch (error) {
-    return {
-      notFound: true,
-    };
+    // A known published URL must not become a 404 because content loading or
+    // validation failed. Let Next return a server error for operational faults.
+    throw error;
   }
 };

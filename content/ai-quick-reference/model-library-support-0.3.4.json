@@ -1,0 +1,358 @@
+{
+  "version": "0.3.4",
+  "wheel_sha256": "88d1f21b76faa51d4253604c0aa36a0ac3fea66f911cd6e9f11d996709f6dbb4",
+  "models": [
+    {
+      "category": "dense",
+      "class": "OpenAIEmbeddingFunction",
+      "default_model": "text-embedding-ada-002",
+      "source_file": "pymilvus/model/dense/openai.py",
+      "signature": "self, model_name: str='text-embedding-ada-002', api_key: Optional[str]=None, base_url: Optional[str]=None, dimensions: Optional[int]=None, **kwargs",
+      "methods": [
+        "__init__",
+        "encode_queries",
+        "encode_documents",
+        "dim",
+        "__call__",
+        "_encode_query",
+        "_encode_document",
+        "_call_openai_api",
+        "_encode"
+      ]
+    },
+    {
+      "category": "dense",
+      "class": "SentenceTransformerEmbeddingFunction",
+      "default_model": "all-MiniLM-L6-v2",
+      "source_file": "pymilvus/model/dense/sentence_transformer.py",
+      "signature": "self, model_name: str='all-MiniLM-L6-v2', batch_size: int=32, query_instruction: str='', doc_instruction: str='', device: str='cpu', normalize_embeddings: bool=True, **kwargs",
+      "methods": [
+        "__init__",
+        "__call__",
+        "_encode",
+        "dim",
+        "encode_queries",
+        "encode_documents",
+        "_encode_query",
+        "_encode_document"
+      ]
+    },
+    {
+      "category": "dense",
+      "class": "VoyageEmbeddingFunction",
+      "default_model": "voyage-3-large",
+      "source_file": "pymilvus/model/dense/voyageai.py",
+      "signature": "self, model_name: str='voyage-3-large', api_key: Optional[str]=None, embedding_type: Optional[str]=None, truncate: Optional[bool]=None, dimension: Optional[int]=None, **kwargs",
+      "methods": [
+        "__init__",
+        "dim",
+        "encode_queries",
+        "encode_documents",
+        "__call__",
+        "_call_voyage_api"
+      ]
+    },
+    {
+      "category": "dense",
+      "class": "JinaEmbeddingFunction",
+      "default_model": "jina-embeddings-v3",
+      "source_file": "pymilvus/model/dense/jinaai.py",
+      "signature": "self, model_name: str='jina-embeddings-v3', api_key: Optional[str]=None, task: str='retrieval.passage', dimensions: Optional[int]=None, late_chunking: Optional[bool]=False, **kwargs",
+      "methods": [
+        "__init__",
+        "dim",
+        "encode_queries",
+        "encode_documents",
+        "__call__",
+        "_call_jina_api"
+      ]
+    },
+    {
+      "category": "dense",
+      "class": "TEIEmbeddingFunction",
+      "default_model": null,
+      "source_file": "pymilvus/model/dense/tei.py",
+      "signature": "self, api_url: str, dimensions: Optional[int]=None",
+      "methods": [
+        "__init__",
+        "dim",
+        "encode_queries",
+        "encode_documents",
+        "__call__",
+        "_call_api"
+      ]
+    },
+    {
+      "category": "dense",
+      "class": "OnnxEmbeddingFunction",
+      "default_model": "GPTCache/paraphrase-albert-onnx",
+      "source_file": "pymilvus/model/dense/onnx.py",
+      "signature": "self, model_name: str='GPTCache/paraphrase-albert-onnx', tokenizer_name: str='GPTCache/paraphrase-albert-small-v2'",
+      "methods": [
+        "__init__",
+        "__call__",
+        "encode_queries",
+        "encode_documents",
+        "_encode",
+        "_to_embedding",
+        "_post_proc",
+        "dim"
+      ]
+    },
+    {
+      "category": "dense",
+      "class": "CohereEmbeddingFunction",
+      "default_model": "embed-english-light-v3.0",
+      "source_file": "pymilvus/model/dense/cohere.py",
+      "signature": "self, model_name: str='embed-english-light-v3.0', api_key: Optional[str]=None, input_type: str='search_document', embedding_types: Optional[List[str]]=None, truncate: Optional[str]=None, **kwargs",
+      "methods": [
+        "__init__",
+        "_call_cohere_api",
+        "encode_documents",
+        "encode_queries",
+        "__call__",
+        "dim"
+      ]
+    },
+    {
+      "category": "dense",
+      "class": "MistralAIEmbeddingFunction",
+      "default_model": "mistral-embed",
+      "source_file": "pymilvus/model/dense/mistralai.py",
+      "signature": "self, api_key: str, model_name: str='mistral-embed', **kwargs",
+      "methods": [
+        "__init__",
+        "encode_queries",
+        "encode_documents",
+        "dim",
+        "__call__",
+        "_encode_query",
+        "_encode_document",
+        "_call_mistral_api",
+        "_encode"
+      ]
+    },
+    {
+      "category": "dense",
+      "class": "NomicEmbeddingFunction",
+      "default_model": "nomic-embed-text-v1.5",
+      "source_file": "pymilvus/model/dense/nomic.py",
+      "signature": "self, model_name: str='nomic-embed-text-v1.5', task_type: str='search_document', dimensions: int=768, **kwargs",
+      "methods": [
+        "__init__",
+        "encode_queries",
+        "encode_documents",
+        "dim",
+        "__call__",
+        "_encode_query",
+        "_encode_document",
+        "_call_nomic_api",
+        "_encode"
+      ]
+    },
+    {
+      "category": "dense",
+      "class": "InstructorEmbeddingFunction",
+      "default_model": "hkunlp/instructor-xl",
+      "source_file": "pymilvus/model/dense/instructor.py",
+      "signature": "self, model_name: str='hkunlp/instructor-xl', batch_size: int=32, query_instruction: str='Represent the question for retrieval:', doc_instruction: str='Represent the document for retrieval:', device: str='cpu', normalize_embeddings: bool=True, **kwargs",
+      "methods": [
+        "__init__",
+        "__call__",
+        "_encode",
+        "dim",
+        "encode_queries",
+        "encode_documents",
+        "_encode_query",
+        "_encode_document"
+      ]
+    },
+    {
+      "category": "dense",
+      "class": "Model2VecEmbeddingFunction",
+      "default_model": "minishlab/potion-base-8M",
+      "source_file": "pymilvus/model/dense/model2vec_embed.py",
+      "signature": "self, model_source: Union[str, Path]='minishlab/potion-base-8M', **kwargs",
+      "methods": [
+        "__init__",
+        "dim",
+        "encode_queries",
+        "encode_documents",
+        "_encode_query",
+        "_encode_document",
+        "__call__",
+        "_encode"
+      ]
+    },
+    {
+      "category": "dense",
+      "class": "GeminiEmbeddingFunction",
+      "default_model": "gemini-embedding-exp-03-07",
+      "source_file": "pymilvus/model/dense/gemini.py",
+      "signature": "self, model_name: str='gemini-embedding-exp-03-07', api_key: Optional[str]=None, config: Optional['types.EmbedContentConfig']=None, **kwargs",
+      "methods": [
+        "__init__",
+        "encode_queries",
+        "encode_documents",
+        "dim",
+        "__call__",
+        "_encode_query",
+        "_encode_document",
+        "_encode"
+      ]
+    },
+    {
+      "category": "sparse",
+      "class": "SpladeEmbeddingFunction",
+      "default_model": "naver/splade-cocondenser-ensembledistil",
+      "source_file": "pymilvus/model/sparse/splade.py",
+      "signature": "self, model_name: str='naver/splade-cocondenser-ensembledistil', batch_size: int=32, query_instruction: str='', doc_instruction: str='', device: Optional[str]='cpu', k_tokens_query: Optional[int]=None, k_tokens_document: Optional[int]=None, **kwargs",
+      "methods": [
+        "__init__",
+        "__call__",
+        "encode_documents",
+        "_encode",
+        "encode_queries",
+        "dim",
+        "_encode_query",
+        "_encode_document"
+      ]
+    },
+    {
+      "category": "sparse",
+      "class": "BM25EmbeddingFunction",
+      "default_model": null,
+      "source_file": "pymilvus/model/sparse/bm25/bm25.py",
+      "signature": "self, analyzer: Analyzer=None, corpus: Optional[List]=None, k1: float=1.5, b: float=0.75, epsilon: float=0.25, num_workers: int=1",
+      "methods": [
+        "__init__",
+        "_calc_term_indices",
+        "_compute_statistics",
+        "_tokenize_corpus",
+        "_calc_idf",
+        "_rebuild",
+        "_clear",
+        "dim",
+        "fit",
+        "_encode_query",
+        "_encode_document",
+        "encode_queries",
+        "__call__",
+        "encode_documents",
+        "save",
+        "load"
+      ],
+      "configuration_kind": "local-corpus-statistics-no-model-checkpoint"
+    },
+    {
+      "category": "hybrid",
+      "class": "BGEM3EmbeddingFunction",
+      "default_model": "BAAI/bge-m3",
+      "source_file": "pymilvus/model/hybrid/bge_m3.py",
+      "signature": "self, model_name: str='BAAI/bge-m3', batch_size: int=16, device: str=None, normalize_embeddings: bool=True, use_fp16: bool=False, return_dense: bool=True, return_sparse: bool=True, return_colbert_vecs: bool=False, **kwargs",
+      "methods": [
+        "__init__",
+        "__call__",
+        "dim",
+        "_encode",
+        "encode_queries",
+        "encode_documents"
+      ]
+    },
+    {
+      "category": "hybrid",
+      "class": "MGTEEmbeddingFunction",
+      "default_model": "Alibaba-NLP/gte-multilingual-base",
+      "source_file": "pymilvus/model/hybrid/mgte.py",
+      "signature": "self, model_name: str='Alibaba-NLP/gte-multilingual-base', batch_size: int=16, device: str='', normalize_embeddings: bool=True, dimensions: Optional[int]=None, use_fp16: bool=False, return_dense: bool=True, return_sparse: bool=True, **kwargs",
+      "methods": [
+        "__init__",
+        "__call__",
+        "dim",
+        "_encode",
+        "encode_queries",
+        "encode_documents"
+      ]
+    },
+    {
+      "category": "reranker",
+      "class": "CohereRerankFunction",
+      "default_model": "rerank-english-v3.0",
+      "source_file": "pymilvus/model/reranker/cohere.py",
+      "signature": "self, model_name: str='rerank-english-v3.0', api_key: Optional[str]=None, return_documents=True, **kwargs",
+      "methods": [
+        "__init__",
+        "__call__"
+      ]
+    },
+    {
+      "category": "reranker",
+      "class": "BGERerankFunction",
+      "default_model": "BAAI/bge-reranker-v2-m3",
+      "source_file": "pymilvus/model/reranker/bgereranker.py",
+      "signature": "self, model_name: str='BAAI/bge-reranker-v2-m3', use_fp16: bool=True, batch_size: int=32, normalize: bool=True, device: Optional[Union[str, List]]=None, query_max_length: int=256, max_length: int=512, **kwargs: Any",
+      "methods": [
+        "__init__",
+        "_batchify",
+        "__call__"
+      ]
+    },
+    {
+      "category": "reranker",
+      "class": "VoyageRerankFunction",
+      "default_model": "rerank-2",
+      "source_file": "pymilvus/model/reranker/voyageai.py",
+      "signature": "self, model_name: str='rerank-2', api_key: Optional[str]=None",
+      "methods": [
+        "__init__",
+        "__call__"
+      ]
+    },
+    {
+      "category": "reranker",
+      "class": "CrossEncoderRerankFunction",
+      "default_model": "",
+      "source_file": "pymilvus/model/reranker/cross_encoder.py",
+      "signature": "self, model_name: str='', device: str='', batch_size: int=32, activation_fct: Any=None, **kwargs",
+      "methods": [
+        "__init__",
+        "__call__"
+      ],
+      "configuration_kind": "local-model-name-required"
+    },
+    {
+      "category": "reranker",
+      "class": "JinaRerankFunction",
+      "default_model": "jina-reranker-v2-base-multilingual",
+      "source_file": "pymilvus/model/reranker/jinaai.py",
+      "signature": "self, model_name: str='jina-reranker-v2-base-multilingual', api_key: Optional[str]=None",
+      "methods": [
+        "__init__",
+        "__call__"
+      ]
+    },
+    {
+      "category": "reranker",
+      "class": "JevRerankFunction",
+      "default_model": "jev-latest",
+      "source_file": "pymilvus/model/reranker/jev.py",
+      "signature": "self, model_name: str='jev-latest', api_key: Optional[str]=None",
+      "methods": [
+        "__init__",
+        "__call__"
+      ]
+    },
+    {
+      "category": "reranker",
+      "class": "TEIRerankFunction",
+      "default_model": null,
+      "source_file": "pymilvus/model/reranker/tei.py",
+      "signature": "self, api_url: str",
+      "methods": [
+        "__init__",
+        "__call__"
+      ]
+    }
+  ],
+  "default_alias": "OnnxEmbeddingFunction"
+}

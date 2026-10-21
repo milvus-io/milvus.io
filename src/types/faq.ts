@@ -15,6 +15,7 @@ export interface FAQDetailType {
   content: string;
   url: string;
   canonical_rel: string;
+  topic: string;
   curIndex?: number;
   demo?: DemoTypeEnum;
   demoDescription?: string;

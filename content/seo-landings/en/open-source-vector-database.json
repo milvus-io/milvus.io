@@ -1,0 +1,346 @@
+{
+  "site": "milvus",
+  "kind": "seo",
+  "slug": "open-source-vector-database",
+  "nav": "Open-source vector database",
+  "path": "/solutions/open-source-vector-database",
+  "title": "Open Source Vector Database, Apache 2.0 | Milvus",
+  "description": "Milvus is a free, Apache 2.0 open source vector database on GitHub with 40K+ stars. Hardware-accelerated search, Kubernetes-native scale, and adopters like NVIDIA.",
+  "keywords": {
+    "primary": "open source vector database",
+    "secondary": [
+      "self hosted vector database",
+      "free vector database",
+      "vector database github",
+      "apache 2.0 vector database",
+      "open source vector database for rag",
+      "open source vector database for llm",
+      "open source vector database comparison",
+      "local vector database python",
+      "on premise vector database",
+      "vector database docker",
+      "vector database kubernetes"
+    ],
+    "questions": [
+      "Is Milvus really free?",
+      "Who maintains Milvus, and could the license change?",
+      "How does Milvus rank in an open source vector database comparison?",
+      "Is a self-hosted, on-premise vector database production-ready at scale?",
+      "Is it an open source vector database for RAG and LLM apps?",
+      "Deploy a self-hosted vector database: pip, Docker, Kubernetes or managed?"
+    ]
+  },
+  "h1": "The open source vector database: free, self-hosted, Apache 2.0",
+  "sub": "Milvus is a free, Apache 2.0 open source vector database from the LF AI & Data Foundation, written in Go and C++ for high-performance search at scale. Start with pip install, grow to tens of billions of vectors on Kubernetes, and keep the same API.",
+  "primary_cta": {
+    "label": "Start the Quickstart",
+    "href": "https://milvus.io/docs/quickstart.md"
+  },
+  "secondary_cta": {
+    "label": "Prefer managed? Try Zilliz Cloud",
+    "href": "https://cloud.zilliz.com/signup"
+  },
+  "proof": [
+    "Apache License 2.0",
+    "40K+ GitHub stars",
+    "LF AI & Data graduated project",
+    "Scales to tens of billions of vectors",
+    "9,575 QPS on VectorDBBench (Cohere 1M)"
+  ],
+  "logos": [
+    "NVIDIA",
+    "Salesforce",
+    "Walmart",
+    "eBay",
+    "IBM",
+    "Cisco",
+    "Reddit",
+    "Roblox",
+    "Shell",
+    "LINE",
+    "Bosch",
+    "Airtable"
+  ],
+  "benefits": [
+    {
+      "title": "Open source, for real",
+      "body": "Apache 2.0 and governed by the LF AI & Data Foundation. Hundreds of contributors build it in the open on GitHub."
+    },
+    {
+      "title": "Fast on every CPU",
+      "body": "The Knowhere engine picks SSE, AVX2, AVX512 or ARM instructions at runtime, and GPU indexes such as CAGRA run on NVIDIA hardware."
+    },
+    {
+      "title": "Scales out, not up",
+      "body": "Storage and compute are separated. Stateless query, streaming and data nodes scale independently on Kubernetes, up to tens of billions of vectors."
+    },
+    {
+      "title": "Trusted in production",
+      "body": "NVIDIA, Salesforce, Walmart, eBay, IBM and Reddit appear on the Milvus adopter wall. Meituan runs 10B+ vectors on self-hosted Milvus."
+    }
+  ],
+  "feature_blocks": [
+    {
+      "title": "An open ecosystem, not a walled garden",
+      "body": "Official SDKs and a REST API cover the common stacks; Milvus plugs into the AI tools you use.",
+      "bullets": [
+        "SDKs for Python, Java, Go and Node.js, plus a RESTful API",
+        "Integrations with LangChain, LlamaIndex, OpenAI, Hugging Face, Spark and Kafka",
+        "Attu GUI, Prometheus/Grafana monitoring and Milvus CDC for operations"
+      ]
+    },
+    {
+      "title": "Every major index, one engine",
+      "body": "Choose the index per vector field for your recall, latency and memory budget, and combine vector search with filters or full-text search.",
+      "bullets": [
+        "HNSW, IVF, DiskANN, SCANN and RaBitQ quantization (IVF_RABITQ)",
+        "GPU indexes: GPU_CAGRA, GPU_IVF_FLAT, GPU_IVF_PQ",
+        "BM25 full-text search and sparse vectors for hybrid search"
+      ]
+    },
+    {
+      "title": "Built for billions and many tenants",
+      "body": "Distributed Milvus installs with the official Helm chart or Milvus Operator and keeps cost in check as data grows.",
+      "bullets": [
+        "Add query nodes for reads and streaming or data nodes for writes",
+        "Hot/cold tiered storage keeps cold data on object storage",
+        "Up to 65,536 collections per cluster by default; partition keys serve millions of tenants"
+      ]
+    }
+  ],
+  "diagram": {
+    "top": {
+      "title": "Your app (pymilvus MilvusClient)",
+      "sub": "Same code, change the URI"
+    },
+    "branches": [
+      {
+        "title": "Milvus Lite",
+        "sub": "pip install, local .db file"
+      },
+      {
+        "title": "Standalone / Distributed",
+        "sub": "Docker, Helm, or Milvus Operator"
+      },
+      {
+        "title": "Zilliz Cloud",
+        "sub": "Fully managed Milvus"
+      }
+    ],
+    "bottom": {
+      "title": "Apache-2.0 Milvus core",
+      "sub": "LF AI & Data Foundation project"
+    },
+    "caption": "One open source engine and one client API across every deployment mode."
+  },
+  "code": {
+    "h2": "Local vector database in Python: pip install to first search",
+    "intro": "Milvus Lite ships with pymilvus. No server, no Docker, no account: the database is a local file.",
+    "lang": "python",
+    "code": "# pip install -U \"pymilvus[milvus-lite]\"\nimport random\nfrom pymilvus import MilvusClient\n\nclient = MilvusClient(\"milvus_demo.db\")  # Milvus Lite: data lives in this local file\nclient.create_collection(collection_name=\"demo\", dimension=768)\n\ndocs = [\"Milvus is an open-source vector database.\", \"It runs on a laptop or on Kubernetes.\"]\nvecs = [[random.random() for _ in range(768)] for _ in docs]  # swap in your embedding model\nclient.insert(collection_name=\"demo\",\n              data=[{\"id\": i, \"vector\": v, \"text\": t} for i, (v, t) in enumerate(zip(vecs, docs))])\n\nprint(client.search(collection_name=\"demo\", data=[vecs[0]], limit=2, output_fields=[\"text\"]))",
+    "note": "To move to a server, pass its URI (for example http://localhost:19530) to MilvusClient."
+  },
+  "stats": [],
+  "compare": {
+    "h2": "Deploy a self-hosted vector database: pip, Docker, Kubernetes or managed?",
+    "caption": "Self-hosted vector database modes, sized per the Milvus install overview",
+    "heads": [
+      "Mode",
+      "Runs on",
+      "Use it when"
+    ],
+    "rows": [
+      [
+        "Milvus Lite",
+        "Python process (Linux, macOS)",
+        "Prototyping or notebooks, up to a few million vectors"
+      ],
+      [
+        "Standalone (Docker)",
+        "One machine, Docker",
+        "Production on one server, up to ~100M vectors"
+      ],
+      [
+        "Distributed (Kubernetes)",
+        "Kubernetes (Helm or Operator)",
+        "100M to tens of billions of vectors, high availability"
+      ],
+      [
+        "Zilliz Cloud",
+        "Fully managed Milvus",
+        "You want Milvus without running it; free tier to start"
+      ]
+    ],
+    "note": null
+  },
+  "faqs": [
+    [
+      "Is Milvus really free?",
+      "Yes. Apache 2.0 permits commercial use, modification and redistribution at no cost. You pay only for the infrastructure you run, or for Zilliz Cloud managed hosting."
+    ],
+    [
+      "Who maintains Milvus, and could the license change?",
+      "Milvus is a graduated LF AI & Data Foundation project with open governance; Zilliz is its major contributor. Released Apache 2.0 code stays Apache 2.0."
+    ],
+    [
+      "How does Milvus rank in an open source vector database comparison?",
+      "Use VectorDBBench, the open source benchmark that runs the same datasets on every database: on Cohere 1M, Milvus-16c64g-sq4u-fp16-force_merge reached 9,575.69 QPS at 2.3 ms P99."
+    ],
+    [
+      "Is it an open source vector database for RAG and LLM apps?",
+      "Yes. LangChain and LlamaIndex ship Milvus integrations, built-in BM25 gives hybrid search, and filters plus partition keys cover RAG and agent memory."
+    ],
+    [
+      "Is a self-hosted, on-premise vector database production-ready at scale?",
+      "Distributed Milvus runs on Kubernetes with replicas and independent scaling. Meituan runs 10B+ vectors on self-hosted Milvus; Read AI serves 20–50 ms retrieval to millions of users."
+    ]
+  ],
+  "final": {
+    "h2": "Run an open source vector database in five minutes",
+    "body": "pip install pymilvus, open a local file, and search. Move to Standalone or Kubernetes when data grows, or hand operations to Zilliz Cloud, no rewrite."
+  },
+  "sources": [
+    "https://github.com/milvus-io/milvus",
+    "https://github.com/milvus-io/milvus/blob/master/README.md",
+    "https://github.com/milvus-io/milvus/blob/master/LICENSE",
+    "https://lfaidata.foundation/blog/2021/06/23/lf-ai-data-foundation-announces-graduation-of-milvus-project/",
+    "https://milvus.io/",
+    "https://milvus.io/docs/quickstart.md",
+    "https://milvus.io/docs/milvus_lite.md",
+    "https://milvus.io/docs/install-overview.md",
+    "https://milvus.io/docs/install_cluster-helm.md",
+    "https://milvus.io/docs/install-pymilvus.md",
+    "https://milvus.io/api-reference/restful/v2.6.x/About.md",
+    "https://milvus.io/docs/integrations_overview.md",
+    "https://milvus.io/docs/architecture_overview.md",
+    "https://milvus.io/docs/knowhere.md",
+    "https://milvus.io/docs/index-explained.md",
+    "https://milvus.io/docs/multi_tenancy.md",
+    "https://milvus.io/docs/tiered-storage-overview.md",
+    "https://milvus.io/docs/create-collection.md",
+    "https://zilliz.com/vdbbench-leaderboard",
+    "https://github.com/zilliztech/VectorDBBench",
+    "https://zilliz.com/customers/meituan",
+    "https://zilliz.com/customers/read-ai",
+    "https://docs.zilliz.com/docs/free-trials"
+  ],
+  "notes": [
+    "Helm install command intentionally not shown in full: the docs' command pins an image tag and streaming flags that change per release; the page links to the Helm guide instead.",
+    "Snippet uses pymilvus[milvus-lite] per milvus_lite.md; re-run on Python 3.10+ before launch.",
+    "'Trusted for production workloads' is milvus.io homepage wording (fetched 2026-10-21). No '10,000+ organizations/users' figure appears in the README or on milvus.io, so none is used.",
+    "SDK list = install-pymilvus.md ('Python, Node.js, GO, and Java') + RESTful API reference. C#/C++/Rust clients exist as community/Zilliz repos but were not verified as official on milvus.io; omitted.",
+    "AVX512 '20% to 30%' vs AVX2 is from docs/knowhere.md; Cardinal is the Zilliz Cloud engine and is not claimed for open-source Milvus.",
+    "Index list per docs/index-explained.md (released). FMINDEX intentionally excluded (master-only).",
+    "Contributor count (README all-contributors badge shows 432) left out of copy as a volatile counter.",
+    "Body intentionally above v3 SEM ceiling (owner asked for a richer page, target 550–750 words).",
+    "Keyword pass 2026-10-21: keywords rebuilt from Google/Baidu autocomplete (WebSearch budget exhausted); research: https://suggestqueries.google.com (autocomplete, hl=en); https://www.baidu.com/sugrec (autocomplete)."
+  ],
+  "benefits_h2": "Why Milvus as an open source vector database for RAG and LLM apps",
+  "bench": [
+    {
+      "title": "Vector search throughput (QPS, higher is better)",
+      "caption": "Cohere 1M, 768 dimensions",
+      "unit": "QPS",
+      "rows": [
+        {
+          "system": "Zilliz Cloud",
+          "label": "ZillizCloud-8cu-perf",
+          "value": 13316.23,
+          "detail": "P99 2 ms · recall 0.9383",
+          "highlight": true
+        },
+        {
+          "system": "Milvus",
+          "label": "Milvus-16c64g-sq4u-fp16-force_merge",
+          "value": 9575.69,
+          "detail": "P99 2.3 ms · recall 0.9189"
+        }
+      ],
+      "source": "VectorDBBench leaderboard (zilliz.com/vdbbench-leaderboard), labels as published. Results depend on configuration; run VectorDBBench on your own data.",
+      "cta": {
+        "text": "Zilliz Cloud is fully managed Milvus: the same API, with no clusters to size, upgrade or scale.",
+        "label": "Try Zilliz Cloud free",
+        "href": "https://cloud.zilliz.com/signup"
+      },
+      "sourceUrl": "https://github.com/zilliztech/VectorDBBench/blob/main/vectordb_bench/results/leaderboard_v2.json"
+    }
+  ],
+  "layout": "pillar",
+  "aiq": [
+    "managed-vector-database-byoc-vs-self-hosted",
+    "how-milvus-separates-ingestion-storage-and-search",
+    "how-do-you-choose-the-right-index-type-for-your-workload",
+    "what-is-hnsw",
+    "what-is-diskann",
+    "what-is-attu",
+    "choose-ai-framework-for-milvus",
+    "what-are-the-tradeoffs-of-using-a-cloudbased-vector-store-service-in-a-rag-system-evaluation-in-terms-of-latency-variance-network-costs-etc-versus-a-local-inmemory-store"
+  ],
+  "related": [
+    "distributed-vector-database",
+    "milvus-vs-qdrant",
+    "vector-database-for-rag",
+    "hybrid-search"
+  ],
+  "sem_seed_for_zilliz": {
+    "ad_groups": [
+      {
+        "name": "Open source vector database",
+        "keywords": [
+          "open source vector database",
+          "\"open source vector database\"",
+          "[open source vector database]",
+          "opensource vector db",
+          "open source vector search engine",
+          "apache 2.0 vector database"
+        ]
+      },
+      {
+        "name": "Self-hosted / free vector database",
+        "keywords": [
+          "self hosted vector database",
+          "[self hosted vector database]",
+          "\"self-hosted vector db\"",
+          "free vector database",
+          "[free vector database]",
+          "vector database kubernetes",
+          "on premise vector database",
+          "local vector database python"
+        ]
+      },
+      {
+        "name": "Vector database GitHub",
+        "keywords": [
+          "vector database github",
+          "[vector database github]",
+          "\"github vector database\"",
+          "milvus github",
+          "open source vector db github"
+        ]
+      }
+    ],
+    "negative_keywords": [
+      "jobs",
+      "salary",
+      "course",
+      "certification",
+      "tutorial pdf",
+      "definition",
+      "what is a vector in math",
+      "vector graphics",
+      "vector art",
+      "free vector images",
+      "svg",
+      "illustrator"
+    ],
+    "conversion_events": [
+      "cta_quickstart_click",
+      "copy_install_command",
+      "copy_code_snippet",
+      "cta_github_click",
+      "cta_zilliz_signup_click"
+    ]
+  },
+  "lang": "en",
+  "reviewedOn": "2026-10-21"
+}

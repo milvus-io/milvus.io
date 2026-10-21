@@ -65,13 +65,8 @@ const Footer = (props: Props) => {
           name: t('header:footer.resource.contact'),
           to: getLocalePath('/contact'),
         },
-        {
-          id: 'resource-5',
-          name: t('header:footer.resource.faq'),
-          to: getLocalePath('/ai-quick-reference'),
-          invisibleItem: true,
-          display: locale === LanguageEnum.ENGLISH,
-        },
+        { id: 'resource-solutions', name: isCNSite ? '解决方案' : 'Solutions', to: isCNSite ? '/zh/solutions' : '/solutions' },
+        { id: 'resource-compare', name: isCNSite ? '产品对比' : 'Compare databases', to: isCNSite ? '/zh/compare' : '/compare' },
       ],
     },
     {
@@ -310,19 +305,11 @@ const Footer = (props: Props) => {
                   </p>
                   <ul className="mt-[20px] space-y-[8px]">
                     {item.children.map((child) => {
-                      if (child.display === false) {
-                        return null;
-                      }
                       if (child.to.startsWith('http')) {
                         return (
                           <li key={child.id} className="list-none">
                             <LocalizedAnchor
-                              className={clsx(
-                                'inline-flex items-center gap-[4px] text-[14px] font-[400] leading-[21px] text-black1 hover:opacity-[0.7]',
-                                {
-                                  ['text-transparent']: child.invisibleItem,
-                                }
-                              )}
+                              className="inline-flex items-center gap-[4px] text-[14px] font-[400] leading-[21px] text-black1 hover:opacity-[0.7]"
                               href={child.to}
                               target="_blank"
                               rel="noopener noreferrer"
@@ -339,12 +326,7 @@ const Footer = (props: Props) => {
                         <li key={child.id} className="list-none">
                           <Link
                             href={child.to}
-                            className={clsx(
-                              'text-[14px] font-[400] leading-[21px] text-black1 hover:opacity-[0.7]',
-                              {
-                                ['text-transparent']: child.invisibleItem,
-                              }
-                            )}
+                            className="text-[14px] font-[400] leading-[21px] text-black1 hover:opacity-[0.7]"
                           >
                             {child.name}
                           </Link>

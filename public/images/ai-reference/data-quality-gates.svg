@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 770" width="640" height="770" role="img" aria-labelledby="title desc">
+<title id="title">Quality gates before the vector index</title>
+<desc id="desc">Validate source records: Check rights, stable IDs, freshness and completeness.. Validate representation: Check model version, dimensions and finite values.. Validate metadata: Enforce tenant, timestamps and filterable field types.. Validate retrieval: Test queries, labels and failure slices before release.. A faster index does not repair an incorrect or stale representation.</desc>
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M1 1 L6 4 L1 7" fill="none" stroke="#1E5F70" stroke-width="1.5"/></marker></defs>
+<rect width="640" height="770" fill="#FAF6EE"/>
+<text x="28" y="30" font-family="Arial, sans-serif" font-size="12" font-weight="400" fill="#6B6356"><tspan x="28" dy="0">MILVUS / AI REFERENCE / SCHEMATIC</tspan></text>
+<text x="28" y="72" font-family="Georgia, serif" font-size="28" font-weight="700" fill="#0F1F2E"><tspan x="28" dy="0">Quality gates before the vector</tspan><tspan x="28" dy="36.4">index</tspan></text>
+<rect x="28" y="146" width="584" height="112" fill="#F4ECDC" stroke="#0F1F2E" stroke-width="1.5"/>
+<rect x="28" y="146" width="5" height="112" fill="#1E5F70"/>
+<text x="48" y="177" font-family="Arial, sans-serif" font-size="23" font-weight="700" fill="#0F1F2E"><tspan x="48" dy="0">Validate source records</tspan></text>
+<text x="48" y="207" font-family="Arial, sans-serif" font-size="20" font-weight="400" fill="#6B6356"><tspan x="48" dy="0">Check rights, stable IDs, freshness and</tspan><tspan x="48" dy="26">completeness.</tspan></text>
+<path d="M320 261 V280" fill="none" stroke="#1E5F70" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="28" y="284" width="584" height="112" fill="#F4ECDC" stroke="#0F1F2E" stroke-width="1.5"/>
+<rect x="28" y="284" width="5" height="112" fill="#1E5F70"/>
+<text x="48" y="315" font-family="Arial, sans-serif" font-size="23" font-weight="700" fill="#0F1F2E"><tspan x="48" dy="0">Validate representation</tspan></text>
+<text x="48" y="345" font-family="Arial, sans-serif" font-size="20" font-weight="400" fill="#6B6356"><tspan x="48" dy="0">Check model version, dimensions and finite</tspan><tspan x="48" dy="26">values.</tspan></text>
+<path d="M320 399 V418" fill="none" stroke="#1E5F70" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="28" y="422" width="584" height="112" fill="#F4ECDC" stroke="#0F1F2E" stroke-width="1.5"/>
+<rect x="28" y="422" width="5" height="112" fill="#1E5F70"/>
+<text x="48" y="453" font-family="Arial, sans-serif" font-size="23" font-weight="700" fill="#0F1F2E"><tspan x="48" dy="0">Validate metadata</tspan></text>
+<text x="48" y="483" font-family="Arial, sans-serif" font-size="20" font-weight="400" fill="#6B6356"><tspan x="48" dy="0">Enforce tenant, timestamps and filterable field</tspan><tspan x="48" dy="26">types.</tspan></text>
+<path d="M320 537 V556" fill="none" stroke="#1E5F70" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="28" y="560" width="584" height="112" fill="#F4ECDC" stroke="#0F1F2E" stroke-width="1.5"/>
+<rect x="28" y="560" width="5" height="112" fill="#E85A2B"/>
+<text x="48" y="591" font-family="Arial, sans-serif" font-size="23" font-weight="700" fill="#0F1F2E"><tspan x="48" dy="0">Validate retrieval</tspan></text>
+<text x="48" y="621" font-family="Arial, sans-serif" font-size="20" font-weight="400" fill="#6B6356"><tspan x="48" dy="0">Test queries, labels and failure slices before</tspan><tspan x="48" dy="26">release.</tspan></text>
+<path d="M28 694 H612" stroke="#0F1F2E" stroke-width="1.5"/>
+<text x="28" y="720" font-family="Arial, sans-serif" font-size="18" font-weight="400" fill="#6B6356"><tspan x="28" dy="0">A faster index does not repair an incorrect or stale</tspan><tspan x="28" dy="23.4">representation.</tspan></text>
+</svg>

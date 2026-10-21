@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "concurrently --names \"next,i18n\" --prefix-colors \"bgBlack.bold,bgCyan.bold\" \"npm run dev:fe\" \"npm run i18n:watch\"",
     "dev:fe": "node scripts/migrateAssets.js && next dev -p 8000",
-    "build": "node scripts/migrateAssets.js && node scripts/generate-llms-txt.js && node scripts/build.js",
+    "build": "node scripts/validate-ai-reference.js && node scripts/migrateAssets.js && node scripts/generate-llms-txt.js && node scripts/build.js",
+    "validate:ai-reference": "node scripts/validate-ai-reference.js",
+    "test:ai-reference": "node --test tests/ai-reference-catalog.test.cjs",
     "postbuild": "next-sitemap --config sitemap.config.js",
     "start": "npx next start",
     "lint": "next lint",

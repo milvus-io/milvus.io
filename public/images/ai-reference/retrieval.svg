@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 780" width="640" height="780" role="img" aria-labelledby="title desc">
+<title id="title">Similarity finds candidates; scope limits them</title>
+<desc id="desc">A query lies near selected eligible vectors A, B and C. A closer point from another tenant is excluded. Returned IDs lead back to source evidence.</desc>
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M1 1 L7 4 L1 7" fill="none" stroke="#1E5F70" stroke-width="1.5"/></marker></defs>
+<rect width="640" height="780" fill="#FAF6EE"/>
+<text x="28" y="30" text-anchor="start" font-family="Arial, sans-serif" font-size="12" fill="#6B6356" font-weight="400"><tspan x="28" dy="0">MILVUS / AI REFERENCE / MECHANISM</tspan></text>
+<text x="28" y="72" text-anchor="start" font-family="Georgia, serif" font-size="27" fill="#0F1F2E" font-weight="700"><tspan x="28" dy="0">Similarity finds candidates; scope</tspan><tspan x="28" dy="35.1">limits them</tspan></text>
+<text x="28" y="153" text-anchor="start" font-family="Arial, sans-serif" font-size="22" fill="#0F1F2E" font-weight="700"><tspan x="28" dy="0">1  Search inside the eligible scope</tspan></text>
+<rect x="55" y="176" width="530" height="308" fill="#FAF6EE" stroke="#E5DDD0" stroke-width="1.5"/>
+<circle cx="270" cy="310" r="94" fill="none" stroke="#1E5F70" stroke-width="1.5" stroke-dasharray="5 4"/>
+<circle cx="95" cy="230" r="6" fill="#E5DDD0" stroke="#6B6356" stroke-width="1.5"/>
+<circle cx="140" cy="420" r="6" fill="#E5DDD0" stroke="#6B6356" stroke-width="1.5"/>
+<circle cx="420" cy="210" r="6" fill="#E5DDD0" stroke="#6B6356" stroke-width="1.5"/>
+<circle cx="505" cy="310" r="6" fill="#E5DDD0" stroke="#6B6356" stroke-width="1.5"/>
+<circle cx="470" cy="420" r="6" fill="#E5DDD0" stroke="#6B6356" stroke-width="1.5"/>
+<circle cx="355" cy="455" r="6" fill="#E5DDD0" stroke="#6B6356" stroke-width="1.5"/>
+<path d="M270 310 L305 275" fill="none" stroke="#1E5F70" stroke-width="2" stroke-dasharray="6 5"/>
+<circle cx="305" cy="275" r="10" fill="#0F7D4B" stroke="#0F1F2E" stroke-width="1.5"/>
+<text x="319" y="265" text-anchor="start" font-family="Arial, sans-serif" font-size="22" fill="#0F7D4B" font-weight="700"><tspan x="319" dy="0">A</tspan></text>
+<path d="M270 310 L225 255" fill="none" stroke="#1E5F70" stroke-width="2" stroke-dasharray="6 5"/>
+<circle cx="225" cy="255" r="10" fill="#0F7D4B" stroke="#0F1F2E" stroke-width="1.5"/>
+<text x="239" y="245" text-anchor="start" font-family="Arial, sans-serif" font-size="22" fill="#0F7D4B" font-weight="700"><tspan x="239" dy="0">B</tspan></text>
+<path d="M270 310 L280 380" fill="none" stroke="#1E5F70" stroke-width="2" stroke-dasharray="6 5"/>
+<circle cx="280" cy="380" r="10" fill="#0F7D4B" stroke="#0F1F2E" stroke-width="1.5"/>
+<text x="294" y="370" text-anchor="start" font-family="Arial, sans-serif" font-size="22" fill="#0F7D4B" font-weight="700"><tspan x="294" dy="0">C</tspan></text>
+<circle cx="270" cy="310" r="11" fill="#E85A2B" stroke="#0F1F2E" stroke-width="1.5"/>
+<text x="185" y="330" text-anchor="start" font-family="Arial, sans-serif" font-size="22" fill="#E85A2B" font-weight="700"><tspan x="185" dy="0">query</tspan></text>
+<path d="M278 298 L292 312" fill="none" stroke="#6B6356" stroke-width="2"/>
+<path d="M278 312 L292 298" fill="none" stroke="#6B6356" stroke-width="2"/>
+<text x="355" y="345" text-anchor="start" font-family="Arial, sans-serif" font-size="19" fill="#6B6356" font-weight="400"><tspan x="355" dy="0">Other tenant:</tspan></text>
+<text x="355" y="370" text-anchor="start" font-family="Arial, sans-serif" font-size="19" fill="#6B6356" font-weight="400"><tspan x="355" dy="0">excluded</tspan></text>
+<path d="M300 310 L345 340" fill="none" stroke="#6B6356" stroke-width="2"/>
+<text x="28" y="525" text-anchor="start" font-family="Arial, sans-serif" font-size="22" fill="#0F1F2E" font-weight="700"><tspan x="28" dy="0">2  Resolve IDs to evidence</tspan></text>
+<rect x="40" y="550" width="178" height="98" fill="#F4ECDC" stroke="#0F1F2E" stroke-width="1.5"/>
+<text x="55" y="583" text-anchor="start" font-family="Arial, sans-serif" font-size="22" fill="#0F1F2E" font-weight="700"><tspan x="55" dy="0">Source A</tspan></text>
+<path d="M55 602 L190 602" fill="none" stroke="#6B6356" stroke-width="2"/>
+<path d="M55 620 L150 620" fill="none" stroke="#6B6356" stroke-width="2"/>
+<rect x="238" y="550" width="178" height="98" fill="#F4ECDC" stroke="#0F1F2E" stroke-width="1.5"/>
+<text x="253" y="583" text-anchor="start" font-family="Arial, sans-serif" font-size="22" fill="#0F1F2E" font-weight="700"><tspan x="253" dy="0">Source B</tspan></text>
+<path d="M253 602 L388 602" fill="none" stroke="#6B6356" stroke-width="2"/>
+<path d="M253 620 L348 620" fill="none" stroke="#6B6356" stroke-width="2"/>
+<rect x="436" y="550" width="178" height="98" fill="#F4ECDC" stroke="#0F1F2E" stroke-width="1.5"/>
+<text x="451" y="583" text-anchor="start" font-family="Arial, sans-serif" font-size="22" fill="#0F1F2E" font-weight="700"><tspan x="451" dy="0">Source C</tspan></text>
+<path d="M451 602 L586 602" fill="none" stroke="#6B6356" stroke-width="2"/>
+<path d="M451 620 L546 620" fill="none" stroke="#6B6356" stroke-width="2"/>
+<path d="M28 704 L612 704" fill="none" stroke="#0F1F2E" stroke-width="2"/>
+<text x="28" y="732" text-anchor="start" font-family="Arial, sans-serif" font-size="18" fill="#6B6356" font-weight="400"><tspan x="28" dy="0">2D schematic. Eligibility is mandatory; ANN may miss true</tspan><tspan x="28" dy="23.4">neighbors.</tspan></text>
+</svg>

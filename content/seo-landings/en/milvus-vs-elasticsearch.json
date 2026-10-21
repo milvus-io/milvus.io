@@ -1,0 +1,513 @@
+{
+  "site": "milvus",
+  "kind": "seo",
+  "slug": "milvus-vs-elasticsearch",
+  "nav": "Milvus vs Elasticsearch",
+  "path": "/compare/milvus-vs-elasticsearch-opensearch",
+  "title": "Milvus vs Elasticsearch & OpenSearch for Vector Search",
+  "description": "Milvus vs Elasticsearch and OpenSearch: VectorDBBench vector and filtered search results, index types, hybrid search, and how to migrate from Elasticsearch.",
+  "keywords": {
+    "primary": "milvus vs elasticsearch",
+    "secondary": [
+      "elasticsearch vs milvus",
+      "milvus vs elasticsearch performance",
+      "elasticsearch vector search",
+      "elasticsearch vector search performance",
+      "elasticsearch vector search vs milvus",
+      "elasticsearch as vector database",
+      "opensearch vector search",
+      "milvus vs opensearch",
+      "migrate elasticsearch to milvus",
+      "elasticsearch and milvus",
+      "hybrid search elasticsearch bm25 vector",
+      "elasticsearch dense_vector",
+      "opensearch knn",
+      "bm25 full-text search",
+      "reciprocal rank fusion"
+    ],
+    "questions": [
+      "Is Elasticsearch a vector database?",
+      "Is Milvus faster than Elasticsearch for vector search?",
+      "Can Milvus replace Elasticsearch for BM25 full-text search?",
+      "How does hybrid search work in Elasticsearch vs Milvus?",
+      "How do I migrate dense_vector data from Elasticsearch to Milvus?",
+      "Should I run Milvus and Elasticsearch together?"
+    ]
+  },
+  "h1": "Milvus vs Elasticsearch and OpenSearch for vector search",
+  "intro": "Milvus vs Elasticsearch is a question of what each system was built for: Milvus is an open-source database built for vector search, while Elasticsearch and OpenSearch are Lucene search engines that added vector fields. All three handle BM25 and hybrid search, so the real differences show up at scale: throughput, latency, index choice and cost. Choose Milvus when vector search is the core workload (RAG, semantic search, agents); keep Elasticsearch or OpenSearch when logs and analytics come first.",
+  "primary_cta": {
+    "label": "Start the Milvus Quickstart",
+    "href": "https://milvus.io/docs/quickstart.md"
+  },
+  "secondary_cta": {
+    "label": "Prefer managed? Try Zilliz Cloud",
+    "href": "https://cloud.zilliz.com/signup"
+  },
+  "proof": [
+    "Apache License 2.0",
+    "40K+ GitHub stars",
+    "Built-in BM25 full-text search",
+    "HNSW, IVF, RaBitQ, DiskANN and GPU indexes",
+    "VTS migrates from Elasticsearch"
+  ],
+  "logos": [
+    "Salesforce",
+    "Walmart",
+    "Reddit",
+    "NVIDIA",
+    "eBay",
+    "Shell",
+    "Roblox",
+    "IBM"
+  ],
+  "diagram": {
+    "type": "compare",
+    "caption": "Milvus runs its own vector indexes on separated storage and compute; Elasticsearch and OpenSearch build an HNSW graph inside every Lucene segment of every shard.",
+    "left": {
+      "title": "Milvus: built for vectors",
+      "sub": "Vector index engine + BM25, separated storage",
+      "nodes": [
+        {
+          "title": "Streaming",
+          "sub": "writes · WAL"
+        },
+        {
+          "title": "Query",
+          "sub": "ANN index + BM25"
+        },
+        {
+          "title": "Data",
+          "sub": "index build"
+        }
+      ],
+      "storage": {
+        "title": "Shared object storage",
+        "sub": "scale nodes without copying data"
+      },
+      "verdict": "One index per segment on dedicated nodes; filters and BM25 in the same query."
+    },
+    "right": {
+      "title": "Elasticsearch / OpenSearch",
+      "sub": "Lucene search engine with vector fields",
+      "nodes": [
+        {
+          "title": "Shard 1",
+          "sub": "HNSW per segment"
+        },
+        {
+          "title": "Shard 2",
+          "sub": "HNSW per segment"
+        },
+        {
+          "title": "Shard N",
+          "sub": "HNSW per segment"
+        }
+      ],
+      "storage": {
+        "title": "Data nodes with local disk",
+        "sub": "JVM heap + off-heap graphs"
+      },
+      "verdict": "kNN visits every segment; force-merge helps, memory grows with the graph."
+    }
+  },
+  "sections": [
+    {
+      "id": "vector-benchmarks",
+      "nav": "Performance",
+      "h2": "Milvus vs Elasticsearch performance: which is faster for vector search?",
+      "paragraphs": [
+        "Elasticsearch vs Milvus on the VectorDBBench leaderboard: Zilliz Cloud and self-hosted Milvus serve several times the QPS of OpenSearch and Elastic Cloud at a fraction of the P99 latency, for plain vector search and for filtered search. Elasticsearch vector search performance improves with force_merge, which is why the labels below carry it."
+      ],
+      "bench": [
+        {
+          "title": "Vector search throughput (QPS, higher is better)",
+          "caption": "Cohere 1M, 768 dimensions",
+          "unit": "QPS",
+          "rows": [
+            {
+              "system": "Zilliz Cloud",
+              "label": "ZillizCloud-8cu-perf",
+              "value": 13316.23,
+              "detail": "P99 2 ms · recall 0.9383",
+              "highlight": true
+            },
+            {
+              "system": "Milvus",
+              "label": "Milvus-16c64g-sq4u-fp16-force_merge",
+              "value": 9575.69,
+              "detail": "P99 2.3 ms · recall 0.9189"
+            },
+            {
+              "system": "OpenSearch",
+              "label": "OpenSearch-16c128g-force_merge",
+              "value": 3055.01,
+              "detail": "P99 7.2 ms · recall 0.9066"
+            },
+            {
+              "system": "Elastic Cloud",
+              "label": "ElasticCloud-8c60g-force_merge",
+              "value": 2353.89,
+              "detail": "P99 17.1 ms · recall 0.9143"
+            }
+          ],
+          "source": "Source: VectorDBBench; configuration labels, recall and hardware differ.",
+          "sourceUrl": "https://github.com/zilliztech/VectorDBBench/blob/main/vectordb_bench/results/leaderboard_v2.json"
+        },
+        {
+          "title": "Filtered search throughput (QPS, filter keeps 1% of data)",
+          "caption": "Cohere 1M, 768 dimensions, filter ratio 0.99",
+          "unit": "QPS",
+          "rows": [
+            {
+              "system": "Zilliz Cloud",
+              "label": "ZillizCloud-8cu-perf-partition_key",
+              "value": 10020.53,
+              "detail": "P99 2.6 ms · recall 0.9788",
+              "highlight": true
+            },
+            {
+              "system": "Milvus",
+              "label": "Milvus-16c64g-sq8-partition_key",
+              "value": 11280.08,
+              "detail": "P99 1.6 ms · recall 0.9507"
+            },
+            {
+              "system": "OpenSearch",
+              "label": "OpenSearch-16c128g-routing-64shard-force_merge",
+              "value": 3064.63,
+              "detail": "P99 6.5 ms · recall 0.9507"
+            },
+            {
+              "system": "Elastic Cloud",
+              "label": "ElasticCloud-8c60g-routing-64shard",
+              "value": 2789.72,
+              "detail": "P99 8.2 ms · recall 0.9538"
+            }
+          ],
+          "source": "VectorDBBench leaderboard (zilliz.com/vdbbench-leaderboard), labels as published. Results depend on configuration; run VectorDBBench on your own data.",
+          "cta": {
+            "text": "Zilliz Cloud is fully managed Milvus: the same engine and top-tier throughput, with no clusters to size, upgrade or scale.",
+            "label": "Try Zilliz Cloud free",
+            "href": "https://cloud.zilliz.com/signup"
+          },
+          "sourceUrl": "https://github.com/zilliztech/VectorDBBench/blob/main/vectordb_bench/results/leaderboard_v2.json"
+        }
+      ]
+    },
+    {
+      "id": "indexes",
+      "nav": "Indexes",
+      "h2": "Which vector index types do Milvus, Elasticsearch and OpenSearch support?",
+      "paragraphs": [
+        "Elasticsearch builds HNSW or flat indexes per Lucene segment, with int8, int4 and BBQ quantization. OpenSearch adds Faiss IVF and an on-disk mode. Milvus ships a wider menu, including GPU_CAGRA, GPU_IVF_FLAT, GPU_IVF_PQ and GPU_BRUTE_FORCE, plus scalar indexes for filters, so you can trade memory, recall and latency per field."
+      ],
+      "table": {
+        "caption": "Vector index types per official docs (Elasticsearch dense_vector, OpenSearch knn_vector, Milvus index-explained)",
+        "heads": [
+          "Index family",
+          "Milvus",
+          "Elasticsearch",
+          "OpenSearch"
+        ],
+        "rows": [
+          [
+            "Graph (HNSW)",
+            "HNSW, HNSW_SQ, HNSW_PQ, HNSW_PRQ",
+            "hnsw, int8_hnsw, int4_hnsw, bbq_hnsw",
+            "hnsw on Faiss or Lucene engine"
+          ],
+          [
+            "Cluster-based / quantized",
+            "IVF_FLAT, IVF_SQ8, IVF_PQ, IVF_RABITQ, SCANN",
+            "flat, int8_flat, int4_flat, bbq_flat",
+            "Faiss ivf; sq, pq and binary quantization"
+          ],
+          [
+            "Disk-based",
+            "DISKANN; tiered storage from object storage",
+            "bbq_disk (Enterprise subscription)",
+            "on_disk mode with compression levels and rescoring"
+          ],
+          [
+            "Sparse and BM25",
+            "SPARSE_INVERTED_INDEX (BM25 or IP metric)",
+            "sparse_vector (ELSER), Lucene BM25",
+            "Neural sparse search, Lucene BM25"
+          ],
+          [
+            "Binary vectors",
+            "BIN_FLAT, BIN_IVF_FLAT, MINHASH_LSH",
+            "bit element type with hnsw or flat",
+            "Binary quantization"
+          ],
+          [
+            "Scalar and JSON filters",
+            "INVERTED, BITMAP, STL_SORT, Trie, NGRAM, RTREE, JSON path index",
+            "Lucene field indexes set by mapping",
+            "Lucene field indexes set by mapping"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "capabilities",
+      "nav": "Capabilities",
+      "h2": "What does a purpose-built vector database add beyond vector search?",
+      "paragraphs": [
+        "Elasticsearch vector search vs Milvus is a question of what the system is built around. Elasticsearch is strong when documents already live in an index. Milvus treats the collection schema as the product: typed vectors, JSON and arrays, built-in BM25 and hybrid search in the open-source build, and an architecture that scales each node role on its own."
+      ],
+      "table": {
+        "caption": "Milvus capabilities for vector and hybrid search workloads (milvus.io docs)",
+        "heads": [
+          "Capability",
+          "In Milvus"
+        ],
+        "rows": [
+          [
+            "Multi-tenancy",
+            "Database (64 by default), collection (65,536 by default), partition (1,024 per collection), or partition key for millions of tenants"
+          ],
+          [
+            "JSON and dynamic fields",
+            "JSON fields with JSON path indexes; a dynamic field stores undeclared keys"
+          ],
+          [
+            "ARRAY fields",
+            "Typed arrays, ARRAY_CONTAINS filters, BITMAP or INVERTED indexes"
+          ],
+          [
+            "Multi-vector hybrid search",
+            "Up to 10 vector fields; hybrid_search fuses dense, sparse and BM25 with RRF or weighted rerankers"
+          ],
+          [
+            "BM25 full-text search",
+            "A BM25 function with standard, english, chinese, ICU or custom analyzers; query with raw text"
+          ],
+          [
+            "Keyword and phrase match",
+            "TEXT_MATCH and PHRASE_MATCH (with slop) on analyzed VARCHAR fields"
+          ],
+          [
+            "Pattern filters",
+            "LIKE and RE2 regex (=~, !~), accelerated by an NGRAM index"
+          ],
+          [
+            "Partial update and TTL",
+            "upsert with partial_update=True; collection.ttl.seconds expires entities"
+          ],
+          [
+            "Storage-compute separation",
+            "Query, streaming and data nodes over shared object storage, scaled independently"
+          ],
+          [
+            "Tiered storage",
+            "Hot data loads on demand and cold data is evicted, so query nodes hold less in memory"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "field-mapping",
+      "nav": "Field mapping",
+      "h2": "How do Elasticsearch and OpenSearch fields map to a Milvus schema?",
+      "paragraphs": [
+        "Most mappings translate one to one. Text fields become analyzed VARCHAR with a BM25 function, so keyword relevance survives the move. Milvus docs also map the query DSL: match to full-text search, term to == or TEXT_MATCH, prefix and wildcard to LIKE, knn to search, and RRF to hybrid_search."
+      ],
+      "table": {
+        "caption": "Elasticsearch to Milvus field mapping for migration",
+        "heads": [
+          "Elasticsearch / OpenSearch",
+          "Milvus"
+        ],
+        "rows": [
+          [
+            "Index",
+            "Collection (inside a database)"
+          ],
+          [
+            "_id",
+            "VARCHAR or INT64 primary key; keep the same ID for dual-write"
+          ],
+          [
+            "dense_vector / knn_vector",
+            "FLOAT_VECTOR (or FLOAT16, BFLOAT16, INT8) with the same dimension and metric"
+          ],
+          [
+            "text with analyzer",
+            "VARCHAR with enable_analyzer + BM25 function to SPARSE_FLOAT_VECTOR"
+          ],
+          [
+            "keyword",
+            "VARCHAR with INVERTED or BITMAP index; NGRAM for wildcard"
+          ],
+          [
+            "Numeric and date",
+            "INT64 / DOUBLE with STL_SORT or INVERTED index"
+          ],
+          [
+            "keyword arrays",
+            "ARRAY of VARCHAR"
+          ],
+          [
+            "object, nested, flattened",
+            "JSON field with JSON path indexes, or the dynamic field"
+          ],
+          [
+            "sparse_vector",
+            "SPARSE_FLOAT_VECTOR with IP metric"
+          ],
+          [
+            "Custom routing per tenant",
+            "Partition key"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "migration",
+      "nav": "Migration",
+      "h2": "How do you migrate from Elasticsearch or OpenSearch to Milvus?",
+      "paragraphs": [
+        "Move the retrieval path first and keep the old cluster serving until results match. VTS (Vector Transport Service) lists Elasticsearch as a source connector; for OpenSearch, export with the scroll API and load files with BulkWriter."
+      ],
+      "bullets": [
+        "Export: VTS es_to_milvus, or scroll / point-in-time reads of _source.",
+        "Create the schema: map fields, add a BM25 function, index filter fields.",
+        "Backfill with BulkWriter and bulk_import; use insert for small sets.",
+        "Dual-write new documents to both systems from the same source.",
+        "Validate recall and relevance on a query set, then shift reads gradually."
+      ]
+    },
+    {
+      "id": "when-elasticsearch-fits",
+      "nav": "When ES fits",
+      "h2": "When do Elasticsearch or OpenSearch fit better?",
+      "paragraphs": [
+        "A fair call: if search is a side feature of an existing Elastic stack, adding vectors there can be enough."
+      ],
+      "bullets": [
+        "Logs, observability and security analytics built on Kibana or OpenSearch Dashboards.",
+        "Aggregation-heavy analytics and faceting over text, with vectors as a small add-on.",
+        "An existing ELK pipeline where a modest vector corpus does not justify a second system."
+      ]
+    }
+  ],
+  "code": {
+    "h2": "How do you map an Elasticsearch index to a Milvus collection in Python?",
+    "intro": "This script reads every document from an Elasticsearch index and writes it into a Milvus collection with dense, BM25, keyword, array and JSON fields.",
+    "lang": "python",
+    "code": "# pip install -U pymilvus elasticsearch\nfrom elasticsearch import Elasticsearch, helpers\nfrom pymilvus import MilvusClient, DataType, Function, FunctionType\n\nes = Elasticsearch(\"http://localhost:9200\")\nclient = MilvusClient(uri=\"http://localhost:19530\")\n\n# ES mapping: title(text) category(keyword) tags(keyword[]) attrs(object) embedding(dense_vector, 768)\nschema = client.create_schema(enable_dynamic_field=True)\nschema.add_field(\"id\", DataType.VARCHAR, is_primary=True, max_length=64)  # ES _id\nschema.add_field(\"title\", DataType.VARCHAR, max_length=8192, enable_analyzer=True, enable_match=True)\nschema.add_field(\"title_bm25\", DataType.SPARSE_FLOAT_VECTOR)  # filled by the BM25 function\nschema.add_field(\"category\", DataType.VARCHAR, max_length=128)\nschema.add_field(\"tags\", DataType.ARRAY, element_type=DataType.VARCHAR, max_capacity=64, max_length=128)\nschema.add_field(\"attrs\", DataType.JSON, nullable=True)\nschema.add_field(\"embedding\", DataType.FLOAT_VECTOR, dim=768)\nschema.add_function(Function(name=\"title_bm25_fn\", function_type=FunctionType.BM25,\n                             input_field_names=[\"title\"], output_field_names=[\"title_bm25\"]))\n\nidx = client.prepare_index_params()\nidx.add_index(field_name=\"embedding\", index_type=\"HNSW\", metric_type=\"COSINE\",\n              params={\"M\": 16, \"efConstruction\": 200})\nidx.add_index(field_name=\"title_bm25\", index_type=\"SPARSE_INVERTED_INDEX\", metric_type=\"BM25\")\nidx.add_index(field_name=\"category\", index_type=\"INVERTED\")\nidx.add_index(field_name=\"attrs\", index_type=\"INVERTED\", index_name=\"attrs_brand\",\n              params={\"json_path\": 'attrs[\"brand\"]', \"json_cast_type\": \"varchar\"})\nclient.create_collection(\"docs\", schema=schema, index_params=idx)\n\nbatch = []\nfor hit in helpers.scan(es, index=\"docs\", query={\"query\": {\"match_all\": {}}}):\n    src = hit[\"_source\"]\n    batch.append({\"id\": hit[\"_id\"], \"title\": src[\"title\"], \"category\": src[\"category\"],\n                  \"tags\": src.get(\"tags\", []), \"attrs\": src.get(\"attrs\"),\n                  \"embedding\": src[\"embedding\"]})\n    if len(batch) == 1000:\n        client.insert(\"docs\", batch)\n        batch = []\nif batch:\n    client.insert(\"docs\", batch)\n",
+    "note": "Match dim and metric_type to your dense_vector mapping. For large indexes, write files with BulkWriter and load them with bulk_import instead of insert. Code requires a running server and your own embedding model; it is an example, not a benchmark."
+  },
+  "faqs": [
+    [
+      "Is Elasticsearch a vector database?",
+      "You can use Elasticsearch as a vector database, but it is a search engine with vector fields: dense_vector stores embeddings and the knn query searches HNSW or flat indexes per Lucene segment. Milvus is a database built around vector indexes, with BM25 and filtering added on the same collection."
+    ],
+    [
+      "Is Milvus faster than Elasticsearch for vector search?",
+      "On the VectorDBBench Cohere 1M test, Milvus-16c64g-sq4u-fp16-force_merge lists 9,575.69 QPS at 0.9189 recall and ElasticCloud-8c60g-force_merge 2,353.89 QPS at 0.9143. Hardware differs by row; benchmark your own data."
+    ],
+    [
+      "Can Milvus replace Elasticsearch for BM25 full-text search?",
+      "For retrieval, yes: a BM25 function turns analyzed text into a sparse vector at insert time, and you query with raw text, alone or in hybrid search. Kibana dashboards and aggregation-heavy analytics stay with Elasticsearch."
+    ],
+    [
+      "How does hybrid search work in Elasticsearch vs Milvus?",
+      "Elasticsearch fuses BM25 and kNN with the reciprocal rank fusion (RRF) retriever, which Elastic lists under the Enterprise subscription. OpenSearch uses search-pipeline processors. Milvus runs hybrid_search with RRFRanker or WeightedRanker in the open-source build."
+    ],
+    [
+      "How do I migrate dense_vector data from Elasticsearch to Milvus?",
+      "Map dense_vector to FLOAT_VECTOR with the same dimension and metric, then copy data with VTS or a scroll export plus BulkWriter. Dual-write during cutover and compare recall before moving reads."
+    ],
+    [
+      "Should I run Milvus and Elasticsearch together?",
+      "Often, yes. Running Elasticsearch and Milvus side by side is common: keep Elasticsearch for logs and analytics, move vector and hybrid retrieval to Milvus, feed both from the same source, and join results by document ID."
+    ]
+  ],
+  "stories": [],
+  "aiq": [
+    "what-tools-help-benchmark-vector-search-performance",
+    "what-is-fulltext-search",
+    "what-is-hybrid-search-and-when-should-i-use-it",
+    "how-sparse-inverted-indexes-work",
+    "hnsw-sq-pq-prq-tradeoffs",
+    "what-is-ivf-rabitq",
+    "what-is-diskann",
+    "milvus-cdc-and-migration"
+  ],
+  "related": [
+    "hybrid-search",
+    "open-source-vector-database",
+    "distributed-vector-database",
+    "vector-database-for-rag",
+    "milvus-vs-qdrant"
+  ],
+  "managed": {
+    "h2": "Want the benchmarked results without running a cluster?",
+    "body": "Zilliz Cloud is fully managed Milvus. On the VectorDBBench Cohere 1M test, ZillizCloud-8cu-perf lists 13,316.23 QPS at 0.9383 recall, with the same MilvusClient API as open-source Milvus."
+  },
+  "research": [
+    "https://milvus.io/docs/elasticsearch-queries-to-milvus.md",
+    "https://www.elastic.co/docs/solutions/search/vector",
+    "https://airbyte.com/data-engineering-resources/elasticsearch-vs-milvus",
+    "https://milvus.io/blog/milvus-26-preview-72-memory-reduction-without-compromising-recall-and-4x-faster-than-elasticsearch.md",
+    "https://dev.to/zilliz/elasticsearch-was-great-but-vector-databases-are-the-future-3lff",
+    "https://talks.simonhearne.com/2026-09-milvus-migration/"
+  ],
+  "sources": [
+    "https://zilliz.com/vdbbench-leaderboard",
+    "https://github.com/zilliztech/VectorDBBench",
+    "https://github.com/zilliztech/VectorDBBench/blob/main/vectordb_bench/results/leaderboard_v2.json",
+    "https://www.elastic.co/docs/reference/elasticsearch/mapping-reference/dense-vector",
+    "https://www.elastic.co/docs/reference/elasticsearch/mapping-reference/sparse-vector",
+    "https://www.elastic.co/docs/reference/elasticsearch/rest-apis/reciprocal-rank-fusion",
+    "https://www.elastic.co/subscriptions",
+    "https://docs.opensearch.org/latest/mappings/supported-field-types/knn-methods-engines/",
+    "https://docs.opensearch.org/latest/vector-search/optimizing-storage/disk-based-vector-search/",
+    "https://docs.opensearch.org/latest/vector-search/optimizing-storage/binary-quantization/",
+    "https://docs.opensearch.org/latest/vector-search/ai-search/hybrid-search/rrf/",
+    "https://docs.opensearch.org/latest/search-plugins/search-pipelines/normalization-processor/",
+    "https://github.com/milvus-io/milvus",
+    "https://milvus.io/docs/index-explained.md",
+    "https://milvus.io/docs/ivf-rabitq.md",
+    "https://milvus.io/docs/scann.md",
+    "https://milvus.io/docs/bitmap.md",
+    "https://milvus.io/docs/ngram.md",
+    "https://milvus.io/docs/json-indexing.md",
+    "https://milvus.io/docs/multi_tenancy.md",
+    "https://milvus.io/docs/use-json-fields.md",
+    "https://milvus.io/docs/enable-dynamic-field.md",
+    "https://milvus.io/docs/array_data_type.md",
+    "https://milvus.io/docs/multi-vector-search.md",
+    "https://milvus.io/docs/full-text-search.md",
+    "https://milvus.io/docs/analyzer-overview.md",
+    "https://milvus.io/docs/keyword-match.md",
+    "https://milvus.io/docs/phrase-match.md",
+    "https://milvus.io/docs/basic-operators.md",
+    "https://milvus.io/docs/upsert-entities.md",
+    "https://milvus.io/docs/set-collection-ttl.md",
+    "https://milvus.io/docs/architecture_overview.md",
+    "https://milvus.io/docs/tiered-storage-overview.md",
+    "https://milvus.io/docs/prepare-source-data.md",
+    "https://milvus.io/docs/import-data.md",
+    "https://milvus.io/docs/elasticsearch-queries-to-milvus.md",
+    "https://github.com/zilliztech/vts",
+    "https://milvus.io/docs/quickstart.md"
+  ],
+  "notes": [
+    "Vector table: leaderboard 1M headline table ('Vector Search Latency and QPS at $1,000 Monthly Cost'), cross-checked with leaderboard_v2.json 2026-10-21. zilliz.com renders via JS; headings/rows from a same-day rendered capture, every number matches JSON. Run metadata: Milvus 2.6.14, Elastic Cloud 8.17, OpenSearch 2.17, Zilliz Cloud v2026.4.",
+    "Filtered rows: leaderboard_v2.json, Cohere (Medium), filter_ratio 0.99 (raw files: LabelFilterPerformanceCase, label 1%; Milvus 2.5.11 2025-05-09, Elastic 8.17 2025-03-18, OpenSearch 2.17 2025-02-24). The leaderboard 'Filtering Performance' chart legend shows ZillizCloud-8cu-perf, ElasticCloud and OpenSearch force_merge; the Milvus partition_key and routing-64shard rows are in the published JSON but may not appear on the chart. QPS shown to 2 decimals as the leaderboard displays; raw values 11280.0849, 3064.6288, 2789.7212, 1507.6899, 364.3516.",
+    "Not used: Milvus 2.6 blog claim '3-4x higher throughput than Elasticsearch' on BEIR (no ES version/hardware, so no named configuration) and the Zilliz blog '30x' Elastic Cloud claim (2024, single anecdote). Spec forbids X-times claims without a named configuration.",
+    "RRF retriever listed under Enterprise on elastic.co/subscriptions (raw HTML read 2026-10-21); recheck before publishing as Elastic tiers change. bbq_disk requires Enterprise per dense_vector docs.",
+    "VTS README lists Elasticsearch (es_to_milvus.conf) but NOT OpenSearch, so OpenSearch path is scroll export + BulkWriter. milvus-migration (ES 7+) is deprecated in favor of VTS.",
+    "Feature versions (not shown on page): partial_update since 2.6.2, tiered storage since 2.6.4, PHRASE_MATCH 2.5.17+, regex =~ in 3.0.x docs, IVF_RABITQ 2.6.x; all in released v3.0.3. FMINDEX excluded.",
+    "Wanted, unverified: 'Lucene field indexes set by mapping' row for ES/OpenSearch scalar filters is a summary of mapping behaviour, not a fetched doc quote; OpenSearch neural sparse search from SERP pages, not a fetched OpenSearch doc.",
+    "Code validated offline with pymilvus 3.0.1 (schema + index params build); not run against a live cluster. Needs elasticsearch-py and Milvus Standalone, Distributed or Zilliz Cloud (Milvus Lite supports only FLAT).",
+    "Perf section simplified 2026-10-21: one config per system; BM25 full-text rows removed (only Zilliz Cloud has published BM25 results).",
+    "Keyword research 2026-10-21 (session web-search budget exhausted, so query phrasings come from Google/Bing/Baidu autocomplete APIs): real variants are 'elasticsearch vs milvus', 'milvus vs elasticsearch performance', 'milvus vector database vs elasticsearch', 'elasticsearch vector search vs milvus', 'elasticsearch vector search performance/hnsw', 'elasticsearch as vector database', 'is elasticsearch a (good) vector database', 'elasticsearch and milvus', 'aws opensearch vs milvus'. Dropped 'filtered vector search benchmark' and 'purpose-built vector database' (no autocomplete evidence; the latter stays in the h2 as copy)."
+  ],
+  "lang": "en",
+  "reviewedOn": "2026-10-21"
+}

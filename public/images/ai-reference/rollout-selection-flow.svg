@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 718" width="640" height="718" role="img" aria-labelledby="title desc">
+<title id="title">A training example needs an explicit selection rule</title>
+<desc id="desc">Keep eligible rollouts: Pin policy, task, environment and outcome evidence.. Remove leakage and duplicates: Protect evaluation tasks and dataset boundaries.. Select for the objective: SFT successes or task-matched preference pairs.. Record the dataset: Keep selected IDs, reasons, versions and coverage.. Reward is a quality signal; embeddings help with similarity and coverage.</desc>
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M1 1 L6 4 L1 7" fill="none" stroke="#1E5F70" stroke-width="1.5"/></marker></defs>
+<rect width="640" height="718" fill="#FAF6EE"/>
+<text x="28" y="30" font-family="Arial, sans-serif" font-size="12" font-weight="400" fill="#6B6356"><tspan x="28" dy="0">MILVUS / AI REFERENCE / SCHEMATIC</tspan></text>
+<text x="28" y="72" font-family="Georgia, serif" font-size="28" font-weight="700" fill="#0F1F2E"><tspan x="28" dy="0">A training example needs an explicit</tspan><tspan x="28" dy="36.4">selection rule</tspan></text>
+<rect x="28" y="146" width="584" height="112" fill="#F4ECDC" stroke="#0F1F2E" stroke-width="1.5"/>
+<rect x="28" y="146" width="5" height="112" fill="#1E5F70"/>
+<text x="48" y="177" font-family="Arial, sans-serif" font-size="23" font-weight="700" fill="#0F1F2E"><tspan x="48" dy="0">Keep eligible rollouts</tspan></text>
+<text x="48" y="207" font-family="Arial, sans-serif" font-size="20" font-weight="400" fill="#6B6356"><tspan x="48" dy="0">Pin policy, task, environment and outcome</tspan><tspan x="48" dy="26">evidence.</tspan></text>
+<path d="M320 261 V280" fill="none" stroke="#1E5F70" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="28" y="284" width="584" height="86" fill="#F4ECDC" stroke="#0F1F2E" stroke-width="1.5"/>
+<rect x="28" y="284" width="5" height="86" fill="#1E5F70"/>
+<text x="48" y="315" font-family="Arial, sans-serif" font-size="23" font-weight="700" fill="#0F1F2E"><tspan x="48" dy="0">Remove leakage and duplicates</tspan></text>
+<text x="48" y="345" font-family="Arial, sans-serif" font-size="20" font-weight="400" fill="#6B6356"><tspan x="48" dy="0">Protect evaluation tasks and dataset boundaries.</tspan></text>
+<path d="M320 373 V392" fill="none" stroke="#1E5F70" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="28" y="396" width="584" height="86" fill="#F4ECDC" stroke="#0F1F2E" stroke-width="1.5"/>
+<rect x="28" y="396" width="5" height="86" fill="#1E5F70"/>
+<text x="48" y="427" font-family="Arial, sans-serif" font-size="23" font-weight="700" fill="#0F1F2E"><tspan x="48" dy="0">Select for the objective</tspan></text>
+<text x="48" y="457" font-family="Arial, sans-serif" font-size="20" font-weight="400" fill="#6B6356"><tspan x="48" dy="0">SFT successes or task-matched preference pairs.</tspan></text>
+<path d="M320 485 V504" fill="none" stroke="#1E5F70" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="28" y="508" width="584" height="112" fill="#F4ECDC" stroke="#0F1F2E" stroke-width="1.5"/>
+<rect x="28" y="508" width="5" height="112" fill="#E85A2B"/>
+<text x="48" y="539" font-family="Arial, sans-serif" font-size="23" font-weight="700" fill="#0F1F2E"><tspan x="48" dy="0">Record the dataset</tspan></text>
+<text x="48" y="569" font-family="Arial, sans-serif" font-size="20" font-weight="400" fill="#6B6356"><tspan x="48" dy="0">Keep selected IDs, reasons, versions and</tspan><tspan x="48" dy="26">coverage.</tspan></text>
+<path d="M28 642 H612" stroke="#0F1F2E" stroke-width="1.5"/>
+<text x="28" y="668" font-family="Arial, sans-serif" font-size="18" font-weight="400" fill="#6B6356"><tspan x="28" dy="0">Reward is a quality signal; embeddings help with similarity</tspan><tspan x="28" dy="23.4">and coverage.</tspan></text>
+</svg>

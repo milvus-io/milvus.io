@@ -7,9 +7,11 @@ import { useTranslation } from 'react-i18next';
 import Layout from '@/components/layout/commonLayout';
 import { generateSimpleFaqList } from '@/http/faq';
 import { FAQDetailType } from '@/types/faq';
-import { useState, useMemo, useEffect, useCallback } from 'react';
+import { useState, useMemo, useEffect, useCallback, useRef } from 'react';
 import CustomInput from '@/components/customInput/customInput';
 import FaqPagination from '@/components/faq/FaqPagination';
+import topics from '../../../content/ai-quick-reference/topics.json';
+import { AI_REFERENCE_PAGE_SIZE as DEFAULT_PAGE_SIZE } from '@/consts/faq';
 
 const SearchIcon = () => (
   <svg
@@ -36,11 +38,10 @@ const SearchIcon = () => (
   </svg>
 );
 
-const DEFAULT_PAGE_SIZE = 99;
 const PAGEINDEX_QUERY_KEY = 'page';
 const API_ROUTE = '/api/ai-quick-reference';
 
-type FaqListItem = Pick<FAQDetailType, 'title' | 'url'>;
+type FaqListItem = Pick<FAQDetailType, 'title' | 'url' | 'topic'>;
 
 type FaqListResponse = {
   list: FaqListItem[];
@@ -64,17 +65,20 @@ export default function AiFaq(props: {
   list: FaqListItem[];
   total: number;
   pageIndex: number;
+  topic: string;
+  keyword: string;
 }) {
   const { t } = useTranslation('faq');
-  const { list, total, pageIndex } = props;
+  const { list, total, pageIndex, topic, keyword } = props;
   const currentPageIndex = pageIndex;
+  const searchRequest = useRef(0);
 
   const [searchData, setSearchData] = useState<{
     keyword: string;
     list: FaqListItem[];
     isLoading: boolean;
   }>({
-    keyword: '',
+    keyword,
     list,
     isLoading: false,
   });
@@ -85,46 +89,60 @@ export default function AiFaq(props: {
     pageIndex: currentPageIndex,
   });
 
-  const fetchFaqPage = useCallback(async (pageIndex: number, keyword = '') => {
-    setSearchData(v => ({
-      ...v,
-      isLoading: true,
-    }));
-
-    try {
-      const params = new URLSearchParams({
-        [PAGEINDEX_QUERY_KEY]: String(pageIndex),
-      });
-
-      if (keyword) {
-        params.set('keyword', keyword);
-      }
-
-      const response = await fetch(`${API_ROUTE}?${params}`);
-
-      if (!response.ok) {
-        throw new Error('Failed to fetch AI Quick Reference list');
-      }
-
-      const data: FaqListResponse = await response.json();
-      setSearchData(v => ({
-        keyword: v.keyword,
-        list: data.list,
-        isLoading: false,
-      }));
-      setPaginationData({
-        total: data.total,
-        pageSize: data.pageSize,
-        pageIndex: data.pageIndex,
-      });
-    } catch (error) {
+  const fetchFaqPage = useCallback(
+    async (pageIndex: number, keyword = '') => {
+      const request = ++searchRequest.current;
       setSearchData(v => ({
         ...v,
-        isLoading: false,
+        isLoading: true,
       }));
-      console.error(error);
-    }
-  }, []);
+
+      try {
+        const params = new URLSearchParams({
+          [PAGEINDEX_QUERY_KEY]: String(pageIndex),
+        });
+
+        if (keyword) {
+          params.set('keyword', keyword);
+        }
+        if (topic) params.set('topic', topic);
+
+        const response = await fetch(`${API_ROUTE}?${params}`);
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch AI Quick Reference list');
+        }
+
+        const data: FaqListResponse = await response.json();
+        if (request !== searchRequest.current) return;
+        setSearchData(v => ({
+          keyword: v.keyword,
+          list: data.list,
+          isLoading: false,
+        }));
+        setPaginationData({
+          total: data.total,
+          pageSize: data.pageSize,
+          pageIndex: data.pageIndex,
+        });
+      } catch (error) {
+        if (request !== searchRequest.current) return;
+        setSearchData(v => ({
+          ...v,
+          isLoading: false,
+        }));
+        console.error(error);
+      }
+    },
+    [topic]
+  );
+
+  const pageUrl = (page: number, search = '') => {
+    const params = new URLSearchParams({ page: String(page) });
+    if (topic) params.set('topic', topic);
+    if (search) params.set('keyword', search);
+    return `/ai-quick-reference?${params}`;
+  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const keyword = e.target.value;
@@ -134,11 +152,7 @@ export default function AiFaq(props: {
       ...v,
       keyword,
     }));
-    window.history.pushState(
-      null,
-      '',
-      `/ai-quick-reference?${PAGEINDEX_QUERY_KEY}=1`
-    );
+    window.history.pushState(null, '', pageUrl(1, trimmedKeyword));
     fetchFaqPage(1, trimmedKeyword);
   };
 
@@ -157,7 +171,7 @@ export default function AiFaq(props: {
     window.history.pushState(
       null,
       '',
-      `/ai-quick-reference?${PAGEINDEX_QUERY_KEY}=${index}`
+      pageUrl(index, searchData.keyword.trim())
     );
     fetchFaqPage(index, searchData.keyword.trim());
   };
@@ -179,7 +193,10 @@ export default function AiFaq(props: {
       const pageIndex = Number(
         new URL(window.location.href).searchParams.get(PAGEINDEX_QUERY_KEY) || 1
       );
-      fetchFaqPage(pageIndex, searchData.keyword.trim());
+      const keyword =
+        new URL(window.location.href).searchParams.get('keyword') || '';
+      setSearchData(v => ({ ...v, keyword }));
+      fetchFaqPage(pageIndex, keyword);
     };
 
     window.addEventListener('popstate', handler);
@@ -193,15 +210,30 @@ export default function AiFaq(props: {
       <main>
         <Head>
           <title>AI Quick Reference | Milvus</title>
-          <meta
-            name="description"
-            content="Looking for fast answers or a quick refresher on AI-related topics? The AI Quick Reference has everything you need—straightforward explanations, practical solutions, and insights on the latest trends."
-          />
+          <meta name="description" content={t('desc')} />
         </Head>
 
         <section className={clsx(pageClasses.container, classes.pageContainer)}>
           <h1 className="">{t('title')}</h1>
           <p className="">{t('desc')}</p>
+
+          <nav aria-label="Reference topics" className={classes.topicNav}>
+            <a
+              href="/ai-quick-reference"
+              aria-current={!topic ? 'page' : undefined}
+            >
+              {t('allTopics')}
+            </a>
+            {topics.map(item => (
+              <a
+                key={item.id}
+                href={`/ai-quick-reference?topic=${item.id}`}
+                aria-current={topic === item.id ? 'page' : undefined}
+              >
+                {item.label}
+              </a>
+            ))}
+          </nav>
 
           <CustomInput
             value={searchData.keyword}
@@ -244,7 +276,15 @@ export default function AiFaq(props: {
 
 export const getServerSideProps = async ({ query, res }) => {
   try {
-    const simpleFaqList = await generateSimpleFaqList();
+    const topic = String(query?.topic || '');
+    if (topic && !topics.some(item => item.id === topic))
+      return { notFound: true };
+    const keyword = String(query?.keyword || '').trim();
+    const simpleFaqList = (await generateSimpleFaqList()).filter(
+      item =>
+        (!topic || item.topic === topic) &&
+        (!keyword || item.title.toLowerCase().includes(keyword.toLowerCase()))
+    );
     const pageIndex = normalizePageIndex(
       query?.[PAGEINDEX_QUERY_KEY],
       simpleFaqList.length
@@ -260,11 +300,12 @@ export const getServerSideProps = async ({ query, res }) => {
         list: simpleFaqList.slice(start, start + DEFAULT_PAGE_SIZE),
         total: simpleFaqList.length,
         pageIndex,
+        topic,
+        keyword,
       },
     };
   } catch (error) {
-    return {
-      notFound: true,
-    };
+    // Catalog failures are operational errors, not a removed hub page.
+    throw error;
   }
 };

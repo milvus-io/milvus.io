@@ -4,74 +4,55 @@
   "slug": "milvus-vs-lancedb",
   "nav": "Milvus vs LanceDB",
   "path": "/compare/milvus-vs-lancedb",
-  "title": "Milvus vs LanceDB: Scalability, Performance, Features",
-  "description": "Milvus vs LanceDB compared: distributed database vs embedded library over the Lance format, concurrent writes, VectorDBBench QPS, features, cost and ops, fit.",
+  "title": "Milvus vs LanceDB: Lance Format, Scale, Capabilities",
+  "description": "Milvus vs LanceDB: Lance vs LanceDB explained, how Milvus searches Lance datasets in place, Milvus Lite vs embedded LanceDB, and where distributed compute matters.",
   "keywords": {
     "primary": "milvus vs lancedb",
     "secondary": [
       "lancedb vs milvus",
-      "what is lancedb",
-      "lancedb alternatives",
+      "lance vs lancedb",
+      "lance format",
       "lancedb production",
-      "lancedb cloud",
-      "lancedb concurrent writes",
-      "lancedb benchmark",
-      "lancedb multimodal",
-      "lancedb versioning",
-      "lance format vs parquet",
-      "lancedb vs milvus cost",
+      "lancedb scalability",
+      "what is lancedb",
+      "lancedb enterprise",
       "embedded vector database",
-      "serverless vector database",
-      "milvus without kubernetes",
-      "vector database comparison",
+      "milvus lite",
+      "milvus external collection",
+      "lance vector search",
+      "multimodal lakehouse",
+      "distributed vector database",
       "storage compute separation",
-      "billion-scale vector search",
-      "multi-tenant vector database",
-      "VectorDBBench",
-      "Lance format"
+      "vector database comparison"
     ],
     "questions": [
-      "What is LanceDB and when should I use it?",
       "What is the difference between Lance and LanceDB?",
-      "How large of a dataset can LanceDB handle?",
-      "Does LanceDB support concurrent operations?",
-      "Which is faster, Milvus or LanceDB?",
-      "Can Milvus search Lance data without importing it?",
-      "Do I need Kubernetes to run Milvus in production?",
+      "Can Milvus read Lance files?",
+      "Is Milvus Lite like LanceDB?",
+      "Is LanceDB production-ready, and how far does it scale?",
+      "Can LanceDB and Milvus share the same Lance data?",
       "What is the difference between Milvus and Zilliz Cloud?"
     ]
   },
   "research": [
+    "https://docs.lancedb.com/faq/faq-oss",
+    "https://thedataquarry.com/blog/how-lance-enables-the-multimodal-lakehouse/",
+    "https://zeroentropy.dev/concepts/lancedb/",
+    "https://ai-tldr.dev/learn/embeddings-vector-databases/vector-database-guides/lancedb-explained/",
+    "https://medium.com/@andreabozzo92/lance-format-and-lancedb-columnar-storage-for-the-embedding-age-ae18c68392ba",
     "https://www.peerspot.com/products/comparisons/lancedb_vs_milvus",
-    "https://medium.com/@oliversmithth852/lancedb-vs-milvus-hands-on-lessons",
-    "https://x.com/Stephen4171127/status/1853054492586942819",
+    "https://medium.com/@oliversmithth852/vector-search-at-scale-hands-on-lessons-from-milvus-and-lancedb-0c98ef27fa50",
     "https://agentset.ai/vector-databases/compare/lancedb-vs-milvus",
-    "https://lancedb.com/lp/vs-milvus-zilliz",
     "https://builderai.tools/blog/vector-database-benchmarks-qdrant-milvus-weaviate-lancedb",
     "https://encore.dev/articles/best-vector-databases",
-    "https://www.firecrawl.dev/blog/best-vector-databases",
-    "https://dev.to/jangwook_kim/lancedb-review",
-    "https://sprytnyk.dev/posts/running-lancedb-in-production/",
     "https://markaicode.com/alternatives/milvus-alternatives/",
-    "https://langcopilot.com/posts/2025-10-14-best-vector-databases-milvus-vs-pinecone",
-    "https://thedataquarry.com/blog/vector-db-1/",
-    "https://appstackbuilder.com/tool-alternatives/lancedb",
-    "https://yage.ai/share/lancedb-selection-guide-en-20260327.html",
-    "https://aicoolies.com/comparisons/lancedb-vs-chromadb",
-    "https://docs.lancedb.com/faq/faq-oss",
-    "https://developer.volcengine.com/articles/7454505489758748691",
-    "https://www.cnblogs.com/deeplearningmachine/p/18136746",
-    "https://lqhl.me/blog/lancedb/",
-    "https://cloud.tencent.com/developer/article/2509327",
-    "https://adg.csdn.net/694cfd385b9f5f31781abda5.html",
-    "https://blog.csdn.net/oscar999/article/details/145622353",
-    "https://blog.csdn.net/inthat/article/details/144780760",
-    "https://zhuanlan.zhihu.com/p/692637675",
-    "https://zhuanlan.zhihu.com/p/648837403",
-    "https://www.zhihu.com/question/602365692"
+    "https://sprytnyk.dev/posts/running-lancedb-in-production/",
+    "https://blog.everpuredata.com/purely-technical/scale-lancedb-production-ai/",
+    "https://koushik-dutta.medium.com/beyond-parquet-lance-the-ml-native-data-format-03740f12eb86",
+    "https://lance.org/format/"
   ],
-  "h1": "Milvus vs LanceDB: an open-source vector database comparison",
-  "intro": "Milvus vs LanceDB is a comparison of two different kinds of software: both are Apache-2.0, but Milvus is a distributed vector database service with storage-compute separation, while LanceDB OSS is an embedded library that runs inside your application process over the Lance format. Milvus serves many clients, replicas and writers from one cluster; LanceDB gives one process a serverless vector database with fast local search and nothing to run. Choose Milvus when several services, writers or tenants share the data or it will grow toward billions of vectors; choose LanceDB for single-process, local-first and Lance-native work.",
+  "h1": "Milvus vs LanceDB: format, embedded library, or distributed database?",
+  "intro": "Milvus vs LanceDB is really a comparison of layers: Lance is an open columnar format, LanceDB is the embedded database built over it, and Milvus is a distributed vector database that can serve Lance datasets in place or store data itself. LanceDB OSS runs inside one application process; Milvus runs as a service with storage-compute separation, replicas and multi-writer ingest. Keep Lance as your source of truth either way; choose LanceDB when one process owns the data, and Milvus when many services, writers or tenants share it.",
   "primary_cta": {
     "label": "Start the Milvus Quickstart",
     "href": "https://milvus.io/docs/quickstart.md"
@@ -82,9 +63,9 @@
   },
   "proof": [
     "Apache-2.0, 40K+ GitHub stars",
-    "Scales to tens of billions of vectors",
-    "Storage and compute separated",
-    "Searches Lance datasets in place with external collections"
+    "Searches Lance datasets in place with external collections",
+    "Milvus Lite: pip install, one local file",
+    "Distributed: tens of billions of vectors"
   ],
   "logos": [
     "Salesforce",
@@ -103,7 +84,7 @@
   ],
   "diagram": {
     "type": "compare",
-    "caption": "Milvus is a service: stateless node types scale on shared object storage. LanceDB OSS is a library: the host process owns CPU, memory and storage.",
+    "caption": "Milvus is a service: stateless node types scale on shared object storage, and can index Lance datasets in place. LanceDB OSS is a library over Lance files: the host process owns CPU, memory and storage.",
     "left": {
       "title": "Milvus: storage-compute separation",
       "sub": "Stateless workers, each scaled on its own",
@@ -123,12 +104,12 @@
       ],
       "storage": {
         "title": "Shared object storage",
-        "sub": "S3 / MinIO / Azure / GCS, tiered loading"
+        "sub": "Object storage · Lance in place"
       },
       "verdict": "Add a node: it loads segments from storage. Tens of billions of vectors."
     },
     "right": {
-      "title": "LanceDB: embedded library",
+      "title": "LanceDB: embedded over Lance",
       "sub": "Runs inside your application process",
       "nodes": [
         {
@@ -137,271 +118,203 @@
         },
         {
           "title": "Lance table",
-          "sub": "Lance fragments"
+          "sub": "fragments · versions"
         },
         {
           "title": "Indexes",
-          "sub": "IVF_PQ · BM25 FTS"
+          "sub": "IVF · FTS · scalar"
         }
       ],
       "storage": {
         "title": "Local disk or object store",
-        "sub": "NVMe, EBS, EFS, S3; optimize() by hand"
+        "sub": "NVMe, EBS, EFS, S3; versioned Lance files"
       },
-      "verdict": "Scale is the host process. Enterprise adds query nodes, executors and indexers."
+      "verdict": "Scale is the host process. Enterprise adds query nodes, plan executors, indexers."
     }
   },
   "sections": [
     {
-      "id": "scalability",
-      "nav": "Scalability",
-      "h2": "Milvus vs LanceDB scalability: service or library, and how far does each grow?",
+      "id": "lance-vs-lancedb",
+      "nav": "Lance vs LanceDB",
+      "h2": "Lance vs LanceDB: what is the difference?",
       "paragraphs": [
-        "Milvus is built on storage-compute separation. Segments and the write-ahead log live in object storage; streaming nodes take writes, query nodes serve search with in-memory replicas for throughput and failover, and data nodes build indexes. Each node type scales on its own; Milvus Distributed is documented for tens of billions of vectors.",
-        "LanceDB OSS is an embedded library over Lance tables, using the serving application process for query resources and local disk or object storage for data. Capacity and concurrency depend on the index, storage and host resources. LanceDB Cloud and Enterprise are separate service deployments; their architecture should not be conflated with the OSS library."
+        "Lance is an open, Arrow-native lakehouse format for multimodal AI (Apache-2.0, lance-format/lance). It is three specs in one: a file format whose column pages are laid out for fast random access, a table format that manages fragments, manifests, deletions, schema evolution and ACID commits as immutable versions, and index formats that make vector, full-text and scalar indexes first-class, versioned table objects.",
+        "LanceDB is the database built on top of Lance. LanceDB OSS is an embedded retrieval library with Python, TypeScript and Rust SDKs that organizes Lance datasets into named tables and runs search inside your process; LanceDB Cloud and Enterprise are the company's hosted and BYOC services that add always-on query nodes, plan executors and indexers over the same tables. Lance format vs Parquet is a storage question; LanceDB vs Milvus is a serving question."
       ],
       "table": {
-        "caption": "Scalability, concurrent writes, replicas and multi-tenancy for billion-scale vector search, per each project's documentation",
+        "caption": "Lance format vs LanceDB: layer, contents, native indexes, readers and governance",
         "heads": [
-          "Capability",
-          "Milvus",
-          "LanceDB (OSS)"
+          "",
+          "Lance (format)",
+          "LanceDB (database)"
         ],
         "rows": [
           [
-            "Architecture",
-            "Distributed service: proxies, streaming, query and data nodes",
-            "Embedded library inside the application process; no server"
+            "What it is",
+            "Open columnar file, table and index formats on local disk or object storage",
+            "Embedded library (OSS) plus Cloud and Enterprise services built over Lance tables"
           ],
           [
-            "Where data lives",
-            "Object storage (S3, MinIO, Azure Blob, GCS), including the WAL",
-            "Lance tables on local NVMe, EBS, EFS or S3 / GCS / Azure Blob"
+            "What it holds",
+            "Fragments of column data, immutable manifests per version, deletion files, blobs for media",
+            "Named tables over Lance datasets, a catalog of namespaces, search and query APIs"
           ],
           [
-            "Documented scale",
-            "100 million to tens of billions of vectors (Distributed)",
-            "Evaluate the index, storage and host; assess Cloud/Enterprise separately"
+            "Native indexes",
+            "Vector (IVF and HNSW layouts), full-text, BTree, Bitmap, Label List, Bloom, N-gram, JSON",
+            "Builds and queries those indexes; hybrid search with rerankers in the host process"
           ],
           [
-            "Concurrent writers",
-            "Multiple clients write through proxies and the WAL, subject to cluster resources and limits",
-            "Supported; each add() commits a version, and writers retry commits a limited number of times"
+            "Who reads it",
+            "pylance, DuckDB, Spark, Ray, Trino, Polars, PyTorch loaders, Milvus external collections",
+            "Your application through the LanceDB SDK, or Enterprise query nodes"
           ],
           [
-            "Replicas and failover",
-            "In-memory replicas: more QPS, and requests move to another query node on failure",
-            "The host process; Enterprise plan executors run with 2+ replicas"
-          ],
-          [
-            "Adding capacity",
-            "Add a query node; it loads segments from object storage",
-            "Scale application serving resources or choose a service deployment"
-          ],
-          [
-            "Consistency",
-            "Strong, Bounded (default), Session or Eventually, per request",
-            "read_consistency_interval; by default no cross-process refresh check"
-          ],
-          [
-            "Multi-tenant vector database",
-            "Database, collection, partition, or partition key for millions of tenants",
-            "Namespaces that organize many Lance tables"
+            "Project",
+            "Apache-2.0, github.com/lance-format/lance",
+            "Apache-2.0 OSS, github.com/lancedb/lancedb; services from LanceDB Inc."
           ]
         ]
       }
     },
     {
-      "id": "performance",
-      "nav": "Performance",
-      "h2": "Milvus vs LanceDB performance: what does VectorDBBench show?",
+      "id": "milvus-on-lance",
+      "nav": "Milvus + Lance",
+      "h2": "Can Milvus use Lance as a storage format too?",
       "paragraphs": [
-        "These charts show the verified Milvus and Zilliz Cloud VectorDBBench configurations. They do not include a same-condition result for the other product, so they cannot establish a speed advantage. Benchmark with matching data, filters, recall targets and hardware before comparing."
+        "Yes. A Milvus external collection (Milvus 3.0+) points external_source at a Lance dataset directory with format lance-table, maps each field to a source column with external_field, and then indexes and serves the data in place. There is no import and no second copy: the rows stay in Lance, read-only, and Milvus stores only the schema mapping, manifests, indexes and caches.",
+        "Your Lance datasets stay the source of truth; Milvus adds the serving layer. Spark, Ray or pylance keep writing fragments, and the same files remain readable by LanceDB, DuckDB and training jobs."
       ],
-      "bench": [
-        {
-          "title": "Vector search throughput (QPS, higher is better)",
-          "caption": "Cohere 1M, 768 dimensions",
-          "unit": "QPS",
-          "rows": [
-            {
-              "system": "Zilliz Cloud",
-              "label": "ZillizCloud-8cu-perf",
-              "value": 13316.23,
-              "detail": "P99 2 ms · recall 0.9383",
-              "highlight": true
-            },
-            {
-              "system": "Milvus",
-              "label": "Milvus-16c64g-sq4u-fp16-force_merge",
-              "value": 9575.69,
-              "detail": "P99 2.3 ms · recall 0.9189"
-            }
-          ],
-          "source": "Source: VectorDBBench, verified Milvus and Zilliz Cloud configurations only; these rows do not establish a competitor performance comparison.",
-          "sourceUrl": "https://github.com/zilliztech/VectorDBBench/blob/main/vectordb_bench/results/leaderboard_v2.json"
-        },
-        {
-          "title": "Filtered search throughput (QPS, filter keeps 1% of data)",
-          "caption": "Cohere 1M, 768 dimensions, filter ratio 0.99",
-          "unit": "QPS",
-          "rows": [
-            {
-              "system": "Zilliz Cloud",
-              "label": "ZillizCloud-8cu-perf-partition_key",
-              "value": 10020.53,
-              "detail": "P99 2.6 ms · recall 0.9788",
-              "highlight": true
-            },
-            {
-              "system": "Milvus",
-              "label": "Milvus-16c64g-sq8-partition_key",
-              "value": 11280.08,
-              "detail": "P99 1.6 ms · recall 0.9507"
-            }
-          ],
-          "source": "Source: VectorDBBench, verified Milvus and Zilliz Cloud configurations only; these rows do not establish a competitor performance comparison.",
-          "cta": {
-            "text": "Zilliz Cloud is fully managed Milvus: the same engine and top-tier throughput, with no clusters to size, upgrade or scale.",
-            "label": "Try Zilliz Cloud free",
-            "href": "https://cloud.zilliz.com/signup"
-          },
-          "sourceUrl": "https://github.com/zilliztech/VectorDBBench/blob/main/vectordb_bench/results/leaderboard_v2.json"
-        }
+      "bullets": [
+        "Enable Storage V3 (common.storage.useLoonFFI: true), create the schema with external_source and external_spec, then refresh, index, load and search.",
+        "Milvus builds its own HNSW, IVF or DiskANN index in Milvus storage and never writes into the dataset, so Lance's native indexes and versions are untouched.",
+        "Refresh is explicit, asynchronous and incremental: new fragments are picked up, unchanged data keeps its segments and indexes, and queries serve the previous state until it completes.",
+        "External fields can feed Functions, so BM25 sparse vectors or text embeddings are generated in Milvus without writing a column back to the table.",
+        "The same mechanism reads Apache Iceberg tables (format iceberg-table with a snapshot_id), Parquet and Vortex; see vector search on the data lake."
       ]
     },
     {
-      "id": "features",
-      "nav": "Features",
-      "h2": "LanceDB vs Milvus features: a vector database comparison table",
+      "id": "distributed",
+      "nav": "Distributed",
+      "h2": "Milvus and LanceDB: from embedded retrieval to distributed serving",
       "paragraphs": [
-        "Both cover vector search, BM25 full-text search, hybrid search and filtering. Milvus has more index families, server-side hybrid ranking and automatic indexing of new data; LanceDB keeps everything in one versioned Lance table. The two also meet: if your embeddings already sit in Lance datasets, Milvus external collections (Milvus 3.0+) index them in place and serve search without copying a row (see vector search on the data lake)."
+        "For the embedded case, Milvus Lite is a pip install (pymilvus) that runs in-process and keeps data in a local file: MilvusClient(\"./milvus_demo.db\"). It targets notebooks, laptops, edge devices and prototypes, and the same MilvusClient API moves unchanged to Standalone, Distributed and Zilliz Cloud. That is the LanceDB OSS shape: zero services, one process, local storage.",
+        "The core difference is what happens past one process. Milvus is a distributed system with storage-compute separation: stateless proxies, streaming nodes for writes and the WAL, query nodes for search, and data nodes for compaction and index build, all over shared object storage. Multiple clients write at once, replicas raise throughput and absorb failures, a query fans out across query nodes, and tiered storage keeps hot data in memory and local disk while the rest stays in object storage. LanceDB OSS is bound to its host process; its docs put OSS at millions of vectors on a single node and recommend LanceDB Enterprise, which adds its own query nodes, plan executors, indexers and a control plane, for hundreds of millions and beyond."
       ],
       "table": {
-        "caption": "Feature comparison: index types, quantization, full-text and hybrid search, Lance format and versioning, multimodal data, lakehouse interop, deployment and SDKs",
+        "caption": "LanceDB scalability vs Milvus: embedded process, LanceDB Enterprise services and Milvus Distributed, per each project's documentation",
         "heads": [
-          "Feature",
-          "Milvus",
-          "LanceDB"
+          "",
+          "Milvus (Lite to Distributed)",
+          "LanceDB OSS",
+          "LanceDB Enterprise"
         ],
         "rows": [
           [
-            "Dense vector index types",
-            "HNSW, IVF (FLAT, SQ8, PQ, RaBitQ), SCANN, DiskANN, GPU (CAGRA, IVF)",
-            "IVF_PQ, IVF_RQ, IVF_HNSW_SQ, IVF_HNSW_PQ, IVF_HNSW_FLAT; brute-force scan below about 100K vectors"
+            "Runs as",
+            "Lite: in-process; Distributed: stateless proxy, streaming, query and data nodes",
+            "Library inside your process",
+            "Query nodes, plan executors, indexers, control plane"
           ],
           [
-            "Quantization",
-            "SQ8, PQ, PRQ, RaBitQ; HNSW_SQ, HNSW_PQ, HNSW_PRQ",
-            "PQ, SQ, RaBitQ (1 to 8 bits per dimension)"
+            "Where data lives",
+            "Lite: local file; Distributed: object storage, WAL included (Woodpecker)",
+            "Lance tables on local NVMe, EBS, EFS or S3 / GCS / Azure",
+            "Lance tables and index artifacts in object storage"
           ],
           [
-            "GPU",
-            "GPU index build and search (CAGRA, GPU IVF)",
-            "GPU index build: manual IVF_PQ via PyTorch in OSS; automatic in Enterprise"
+            "Concurrent writers",
+            "Multiple clients through proxies and the streaming WAL",
+            "Each add() commits a version; commit retries are bounded",
+            "Writes validated and committed by query nodes"
           ],
           [
-            "BM25 and full-text search",
-            "Built-in BM25 function turns raw text into sparse vectors on the server",
-            "Lance-native BM25 FTS index; tokenizers include jieba, lindera and ICU"
+            "Replicas and query fan-out",
+            "In-memory replicas for QPS and failover; one query spans many query nodes",
+            "The host process",
+            "Search traffic spread across multiple nodes"
           ],
           [
-            "Hybrid search",
-            "Multiple vector fields per query, fused with RRF or weighted ranker on the server",
-            "Vector plus FTS query with a reranker: RRF by default, Cohere, cross-encoder, ColBERT"
+            "Hot and cold data",
+            "Tiered storage: lazy load, partial load, LRU eviction across memory, disk, object storage",
+            "Host memory and disk",
+            "Distributed NVMe cache"
           ],
           [
-            "Multi-vector",
-            "Up to 10 vector fields per collection; StructArray EmbeddingList fields searched with MAX_SIM for ColBERT and ColPali",
-            "Multivector columns scored with MaxSim for ColBERT-style models"
+            "Documented scale",
+            "Lite: a few million; Standalone: 100 million; Distributed: tens of billions",
+            "Millions of vectors on a single node",
+            "Hundreds of millions to billions of rows"
           ],
           [
-            "Filtering and scalar indexes",
-            "Filter expressions, JSON field with JSON path index; INVERTED, BITMAP, STL_SORT",
-            "SQL WHERE via DataFusion, pre-filtering by default; BTREE, BITMAP, LABEL_LIST"
-          ],
-          [
-            "Index freshness",
-            "Data nodes index sealed segments automatically; new data visibility follows the selected consistency level",
-            "OSS: call optimize() to compact and index new rows, which are brute-forced until then; Enterprise indexes in the background"
-          ],
-          [
-            "Lance format and versioning",
-            "External collections search Lance datasets in place, zero-copy",
-            "Native storage format; every write is a new version with time travel, tags and branches"
-          ],
-          [
-            "Multimodal data",
-            "Vectors with scalar, JSON, array, text and StructArray fields; raw media stays in your object store",
-            "Images, audio, video, text and embeddings in one Lance table"
-          ],
-          [
-            "Data-frame and lakehouse interop",
-            "Bulk import from Parquet, JSON or CSV; external collections over Lance, Iceberg, Parquet and Vortex",
-            "pandas, PyArrow, Polars, DuckDB, Pydantic and dlt; PyTorch loaders on the same table"
-          ],
-          [
-            "Deployment options",
-            "Milvus Lite, Standalone, Distributed, Zilliz Cloud",
-            "Embedded in your binary, container or serverless function; LanceDB Cloud and Enterprise (managed or BYOC)"
-          ],
-          [
-            "RAG framework integrations",
-            "LangChain, LlamaIndex, Haystack, Dify, DSPy, n8n and more",
-            "LangChain, LlamaIndex and Hugging Face"
-          ],
-          [
-            "License and language",
-            "Apache-2.0; Go and C++",
-            "Apache-2.0; Rust"
-          ],
-          [
-            "SDK languages",
-            "Python, Java, Go, Node.js, C#, C++, Rust, RESTful",
-            "Python, TypeScript/JavaScript, Rust, Java; REST API for Cloud and Enterprise"
-          ],
-          [
-            "Community and governance",
-            "LF AI & Data graduated project; 40K+ GitHub stars",
-            "LanceDB Inc.; 10K+ GitHub stars"
+            "Deployment",
+            "pip, Docker, Helm or Milvus Operator; Zilliz Cloud managed",
+            "pip / npm / cargo",
+            "Managed or BYOC"
           ]
         ]
-      }
+      },
+      "note": "Documented scales are deployment guidance, not hard product limits; measure with your index, hardware and workload."
     },
     {
-      "id": "operations",
-      "nav": "Cost and ops",
-      "h2": "Milvus vs LanceDB cost and operations: what does each take to run?",
+      "id": "capabilities",
+      "nav": "Capabilities",
+      "h2": "LanceDB vs Milvus features: what each does that the other does not",
       "paragraphs": [
-        "LanceDB vs Milvus cost starts with what you run. LanceDB OSS is zero-ops: pip install, then a directory or bucket. Milvus Lite is also a pip install and Milvus Standalone one Docker image, so Kubernetes only enters with Milvus Distributed. After that, cost is RAM on whichever process serves the index."
+        "LanceDB's edge is the data layer: because the table is Lance, the same files flow through Arrow, pandas, Polars, DuckDB and PyTorch, every write is a time-travelable version, and images or audio sit next to their embeddings as blobs. Milvus's edge is the serving layer: server-side hybrid search with BM25, fused by RRF, weighted, decay or model rankers and composed with Function Chain; partition-key multi-tenancy for millions of tenants; RBAC; a broad index catalog including GPU, DiskANN and RaBitQ; streaming ingest that is searchable on write under a chosen consistency level; and external collections over Lance and Iceberg."
       ],
       "table": {
-        "caption": "Milvus vs LanceDB cost and operations: Kubernetes, services, cost drivers, versioning and backup",
+        "caption": "Vector database comparison: differentiated capabilities of LanceDB and Milvus, from each project's documentation",
         "heads": [
-          "Topic",
-          "Milvus",
-          "LanceDB (OSS)"
+          "Capability",
+          "LanceDB",
+          "Milvus"
         ],
         "rows": [
           [
-            "Production without Kubernetes",
-            "Milvus Standalone: a single Docker image with the Woodpecker WAL embedded, up to 100 million vectors",
-            "The library inside your service; LanceDB Enterprise for a cluster"
+            "Arrow, pandas, Polars, DuckDB interop",
+            "Tables are Arrow-native Lance; read and write with pandas, PyArrow, Polars, DuckDB, dlt",
+            "Bulk import from Parquet, JSON, CSV; lake tables served via external collections"
           ],
           [
-            "Services you operate",
-            "Distributed: etcd and object storage (MinIO or S3) via Helm or the Milvus Operator; Woodpecker replaces Kafka or Pulsar",
-            "None: a Lance directory on local NVMe, EBS, EFS or an S3, GCS or Azure bucket"
+            "Zero-service local mode",
+            "OSS library in Python, TypeScript or Rust; nothing to run",
+            "Milvus Lite: pip install, local file, FLAT index, same API as the cluster"
           ],
           [
-            "What drives cost",
-            "RAM on query nodes; quantization, DiskANN and tiered storage trade it for disk and object storage",
-            "RAM and CPU of the host; IVF_PQ keeps indexes on disk, and its docs favour local NVMe over object storage for low latency"
+            "Dataset versioning and time travel",
+            "Every write is a Lance version; time travel, tags and branches",
+            "Snapshots and milvus-backup; lake versions stay with the lake"
           ],
           [
-            "Versioning and backup",
-            "milvus-backup to S3, GCS, Azure or local disk while the cluster stays online; RBAC and TLS",
-            "Every write is a new Lance version: time travel, tags, branches; optimize() cleans old versions"
+            "Multimodal blobs in the table",
+            "Images, video, audio and embeddings in one Lance table with a blob API",
+            "Vectors with scalar, JSON, array, text and StructArray fields; media stays in your object store or lake"
+          ],
+          [
+            "Hybrid search and reranking",
+            "Vector plus FTS with a reranker in the host process (RRF, Cohere, cross-encoder, ColBERT)",
+            "Built-in BM25 and multi-vector fusion on the server: RRF, weighted, decay and model rankers, composable with Function Chain (Milvus 3.0+)"
+          ],
+          [
+            "Multi-tenancy and access control",
+            "Namespaces organize many tables",
+            "Database, collection, partition or partition key for millions of tenants; RBAC with users, roles and privileges; shared collections require a tenant filter on every request"
+          ],
+          [
+            "Index breadth",
+            "IVF_PQ, IVF_RQ, IVF_HNSW_SQ, IVF_HNSW_PQ, IVF_HNSW_FLAT; FTS; BTREE, BITMAP, LABEL_LIST",
+            "HNSW, HNSW_SQ/PQ/PRQ, IVF_FLAT/SQ8/PQ/RABITQ, DISKANN, SCANN, GPU_CAGRA, GPU_IVF; sparse, binary, MinHash; INVERTED, BITMAP, JSON path"
+          ],
+          [
+            "Streaming ingest and consistency",
+            "Writes commit versions; readers refresh per read_consistency_interval; OSS calls optimize() to index new rows",
+            "Writes land in the streaming WAL and become searchable under the selected consistency level; Strong, Bounded (default), Session or Eventually per request"
+          ],
+          [
+            "Lake formats served",
+            "Lance tables",
+            "External collections over Lance, Apache Iceberg, Parquet and Vortex, plus native collections"
           ]
         ]
       }
@@ -411,14 +324,14 @@
       "nav": "When LanceDB fits",
       "h2": "When is LanceDB the better choice?",
       "paragraphs": [
-        "What is LanceDB and when should I use it? LanceDB is a well-made embedded retrieval library, and for a single process it removes a whole tier of infrastructure. Teams looking for LanceDB alternatives usually need several services, writers or tenants on the same data; if one application owns the table, LanceDB is a sound choice."
+        "What is LanceDB good at? Removing a tier. For a single process that owns its data, LanceDB OSS gives you search, full-text and versioned storage from a library and a directory. If that process later needs to share the data with other services, the Lance files are already the kind of thing Milvus serves."
       ],
       "bullets": [
         "A single-process app, notebook, CLI or edge function that wants search with no server.",
         "Local-first development where the dataset fits one machine and ships with the code.",
         "Lance-native pipelines: PyTorch, Ray or Spark jobs that train on and query the same versioned table.",
-        "Small teams without Kubernetes who prefer a library and a bucket over a cluster.",
-        "Multimodal datasets where images, audio and embeddings belong in one table."
+        "Multimodal datasets where images, audio and embeddings belong in one table with time travel.",
+        "Teams that want Arrow, DuckDB and Polars on the same files as their vector search."
       ]
     },
     {
@@ -456,36 +369,28 @@
   ],
   "faqs": [
     [
-      "What is LanceDB and when should I use it?",
-      "LanceDB OSS calls itself an open-source embedded retrieval library for multimodal AI: it runs inside your Python, TypeScript or Rust process and reads Lance tables from disk or object storage. Use it when one application owns the data; use Milvus when many clients, writers or tenants share it."
-    ],
-    [
       "What is the difference between Lance and LanceDB?",
-      "Lance is the Apache-2.0 columnar format; Lance format vs Parquet comes down to versioning and random row access for embeddings and media. LanceDB is the library and service that indexes and queries Lance tables. Milvus reads Lance datasets too, through external collections."
+      "Lance is the open columnar format: files, versioned tables of fragments, and native vector, full-text and scalar indexes, all Arrow-native. LanceDB is the database built on it: an embedded OSS library that queries Lance tables in-process, plus LanceDB Cloud and Enterprise services. Milvus reads Lance too."
     ],
     [
-      "How large of a dataset can LanceDB handle?",
-      "LanceDB OSS is an embedded library over Lance tables, using the serving application process for query resources and local disk or object storage for data. Capacity and concurrency depend on the index, storage and host resources. LanceDB Cloud and Enterprise are separate service deployments; their architecture should not be conflated with the OSS library."
+      "Can Milvus read Lance files?",
+      "Yes. A Milvus 3.0+ external collection points external_source at the Lance dataset directory with format lance-table, maps columns with external_field, then refreshes, indexes and serves it. Rows stay in Lance, read-only, with no second copy; Storage V3 (common.storage.useLoonFFI) must be enabled."
     ],
     [
-      "Does LanceDB support concurrent operations?",
-      "Reads scale with your processes. Concurrent writes work with limits: every add() commits a new table version, and the FAQ notes that too many concurrent writers can lead to failing writes because commit retries are bounded. Milvus accepts writes from any number of clients through its streaming WAL."
+      "Is Milvus Lite like LanceDB?",
+      "In shape, yes: Milvus Lite is pip-installed, runs in your Python process and stores data in a local file, like LanceDB OSS. It is meant for prototypes and edge use with a FLAT index; the same MilvusClient code then runs on Milvus Standalone, Distributed or Zilliz Cloud."
     ],
     [
-      "Which is faster, Milvus or LanceDB?",
-      "These charts show the verified Milvus and Zilliz Cloud VectorDBBench configurations. They do not include a same-condition result for the other product, so they cannot establish a speed advantage. Benchmark with matching data, filters, recall targets and hardware before comparing."
+      "Is LanceDB production-ready, and how far does it scale?",
+      "LanceDB's docs say OSS comfortably handles millions of vectors on a single node, with bounded commit retries under many concurrent writers, and recommend LanceDB Enterprise for hundreds of millions and beyond. Milvus Distributed is documented for tens of billions of vectors with replicas and multi-writer ingest."
     ],
     [
-      "Can Milvus search Lance data without importing it?",
-      "Yes. Milvus 3.0+ external collections point at a Lance dataset directory with format lance-table, map columns to fields, then refresh, index and search. Rows stay in Lance, read-only, with no second copy."
-    ],
-    [
-      "Do I need Kubernetes to run Milvus in production?",
-      "No. Milvus Standalone packs every component into a single Docker image with the Woodpecker WAL embedded and is documented up to 100 million vectors. Kubernetes, via Helm or the Milvus Operator, is for Milvus Distributed."
+      "Can LanceDB and Milvus share the same Lance data?",
+      "Yes. Milvus never writes into the dataset: it keeps its own indexes in Milvus storage, so LanceDB, DuckDB, Spark and training jobs keep reading and writing the same Lance files while Milvus serves online search over them."
     ],
     [
       "What is the difference between Milvus and Zilliz Cloud?",
-      "Zilliz Cloud is fully managed Milvus from the team that created it. It uses the same client APIs, so code written against Milvus Lite or Standalone moves to Zilliz Cloud without a rewrite."
+      "Zilliz Cloud is fully managed Milvus from the team that created it, with the same client APIs, so code written against Milvus Lite or Standalone moves there without a rewrite. It also offers external collections over Lance, Iceberg, Parquet and Vortex.External collections are currently in Public Preview and supported only in on-demand compute databases."
     ]
   ],
   "stories": [
@@ -506,14 +411,14 @@
     }
   ],
   "aiq": [
+    "how-can-milvus-search-lance-data",
+    "lance-iceberg-parquet-for-vector-data-lakes",
+    "when-to-use-milvus-external-collections",
     "how-does-a-vector-database-handle-scaling-up-to-millions-or-billions-of-vectors-and-what-architectural-features-enable-this-scalability",
     "how-do-distributed-vector-databases-handle-sharding-and-replication",
     "how-do-you-choose-the-right-index-type-for-your-workload",
-    "how-can-milvus-search-lance-data",
-    "lance-iceberg-parquet-for-vector-data-lakes",
     "what-is-hybrid-search-and-when-should-i-use-it",
-    "what-is-the-role-of-multitenancy-in-scalability-considerations-for-vector-databases-and-how-might-resource-isolation-be-handled-when-multiple-applications-share-the-same-infrastructure",
-    "what-tools-help-benchmark-vector-search-performance"
+    "what-is-the-role-of-multitenancy-in-scalability-considerations-for-vector-databases-and-how-might-resource-isolation-be-handled-when-multiple-applications-share-the-same-infrastructure"
   ],
   "related": [
     "search-on-the-lake",
@@ -524,47 +429,59 @@
   ],
   "managed": {
     "h2": "Prefer not to run a cluster?",
-    "body": "Zilliz Cloud is fully managed Milvus from the team that created it, with the same MilvusClient API you use locally. Start on open-source Milvus and move to the managed service without rewriting your application."
+    "body": "Zilliz Cloud is fully managed Milvus from the team that created it, with the same MilvusClient API you use locally and external collections over Lance, Iceberg, Parquet and Vortex. Start on open-source Milvus and move without rewriting your application.External collections are currently in Public Preview and supported only in on-demand compute databases; see the linked limits."
   },
   "sources": [
     "https://milvus.io",
     "https://github.com/milvus-io/milvus",
     "https://milvus.io/docs/architecture_overview.md",
     "https://milvus.io/docs/install-overview.md",
+    "https://milvus.io/docs/milvus_lite.md",
     "https://milvus.io/docs/replica.md",
     "https://milvus.io/docs/consistency.md",
-    "https://milvus.io/docs/scaleout.md",
+    "https://milvus.io/docs/tiered-storage-overview.md",
     "https://milvus.io/docs/index-explained.md",
     "https://milvus.io/docs/full-text-search.md",
     "https://milvus.io/docs/multi-vector-search.md",
-    "https://milvus.io/docs/json-indexing.md",
+    "https://milvus.io/docs/reranking.md",
+    "https://milvus.io/docs/decay-ranker-overview.md",
+    "https://milvus.io/docs/model-ranker-overview.md",
+    "https://milvus.io/docs/release_notes.md",
+    "https://milvus.io/api-reference/restful/v3.0.x/v2/Vector%20(v2)/Search.md",
     "https://milvus.io/docs/multi_tenancy.md",
+    "https://milvus.io/docs/rbac.md",
+    "https://milvus.io/docs/json-indexing.md",
+    "https://milvus.io/docs/woodpecker_architecture.md",
     "https://milvus.io/docs/create-an-external-collection.md",
-    "https://github.com/lancedb/lancedb",
+    "https://milvus.io/docs/storage-v3.md",
+    "https://milvus.io/docs/snapshots.md",
+    "https://milvus.io/docs/prepare-source-data.md",
+    "https://milvus.io/docs/array-of-structs.md",
+    "https://github.com/zilliztech/milvus-backup",
+    "https://lance.org/format/",
+    "https://lance.org/format/index/",
+    "https://github.com/lance-format/lance",
+    "https://docs.lancedb.com/lance",
     "https://docs.lancedb.com/",
+    "https://github.com/lancedb/lancedb",
     "https://docs.lancedb.com/faq/faq-oss",
-    "https://docs.lancedb.com/faq/faq-enterprise",
     "https://docs.lancedb.com/enterprise",
     "https://docs.lancedb.com/enterprise/architecture",
-    "https://docs.lancedb.com/enterprise/benchmarks",
     "https://docs.lancedb.com/storage",
     "https://docs.lancedb.com/tables/consistency",
     "https://docs.lancedb.com/tables/versioning",
+    "https://docs.lancedb.com/tables/multimodal",
     "https://docs.lancedb.com/indexing/vector-index",
-    "https://docs.lancedb.com/indexing/quantization",
-    "https://docs.lancedb.com/indexing/gpu-indexing",
     "https://docs.lancedb.com/indexing/fts-index",
     "https://docs.lancedb.com/indexing/scalar-index",
     "https://docs.lancedb.com/indexing/reindexing",
     "https://docs.lancedb.com/search/hybrid-search",
-    "https://docs.lancedb.com/search/multivector-search",
-    "https://docs.lancedb.com/search/filtering",
     "https://docs.lancedb.com/namespaces",
-    "https://docs.lancedb.com/performance",
-    "https://zilliz.com/vdbbench-leaderboard",
-    "https://github.com/zilliztech/VectorDBBench",
-    "https://github.com/zilliztech/VectorDBBench/blob/main/vectordb_bench/results/leaderboard_v2.json",
-    "https://github.com/zilliztech/VectorDBBench/tree/main/vectordb_bench/backend/clients/lancedb",
+    "https://docs.lancedb.com/integrations/data/duckdb",
+    "https://docs.lancedb.com/integrations/data/polars_arrow",
+    "https://docs.lancedb.com/integrations/data/pandas_and_pyarrow",
+    "https://docs.lancedb.com/training/torch",
+    "https://docs.zilliz.com/docs/external-collection-limits",
     "https://zilliz.com/customers/filevine",
     "https://zilliz.com/customers/openevidence",
     "https://zilliz.com/customers/exa",
@@ -572,39 +489,18 @@
     "https://zilliz.com/customers/plaud",
     "https://zilliz.com/customers/read-ai",
     "https://zilliz.com/customers/meituan",
-    "https://milvus.io/docs/quickstart.md",
-    "https://milvus.io/docs/rbac.md",
-    "https://milvus.io/docs/integrations_overview.md",
-    "https://milvus.io/docs/woodpecker_architecture.md",
-    "https://milvus.io/docs/install_cluster-helm.md",
-    "https://milvus.io/docs/install_cluster-milvusoperator.md",
-    "https://milvus.io/docs/prepare-source-data.md",
-    "https://milvus.io/docs/array-of-structs.md",
-    "https://milvus.io/docs/search-with-embedding-lists.md",
-    "https://github.com/zilliztech/milvus-backup",
-    "https://lfaidata.foundation/projects/",
-    "https://github.com/lancedb/lance",
-    "https://docs.lancedb.com/tables/multimodal",
-    "https://docs.lancedb.com/integrations/ai/langchain",
-    "https://docs.lancedb.com/integrations/ai/llamaIndex",
-    "https://docs.lancedb.com/integrations/data/duckdb",
-    "https://docs.lancedb.com/integrations/data/polars_arrow",
-    "https://docs.lancedb.com/integrations/data/pandas_and_pyarrow",
-    "https://docs.lancedb.com/training/torch"
+    "https://milvus.io/docs/quickstart.md"
   ],
   "notes": [
-    "SERP pass 2026-10-21: studied 17 EN / 10 ZH results (14 EN + 5 ZH fetched; medium 403, zhihu 403, CSDN 521). Gaps closed: cost drivers and operations (new 'operations' section: footprint, production without Kubernetes, services you operate, what drives cost, versioning and backup), multimodal data row, data-frame and lakehouse interop row (pandas/Arrow/Polars/DuckDB vs bulk import and external collections), RAG framework integrations row, community row, StructArray multi-vector wording, FAQs rebuilt around the exact PAA wording ('What is LanceDB and when should I use it?', 'What is the difference between Lance and LanceDB?', 'How large of a dataset can LanceDB handle?', 'Does LanceDB support concurrent operations?', 'Do I need Kubernetes to run Milvus in production?'). Not added: pricing numbers and '100x cost savings' claims (SPEC v3 forbids pricing/derived numbers), API-stability complaints (negative, version-specific), code snippet (length cap). Dropped keywords: 'lancedb limitations', 'open source vector database comparison' (no SERP evidence); added: 'what is lancedb', 'lancedb multimodal', 'lance format vs parquet', 'lancedb versioning', 'lancedb vs milvus cost', 'milvus without kubernetes'. Competitor numbers (medium '~15 min vs ~25 min insertion', lancedb.com '20 PB largest table, 20K+ QPS', sprytnyk '1.6 TB for 700M vectors') were not reused. No zilliz.com or milvus.io page appeared in any of the nine result sets; #1 is a thin PeerSpot aggregator.",
-    "Facts verified 2026-10-21 for the new rows: lancedb/lancedb on GitHub shows 11.7k stars (page says 10K+), Apache-2.0, Rust, description 'Developer-friendly OSS embedded retrieval library for multimodal AI'; lancedb/lance README: 'Open Lakehouse Format for Multimodal AI', 'Zero-copy versioning: Automatic versioning with ACID transactions, time travel, tags, and branches', 'Store images, videos, audio, text, and embeddings in a single unified format' (its '100x faster than Parquet' claim is a vendor number and is not reused); docs.lancedb.com llms.txt lists integrations/ai/langchain, llamaIndex, huggingface, integrations/data/duckdb, polars_arrow, pandas_and_pyarrow, pydantic, dlt, training/torch, tables/multimodal, tables/versioning. Milvus: install-overview (Lite 'up to a few million vectors'; Standalone 'a single Docker image', up to 100 million, 'runs Woodpecker (embedded) as its message queue'; default dependencies 'Woodpecker, MinIO, and etcd'); woodpecker_architecture.md ('In Milvus 2.6, Woodpecker replaces Kafka and Pulsar'); rbac.md; milvus-backup README (MinIO, S3, GCS, Azure Blob, local disk, 'while the Milvus cluster remains available'); integrations_overview (LlamaIndex, LangChain, Haystack, Dify, DSPy, n8n); prepare-source-data.md (bulk import from JSON, Parquet, CSV); array-of-structs.md and search-with-embedding-lists.md (StructArray EmbeddingList with MAX_SIM_* for ColBERT/ColPali; blog 'Milvus 3.0 StructArray'); lfaidata.foundation/projects lists Milvus under GRADUATED.",
-    "Performance: VectorDBBench repo (local clone at 2026-05-29, origin main) has vectordb_bench/backend/clients/lancedb/ (index types IVFPQ, HNSW, AUTOINDEX, NONE) but no vectordb_bench/results/LanceDB directory and no LanceDB row in leaderboard.json / leaderboard_v2.json, so the charts show Milvus and Zilliz Cloud only, per the brief. The one LanceDB number in prose is LanceDB's own Enterprise benchmark page (dbpedia-entities-openai-1M, warmed cache, ~25 ms P50) and is explicitly marked not comparable; remove it if legal prefers no vendor-reported figures.",
-    "LanceDB facts verified 2026-10-21 on docs.lancedb.com (markdown via /llms.txt) and github.com/lancedb/lancedb: Apache-2.0; 'open-source embedded retrieval library' with Python, TypeScript and Rust SDKs (GitHub repo also has a java/ directory and a REST API for Cloud/Enterprise); OSS 'directly embedded into your service. The process owns all CPU, memory, and storage, so scale is limited'; FAQ: 'LanceDB OSS can comfortably handle millions of vectors on a single node', 'hundreds of millions of vectors ... we recommend LanceDB Enterprise', 'Enterprise customers regularly operate on billions of rows', Enterprise page '100B+ row scale'; FAQ: 'too many concurrent writers can lead to failing writes as there is a limited number of times a writer retries a commit'; performance page: each add() commits a new version and fragment; storage page: local NVMe, EBS, EFS, S3/GCS/Azure Blob, S3-compatible (MinIO), 'LanceDB separates storage and compute and writes immutable fragments', S3 concurrent writers need no external coordinator; consistency page: read_consistency_interval unset by default = 'no automatic cross-process refresh checks'; Enterprise FAQ: plan executors 'typically deployed with 2+ replicas', strong consistency by default; Enterprise: BYOC or managed, SOC 2 Type II / HIPAA, 'Distributed search: Coming soon' (not used in copy).",
-    "LanceDB index facts: vector-index page table lists IVF_RQ, IVF_PQ, IVF_HNSW_SQ, IVF_HNSW_FLAT and the IVF+HNSW note adds IVF_HNSW_PQ; 'HNSW is not exposed as a top-level vector index'; performance page: default brute-force scan 'works fine below ~100K vectors'; quantization page: PQ, RaBitQ (IVF_RQ, num_bits 1/2/4/8), SQ; GPU page: OSS manual IVF_PQ build with PyTorch (Python), automatic GPU indexing Enterprise-only; FTS page: 'The current FTS implementation is Lance-native. Legacy Tantivy-only options, including use_tantivy, are no longer accepted' -- so the owner's 'FTS via tantivy' wording was NOT used; tokenizers simple/whitespace/raw/ngram/icu/jieba/lindera; scalar: BTREE, BITMAP, LABEL_LIST; filtering: SQL via DataFusion, pre-filtering default; hybrid: vector + FTS with reranker, RRF default, Cohere/CrossEncoder/ColBERT/Jina integrations; multivector MaxSim; reindexing: OSS optimize() does compaction, cleanup (7-day retention) and index update, unindexed rows searched by brute force; Enterprise background indexing.",
-    "LanceDB multi-tenancy: no tenant-specific doc; namespaces page describes a catalog-level hierarchy of namespaces and tables, so the table says 'Namespaces that organize many Lance tables'. 'LanceDB Cloud' appears on the GitHub README ('Cloud and Enterprise'); docs.lancedb.com currently documents Enterprise (managed or BYOC) only, so the copy says 'LanceDB Cloud and Enterprise (managed or BYOC)'. Sparse vectors: not documented for LanceDB, so no sparse row.",
-    "Milvus facts fetched 2026-10-21: install-overview (Lite = Python library; Standalone up to 100M vectors; Distributed 100M to tens of billions); replica.md (in-memory replicas raise QPS and let requests move to another query node on failure); consistency.md (Strong, Bounded default, Session, Eventually); multi_tenancy.md (64 databases, 65,536 collections, 1,024 partitions, partition key = millions of tenants). Index, BM25, hybrid, JSON and SDK rows reuse the sourced wording from the Qdrant page. 'Data nodes index sealed segments automatically; new data visibility follows the selected consistency level' is from architecture_overview / scaleout; growing segments are searched by brute force or interim index, which the copy does not detail.",
-    "External collection tie-in kept consistent with content/milvus/search-on-the-lake.json: Milvus 3.0+, format lance-table, map columns via external_field, refresh then index/search, rows stay read-only in Lance, zero-copy. Linked via related + one sentence in the features paragraph; the FAQ 'Can Milvus search Lance data without importing it?' mirrors that page's FAQ.",
-    "Customer facts and stories reused verbatim from the Qdrant page (fetched 2026-10-21 from zilliz.com/customers). Meituan is not on the milvus.io logo wall, so it appears only as a story.",
-    "Wanted, unverified: LanceDB per-process memory guidance; LanceDB Cloud as a distinct serverless tier (docs now describe Enterprise managed/BYOC); Lance commit-conflict details beyond the FAQ sentence; Milvus growing-segment interim index behaviour (not claimed).",
-    "Remove stale or unlike-for-like competitor benchmark numbers from prose and FAQs.",
-    "Avoid unsupported LanceDB OSS capacity ceiling and unbounded Milvus writer claims."
+    "Rewrite 2026-10-21 per owner: performance section and VectorDBBench charts removed; page re-centred on Lance vs LanceDB, Milvus external collections over Lance, Milvus Lite vs embedded LanceDB, distributed compute, and a differentiated-capabilities table. Section ids changed (lance-vs-lancedb, milvus-on-lance, distributed, capabilities, lancedb-fit, adopters); check any inbound anchors.",
+    "Lance facts verified 2026-10-21 on lance.org/format and lance.org/format/index: 'The file format stores column data in large pages optimized for random access and avoids row groups'; 'The table format manages fragments, manifests, deletions, schema evolution, and ACID commits'; 'Indices are first-class table objects... discovered, versioned, and coordinated transactionally'; scalar index list BTree, Bitmap, Label List, Zone Map, Bloom Filter, Full Text Search, N-gram, MinHash LSH (experimental), FM-Index, RTree, JSON; vector 'IVF-based layouts and HNSW graphs'; system Fragment Reuse, MemWAL. docs.lancedb.com/lance: file format + table format + lightweight catalog spec, Arrow-native, 'first-class blob API', integrations PyTorch, Ray, Spark, Trino, DuckDB, Polars. github.com/lance-format/lance README: Apache-2.0, 'Zero-copy versioning', Arrow/Pandas/Polars/DuckDB/Spark/Ray/Trino/Flink. lancedb.github.io/lance returned 404 (docs moved to lance.org).",
+    "LanceDB facts verified 2026-10-21: FAQ 'Lance is a modern lakehouse format for multimodal AI... LanceDB is the multimodal lakehouse that's built on top of Lance'; 'LanceDB OSS can comfortably handle millions of vectors on a single node'; 'If you need to scale to hundreds of millions of vectors or work with terabytes of data, we recommend LanceDB Enterprise'; 'too many concurrent writers can lead to failing writes as there is a limited number of times a writer retries a commit'; 'Enterprise customers regularly operate on billions of rows'. Enterprise architecture page: query nodes ('client-facing layer... validate them, resolve the target table, plan the work'), plan executors ('read-execution layer... cache-backed reads against object storage'), indexers (index build, compaction), control plane; 'Table data and index artifacts live in object storage'; writes: query node 'validates the request and commits the new table state'. Enterprise page: Managed or BYOC; 'spread search traffic across multiple nodes'; 'Distributed NVMe cache'. LanceDB Cloud: named on the GitHub README ('Cloud and Enterprise: Production-scale vector search with no servers to manage') but docs.lancedb.com currently documents Enterprise only; copy says 'LanceDB Cloud and Enterprise' without describing Cloud separately. Index names from docs.lancedb.com/indexing (prior pass).",
+    "Milvus facts verified 2026-10-21: milvus_lite.md ('pip install -U pymilvus', MilvusClient(\"./milvus_demo.db\"), FLAT index only, Jupyter/Colab/laptops/edge, same API across Lite/Standalone/Distributed/Zilliz Cloud); install-overview (Lite a few million, Standalone 100 million, Distributed tens of billions); architecture_overview (proxy stateless, streaming node WAL + growing data, query node loads historical data from object storage, data node compaction and index build, workers 'stateless thanks to separation of storage and computation', Woodpecker 'zero-disk design that writes directly to object storage'); tiered-storage-overview (2.6.4+, lazy load, partial load, LRU eviction); consistency.md (Strong, Bounded staleness default, Session, Eventually; per request); multi_tenancy.md (database/collection/partition/partition key; partition key 'millions of tenants'); index-explained (FLAT, IVF_FLAT, IVF_SQ8, IVF_PQ, IVF_RABITQ, HNSW, HNSW_SQ, HNSW_PQ, HNSW_PRQ, DISKANN, SCANN, GPU_CAGRA, GPU_IVF_FLAT, GPU_IVF_PQ, GPU_BRUTE_FORCE; BIN_*, MINHASH_LSH, SPARSE_INVERTED_INDEX; INVERTED, BITMAP, STL_SORT); reranking.md (WeightedRanker, RRFRanker); decay-ranker-overview (gauss/exp/linear as Function) and model-ranker-overview (vLLM, TEI, Cohere, Voyage AI, SiliconFlow, DashScope, Hugging Face); release_notes v3.0.0 'Reranking is now composable through the Function Chain API', v3.0.1 'L1 reranking support to search function chains', v3.0.3 'Function Chain support to Hybrid Search' (no dedicated docs page found; cited via release notes and the REST Search reference).",
+    "External collection facts kept identical to content/milvus/search-on-the-lake.json: Milvus 3.0+, external_source + external_spec, format lance-table (iceberg-table with snapshot_id, parquet, vortex), external_field mapping, Storage V3 common.storage.useLoonFFI: true, refresh_external_collection asynchronous and incremental (unchanged segments kept, previous state served until completion), Milvus builds HNSW/IVF/DiskANN in Milvus storage and never writes into the dataset, external fields can feed Functions (BM25 / text embedding), rows read-only with no second copy. Zilliz Cloud external collections are Public Preview per docs.zilliz.com; the managed block does not say 'preview' to stay evergreen; re-check before publishing.",
+    "SERP pass 2026-10-21 (WebSearch): 'lance vs lancedb difference' -> LanceDB FAQ, Data Quarry multimodal lakehouse, zeroentropy, ai-tldr, Medium (Bozzo); 'lancedb vs milvus' -> PeerSpot, Medium (Smith), agentset, builderai, encore, markaicode; 'lancedb production scalability' -> lancedb.com, Enterprise architecture, sprytnyk 700M vectors, Pure Storage blog, Data Quarry; 'lance format' -> lance.org spec pages, koushik-dutta Medium. Recurring subtopics folded in: 'pylance vs lancedb catalog of named tables', 'Lance vs Parquet random access', 'OSS process owns CPU/memory/storage', 'Enterprise query nodes', 'multimodal lakehouse'. Vendor throughput figures (lancedb.com '100K+ QPS', Enterprise '10,000 QPS vs OSS 10-50 QPS', sprytnyk '700M vectors') deliberately not reused (SPEC v3 §4). No milvus.io or zilliz.com page appeared in these result sets.",
+    "Customer facts and stories reused verbatim from the Qdrant page (zilliz.com/customers, 2026-10-21). Meituan is not on the milvus.io logo wall, so it appears only as a story.",
+    "Wanted, unverified: whether LanceDB Cloud is still sold as a distinct serverless tier; Lance catalog spec details; Milvus Lite exact vector guidance beyond 'a few million'; a dedicated milvus.io docs page for Function Chain.",
+    "Qualify concurrency, consistency, tenant filters and documented-scale guidance; disclose Cloud external collection Public Preview/on-demand support."
   ],
   "lang": "en",
   "reviewedOn": "2026-10-21"

@@ -155,7 +155,7 @@ export default function LandingPage({ page: p, twinPath, related, references, la
         <span className="bench-val">{r.value.toLocaleString('en-US', { maximumFractionDigits: 2 })} <small>{b.unit}</small></span></span>
       <span className="bench-detail">{r.detail}</span>
     </li>)}</ul><p className="bench-source"><a href={href(b.sourceUrl)}>{b.source}</a></p>
-  </figure>{b.cta && <div className="bench-cta"><p>{b.cta.text}</p>{cta(b.cta, true, 'cta_benchmark_click', 'benchmark')}</div>}</div>;
+  </figure></div>;
   const stats = p.stats?.length ? <div className={`stat-grid count-${p.stats.length}`}>{p.stats.map((s, i) => <div className="stat-card" key={i}>
     <strong className="stat-value">{s.value}</strong><span className="stat-label">{s.label}</span><a className="stat-source" href={href(s.source)}>{zh ? '查看来源' : 'View source'}</a>
   </div>)}</div> : null;
@@ -197,9 +197,12 @@ export default function LandingPage({ page: p, twinPath, related, references, la
       {!!p.stories?.length && <section className="section" id="customers"><div className="wrap"><h2>{zh ? '用户案例' : 'Customer stories'}</h2><div className="story-grid">{p.stories.map(s => <a className="story-card" href={href(s.href)} key={s.name} data-track="customer_story_click" data-cta-location="customer_story"><h3>{s.name}</h3><p>{s.text}</p><span>{zh ? '阅读案例' : 'Read the story'}</span></a>)}</div></div></section>}
       {!!references.length && <section className="section shaded" id="learn"><div className="wrap"><h2>{zh ? '延伸阅读' : 'Explore the concepts'}</h2><ul className="aiq-list">{references.map(r => <li key={r.slug}><a href={`/ai-quick-reference/${r.slug}`}>{r.title}</a></li>)}</ul></div></section>}
       <section className="section" id="faq"><div className="wrap faq-grid"><h2>{zh ? '常见问题' : 'Frequently asked questions'}</h2><div className="faq-list">{p.faqs.map(([q,a],i) => <details className="faq-item" key={i} open={i===0}><summary>{q}</summary><p>{a}</p></details>)}</div></div></section>
-      {(p.final || p.managed) && <section className="final-cta"><div className="wrap"><h2>{(p.final || p.managed).h2}</h2><p>{(p.final || p.managed).body}</p><div className="actions">{cta(p.primary_cta, false, 'cta_final_click', 'final')}{cta(p.secondary_cta, true, 'cta_final_click', 'final')}</div></div></section>}
       {!!related.length && <nav className="related" aria-label={zh ? '相关页面' : 'Related pages'}><div className="wrap"><strong>{zh ? '相关页面' : 'Related pages'}</strong>{related.map(r => <Link href={r.path} key={r.path}>{r.title}</Link>)}</div></nav>}
       <section className="section" id="sources"><div className="wrap"><details><summary>{zh ? '资料来源与技术文档' : 'Sources and technical documentation'} ({p.sources.length})</summary><ul className="sources-list">{p.sources.map((s,i) => <li key={i}><a href={href(s)}>{s}</a></li>)}</ul></details></div></section>
+      <section className="cloud-banner" id="managed-cloud" aria-label="Zilliz Cloud"><div className="wrap"><div className="bench-cta">
+        <p>{zh ? 'Zilliz Cloud 就是全托管的 Milvus：同样的引擎、同一梯队的性能，不用自己规划集群、升级和扩容。' : 'Zilliz Cloud is fully managed Milvus: the same engine and top-tier throughput, with no clusters to size, upgrade or scale.'}</p>
+        {cta({ label: zh ? '免费试用 Zilliz Cloud' : 'Try Zilliz Cloud free', href: p.secondary_cta.href }, true, 'cta_final_click', 'final')}
+      </div></div></section>
     </main>
   </Layout>;
 }

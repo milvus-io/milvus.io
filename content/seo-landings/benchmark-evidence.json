@@ -8,6 +8,10 @@
     {
       "url": "https://github.com/zilliztech/VectorDBBench/blob/main/vectordb_bench/results/FullTextSearch/ZillizCloud/result_20260626_fts_standard_zillizcloud.json",
       "sha256": "5f47ca0f0d79695e0372fe73319dc5f661e0d0a73e084c2e3985a35e035f2f1d"
+    },
+    {
+      "url": "https://github.com/zilliztech/VectorDBBench/blob/main/vectordb_bench/results/PgVector/result_20230727_standard_pgvector.json",
+      "sha256": "808734e6edf8e0f9197fbf03c62f33a34fec8cfb8a130f4f317a80395c7394ea"
     }
   ],
   "rows": [
@@ -144,6 +148,42 @@
       "recall": 0.9538,
       "filter_ratio": 0.99,
       "sourceUrl": "https://github.com/zilliztech/VectorDBBench/blob/main/vectordb_bench/results/leaderboard_v2.json"
+    },
+    {
+      "dataset": "Cohere (Medium)",
+      "db": "PgVector",
+      "db_name": "PgVector-2c8g (Jul 2023, IVF_FLAT, filter=0)",
+      "qps": 10.6271,
+      "latency": 730.7,
+      "latencyKind": "serial P99",
+      "recall": 0.8898,
+      "filter_ratio": 0.0,
+      "sourceUrl": "https://github.com/zilliztech/VectorDBBench/blob/main/vectordb_bench/results/PgVector/result_20230727_standard_pgvector.json",
+      "case_id": 5,
+      "index": {
+        "index": "IVF_FLAT",
+        "metric_type": "COSINE",
+        "lists": 10,
+        "probes": 2
+      }
+    },
+    {
+      "dataset": "Cohere (Medium)",
+      "db": "PgVector",
+      "db_name": "PgVector-2c8g (Jul 2023, IVF_FLAT, filter=0.99)",
+      "qps": 75.7055,
+      "latency": 121.2,
+      "latencyKind": "serial P99",
+      "recall": 0.9999,
+      "filter_ratio": 0.99,
+      "sourceUrl": "https://github.com/zilliztech/VectorDBBench/blob/main/vectordb_bench/results/PgVector/result_20230727_standard_pgvector.json",
+      "case_id": 9,
+      "index": {
+        "index": "IVF_FLAT",
+        "metric_type": "COSINE",
+        "lists": 10,
+        "probes": 2
+      }
     }
   ]
 }

@@ -542,8 +542,7 @@
     "open-source-vector-database",
     "distributed-vector-database",
     "vector-database-for-rag",
-    "milvus-vs-qdrant",
-    "milvus-vs-vespa"
+    "milvus-vs-qdrant"
   ],
   "managed": {
     "h2": "不想自己运维集群？",

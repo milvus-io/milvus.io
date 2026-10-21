@@ -60,11 +60,6 @@
 .page :global(.feature-block){background:#fff;border:1px solid var(--line);border-radius:10px;padding:28px}
 .page :global(.feature-block h3){font-size:21px;margin:0 0 10px}.page :global(.feature-block p){color:var(--text);margin:0;font-size:15px;line-height:1.7}
 .page :global(.inline-cta){margin-top:30px}
-.page :global(.final-cta){background:var(--ink);color:#fff;padding:70px 0;text-align:left}
-.page :global(.final-cta h2){color:#fff;font-size:clamp(28px,3vw,40px);max-width:760px;text-wrap:balance}
-.page :global(.final-cta p){color:#c4d3e3;font-size:17px;max-width:720px;margin:16px 0 28px}
-.page :global(.final-cta .button){background:#65f8c3;color:var(--ink);border-color:#65f8c3}
-.page :global(.final-cta .button.secondary){background:transparent;color:#fff;border-color:#4a6588}
 @media(max-width:800px){.page :global(.aiq-list){grid-template-columns:1fr}.page :global(.stat-value){font-size:28px}.page :global(.prose p){font-size:16px}.page :global(.logo-row){gap:10px}}
 /* mobile containment: wide tables and code scroll inside their cards, never widen the page */
 .page :global(.wrap>*), .page :global(.code-section), .page :global(.code-card), .page :global(.feature-block), .page :global(.faq-list){min-width:0;max-width:100%}
@@ -118,3 +113,6 @@
 .page :global(.hero-art){align-self:center}
 .page :global(.sources-list){margin-top:20px}
 @media(max-width:800px){.page :global(.hero h1){font-size:34px}.page :global(.hero .intro){font-size:16px}.page :global(.section-nav){position:static}.page :global(section[id]){scroll-margin-top:135px}}
+
+.page :global(.cloud-banner){padding:0 0 64px}
+.page :global(.cloud-banner .bench-cta){margin-top:0}

@@ -345,40 +345,6 @@
       }
     },
     {
-      "id": "coexist",
-      "nav": "迁移并存",
-      "h2": "先用 pgvector，再把向量表迁到 Milvus：多语言持久化模式",
-      "paragraphs": [
-        "常见路径不是替换。团队因为数据在 Postgres 里先用 pgvector，向量表长到主库撑不住时只把向量表迁到 Milvus，Postgres 继续负责 OLTP：用户、订单、权限、Agent checkpoint。关系行和向量按主键关联，PGSQL 和 Milvus 从二选一变成并用。",
-        "小型 RAG 原型用 Milvus 会不会太重？pip 装的 Milvus Lite 进程内运行，不会。Milvus 需要 GPU 吗？不需要，GPU 索引可选。pgvector 迁移 Milvus 是拷贝不是重新生成向量：VTS（Vector Transport Service）自带 Postgres Vector 源端和 pg_to_milvus 配置。"
-      ],
-      "table": {
-        "caption": "从 pgvector 迁到 Milvus、Postgres 仍作为记录系统的步骤",
-        "heads": [
-          "步骤",
-          "做什么",
-          "说明"
-        ],
-        "rows": [
-          [
-            "映射 schema 并拷贝",
-            "vector 列映射为 FloatVector 字段，其他列映射为 VARCHAR、INT64、JSON 或 ARRAY；VTS 用 pg_to_milvus.conf 拷贝整表",
-            "先在 Milvus Lite 上验证"
-          ],
-          [
-            "建索引",
-            "向量字段用 HNSW 或 AUTOINDEX；过滤列建标量索引；租户用 partition key",
-            "索引参数按字段，搜索参数按查询"
-          ],
-          [
-            "双写、切流",
-            "应用同时写两边，对比召回和延迟后切读；事务、JOIN、RLS 留在 Postgres",
-            "Zilliz Cloud 用同一套 MilvusClient API"
-          ]
-        ]
-      }
-    },
-    {
       "id": "pgvector-fit",
       "nav": "怎么选",
       "h2": "pgvector 和 Milvus 哪个好？什么情况下该选 pgvector，一张选型清单",

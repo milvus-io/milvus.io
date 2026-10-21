@@ -522,8 +522,7 @@
     "open-source-vector-database",
     "hybrid-search",
     "milvus-vs-elasticsearch",
-    "search-on-the-lake",
-    "milvus-vs-weaviate"
+    "search-on-the-lake"
   ],
   "managed": {
     "h2": "Prefer not to run a cluster?",

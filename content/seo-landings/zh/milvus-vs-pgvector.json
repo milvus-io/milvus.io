@@ -203,7 +203,7 @@
       "nav": "性能",
       "h2": "Milvus 和 pgvector 性能对比：谁更快？",
       "paragraphs": [
-        "图中仅展示当前已核对的 Milvus 与 Zilliz Cloud VectorDBBench 配置。这里没有同条件、同版本的对手结果，不能据此推断谁更快。使用相同数据集、过滤比例、召回目标和硬件重测后再比较。"
+        "下面将 pgvector 的公开实测与 Milvus/Cloud 的 VectorDBBench 结果分开呈现。AWS 在 2025 年 5 月发布的测试使用 Aurora db.r8g.4xlarge、1,000 万条 384 维向量和 HNSW，比较 pgvector 0.8.0 的扫描配置；这不是与 Milvus 同条件的对测，不能据此计算性能倍数。"
       ],
       "bench": [
         {
@@ -255,7 +255,37 @@
           },
           "sourceUrl": "https://github.com/zilliztech/VectorDBBench/blob/main/vectordb_bench/results/leaderboard_v2.json"
         }
-      ]
+      ],
+      "table": {
+        "caption": "pgvector 0.8.0：AWS 报告的查询延迟（毫秒，越低越好）",
+        "heads": [
+          "查询",
+          "ef_search=40，扫描关闭",
+          "ef_search=200，strict_order",
+          "ef_search=200，relaxed_order"
+        ],
+        "rows": [
+          [
+            "Top-10 检索",
+            "19.3",
+            "28.8",
+            "30.7"
+          ],
+          [
+            "类别过滤，Top-10",
+            "20.0",
+            "128.5",
+            "85.7"
+          ],
+          [
+            "类别＋标题过滤，Top-100",
+            "15.7",
+            "57.9",
+            "70.7"
+          ]
+        ]
+      },
+      "note": "来源：AWS Database Blog，2025-05-28，Performance improvements / Different iterative scan modes。原文将延迟表称为 P99，但方法部分又描述均值；这里仅保留“报告延迟”，不将其当作 SLA 或换算 QPS。扫描关闭时更快也可能返回不足的结果；返回条数完整不等于相对精确 KNN 的召回率。请以相同数据、过滤、并发与召回目标重测。"
     },
     {
       "id": "features",
@@ -439,7 +469,7 @@
   "faqs": [
     [
       "Milvus 和 pgvector 谁更快？",
-      "图中仅展示当前已核对的 Milvus 与 Zilliz Cloud VectorDBBench 配置。这里没有同条件、同版本的对手结果，不能据此推断谁更快。使用相同数据集、过滤比例、召回目标和硬件重测后再比较。"
+      "本页补充了 pgvector 0.8.0 在 Aurora 上的公开查询延迟，另列 Milvus/Cloud 的 VectorDBBench 跑分。两者不是同条件对测，不能据此判断谁更快；实际选型应同时测过滤、召回率、并发吞吐和延迟。"
     ],
     [
       "pgvector 支持多少条向量？",
@@ -524,7 +554,6 @@
     "https://github.com/zilliztech/VectorDBBench",
     "https://github.com/zilliztech/VectorDBBench/blob/main/vectordb_bench/results/leaderboard_v2.json",
     "https://github.com/zilliztech/VectorDBBench/blob/main/vectordb_bench/results/leaderboard.json",
-    "https://github.com/zilliztech/VectorDBBench/blob/main/vectordb_bench/results/PgVector/result_20230727_standard_pgvector.json",
     "https://github.com/zilliztech/VectorDBBench/tree/main/vectordb_bench/backend/clients/pgvector",
     "https://zilliz.com/customers/filevine",
     "https://zilliz.com/customers/openevidence",
@@ -543,7 +572,8 @@
     "https://milvus.io/docs/gpu_index.md",
     "https://github.com/zilliztech/vts",
     "https://github.com/zilliztech/VectorDBBench/tree/main/vectordb_bench/backend/clients",
-    "https://lfaidata.foundation/projects/"
+    "https://lfaidata.foundation/projects/",
+    "https://aws.amazon.com/blogs/database/supercharging-vector-search-performance-and-relevance-with-pgvector-0-8-0-on-amazon-aurora-postgresql/"
   ],
   "notes": [
     "pgvector facts verified 2026-10-21 from the README on github.com/pgvector/pgvector (see English page notes); hosted providers from issue #54; read-only replicas / single primary from postgresql.org high-availability docs. Milvus 32,768 dims from docs/limitations.md (the /docs/zh/limitations.md stat source is the Chinese variant of the same page).",
@@ -552,7 +582,8 @@
     "2023 v1 competitor row removed from charts (not same-condition); mentioned in prose only.",
     "SERP pass 2026-10-21: studied 12 EN / 7 ZH results (same list as the English page; Zhihu 和 CSDN 140876718 返回 403/521，只读到标题). 中文结果共同点：运维复杂度星级（苏三 '一行 SQL ★☆☆☆☆ vs ★★★★☆'、'8GB+ 内存门槛'，这里用 Milvus Lite / Standalone 单容器事实回应）、规模阈值（'500万'、'100万–1亿'，按规范不写数字，只引 Milvus 文档的 Lite/Standalone/Distributed 档位）、'先用 pgvector 再迁 Milvus'、'PGVector 支持多少条向量'、'Milvus 一定比 PGVector 好吗'、混合检索一条 SQL。Gaps closed: 部署运维表、迁移（VTS pg_to_milvus）、README 过滤召回例子、HNSW 默认参数、框架与 star、并用模式。Dropped: 'pgvector 能扩展到十亿级向量吗' FAQ（改为 '支持多少条向量'）、Zilliz Cloud FAQ。新增关键词 'pgvector 迁移 Milvus'、'运维复杂度'。Not used: 各家价格（RDS、Supabase、Zilliz）、自测数字、'百万级 30 分钟内' 迁移耗时。",
     "Correct Standalone dependency claim; migration reuses embeddings but is not a query/API drop-in.",
-    "Remove stale or unlike-for-like competitor benchmark numbers from prose and FAQs."
+    "Remove stale or unlike-for-like competitor benchmark numbers from prose and FAQs.",
+    "Add AWS May 2025 pgvector 0.8.0 query/configuration latency table, separately from VDBBench; distinguish result completeness from ANN recall and note latency-label ambiguity."
   ],
   "lang": "zh",
   "reviewedOn": "2026-10-21"

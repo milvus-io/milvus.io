@@ -5,7 +5,7 @@
   "nav": "对比 pgvector",
   "path": "/zh/compare/milvus-vs-pgvector",
   "title": "Milvus 和 pgvector 对比：扩展性、性能与功能",
-  "description": "Milvus 与 pgvector：比较独立向量数据库与 Postgres 扩展的架构、过滤、混合检索、部署运维和迁移，按工作负载选择。",
+  "description": "Milvus 和 pgvector 对比：Postgres 扩展与专用分布式向量数据库各自能做、对方做不到的事，VectorDBBench 与 pgvector 公开性能数据，迁移与并存。",
   "keywords": {
     "primary": "Milvus 和 pgvector 对比",
     "secondary": [
@@ -58,7 +58,7 @@
     "https://www.cnblogs.com/itqinls/p/20832126"
   ],
   "h1": "Milvus 和 pgvector 对比：数据持续增长时该怎么选",
-  "intro": "pgvector 把向量检索加入 Postgres，可复用关系数据、事务和 JOIN；扩容方式包括纵向扩展、只读副本和额外的分片方案。Milvus 是专门的向量数据库，将持久数据放在对象存储，并分别扩缩写入、索引与检索资源。选择取决于是否需要关系能力，以及实际过滤、吞吐、延迟和运维要求。",
+  "intro": "Milvus 和 pgvector 对比，比的不是两套 HNSW 实现：pgvector 是把向量检索装进你已经在用的 Postgres 的扩展，Milvus 是存算分离的专用分布式向量数据库，可以扩展到数百亿向量。pgvector 让向量和事务、JOIN、SQL、行级安全放在一起；Milvus 提供更多索引类型、服务端 BM25 混合检索、partition key 百万级多租户和边写边查的流式写入，这些资源可以按检索负载独立扩缩。向量表一台 Postgres 放得下，选 pgvector；向量数、租户数或查询量会持续增长，选 Milvus；数据本身就分成两类，就两个一起用。",
   "primary_cta": {
     "label": "开始 Milvus 快速入门",
     "href": "https://milvus.io/docs/zh/quickstart.md"
@@ -70,8 +70,7 @@
   "proof": [
     "Apache-2.0，GitHub 40K+ star",
     "可扩展到数百亿向量",
-    "存储与计算分离",
-    "单字段最高 32,768 维，17 种稠密向量索引"
+    "存储与计算分离"
   ],
   "logos": [
     "Salesforce",
@@ -90,7 +89,7 @@
   ],
   "diagram": {
     "type": "compare",
-    "caption": "Milvus 各类节点在共享对象存储上独立扩缩；pgvector 运行在一个 Postgres 主库里，只能靠只读副本分担查询。",
+    "caption": "Milvus 各类节点在共享对象存储上独立扩缩；pgvector 运行在一个 Postgres 主库里，只能靠只读 hot standby 副本分担查询。",
     "left": {
       "title": "Milvus：存算分离",
       "sub": "无状态 worker，按类型各自扩缩",
@@ -144,66 +143,22 @@
       "nav": "扩展性",
       "h2": "Milvus 和 pgvector 扩展性对比：向量表超过一台 Postgres 之后怎么办？",
       "paragraphs": [
-        "Milvus 是存算分离架构。segment 和 WAL 都在对象存储里，新加的 query 节点直接加载分配给它的 segment，不用从别的节点拷盘；写入、检索、建索引分别由不同类型的节点承担，各自扩缩。tiered storage 还能让单个节点服务超过自身内存和磁盘的数据量。",
-        "pgvector 的扩展性就是 Postgres 的扩展性。README 写明：纵向扩展靠给单实例加内存、CPU 和磁盘；横向扩展靠只读副本，或者用 Citus、PgDog 这类分片方案。Postgres 副本只读，所有写入和 HNSW 建索引都落在主库；一旦图结构超出 maintenance_work_mem，HNSW 建索引会明显变慢。"
+        "Milvus 是存算分离架构：segment 和 WAL 都在对象存储里，新加的 query 节点直接加载分配给它的 segment，不用从别的节点拷盘；写入、检索、建索引由不同类型的节点各自扩缩，十亿级向量检索靠加节点解决。tiered storage 还能让单个节点服务远超自身内存的数据量。",
+        "pgvector 的扩展性就是 Postgres 的扩展性：README 写明，纵向靠给单实例加资源，横向靠 hot standby 只读副本（每个都是全量拷贝，严格只读），再大就用 Citus 或 PgDog 分片。所有写入和 HNSW 建索引都落在主库。文档记录的几条扩展行为："
       ],
-      "table": {
-        "caption": "十亿级向量检索的扩展性（依据双方官方文档）",
-        "heads": [
-          "能力",
-          "Milvus",
-          "pgvector"
-        ],
-        "rows": [
-          [
-            "架构",
-            "存算分离：proxy、streaming、query、data 节点",
-            "Postgres 进程内的扩展；堆表加 HNSW 或 IVFFlat 索引"
-          ],
-          [
-            "数据存放",
-            "对象存储（S3、MinIO、Azure Blob、GCS），WAL 也在其中",
-            "主库本地磁盘，WAL 流式同步到副本"
-          ],
-          [
-            "写入与建索引扩展",
-            "增加 streaming 或 data 节点",
-            "单主库；只能靠本机并行 worker"
-          ],
-          [
-            "查询扩展",
-            "增加 query 节点和副本，segment 从对象存储加载",
-            "只读 hot standby 副本，每个都是全量拷贝"
-          ],
-          [
-            "数据超过单节点容量",
-            "tiered storage 按需拉取字段数据",
-            "换更大的机器，或用 Citus / PgDog 分片"
-          ],
-          [
-            "建索引内存",
-            "在 data 节点上构建，与查询服务分离",
-            "HNSW 图放得进 maintenance_work_mem 才快"
-          ],
-          [
-            "可建索引的维度",
-            "单个向量字段最高 32,768 维",
-            "vector 最高 2,000 维；halfvec 4,000；bit 64,000"
-          ],
-          [
-            "大规模多租户",
-            "partition key 支持百万级租户；也可按 database、collection、partition 隔离",
-            "按租户做 list 分区或拆表"
-          ]
-        ]
-      }
+      "bullets": [
+        "HNSW 建索引时间与内存：图放得进 maintenance_work_mem 才快，超出后 Postgres 提示 \"hnsw graph no longer fits into maintenance_work_mem\"，建索引明显变慢。并行构建（0.6.0+）默认 2 个 worker；Jonathan Katz 2023 年在 r7gd.16xlarge 上建 1M × 1,536 维 HNSW 用了 60.10 分钟，索引 7,734 MB。",
+        "可建索引的维度：vector 最高 2,000 维，halfvec 4,000 维，bit 64,000 维。",
+        "后过滤召回悬崖：默认 hnsw.ef_search 为 40 时，命中 10% 行的 WHERE 平均只返回约 4 行；0.8.0+ 的迭代索引扫描会继续扫到凑够 k 行，上限 hnsw.max_scan_tuples（默认 20,000）。",
+        "索引大小与内存：README 说索引放进内存性能更好；AWS 写明 HNSW 索引必须常驻内存，否则延迟劣化。"
+      ]
     },
     {
       "id": "performance",
       "nav": "性能",
-      "h2": "Milvus 和 pgvector 性能对比：谁更快？",
+      "h2": "Milvus 和 pgvector 谁更快？VectorDBBench 结果与 pgvector 公开性能测试",
       "paragraphs": [
-        "下面将 pgvector 的公开实测与 Milvus/Cloud 的 VectorDBBench 结果分开呈现。AWS 在 2025 年 5 月发布的测试使用 Aurora db.r8g.4xlarge、1,000 万条 384 维向量和 HNSW，比较 pgvector 0.8.0 的扫描配置；这不是与 Milvus 同条件的对测，不能据此计算性能倍数。"
+        "下面保留 Milvus/Cloud 的当前 VectorDBBench 图，另列 pgvector 的 2023 年历史图及各来源公开测试。年份、实例、索引和召回条件不同，不做横向排名，也不计算跨测试性能倍数。"
       ],
       "bench": [
         {
@@ -225,7 +180,7 @@
               "detail": "P99 2.3 ms · 召回率 0.9189"
             }
           ],
-          "source": "来源：VectorDBBench，仅列 Milvus 与 Zilliz Cloud 的已核对配置；不构成对竞品的性能结论。",
+          "source": "来源：VectorDBBench；保留原始配置标签。与下列历史 pgvector 测试条件不同。",
           "sourceUrl": "https://github.com/zilliztech/VectorDBBench/blob/main/vectordb_bench/results/leaderboard_v2.json"
         },
         {
@@ -247,14 +202,121 @@
               "detail": "P99 1.6 ms · 召回率 0.9507"
             }
           ],
-          "source": "来源：VectorDBBench，仅列 Milvus 与 Zilliz Cloud 的已核对配置；不构成对竞品的性能结论。",
+          "source": "来源：VectorDBBench；保留原始配置标签。与下列历史 pgvector 测试条件不同。",
           "cta": {
             "text": "Zilliz Cloud 就是全托管的 Milvus：同样的引擎、同一梯队的性能，不用自己规划集群、升级和扩容。",
             "label": "免费试用 Zilliz Cloud",
             "href": "https://cloud.zilliz.com.cn/signup"
           },
           "sourceUrl": "https://github.com/zilliztech/VectorDBBench/blob/main/vectordb_bench/results/leaderboard_v2.json"
+        },
+        {
+          "title": "pgvector 历史测试：无过滤",
+          "caption": "2023-07 · 2 vCPU / 8 GB · IVF_FLAT · Cohere 1M / 768d；不与上图横向排名",
+          "unit": "QPS",
+          "rows": [
+            {
+              "system": "pgvector",
+              "label": "PgVector-2c8g (Jul 2023, IVF_FLAT, filter=0)",
+              "value": 10.6271,
+              "detail": "serial P99 730.7 ms · 召回率 0.8898 · 2 vCPU 8 GB"
+            }
+          ],
+          "source": "VectorDBBench v1 · July 2023 · original result",
+          "sourceUrl": "https://github.com/zilliztech/VectorDBBench/blob/main/vectordb_bench/results/PgVector/result_20230727_standard_pgvector.json"
+        },
+        {
+          "title": "pgvector 历史测试：过滤后保留 1%",
+          "caption": "2023-07 · 2 vCPU / 8 GB · IVF_FLAT · Cohere 1M / 768d；不与上图横向排名",
+          "unit": "QPS",
+          "rows": [
+            {
+              "system": "pgvector",
+              "label": "PgVector-2c8g (Jul 2023, IVF_FLAT, filter=0.99)",
+              "value": 75.7055,
+              "detail": "serial P99 121.2 ms · 召回率 0.9999 · 2 vCPU 8 GB"
+            }
+          ],
+          "source": "VectorDBBench v1 · July 2023 · original result",
+          "sourceUrl": "https://github.com/zilliztech/VectorDBBench/blob/main/vectordb_bench/results/PgVector/result_20230727_standard_pgvector.json"
         }
+      ],
+      "table": {
+        "caption": "pgvector 公开性能测试：条件均与 VectorDBBench 不同，不做横向排名",
+        "heads": [
+          "来源",
+          "数据集",
+          "机型 · 索引",
+          "QPS / 延迟",
+          "召回率"
+        ],
+        "rows": [
+          [
+            "VectorDBBench v1，2023 年 7 月，PgVector-2c8g",
+            "Cohere 1M，768 维",
+            "2 vCPU 8 GB；IVF_FLAT，lists 10，probes 2",
+            "10.6271 QPS，serial P99 730.7 ms；filter 0.99：75.7055 QPS，serial P99 121.2 ms",
+            "0.8898；过滤 0.9999"
+          ],
+          [
+            "AWS 博客，2023 年 11 月（pgvector 0.5.1）",
+            "合成数据 10M，1,536 维",
+            "db.m7g.16xlarge；HNSW m 16，ef_construction 64；64 并发",
+            "ef_search 20：28,798 TPS；ef_search 800：1,265 TPS",
+            "未报告"
+          ],
+          [
+            "Supabase，2023 年 10 月（pgvector 0.5.0）",
+            "dbpedia OpenAI 1M，1,536 维",
+            "2XL（8 核，32 GB）；HNSW m 36，ef_construction 128",
+            "ef_search 32 时 QPS 比 Pinecone s1 高 1185%（仅图表）",
+            "accuracy@10 0.98"
+          ],
+          [
+            "Timescale，2024 年 6 月（pgvector 0.7.0 + pgvectorscale）",
+            "Cohere 50M，768 维",
+            "r6id.4xlarge（16 vCPU，128 GB，NVMe）；StreamingDiskANN",
+            "Timescale 宣称 p95 延迟比 Pinecone s1 低 28 倍、吞吐高 16 倍（仅图表）",
+            "0.99"
+          ],
+          [
+            "AWS 博客，2025 年 5 月（pgvector 0.8.0 迭代扫描）",
+            "10M 商品，384 维",
+            "db.r8g.4xlarge；HNSW m 16，ef_construction 128；过滤约 10%",
+            "报告延迟 123.3 ms 降到 13.1 ms（Query A）；913.4 ms 降到 160.3 ms（Query E）",
+            "原文报告结果条数完整性，不是精确 KNN 召回率"
+          ],
+          [
+            "AWS 博客，2026 年 8 月（pgvector 0.8.0+，二值量化）",
+            "OpenAI 5M，1,536 维",
+            "r8g.large；HNSW m 16、ef_construction 256；原文列 BQ rerank=1,400，但结果解释为 800，参数表述存在差异",
+            "HNSW：78 QPS，p99 1,356 ms，建索引 12 分钟；HNSW+BQ：138 QPS，p99 18.9 ms，建索引 6 分钟",
+            "0.934 / 0.951"
+          ],
+          [
+            "同一篇 AWS 博客",
+            "LAION 100M，768 维",
+            "r8g.4xlarge（128 GB RAM）；HNSW 367 GB，BQ 38 GB",
+            "HNSW：冷 3.4 QPS，热 3,336，建索引 16.1 小时；BQ：冷 13.5，热 895，建索引 1.1 小时",
+            "0.965 / 0.931"
+          ],
+          [
+            "SIGMOD 2026，arXiv 2603.23710（pgvector 0.8.0）",
+            "sift10M、openai5M、cohere10M、text2image10M；选择率 0.01–0.9",
+            "2 × 32 核 EPYC，240 GB；迭代扫描对比 filter-first 方法；商业 PostgreSQL 兼容系统内的实验",
+            "指标为 95% recall@10 下的 QPS；数据库内延迟最高比 HNSWLib 高 10 倍",
+            "低选择率下 filter-first 方法占优"
+          ]
+        ]
+      },
+      "note": "各行来源见文末，不同工具、硬件、版本及冷热缓存不能直接排名。AWS 2025 年原文的 P99 与均值表述有歧义，此处记为报告延迟；结果条数完整不等于精确 KNN 召回率。历史数据不代表当前产品上限。"
+    },
+    {
+      "id": "pgvector-scan-configurations",
+      "nav": "扫描配置",
+      "h2": "pgvector 0.8.0：扫描配置如何改变延迟",
+      "paragraphs": [
+        "AWS 2025-05-28，同一实例与数据集的配置明细。"
       ],
       "table": {
         "caption": "pgvector 0.8.0：AWS 报告的查询延迟（毫秒，越低越好）",
@@ -288,163 +350,189 @@
       "note": "来源：AWS Database Blog，2025-05-28，Performance improvements / Different iterative scan modes。原文将延迟表称为 P99，但方法部分又描述均值；这里仅保留“报告延迟”，不将其当作 SLA 或换算 QPS。扫描关闭时更快也可能返回不足的结果；返回条数完整不等于相对精确 KNN 的召回率。请以相同数据、过滤、并发与召回目标重测。"
     },
     {
-      "id": "features",
-      "nav": "功能",
-      "h2": "pgvector 和 Milvus 功能对比：索引类型、过滤与混合检索",
+      "id": "pgvector-gives",
+      "nav": "pgvector 优势",
+      "h2": "pgvector 能做、Milvus 做不到的事",
       "paragraphs": [
-        "pgvector 给 Postgres 加了两种 ANN 索引，外加 SQL 的全部工具。Milvus 是专门的向量数据库：索引家族更多，标量索引在向量检索之前先过滤，服务端内置 BM25 函数和 ranker 做混合检索。做向量数据库选型时，先看这张向量数据库对比表，pgvector 和 Milvus 区别一目了然。"
+        "Milvus 一定比 pgvector 好吗？不是。pgvector 的优势不在向量索引，而在 Postgres 围绕这一列向量已经具备的一切。数据本来就在 Postgres 里的团队，这些都是留下来的理由，PGSQL 和 Milvus 的取舍从这里开始。"
       ],
       "table": {
-        "caption": "功能对比：pgvector HNSW / IVFFlat 与 Milvus 的索引类型、元数据过滤、混合检索、部署方式与 SDK",
+        "caption": "来自 Postgres 的 pgvector 能力，以及 Milvus 最接近的对应项",
         "heads": [
-          "功能",
-          "Milvus",
-          "pgvector"
+          "能力",
+          "pgvector",
+          "Milvus"
         ],
         "rows": [
           [
-            "稠密向量索引类型",
-            "HNSW、IVF（FLAT、SQ8、PQ、RaBitQ）、SCANN、DiskANN、GPU（CAGRA、IVF、暴力检索）",
-            "HNSW、IVFFlat"
+            "ACID 事务",
+            "行、向量和审计记录在一个事务里写入，一起回滚",
+            "按请求设置一致性级别（Strong、Bounded、Session、Eventually）；跨请求的 upsert 不保证原子"
           ],
           [
-            "向量类型",
-            "float32、float16、bfloat16、int8、二值、稀疏",
-            "vector、halfvec、bit、sparsevec"
+            "与关系数据 JOIN",
+            "一条 SQL 就能把向量表和用户、订单、权限表 JOIN",
+            "不支持跨 collection JOIN；在应用层按主键关联"
           ],
           [
-            "量化",
-            "SQ8、PQ、PRQ、RaBitQ；HNSW_SQ、HNSW_PQ、HNSW_PRQ",
-            "halfvec 存储；表达式索引做二值量化，再用精确距离重排"
+            "SQL 与 Postgres 工具链",
+            "视图、CTE、触发器、EXPLAIN、pg_dump、时间点恢复",
+            "MilvusClient API 加过滤表达式；备份用 milvus-backup"
           ],
           [
-            "元数据过滤",
-            "先用标量索引（INVERTED、BITMAP、STL_SORT）或 partition key 过滤，再做 ANN 检索；复杂表达式可用 iterative_filter hint",
-            "WHERE 条件在索引扫描之后应用：README 的例子是条件命中 10% 的行时，默认 hnsw.ef_search 为 40 只能平均返回约 4 行；0.8.0+ 的迭代索引扫描会继续扫到凑够 k 行"
+            "行级安全（RLS）",
+            "按表 CREATE POLICY，覆盖 SELECT、INSERT、UPDATE、DELETE，租户隔离由数据库强制执行",
+            "RBAC 角色与权限；租户范围靠 partition key 和过滤条件"
           ],
           [
-            "全文检索 / BM25",
-            "内置 BM25 函数，服务端把原始文本转成稀疏向量",
-            "Postgres 全文检索：tsvector、tsquery、ts_rank_cd"
-          ],
-          [
-            "混合检索",
-            "一次 hybrid_search 查多个向量字段，RRFRanker 或 WeightedRanker 融合",
-            "两条查询分别执行，在 SQL 或应用层用 RRF 或 cross-encoder 合并"
-          ],
-          [
-            "多租户",
-            "database、collection、partition 或 partition key",
-            "list 分区或拆表"
-          ],
-          [
-            "事务与 JOIN",
-            "collection 级一致性级别；不支持跨表 JOIN",
-            "Postgres 自带 ACID 事务、JOIN 和时间点恢复"
-          ],
-          [
-            "部署方式",
-            "Milvus Lite、Standalone、Distributed、Zilliz Cloud",
-            "任意 Postgres 13+；Amazon RDS、Supabase、Neon、Crunchy Bridge 等托管服务"
-          ],
-          [
-            "许可证与社区",
-            "Apache-2.0；Go 和 C++；LF AI & Data 毕业项目；GitHub 40K+ star",
-            "PostgreSQL License；C；GitHub 20K+ star"
-          ],
-          [
-            "SDK 语言",
-            "Python、Java、Go、Node.js、C#、C++、Rust、RESTful",
-            "任何带 Postgres 客户端的语言"
+            "只运维一个数据库、沿用现有工具",
+            "在已有 Postgres 上 CREATE EXTENSION vector；任意 ORM 或驱动；RDS、Aurora、Supabase、Neon、Cloud SQL、AlloyDB、Azure 均托管",
+            "独立服务（Milvus Lite、Standalone 或 Kubernetes），自带 SDK"
           ]
         ]
       }
     },
     {
-      "id": "setup",
-      "nav": "部署运维",
-      "h2": "Milvus 比 pgvector 难部署吗？运维复杂度对比",
+      "id": "milvus-gives",
+      "nav": "Milvus 优势",
+      "h2": "Milvus 的专用检索与独立扩缩能力",
       "paragraphs": [
-        "Milvus Lite 可用 pip 在进程内启动，CPU 是默认路径，GPU 索引可选。已有 Postgres 的团队可以先用 pgvector，迁移时通常能复用模型与维度一致的向量，但仍需映射 schema、创建索引并改写检索调用。两者都应按索引内存、存储、查询量和可用性要求评估成本。"
+        "Milvus 将写入、索引和检索资源分开扩缩，并提供专用检索索引与服务端排序能力。Postgres 也可以通过 SQL、其他扩展或外部分片方案组合能力；选型需要比较完整部署及其运维成本。"
       ],
       "table": {
-        "caption": "PGSQL 和 Milvus 的部署、调参与迁移（依据官方文档）",
+        "caption": "Milvus 与 pgvector 的能力及实现方式",
         "heads": [
-          "阶段",
+          "能力",
           "Milvus",
           "pgvector"
         ],
         "rows": [
           [
-            "起步",
-            "pip install pymilvus 即进程内运行 Milvus Lite，数百万向量以内",
-            "在现有 Postgres 13+ 上 CREATE EXTENSION vector"
+            "索引广度",
+            "HNSW 及 SQ、PQ、PRQ 变体；IVF_FLAT、IVF_SQ8、IVF_PQ、IVF_RABITQ；SCANN；超出内存用 DiskANN；GPU_CAGRA、GPU_IVF；最高 32,768 维",
+            "HNSW 和 IVFFlat；vector 可索引 2,000 维，halfvec 4,000 维；二值量化加重排"
           ],
           [
-            "单机",
-            "Standalone：使用 Docker 部署，并配置 etcd 与对象存储；Woodpecker 可嵌入运行",
-            "单主库；HNSW 图放进 maintenance_work_mem 才建得快，默认 2 个并行 worker"
+            "内置 BM25 混合检索",
+            "BM25 函数在服务端把文本转成稀疏向量；一次 hybrid_search 用 RRFRanker 或 WeightedRanker 融合稠密与稀疏结果",
+            "tsvector 全文检索加向量查询，在 SQL 或应用层用 RRF 或 cross-encoder 合并"
           ],
           [
-            "集群",
-            "Distributed：Kubernetes 上用 Milvus Operator 或 Helm 部署，数据在对象存储；1 亿到数百亿",
-            "只读副本；分片靠 Citus 或 PgDog"
+            "Function Chain 重排",
+            "Decay、Model（TEI、vLLM、Cohere、Voyage）和 Boost ranker 在服务端执行；Milvus 3.0+ 的混合检索支持 Function Chain",
+            "在应用层重排"
           ],
           [
-            "调参入口",
-            "按字段设索引参数（M、efConstruction、nlist），按查询设搜索参数",
-            "默认 m 16、ef_construction 64、hnsw.ef_search 40；hnsw.iterative_scan、hnsw.max_scan_tuples"
+            "百万级多租户",
+            "partition key 用于裁剪检索范围，每次请求仍须带正确的租户过滤；也可按 database、collection、partition 组织租户",
+            "list 分区或每租户一张表"
           ],
           [
-            "GPU",
-            "可选 GPU_CAGRA、GPU_IVF 索引",
-            "无"
+            "存算分离与 tiered storage",
+            "segment 和 WAL 在对象存储；query 节点独立扩缩；tiered storage 服务远超节点内存和磁盘的数据",
+            "堆表和索引存放在 Postgres 存储中；HNSW 超出缓存时可能因 I/O 增加而变慢，并非必须完全驻留内存"
           ],
           [
-            "框架与 SDK",
-            "langchain-milvus、LlamaIndex、Haystack、Dify、n8n；SDK 覆盖 Python、Java、Go、Node.js、C#、C++、Rust",
-            "langchain-postgres（PGVector）；任意 ORM 或 Postgres 驱动"
+            "边服务边流式写入",
+            "Streaming Node 追加写 WAL，growing 数据实时可查，data 节点同时给 sealed segment 建索引",
+            "写入和 HNSW 维护都在单个主库"
           ],
           [
-            "托管服务",
-            "Zilliz Cloud，MilvusClient API 一致",
-            "Amazon RDS、Supabase、Neon、Crunchy Bridge"
+            "标量索引与丰富字段",
+            "VARCHAR、JSON、ARRAY、TEXT（Milvus 3.0+）、TIMESTAMPTZ 上建 INVERTED、BITMAP、STL_SORT、Trie、JSON path 索引；过滤在 ANN 检索之前执行，或用 iterative_filter hint",
+            "过滤在索引扫描之后执行；iterative_scan 最多重扫到 hnsw.max_scan_tuples"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "coexist",
+      "nav": "迁移并存",
+      "h2": "先用 pgvector，再把向量表迁到 Milvus：多语言持久化模式",
+      "paragraphs": [
+        "常见路径不是替换。团队因为数据在 Postgres 里先用 pgvector，向量表长到主库撑不住时只把向量表迁到 Milvus，Postgres 继续负责 OLTP：用户、订单、权限、Agent checkpoint。关系行和向量按主键关联，PGSQL 和 Milvus 从二选一变成并用。",
+        "小型 RAG 原型用 Milvus 会不会太重？pip 装的 Milvus Lite 进程内运行，不会。Milvus 需要 GPU 吗？不需要，GPU 索引可选。pgvector 迁移 Milvus 是拷贝不是重新生成向量：VTS（Vector Transport Service）自带 Postgres Vector 源端和 pg_to_milvus 配置。"
+      ],
+      "table": {
+        "caption": "从 pgvector 迁到 Milvus、Postgres 仍作为记录系统的步骤",
+        "heads": [
+          "步骤",
+          "做什么",
+          "说明"
+        ],
+        "rows": [
+          [
+            "映射 schema 并拷贝",
+            "vector 列映射为 FloatVector 字段，其他列映射为 VARCHAR、INT64、JSON 或 ARRAY；VTS 用 pg_to_milvus.conf 拷贝整表",
+            "先在 Milvus Lite 上验证"
           ],
           [
-            "以后迁移",
-            "VTS（Vector Transport Service）有 Postgres Vector 源端（pg_to_milvus）：向量和列直接拷贝，不用重新生成向量",
-            "关系表留在 Postgres，按主键关联"
+            "建索引",
+            "向量字段用 HNSW 或 AUTOINDEX；过滤列建标量索引；租户用 partition key",
+            "索引参数按字段，搜索参数按查询"
+          ],
+          [
+            "双写、切流",
+            "应用同时写两边，对比召回和延迟后切读；事务、JOIN、RLS 留在 Postgres",
+            "Zilliz Cloud 用同一套 MilvusClient API"
           ]
         ]
       }
     },
     {
       "id": "pgvector-fit",
-      "nav": "选 pgvector",
-      "h2": "pgvector 和 Milvus 哪个好？什么情况下该选 pgvector",
+      "nav": "怎么选",
+      "h2": "pgvector 和 Milvus 哪个好？什么情况下该选 pgvector，一张选型清单",
       "paragraphs": [
-        "pgvector 的优势是复用已有 Postgres 的事务、JOIN 与运维体系。是否需要迁移，应按向量索引、过滤负载和读写扩展的实测结果判断；扩展路径也包括只读副本及 Citus、PgDog 等分片方案。"
+        "pgvector 维护得很好，把向量放在已有数据库里本身就是优势。向量表一台主库放得下、又需要向量和关系行之间的事务、JOIN 或行级安全时，pgvector 向量数据库就是合适的选择；需要事务更新的 Agent 记忆是典型例子，大语料检索再交给 Milvus。搜 pgvector 替代方案的团队多半撞上了上面那些单主库行为。向量数据库选型按下表逐项核对，运维复杂度也在其中。"
       ],
-      "bullets": [
-        "数据本来就在 Postgres 里，向量表一个主库装得下。",
-        "需要向量和关系行之间的 ACID 事务或 JOIN。",
-        "Agent 记忆或 checkpoint 这类要事务更新的数据；大语料检索交给 Milvus，两者并用。",
-        "已经在用 RDS、Supabase、Neon 等托管 Postgres，不想多运维一个服务。",
-        "团队以 SQL 为主，只想要一个连接串，不想引入新的客户端库。"
-      ]
+      "table": {
+        "caption": "向量数据库对比选型清单：逐个问题看该偏向 pgvector 还是 Milvus",
+        "heads": [
+          "问题",
+          "偏向 pgvector",
+          "偏向 Milvus"
+        ],
+        "rows": [
+          [
+            "向量表会长到多大？",
+            "一台主库放得下，HNSW 索引放得进内存",
+            "数亿到数百亿"
+          ],
+          [
+            "有多少租户？",
+            "几十到几千，靠分区或分表",
+            "百万级，靠 partition key"
+          ],
+          [
+            "过滤条件有多挑剔？",
+            "少量宽泛过滤，迭代扫描够用",
+            "高选择率或多列过滤，标量索引先过滤"
+          ],
+          [
+            "需要 BM25 混合检索吗？",
+            "tsvector 加 SQL 里的 RRF 够用",
+            "服务端 BM25、一次 hybrid_search、Function Chain 重排"
+          ],
+          [
+            "谁来运维？",
+            "现有 Postgres 团队或托管 Postgres",
+            "Zilliz Cloud，或 Kubernetes 上的 Milvus Operator"
+          ]
+        ]
+      }
     },
     {
       "id": "adopters",
       "nav": "客户",
       "h2": "哪些 AI 公司和大型企业在生产环境用 Milvus？",
       "paragraphs": [
-        "从 AI 原生公司到大型企业，都在生产环境运行 Milvus 或 Zilliz Cloud（托管 Milvus）。milvus.io 用户墙上有 Salesforce、Walmart、NVIDIA、eBay、IBM、Cisco、Roblox、Reddit，也有 Exa.ai、OpenEvidence、Read.ai、Notta.ai、Plaud、Filevine。公开案例中的结果："
+        "从 AI 原生公司到大型企业都在生产环境运行 Milvus 或 Zilliz Cloud：milvus.io 用户墙上有 Salesforce、Walmart、NVIDIA、eBay、IBM、Cisco、Roblox、Reddit，也有 Exa.ai、OpenEvidence、Read.ai、Plaud、Filevine。"
       ],
       "bullets": [
         "OpenEvidence：基于 Zilliz Cloud，检索延迟低于 10 ms，峰值 4,000 QPS。",
         "Plaud：每个区域 100 亿+ 向量块，平均召回延迟低于 200 ms。",
-        "Exa：借助混合检索，神经搜索延迟从秒级降到 200 ms 以内。",
-        "Airtable：在 Kubernetes 上用 Milvus Operator 自建 Milvus，支撑语义检索。"
+        "Exa：借助混合检索，神经搜索延迟从秒级降到 200 ms 以内。"
       ]
     }
   ],
@@ -469,27 +557,27 @@
   "faqs": [
     [
       "Milvus 和 pgvector 谁更快？",
-      "本页补充了 pgvector 0.8.0 在 Aurora 上的公开查询延迟，另列 Milvus/Cloud 的 VectorDBBench 跑分。两者不是同条件对测，不能据此判断谁更快；实际选型应同时测过滤、召回率、并发吞吐和延迟。"
+      "没有同条件测试能回答。VectorDBBench 里 Milvus-16c64g-sq4u-fp16-force_merge 在 Cohere 1M 上为 9,575.69 QPS、P99 2.3 ms；2023 年 PgVector-2c8g IVFFlat 在 2 核上为 10.6271 QPS、P99 730.7 ms。pgvector 的 HNSW 数据来自其他数据集和机型，建议自己跑。"
     ],
     [
       "pgvector 支持多少条向量？",
-      "README 没有给条数上限，容量就是主库的容量：HNSW 图放进 maintenance_work_mem 才建得快，每个副本都是全量拷贝，超过一台机器要靠 Citus 或 PgDog 分片。Milvus Standalone 文档标称约 1 亿向量，Distributed 到数百亿。"
-    ],
-    [
-      "pgvector 支持混合检索吗？",
-      "支持：向量查询配合 Postgres 全文检索（tsvector），再在 SQL 或应用层用 RRF 合并两份结果。Milvus 的 BM25 函数在服务端运行，一次 hybrid_search 就能用 RRF 或加权 ranker 融合稠密和稀疏结果。"
+      "README 没有条数上限，容量就是主库的容量。AWS 公开的 LAION 100M（768 维）HNSW 索引 367 GB，建了 16.1 小时，128 GB 缓存上冷查询 3.4 QPS。Milvus Standalone 标称约 1 亿向量，Distributed 到数百亿。"
     ],
     [
       "pgvector 支持多少维度？",
-      "pgvector 的 vector 类型最多存 16,000 维，但 HNSW 和 IVFFlat 只能给 2,000 维以内的 vector 建索引；halfvec 可索引到 4,000 维，bit 到 64,000 维。Milvus 单个向量字段最高 32,768 维，可直接建索引。"
+      "vector 类型最多存 16,000 维，但 HNSW 和 IVFFlat 只能给 2,000 维以内的 vector 建索引；halfvec 可索引到 4,000 维，bit 到 64,000 维。Milvus 单个向量字段最高 32,768 维，可直接建索引。"
+    ],
+    [
+      "pgvector 支持混合检索吗？",
+      "支持：向量查询配合 Postgres 全文检索（tsvector），再用 RRF 或 cross-encoder 合并。Milvus 的 BM25 在服务端运行，一次 hybrid_search 就能融合稠密和稀疏结果。"
     ],
     [
       "什么情况下该选 pgvector？",
-      "向量和需要事务更新、JOIN 的关系行放在一起，且表一台 Postgres 实例装得下时，选 pgvector；规模、过滤检索性能或租户数成为瓶颈时，选 Milvus。PGSQL 和 Milvus 也可以并存：业务数据留在 Postgres，向量检索交给 Milvus。"
+      "向量和需要事务更新、JOIN 的关系行放在一起，表一台 Postgres 实例装得下，又想用同一个数据库的行级安全和 SQL 时，选 pgvector；规模、过滤吞吐、租户数或持续写入成为瓶颈时，选 Milvus。"
     ],
     [
       "什么时候该从 pgvector 迁移到 Milvus？",
-      "HNSW 建索引超出 maintenance_work_mem、读扩展只能靠全量副本、或租户数和过滤吞吐成为瓶颈时。迁移是拷贝：VTS 的 Postgres Vector 源端（pg_to_milvus）原样搬向量和列，不用重新生成向量；列映射成标量或 JSON 字段，建好索引后双写切流。"
+      "HNSW 建索引超出 maintenance_work_mem、读扩展只能靠全量副本、或租户数和过滤吞吐成为瓶颈时。迁移是拷贝：VTS 的 pg_to_milvus 原样搬向量和列，建好索引后双写切流，关系表留在 Postgres。"
     ]
   ],
   "stories": [
@@ -502,22 +590,15 @@
       "name": "美团",
       "text": "自建 Milvus 生产环境承载 100 亿+ 向量，单个 collection 超过 20 亿。",
       "href": "https://zilliz.com/customers/meituan"
-    },
-    {
-      "name": "Read AI",
-      "text": "基于 Milvus 为数百万月活用户提供 20–50 ms 检索延迟，活跃租户达百万级。",
-      "href": "https://zilliz.com/customers/read-ai"
     }
   ],
   "aiq": [
-    "how-does-a-vector-database-handle-scaling-up-to-millions-or-billions-of-vectors-and-what-architectural-features-enable-this-scalability",
-    "how-do-distributed-vector-databases-handle-sharding-and-replication",
-    "how-does-applying-boolean-filters-or-metadatabased-prefiltering-alongside-vector-similarity-search-influence-the-overall-query-performance",
     "what-is-hnsw",
+    "what-is-diskann",
     "how-do-you-choose-the-right-index-type-for-your-workload",
     "what-is-hybrid-search-and-when-should-i-use-it",
-    "what-is-the-role-of-multitenancy-in-scalability-considerations-for-vector-databases-and-how-might-resource-isolation-be-handled-when-multiple-applications-share-the-same-infrastructure",
-    "what-tools-help-benchmark-vector-search-performance"
+    "what-is-vector-reranking-and-when-should-you-apply-it",
+    "milvus-cdc-and-migration"
   ],
   "related": [
     "milvus-vs-qdrant",
@@ -528,7 +609,7 @@
   ],
   "managed": {
     "h2": "不想自己运维集群？",
-    "body": "Zilliz Cloud 是 Milvus 原班团队提供的全托管服务，MilvusClient API 与本地一致。可以先用开源 Milvus 起步，再迁到托管服务，应用代码不用重写。"
+    "body": "Zilliz Cloud 是 Milvus 原班团队提供的全托管服务，MilvusClient API 与本地一致。先用开源 Milvus 起步，再迁到托管服务，应用代码不用重写。"
   },
   "sources": [
     "https://milvus.io",
@@ -538,23 +619,64 @@
     "https://milvus.io/docs/scaleout.md",
     "https://milvus.io/docs/tiered-storage-overview.md",
     "https://milvus.io/docs/index-explained.md",
+    "https://milvus.io/docs/ivf-rabitq.md",
+    "https://milvus.io/docs/diskann.md",
+    "https://milvus.io/docs/gpu_index.md",
     "https://milvus.io/docs/limitations.md",
     "https://milvus.io/docs/schema.md",
+    "https://milvus.io/docs/text.md",
+    "https://milvus.io/docs/use-json-fields.md",
+    "https://milvus.io/docs/index-scalar-fields.md",
     "https://milvus.io/docs/filtered-search.md",
     "https://milvus.io/docs/use-partition-key.md",
+    "https://milvus.io/docs/multi_tenancy.md",
     "https://milvus.io/docs/full-text-search.md",
     "https://milvus.io/docs/multi-vector-search.md",
     "https://milvus.io/docs/reranking.md",
-    "https://milvus.io/docs/multi_tenancy.md",
+    "https://milvus.io/docs/decay-ranker-overview.md",
+    "https://milvus.io/docs/model-ranker-overview.md",
+    "https://milvus.io/docs/boost-ranker.md",
+    "https://milvus.io/docs/release_notes.md",
+    "https://milvus.io/docs/embedding-function-overview.md",
+    "https://milvus.io/docs/consistency.md",
+    "https://milvus.io/docs/upsert-entities.md",
+    "https://milvus.io/docs/rbac.md",
+    "https://milvus.io/docs/quickstart.md",
+    "https://milvus.io/docs/install_standalone-docker.md",
+    "https://milvus.io/docs/integrations_overview.md",
+    "https://github.com/zilliztech/milvus-backup",
+    "https://github.com/zilliztech/vts",
+    "https://github.com/zilliztech/vts/blob/master/seatunnel-examples/seatunnel-engine-examples/src/main/resources/examples/pg_to_milvus.conf",
     "https://github.com/pgvector/pgvector",
+    "https://github.com/pgvector/pgvector/blob/master/CHANGELOG.md",
     "https://github.com/pgvector/pgvector/blob/master/LICENSE",
-    "https://github.com/pgvector/pgvector/issues/54",
     "https://www.postgresql.org/docs/current/high-availability.html",
+    "https://www.postgresql.org/docs/current/hot-standby.html",
+    "https://www.postgresql.org/docs/current/ddl-rowsecurity.html",
+    "https://docs.aws.amazon.com/AmazonRDS/latest/PostgreSQLReleaseNotes/postgresql-extensions.html",
+    "https://supabase.com/docs/guides/database/extensions/pgvector",
+    "https://neon.com/docs/extensions/pgvector",
+    "https://docs.cloud.google.com/sql/docs/postgres/extensions",
+    "https://docs.cloud.google.com/alloydb/docs/reference/extensions",
+    "https://learn.microsoft.com/en-us/azure/postgresql/flexible-server/how-to-use-pgvector",
     "https://zilliz.com/vdbbench-leaderboard",
     "https://github.com/zilliztech/VectorDBBench",
     "https://github.com/zilliztech/VectorDBBench/blob/main/vectordb_bench/results/leaderboard_v2.json",
-    "https://github.com/zilliztech/VectorDBBench/blob/main/vectordb_bench/results/leaderboard.json",
-    "https://github.com/zilliztech/VectorDBBench/tree/main/vectordb_bench/backend/clients/pgvector",
+    "https://github.com/zilliztech/VectorDBBench/blob/main/vectordb_bench/results/PgVector/result_20230727_standard_pgvector.json",
+    "https://github.com/zilliztech/VectorDBBench/tree/main/vectordb_bench/backend/clients",
+    "https://jkatz05.com/post/postgres/pgvector-hnsw-performance/",
+    "https://aws.amazon.com/blogs/database/accelerate-hnsw-indexing-and-searching-with-pgvector-on-amazon-aurora-postgresql-compatible-edition-and-amazon-rds-for-postgresql/",
+    "https://supabase.com/blog/pgvector-vs-pinecone",
+    "https://supabase.com/blog/increase-performance-pgvector-hnsw",
+    "https://supabase.com/blog/pgvector-fast-builds",
+    "https://www.tigerdata.com/blog/pgvector-is-now-as-fast-as-pinecone-at-75-less-cost",
+    "https://www.tigerdata.com/blog/pgvector-vs-pinecone",
+    "https://aws.amazon.com/blogs/database/supercharging-vector-search-performance-and-relevance-with-pgvector-0-8-0-on-amazon-aurora-postgresql/",
+    "https://aws.amazon.com/blogs/database/scale-pgvector-with-binary-quantization-on-amazon-aurora-postgresql/",
+    "https://aws.amazon.com/blogs/database/running-pgvector-in-production-on-amazon-aurora-postgresql/",
+    "https://arxiv.org/abs/2603.23710",
+    "https://docs.langchain.com/oss/python/integrations/vectorstores/pgvector",
+    "https://docs.langchain.com/oss/python/integrations/vectorstores/milvus",
     "https://zilliz.com/customers/filevine",
     "https://zilliz.com/customers/openevidence",
     "https://zilliz.com/customers/exa",
@@ -562,28 +684,16 @@
     "https://zilliz.com/customers/plaud",
     "https://zilliz.com/customers/read-ai",
     "https://zilliz.com/customers/meituan",
-    "https://milvus.io/docs/zh/quickstart.md",
-    "https://cloud.zilliz.com.cn/signup",
-    "https://github.com/pgvector/pgvector/blob/master/CHANGELOG.md",
-    "https://docs.langchain.com/oss/python/integrations/vectorstores/pgvector",
-    "https://docs.langchain.com/oss/python/integrations/vectorstores/milvus",
-    "https://milvus.io/docs/integrations_overview.md",
-    "https://milvus.io/docs/install_standalone-docker.md",
-    "https://milvus.io/docs/gpu_index.md",
-    "https://github.com/zilliztech/vts",
-    "https://github.com/zilliztech/VectorDBBench/tree/main/vectordb_bench/backend/clients",
     "https://lfaidata.foundation/projects/",
-    "https://aws.amazon.com/blogs/database/supercharging-vector-search-performance-and-relevance-with-pgvector-0-8-0-on-amazon-aurora-postgresql/"
+    "https://milvus.io/docs/zh/quickstart.md",
+    "https://cloud.zilliz.com.cn/signup"
   ],
   "notes": [
-    "pgvector facts verified 2026-10-21 from the README on github.com/pgvector/pgvector (see English page notes); hosted providers from issue #54; read-only replicas / single primary from postgresql.org high-availability docs. Milvus 32,768 dims from docs/limitations.md (the /docs/zh/limitations.md stat source is the Chinese variant of the same page).",
-    "Customer facts reused from the Qdrant page (fetched 2026-10-21 from zilliz.com/customers). Meituan is not on the milvus.io logo wall, so it appears only as a story.",
-    "Wanted, unverified: pgvector version that introduced HNSW; pgvectorscale / pgvecto.rs not covered.",
-    "2023 v1 competitor row removed from charts (not same-condition); mentioned in prose only.",
-    "SERP pass 2026-10-21: studied 12 EN / 7 ZH results (same list as the English page; Zhihu 和 CSDN 140876718 返回 403/521，只读到标题). 中文结果共同点：运维复杂度星级（苏三 '一行 SQL ★☆☆☆☆ vs ★★★★☆'、'8GB+ 内存门槛'，这里用 Milvus Lite / Standalone 单容器事实回应）、规模阈值（'500万'、'100万–1亿'，按规范不写数字，只引 Milvus 文档的 Lite/Standalone/Distributed 档位）、'先用 pgvector 再迁 Milvus'、'PGVector 支持多少条向量'、'Milvus 一定比 PGVector 好吗'、混合检索一条 SQL。Gaps closed: 部署运维表、迁移（VTS pg_to_milvus）、README 过滤召回例子、HNSW 默认参数、框架与 star、并用模式。Dropped: 'pgvector 能扩展到十亿级向量吗' FAQ（改为 '支持多少条向量'）、Zilliz Cloud FAQ。新增关键词 'pgvector 迁移 Milvus'、'运维复杂度'。Not used: 各家价格（RDS、Supabase、Zilliz）、自测数字、'百万级 30 分钟内' 迁移耗时。",
-    "Correct Standalone dependency claim; migration reuses embeddings but is not a query/API drop-in.",
-    "Remove stale or unlike-for-like competitor benchmark numbers from prose and FAQs.",
-    "Add AWS May 2025 pgvector 0.8.0 query/configuration latency table, separately from VDBBench; distinguish result completeness from ANN recall and note latency-label ambiguity."
+    "Chinese twin of the 2026-10-21 rewrite: same section ids and the same pgvector benchmark rows as the English page (numbers verbatim from the same sources; see English notes for the verification list and the unverified items).",
+    "Keyword map unchanged from the previous ZH revision; questions with full-width '？' are matched as single tokens by kwcheck, so each appears verbatim in a FAQ question or h2.",
+    "Customer facts reused from the Qdrant page; Meituan appears only as a story (not on the milvus.io logo wall).",
+    "Separate historical pgvector bars; preserve source dates/conditions, serial P99, AWS terminology caveats and prior configuration table.",
+    "Qualify tenant filtering and HNSW memory requirements; distinguish capability choices from impossible-in-Postgres claims."
   ],
   "lang": "zh",
   "reviewedOn": "2026-10-21"

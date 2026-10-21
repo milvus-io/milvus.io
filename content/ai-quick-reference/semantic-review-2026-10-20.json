@@ -1,0 +1,2379 @@
+{
+  "checked_at": "2026-10-20",
+  "baseline": "4c059f651f91a3bc2d482028d52bf995c9222c20",
+  "article_count": 130,
+  "corrected_or_clarified": 34,
+  "original_figures": 21,
+  "figure_placements": 69,
+  "reviewer_scope": "Claim-level editorial review of all 130 English main bodies and examples, with targeted Chinese synchronization. Source snapshots are reused where already checked; no inference, benchmark, or guarantee of exhaustive error detection.",
+  "articles": [
+    {
+      "file": "vector-database.md",
+      "slug": "what-is-a-vector-database-and-why-is-it-important",
+      "title": "What is a vector database, and when do you need one?",
+      "topic": "foundations",
+      "baseline_sha256": "ad93b450d6b162542f4fcaf28c2f4a32747e14a203d660b26539f672e5018dce",
+      "reviewed_sha256": "ad93b450d6b162542f4fcaf28c2f4a32747e14a203d660b26539f672e5018dce",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://milvus.io/docs/overview.md",
+        "https://milvus.io/docs/quickstart.md",
+        "https://milvus.io/docs/schema.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "vector-search.md",
+      "slug": "what-is-vector-search",
+      "title": "What is vector search?",
+      "topic": "foundations",
+      "baseline_sha256": "0f8653b49cb84021b1973608c3fd526aeed87c564773051caa189f468537c0dc",
+      "reviewed_sha256": "113873f3fa8b3996e4281926db6960bb7826ac8730d21d7bbced719f117f9473",
+      "disposition": "corrected-or-clarified",
+      "notes": [
+        "Exact search is a correctness property; exhaustive FLAT is one implementation."
+      ],
+      "sources": [
+        "https://milvus.io/docs/quickstart.md",
+        "https://milvus.io/docs/metric.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "embeddings.md",
+      "slug": "what-are-embeddings-in-vector-search",
+      "title": "What are embeddings in vector search?",
+      "topic": "foundations",
+      "baseline_sha256": "98cfd319484fd6a8295606a5d8670d0a6f3a06e3c4dbd53c2794a2eea8168d38",
+      "reviewed_sha256": "98cfd319484fd6a8295606a5d8670d0a6f3a06e3c4dbd53c2794a2eea8168d38",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://milvus.io/docs/dense-vector.md",
+        "https://milvus.io/docs/quickstart.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "embedding-models.md",
+      "slug": "what-factors-should-be-considered-when-selecting-an-embedding-model-for-a-rag-pipeline-such-as-the-models-domain-training-data-embedding-dimensionality-and-semantic-accuracy",
+      "title": "How do you choose an embedding model for retrieval?",
+      "topic": "foundations",
+      "baseline_sha256": "a082a62a4a7af065bb2fbbb49c607e8715a91c6d2585a7ffdbc89eb8ce513d98",
+      "reviewed_sha256": "a082a62a4a7af065bb2fbbb49c607e8715a91c6d2585a7ffdbc89eb8ce513d98",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://huggingface.co/spaces/mteb/leaderboard",
+        "https://sbert.net/",
+        "https://milvus.io/docs/metric.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "metrics.md",
+      "slug": "what-is-the-role-of-distance-metrics-in-embeddings",
+      "title": "How do cosine similarity, inner product, and L2 differ?",
+      "topic": "foundations",
+      "baseline_sha256": "d253695caa8cce35ce51b568e778ab090d6655c2597c13613fa6fd840e7d9ad0",
+      "reviewed_sha256": "d253695caa8cce35ce51b568e778ab090d6655c2597c13613fa6fd840e7d9ad0",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://milvus.io/docs/metric.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "dense-sparse.md",
+      "slug": "what-are-dense-and-sparse-embeddings",
+      "title": "What are dense and sparse embeddings?",
+      "topic": "foundations",
+      "baseline_sha256": "37d5c67c7eb653f6fe04e8f14b406f92627c0009f79a3de16a1b0af3de4d5b07",
+      "reviewed_sha256": "4670560b3875678215ecf407cec37d1dfd34503fe09a49cdc0700159909f59bc",
+      "disposition": "corrected-or-clarified",
+      "notes": [
+        "A lexical benefit depends on tokenization and task, not merely the presence of an exact-looking code."
+      ],
+      "sources": [
+        "https://milvus.io/docs/dense-vector.md",
+        "https://milvus.io/docs/full-text-search.md",
+        "https://milvus.io/docs/sparse-inverted-index.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "multimodal-embeddings.md",
+      "slug": "what-are-multimodal-embeddings",
+      "title": "What are multimodal embeddings?",
+      "topic": "foundations",
+      "baseline_sha256": "b64976834f4e20b851583bc70abebf892f070efc5d96d9bde6fb27dbecd649c7",
+      "reviewed_sha256": "281c708d4923d0402821c5d547904734c93885435fe2a3d12df7dd1a1800c1f8",
+      "disposition": "corrected-or-clarified",
+      "notes": [
+        "Rewrite modality alignment versus preferences; distinguish single-vector and multi-vector output; replace an incorrect multi-vector diagram and implementation link."
+      ],
+      "sources": [
+        "https://milvus.io/docs/multimodal_rag_with_milvus.md",
+        "https://milvus.io/docs/text_image_search.md",
+        "https://arxiv.org/abs/2103.00020",
+        "https://research.google/pubs/deep-neural-networks-for-youtube-recommendations/"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "semantic-keyword.md",
+      "slug": "what-is-semantic-search-and-how-does-it-differ-from-keyword-search",
+      "title": "How does semantic search differ from keyword search?",
+      "topic": "retrieval",
+      "baseline_sha256": "aa852e5bc47b3ca3a9ff0fe061b5de4cac3a86f5b670a5e90852e7f7cc6ae1ea",
+      "reviewed_sha256": "aa852e5bc47b3ca3a9ff0fe061b5de4cac3a86f5b670a5e90852e7f7cc6ae1ea",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://milvus.io/docs/full-text-search.md",
+        "https://milvus.io/docs/multi-vector-search.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "fulltext.md",
+      "slug": "what-is-fulltext-search",
+      "title": "What is full-text search, and how does BM25 fit?",
+      "topic": "retrieval",
+      "baseline_sha256": "968c2d640721b0b3896eaeffd608aff0175913fee41f1cb2606eb5619d5f9a92",
+      "reviewed_sha256": "968c2d640721b0b3896eaeffd608aff0175913fee41f1cb2606eb5619d5f9a92",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://milvus.io/docs/full-text-search.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "ann.md",
+      "slug": "what-is-approximate-nearestneighbor-ann-search",
+      "title": "What is approximate nearest-neighbor search?",
+      "topic": "retrieval",
+      "baseline_sha256": "7f3ce13b6ba950875e03ab1a19440f6b2f62e1697b0aab7a49cccd1c306cb357",
+      "reviewed_sha256": "45e6e9d9a3cfbafa7f296fb3b143a0308ab35bd898d0d998ac06902e506ac569",
+      "disposition": "corrected-or-clarified",
+      "notes": [
+        "ANN is not defined only by searching a strict subset, and misses or speedups are not inevitable."
+      ],
+      "sources": [
+        "https://milvus.io/docs/index-explained.md",
+        "https://milvus.io/docs/metric.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "hnsw.md",
+      "slug": "what-is-hnsw",
+      "title": "What is HNSW, and how should you tune it?",
+      "topic": "retrieval",
+      "baseline_sha256": "1a0c7c87f3ac899e08ce806e18536cf983653f98c4a570c2fe06a423a4f6985b",
+      "reviewed_sha256": "1a0c7c87f3ac899e08ce806e18536cf983653f98c4a570c2fe06a423a4f6985b",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://milvus.io/docs/hnsw.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "ivf.md",
+      "slug": "how-do-inverted-file-ivf-indexes-work-in-vector-databases-and-what-role-do-clustering-centroids-play-in-the-search-process",
+      "title": "How do IVF indexes use centroids to search vectors?",
+      "topic": "retrieval",
+      "baseline_sha256": "6ed617737497a4be83a72e73a23ae36608d795e742094badd6253258173f209c",
+      "reviewed_sha256": "6ed617737497a4be83a72e73a23ae36608d795e742094badd6253258173f209c",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://milvus.io/docs/ivf-flat.md",
+        "https://milvus.io/docs/ivf-pq.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "quantization.md",
+      "slug": "what-is-vector-quantization-in-embeddings",
+      "title": "What is vector quantization, and what does it trade off?",
+      "topic": "retrieval",
+      "baseline_sha256": "c4da0f4ce3712e238e005d918447f2c536dee6688f5bb1f39e99d1b95607c3d1",
+      "reviewed_sha256": "c4da0f4ce3712e238e005d918447f2c536dee6688f5bb1f39e99d1b95607c3d1",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://milvus.io/docs/index-explained.md",
+        "https://milvus.io/docs/ivf-pq.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "index-selection.md",
+      "slug": "how-do-you-choose-the-right-index-type-for-your-workload",
+      "title": "How do you choose a vector index for your workload?",
+      "topic": "retrieval",
+      "baseline_sha256": "c2c837b304f448d3bbf73e352d5297718a0abdb50d114e6eb9c88da43ce04561",
+      "reviewed_sha256": "c2c837b304f448d3bbf73e352d5297718a0abdb50d114e6eb9c88da43ce04561",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://milvus.io/docs/index-explained.md",
+        "https://milvus.io/docs/index_selection.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "metadata-filtering.md",
+      "slug": "how-does-applying-boolean-filters-or-metadatabased-prefiltering-alongside-vector-similarity-search-influence-the-overall-query-performance",
+      "title": "How do metadata filters interact with vector search?",
+      "topic": "retrieval",
+      "baseline_sha256": "45fe096144a84721b87b084826dcbe9c99a58cde306db71162ac1817ef433dff",
+      "reviewed_sha256": "45fe096144a84721b87b084826dcbe9c99a58cde306db71162ac1817ef433dff",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://milvus.io/docs/filtered-search.md",
+        "https://milvus.io/docs/basic-operators.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "hybrid.md",
+      "slug": "what-is-hybrid-search-and-when-should-i-use-it",
+      "title": "What is hybrid search, and when should you use it?",
+      "topic": "retrieval",
+      "baseline_sha256": "2a34bfd31b74189091e01655fe67e3f2a03ca884fd1b6d1dfd8c919a6fd6d1ea",
+      "reviewed_sha256": "2a34bfd31b74189091e01655fe67e3f2a03ca884fd1b6d1dfd8c919a6fd6d1ea",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://milvus.io/docs/multi-vector-search.md",
+        "https://milvus.io/docs/rrf-ranker.md",
+        "https://milvus.io/docs/full-text-search.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "reranking.md",
+      "slug": "what-is-vector-reranking-and-when-should-you-apply-it",
+      "title": "What is reranking, and when should you apply it?",
+      "topic": "retrieval",
+      "baseline_sha256": "15b20825a2fb9ffe28eae897947f41456432f78c3b6910ef4b2c801836373455",
+      "reviewed_sha256": "15b20825a2fb9ffe28eae897947f41456432f78c3b6910ef4b2c801836373455",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://sbert.net/examples/sentence_transformer/applications/retrieve_rerank/README.html",
+        "https://milvus.io/docs/reranking.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "rag.md",
+      "slug": "what-is-rag-retrievalaugmented-generation-in-nlp",
+      "title": "What is retrieval-augmented generation (RAG)?",
+      "topic": "rag-agents",
+      "baseline_sha256": "20875cebc914ebcb7f0e5607bdbf5d21a974a51c540846dcbb0e3cfc43fd850c",
+      "reviewed_sha256": "20875cebc914ebcb7f0e5607bdbf5d21a974a51c540846dcbb0e3cfc43fd850c",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://milvus.io/docs/build-rag-with-milvus.md",
+        "https://milvus.io/docs/rag_pipeline.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "chunking.md",
+      "slug": "what-is-the-optimal-chunk-size-for-rag-applications",
+      "title": "How do you choose chunk size for RAG?",
+      "topic": "rag-agents",
+      "baseline_sha256": "9c7aa4f5b46f84acc430428b38d2858f1a90279f2a9dcacf14666c95b404f666",
+      "reviewed_sha256": "68bd13ad778ab929d45943c6937a2b570af9124c7dfb052ed51b0ad8cd4a314b",
+      "disposition": "corrected-or-clarified",
+      "notes": [
+        "Development selection and final held-out testing must be separated."
+      ],
+      "sources": [
+        "https://milvus.io/docs/build-rag-with-milvus.md",
+        "https://milvus.io/docs/rag_pipeline.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "retrieval-evaluation.md",
+      "slug": "how-can-we-measure-the-accuracy-of-the-retrieval-component-in-a-rag-system-for-example-using-metrics-like-precisionk-and-recallk-on-the-documents-retrieved",
+      "title": "How do you evaluate retrieval quality?",
+      "topic": "rag-agents",
+      "baseline_sha256": "48f19e09c1537c713f10576aafc7eb75d44017f3b7c2213b8fb3fb7d90731eb8",
+      "reviewed_sha256": "48f19e09c1537c713f10576aafc7eb75d44017f3b7c2213b8fb3fb7d90731eb8",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://github.com/beir-cellar/beir/wiki/Metrics-available",
+        "https://milvus.io/docs/integrate_with_ragas.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "agent-memory.md",
+      "slug": "what-are-best-practices-for-structuring-agent-memory-in-milvus",
+      "title": "How should you structure agent memory in Milvus?",
+      "topic": "rag-agents",
+      "baseline_sha256": "fc6362be5e81b2006667eac9657501f909bf8ad6886ad1b756bc087ceb7190f6",
+      "reviewed_sha256": "5f2ec58cd340b59fbd3c5f0b1c7c0ce7bc0eb11f566a14dc2d67bcc8d2ee38fe",
+      "disposition": "corrected-or-clarified",
+      "notes": [
+        "Memory includes exact task state and non-vector access; retrieval is only one implementation."
+      ],
+      "sources": [
+        "https://github.com/zilliztech/memsearch/blob/main/docs/design-philosophy.md",
+        "https://milvus.io/docs/basic_memory_with_milvus.md",
+        "https://milvus.io/docs/filtered-search.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "graph-rag.md",
+      "slug": "how-does-milvus-enable-graph-rag-for-multihop-agent-reasoning",
+      "title": "What is Graph RAG, and where does Milvus fit?",
+      "topic": "rag-agents",
+      "baseline_sha256": "4410e0bc52d8045dc93c8056e33ad6828f6b63b4decfafbf7f537d26a2dab70d",
+      "reviewed_sha256": "4410e0bc52d8045dc93c8056e33ad6828f6b63b4decfafbf7f537d26a2dab70d",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://milvus.io/docs/graph_rag_with_milvus.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "ingestion.md",
+      "slug": "what-are-the-main-phases-of-an-etl-process",
+      "title": "How does ETL prepare data for vector search?",
+      "topic": "data",
+      "baseline_sha256": "72ac6a7571f98117f9b800a270902e8610e71583683a427665e45e374002da59",
+      "reviewed_sha256": "72ac6a7571f98117f9b800a270902e8610e71583683a427665e45e374002da59",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://milvus.io/docs/prepare-source-data.md",
+        "https://milvus.io/docs/import-data.md",
+        "https://milvus.io/docs/schema.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "data-quality.md",
+      "slug": "how-does-etl-help-improve-data-quality",
+      "title": "How does data quality affect vector retrieval?",
+      "topic": "data",
+      "baseline_sha256": "73b7050d940756f3f0739e91126df81432ca03f318a854e00c33b7bc8d68e6a2",
+      "reviewed_sha256": "ac347ffdf207a93333f29d83c13e5539e96d3a84b4c2b99bd8124adfbf55331b",
+      "disposition": "corrected-or-clarified",
+      "notes": [
+        "A similarity score must not be described as calibrated confidence in correctness."
+      ],
+      "sources": [
+        "https://milvus.io/docs/prepare-source-data.md",
+        "https://milvus.io/docs/schema.md",
+        "https://milvus.io/docs/build-rag-with-milvus.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "deduplication.md",
+      "slug": "how-can-sentence-transformers-be-used-for-data-deduplication-when-you-have-a-large-set-of-text-entries-that-might-be-redundant-or-overlapping",
+      "title": "How can embeddings help with data deduplication?",
+      "topic": "data",
+      "baseline_sha256": "2b4c28bff091063331f85d20c83f24c7b1dcb196f2ef10d4190354b0791bd2f4",
+      "reviewed_sha256": "63ee2305ce5db8384ca496b676441784a7e48b58206115435d645c3d841af55b",
+      "disposition": "corrected-or-clarified",
+      "notes": [
+        "Curation exclusion is not the same as erasing authoritative originals."
+      ],
+      "sources": [
+        "https://www.sbert.net/examples/sentence_transformer/applications/paraphrase-mining/README.html",
+        "https://milvus.io/docs/minhash-function.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "clustering.md",
+      "slug": "how-are-embeddings-used-in-document-clustering",
+      "title": "How are embeddings used in document clustering?",
+      "topic": "data",
+      "baseline_sha256": "a52140496675dec9e6c902ee8e609e7531c97faf422d122f46e85a22d360fe02",
+      "reviewed_sha256": "90a9f013d1f93b39f1badd3f6133379d1c7581ec93243de99b95079e4e7d411f",
+      "disposition": "corrected-or-clarified",
+      "notes": [
+        "A Spark pipeline does not explain clustering and must not imply a required dependency."
+      ],
+      "sources": [
+        "https://www.sbert.net/examples/sentence_transformer/applications/clustering/README.html",
+        "https://milvus.io/docs/enable-dynamic-field.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "updates.md",
+      "slug": "how-do-you-handle-incremental-updates-in-a-vector-database",
+      "title": "How do you handle incremental updates in a vector database?",
+      "topic": "data",
+      "baseline_sha256": "bd3496186f0f69a4819c43d5732e21653e3d906bbf38ca1bfe5fb9ab614470cb",
+      "reviewed_sha256": "bd3496186f0f69a4819c43d5732e21653e3d906bbf38ca1bfe5fb9ab614470cb",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://milvus.io/docs/upsert-entities.md",
+        "https://milvus.io/docs/delete-entities.md",
+        "https://milvus.io/docs/consistency.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "consistency.md",
+      "slug": "what-is-eventual-consistency",
+      "title": "What does eventual consistency mean for vector search?",
+      "topic": "production",
+      "baseline_sha256": "ed854efa3966d826180373b96326094da700f2a13cc18d6a635006dc0c5ca607",
+      "reviewed_sha256": "ed854efa3966d826180373b96326094da700f2a13cc18d6a635006dc0c5ca607",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://milvus.io/docs/consistency.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "multitenancy.md",
+      "slug": "what-is-the-role-of-multitenancy-in-scalability-considerations-for-vector-databases-and-how-might-resource-isolation-be-handled-when-multiple-applications-share-the-same-infrastructure",
+      "title": "How should you design multi-tenancy for vector search?",
+      "topic": "production",
+      "baseline_sha256": "cdfcdfaaeb23158c88c223df8620681d0f57d450a2cb963cc86a001e6cce8dec",
+      "reviewed_sha256": "cdfcdfaaeb23158c88c223df8620681d0f57d450a2cb963cc86a001e6cce8dec",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://milvus.io/docs/multi_tenancy.md",
+        "https://milvus.io/docs/filtered-search.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "sharding-replication.md",
+      "slug": "how-do-distributed-vector-databases-handle-sharding-and-replication",
+      "title": "How do sharding and replication differ in a vector database?",
+      "topic": "production",
+      "baseline_sha256": "7fe7cf2adcddf4690beee5ef9a0fdda5f7fa05b24aa07aa219c5d8bcba276fd0",
+      "reviewed_sha256": "7fe7cf2adcddf4690beee5ef9a0fdda5f7fa05b24aa07aa219c5d8bcba276fd0",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://milvus.io/docs/architecture_overview.md",
+        "https://milvus.io/docs/multi_tenancy.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "scalability.md",
+      "slug": "how-does-a-vector-database-handle-scaling-up-to-millions-or-billions-of-vectors-and-what-architectural-features-enable-this-scalability",
+      "title": "What determines vector-database scalability?",
+      "topic": "production",
+      "baseline_sha256": "dcceb8058d1c4253cd91d542568d762869255df5092afab4857728f78fbca3bd",
+      "reviewed_sha256": "dcceb8058d1c4253cd91d542568d762869255df5092afab4857728f78fbca3bd",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://milvus.io/docs/architecture_overview.md",
+        "https://milvus.io/docs/index-explained.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "benchmark.md",
+      "slug": "what-tools-help-benchmark-vector-search-performance",
+      "title": "How should you benchmark vector search performance?",
+      "topic": "production",
+      "baseline_sha256": "ef19cffef4ad367606aacfe252a11fd554549fbb73168dcd89439496496c8cd5",
+      "reviewed_sha256": "ef19cffef4ad367606aacfe252a11fd554549fbb73168dcd89439496496c8cd5",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://github.com/zilliztech/VectorDBBench",
+        "https://milvus.io/docs/index-explained.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "memory-capacity.md",
+      "slug": "how-does-vector-search-manage-memory-usage",
+      "title": "How do you estimate memory for vector search?",
+      "topic": "production",
+      "baseline_sha256": "9f53bc4a74844629a6c13aa9ae0bfe71cd79eb96e3d1b481b72a35502181fb9b",
+      "reviewed_sha256": "9f53bc4a74844629a6c13aa9ae0bfe71cd79eb96e3d1b481b72a35502181fb9b",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://milvus.io/docs/index-explained.md",
+        "https://milvus.io/docs/load-and-release.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "latency-throughput.md",
+      "slug": "how-does-batching-multiple-queries-together-affect-latency-and-throughput-in-what-scenarios-is-batch-querying-beneficial-or-detrimental-for-vector-search",
+      "title": "How do batching, latency, and throughput interact in vector search?",
+      "topic": "production",
+      "baseline_sha256": "686eeaf303fa280c8594a4793e8cd0b770057a90f2cea7587e28618bd6cada2c",
+      "reviewed_sha256": "686eeaf303fa280c8594a4793e8cd0b770057a90f2cea7587e28618bd6cada2c",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://milvus.io/docs/single-vector-search.md",
+        "https://github.com/zilliztech/VectorDBBench"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "cost.md",
+      "slug": "what-are-the-tradeoffs-of-using-a-cloudbased-vector-store-service-in-a-rag-system-evaluation-in-terms-of-latency-variance-network-costs-etc-versus-a-local-inmemory-store",
+      "title": "How do you compare managed and self-hosted vector-search costs?",
+      "topic": "production",
+      "baseline_sha256": "8c7c81d50c8f8defd7da80abc2b7d8be090e78bbbe9af826c31d0880cfced6e3",
+      "reviewed_sha256": "8c7c81d50c8f8defd7da80abc2b7d8be090e78bbbe9af826c31d0880cfced6e3",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://zilliz.com/cloud",
+        "https://zilliz.com/pricing",
+        "https://milvus.io/docs/install_standalone-docker.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "backup.md",
+      "slug": "how-do-vector-databases-handle-backup-and-restore-or-replication-for-very-large-datasets-and-what-impact-does-that-have-on-system-design-in-terms-of-time-and-storage-overhead",
+      "title": "How should you plan backup and recovery for a vector database?",
+      "topic": "production",
+      "baseline_sha256": "2c421b1047286cf97c45ae220c26d039b53fe3022e61b25aeee612e0ffd98d8e",
+      "reviewed_sha256": "2c421b1047286cf97c45ae220c26d039b53fe3022e61b25aeee612e0ffd98d8e",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://milvus.io/docs/milvus_backup_overview.md",
+        "https://milvus.io/docs/milvus_backup_cli.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "vector-data-lake.md",
+      "slug": "what-is-a-vector-data-lake",
+      "title": "What is a vector data lake?",
+      "topic": "lake",
+      "baseline_sha256": "1a8cbf88a23cb3b0332305651dc1583947f85d17dcff7f036742c47f8fbd5d02",
+      "reviewed_sha256": "6a7fc651f1299b2567a6fa6aba807e5d7e32ab19ee28d94efb5f185c9249435c",
+      "disposition": "corrected-or-clarified",
+      "notes": [
+        "Distinguish an architectural term from a standardized format or a serving capability."
+      ],
+      "sources": [
+        "https://milvus.io/docs/storage-v3.md",
+        "https://lance.org/",
+        "https://iceberg.apache.org/docs/latest/evolution/"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "vector-lakebase.md",
+      "slug": "what-is-vector-lakebase",
+      "title": "What is Vector Lakebase, and how does it connect a lake to vector search?",
+      "topic": "lake",
+      "baseline_sha256": "d0115be7dca48629517bae232f7ecb20aed377eef3205841ec9b38221ae2922d",
+      "reviewed_sha256": "12ef9f408f51f13fa6b27d0c35eac34b99c73abcd78041da48a1a8a6f4eec9c0",
+      "disposition": "corrected-or-clarified",
+      "notes": [
+        "Attribute the architecture term and separate it from product-independent standards and guarantees."
+      ],
+      "sources": [
+        "https://milvus.io/docs/create-an-external-collection.md",
+        "https://milvus.io/docs/snapshots.md",
+        "https://milvus.io/docs/integrate_with_spark.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "milvus-lance.md",
+      "slug": "how-can-milvus-search-lance-data",
+      "title": "How can Milvus search data stored in Lance?",
+      "topic": "lake",
+      "baseline_sha256": "f3b31c7d5951749a0aa01ec5fb3633bedf6f50227fce0580682b8cfe315623c0",
+      "reviewed_sha256": "f3b31c7d5951749a0aa01ec5fb3633bedf6f50227fce0580682b8cfe315623c0",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://milvus.io/docs/storage-v3.md",
+        "https://milvus.io/docs/create-an-external-collection.md",
+        "https://lance.org/"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "milvus-iceberg.md",
+      "slug": "how-can-milvus-search-iceberg-tables",
+      "title": "How can Milvus search an Apache Iceberg table?",
+      "topic": "lake",
+      "baseline_sha256": "beba3647b3c414d60077fbaa46867ad5c20d382f0b6fdce051f3e99109418030",
+      "reviewed_sha256": "beba3647b3c414d60077fbaa46867ad5c20d382f0b6fdce051f3e99109418030",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://milvus.io/docs/storage-v3.md",
+        "https://milvus.io/docs/create-an-external-collection.md",
+        "https://iceberg.apache.org/spec/"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "external-collections.md",
+      "slug": "when-to-use-milvus-external-collections",
+      "title": "When should you use a Milvus external collection?",
+      "topic": "lake",
+      "baseline_sha256": "79cf0b6b90e65f2e603cd6db7ea3c24f02d298fddc19943673f6fe86b4d52358",
+      "reviewed_sha256": "15726571f47e1fe839fc33d7f63aadfbefd932af9df647a862b38c742a0d9ec2",
+      "disposition": "corrected-or-clarified",
+      "notes": [
+        "A documented feature is not necessarily enabled by default."
+      ],
+      "sources": [
+        "https://milvus.io/docs/create-an-external-collection.md",
+        "https://milvus.io/docs/storage-v3.md",
+        "https://milvus.io/docs/alter-external-collection-schema.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "external-refresh.md",
+      "slug": "how-to-refresh-milvus-external-collections",
+      "title": "How should you refresh a Milvus external collection safely?",
+      "topic": "lake",
+      "baseline_sha256": "008409aaaef80f0215fe33f970fe63e47d2896cc6adcdb094d01dc95baf89cae",
+      "reviewed_sha256": "008409aaaef80f0215fe33f970fe63e47d2896cc6adcdb094d01dc95baf89cae",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://milvus.io/docs/create-an-external-collection.md",
+        "https://milvus.io/docs/alter-external-collection-schema.md",
+        "https://iceberg.apache.org/docs/latest/maintenance/"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "lake-source-identifiers.md",
+      "slug": "how-to-keep-stable-ids-between-lake-data-and-vector-search",
+      "title": "How do you keep stable identities between lake data and vector search?",
+      "topic": "lake",
+      "baseline_sha256": "4b664d41d686a9d06477f5c8f8af2e9d5f0379b85b26d87aedbb93d9e9c87bed",
+      "reviewed_sha256": "4b664d41d686a9d06477f5c8f8af2e9d5f0379b85b26d87aedbb93d9e9c87bed",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://milvus.io/docs/create-an-external-collection.md",
+        "https://milvus.io/docs/primary-field.md",
+        "https://iceberg.apache.org/docs/latest/evolution/"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "arrow-parquet.md",
+      "slug": "how-arrow-and-parquet-fit-vector-data-pipelines",
+      "title": "How do Arrow and Parquet fit into vector data pipelines?",
+      "topic": "lake",
+      "baseline_sha256": "6f3a9f8047d14498bde5a7f9f1b71b8138ccebc497bb81ea51029e0e47cfc094",
+      "reviewed_sha256": "6f3a9f8047d14498bde5a7f9f1b71b8138ccebc497bb81ea51029e0e47cfc094",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://arrow.apache.org/docs/format/Columnar.html",
+        "https://parquet.apache.org/docs/file-format/",
+        "https://milvus.io/docs/prepare-source-data.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "reproducible-snapshots.md",
+      "slug": "how-to-reproduce-vector-search-and-training-experiments",
+      "title": "How do you make vector-search and training experiments reproducible?",
+      "topic": "lake",
+      "baseline_sha256": "0bd7e522f1c308fe3155c3396ba52fb083bb70c1512c65eca4ab399567d33c15",
+      "reviewed_sha256": "0bd7e522f1c308fe3155c3396ba52fb083bb70c1512c65eca4ab399567d33c15",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://milvus.io/docs/snapshots.md",
+        "https://milvus.io/docs/manage-snapshots.md",
+        "https://iceberg.apache.org/docs/latest/maintenance/"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "lake-deletions.md",
+      "slug": "how-to-propagate-lake-deletions-to-vector-search",
+      "title": "How should deletions propagate from a data lake to vector search?",
+      "topic": "lake",
+      "baseline_sha256": "92cacfd8e6abcdae3ef29ee8d84d1a587ef4e5bcca4a251f638f870189181daf",
+      "reviewed_sha256": "92cacfd8e6abcdae3ef29ee8d84d1a587ef4e5bcca4a251f638f870189181daf",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://milvus.io/docs/storage-v3.md",
+        "https://milvus.io/docs/create-an-external-collection.md",
+        "https://milvus.io/docs/delete-entities.md",
+        "https://iceberg.apache.org/spec/"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "lake-serving-tiers.md",
+      "slug": "how-to-design-hot-and-cold-vector-serving",
+      "title": "How should you separate hot vector serving from cold lake data?",
+      "topic": "lake",
+      "baseline_sha256": "8250f64b06aa0511c3ed80ff203cfef3cdc028f9d42282aac3232809d0377bed",
+      "reviewed_sha256": "8250f64b06aa0511c3ed80ff203cfef3cdc028f9d42282aac3232809d0377bed",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://milvus.io/docs/tiered-storage-overview.md",
+        "https://milvus.io/docs/warm-up.md",
+        "https://milvus.io/docs/best-practices-for-tiered-storage.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "lance-iceberg-choice.md",
+      "slug": "lance-iceberg-parquet-for-vector-data-lakes",
+      "title": "How do Lance, Iceberg, and Parquet play different roles in a vector lake?",
+      "topic": "lake",
+      "baseline_sha256": "59aab649196510924bb9658de585f57f8305efabe64590ed7ad76f06ff0b0f8c",
+      "reviewed_sha256": "59aab649196510924bb9658de585f57f8305efabe64590ed7ad76f06ff0b0f8c",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://lance.org/",
+        "https://iceberg.apache.org/spec/",
+        "https://parquet.apache.org/docs/file-format/",
+        "https://milvus.io/docs/storage-v3.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "milvus-architecture.md",
+      "slug": "how-milvus-separates-ingestion-storage-and-search",
+      "title": "How does the Milvus architecture separate ingestion, storage, and search?",
+      "topic": "ecosystem",
+      "baseline_sha256": "19c4b065261e58e5ea24f71dae48c7540a8bfe4f720a2731e86e64c02bef7733",
+      "reviewed_sha256": "19c4b065261e58e5ea24f71dae48c7540a8bfe4f720a2731e86e64c02bef7733",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://milvus.io/docs/architecture_overview.md",
+        "https://milvus.io/docs/main_components.md",
+        "https://milvus.io/docs/streaming_service.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "knowhere.md",
+      "slug": "what-is-knowhere",
+      "title": "What is Knowhere, and how does Milvus use it?",
+      "topic": "ecosystem",
+      "baseline_sha256": "b782cc63a92941e33a7f1d0af80dc960b7be730ca76f5d51c81386566666ae76",
+      "reviewed_sha256": "b782cc63a92941e33a7f1d0af80dc960b7be730ca76f5d51c81386566666ae76",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://github.com/zilliztech/knowhere",
+        "https://milvus.io/docs/index-explained.md",
+        "https://milvus.io/docs/bitset.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "woodpecker.md",
+      "slug": "what-is-woodpecker",
+      "title": "What is Woodpecker's role in the Milvus write path?",
+      "topic": "ecosystem",
+      "baseline_sha256": "70fb1f1f144afd933f38db79caf950055ffea78294bdb63ab893def05ebb4343",
+      "reviewed_sha256": "70fb1f1f144afd933f38db79caf950055ffea78294bdb63ab893def05ebb4343",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://github.com/zilliztech/woodpecker",
+        "https://milvus.io/docs/woodpecker_architecture.md",
+        "https://milvus.io/docs/streaming_service.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "talon.md",
+      "slug": "what-is-talon",
+      "title": "What is Talon, and when can object-store caching help vector workloads?",
+      "topic": "ecosystem",
+      "baseline_sha256": "4d4a4a347f6bdc8a3836e16d6d218d99bbadc0ef7dbd237ec6590ed7df1748c2",
+      "reviewed_sha256": "5beaa93649684d0c0d018b4d20cfe684aa8e23da765720b8cd3801bfcfaae6f1",
+      "disposition": "corrected-or-clarified",
+      "notes": [
+        "A general diagnostic diagram is not an object-cache architecture diagram."
+      ],
+      "sources": [
+        "https://github.com/milvus-io/talon",
+        "https://milvus-io.github.io/talon/tutorials/getting-started.html",
+        "https://milvus.io/docs/tiered-storage-overview.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "attu.md",
+      "slug": "what-is-attu",
+      "title": "How can Attu help you inspect and manage Milvus?",
+      "topic": "ecosystem",
+      "baseline_sha256": "8bf8f23a424e56c527639ad742ac4a575e738b7b1a4818b782f1e7756b8dda2c",
+      "reviewed_sha256": "8bf8f23a424e56c527639ad742ac4a575e738b7b1a4818b782f1e7756b8dda2c",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://github.com/zilliztech/attu",
+        "https://milvus.io/docs/quickstart_with_attu.md",
+        "https://milvus.io/docs/rbac.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "milvus-storage.md",
+      "slug": "what-is-milvus-storage",
+      "title": "What does the milvus-storage project provide?",
+      "topic": "ecosystem",
+      "baseline_sha256": "fc94a8f6c5feb42a5eeac9fe1d0cec35c895c8bb148fd0286cd5706f1c767ef0",
+      "reviewed_sha256": "9acae8f9eacb234123fef1dd27b58f2b50304e5f0a2d57b6e9e9112b76158f2d",
+      "disposition": "corrected-or-clarified",
+      "notes": [
+        "Explain Loon, the implementation repository, Storage V3, defaults, and data-format compatibility separately."
+      ],
+      "sources": [
+        "https://github.com/milvus-io/milvus-storage",
+        "https://milvus.io/docs/storage-v3.md",
+        "https://arrow.apache.org/docs/format/Columnar.html",
+        "https://milvus.io/blog/why-we-built-loon-a-storage-engine-for-ai-data-that-never-stops-changing.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "streaming-node.md",
+      "slug": "what-is-milvus-streaming-node",
+      "title": "What does the Milvus Streaming Node do?",
+      "topic": "ecosystem",
+      "baseline_sha256": "a4a264692b9e277bfb4ab7b8093ad46571591cf24b42031fd2a510651240b568",
+      "reviewed_sha256": "a4a264692b9e277bfb4ab7b8093ad46571591cf24b42031fd2a510651240b568",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://milvus.io/docs/streaming_service.md",
+        "https://milvus.io/docs/woodpecker_architecture.md",
+        "https://milvus.io/docs/consistency.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "node-responsibilities.md",
+      "slug": "how-to-find-milvus-performance-bottlenecks",
+      "title": "How do you locate a bottleneck across Milvus components?",
+      "topic": "ecosystem",
+      "baseline_sha256": "2066a4c3aad30ba35a0f43532d58637770769a818bd797116b67e528e6d1bff9",
+      "reviewed_sha256": "2066a4c3aad30ba35a0f43532d58637770769a818bd797116b67e528e6d1bff9",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://milvus.io/docs/main_components.md",
+        "https://milvus.io/docs/monitor_overview.md",
+        "https://milvus.io/docs/metrics_dashboard.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "milvusclient.md",
+      "slug": "how-to-build-applications-with-pymilvus-milvusclient",
+      "title": "How should you build a reproducible application workflow with PyMilvus?",
+      "topic": "ecosystem",
+      "baseline_sha256": "15f0977a41244c72704ae7bebb706f7ce069aea89f297cdbc17f57e41fe366d0",
+      "reviewed_sha256": "15f0977a41244c72704ae7bebb706f7ce069aea89f297cdbc17f57e41fe366d0",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://milvus.io/docs/quickstart.md",
+        "https://milvus.io/docs/install-pymilvus.md",
+        "https://milvus.io/docs/schema.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "spark-milvus.md",
+      "slug": "how-spark-integrates-with-milvus",
+      "title": "How does the Spark-Milvus connector fit into an AI data pipeline?",
+      "topic": "ecosystem",
+      "baseline_sha256": "3df5e59cf4e1a55e831ba08679008e8f4f03d58c01bd9ac01cedade4dec2bb08",
+      "reviewed_sha256": "3df5e59cf4e1a55e831ba08679008e8f4f03d58c01bd9ac01cedade4dec2bb08",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://github.com/zilliztech/spark-milvus",
+        "https://milvus.io/docs/integrate_with_spark.md",
+        "https://milvus.io/docs/snapshots.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "diskann.md",
+      "slug": "what-is-diskann",
+      "title": "When should you use DISKANN in Milvus?",
+      "topic": "retrieval",
+      "baseline_sha256": "d1554962c15b127b172147b1916480ca5618fa64f859fc54050d8c51f283a969",
+      "reviewed_sha256": "b1d64832698fd4ccf1962a39225cc7a02b45b788aa17104f4f2eeac629232b78",
+      "disposition": "corrected-or-clarified",
+      "notes": [
+        "A generic diagnostic pipeline adds no explanation of the disk-oriented index."
+      ],
+      "sources": [
+        "https://milvus.io/docs/diskann.md",
+        "https://milvus.io/docs/index-explained.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "gpu-cagra.md",
+      "slug": "what-is-gpu-cagra",
+      "title": "What is GPU_CAGRA, and when does it help vector search?",
+      "topic": "retrieval",
+      "baseline_sha256": "0679dfefce8dc59587584d3eefe3b27849f00a6ca45392f3140610c7703399f7",
+      "reviewed_sha256": "0679dfefce8dc59587584d3eefe3b27849f00a6ca45392f3140610c7703399f7",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://milvus.io/docs/gpu-cagra.md",
+        "https://github.com/NVIDIA/cuvs"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "gpu-ivf.md",
+      "slug": "gpu-ivf-flat-vs-gpu-ivf-pq",
+      "title": "How do GPU_IVF_FLAT and GPU_IVF_PQ differ?",
+      "topic": "retrieval",
+      "baseline_sha256": "4246b0a03825052b2d97b41f8b1297c6aaac685bc9a8f5e7ec5038251f48f7c8",
+      "reviewed_sha256": "4246b0a03825052b2d97b41f8b1297c6aaac685bc9a8f5e7ec5038251f48f7c8",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://milvus.io/docs/gpu-ivf-flat.md",
+        "https://milvus.io/docs/gpu-ivf-pq.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "hnsw-compression.md",
+      "slug": "hnsw-sq-pq-prq-tradeoffs",
+      "title": "How do HNSW_SQ, HNSW_PQ, and HNSW_PRQ change the trade-offs?",
+      "topic": "retrieval",
+      "baseline_sha256": "a4ca8e3ed364196c0d1b1032d410316058ba8cd713a77c03180fe4cb1c0f5766",
+      "reviewed_sha256": "a4ca8e3ed364196c0d1b1032d410316058ba8cd713a77c03180fe4cb1c0f5766",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://milvus.io/docs/hnsw-sq.md",
+        "https://milvus.io/docs/hnsw-pq.md",
+        "https://milvus.io/docs/hnsw-prq.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "rabitq.md",
+      "slug": "what-is-ivf-rabitq",
+      "title": "What is IVF_RABITQ, and how should you evaluate it?",
+      "topic": "retrieval",
+      "baseline_sha256": "b24675792efca0112af3de3e75c51fa4b8e83bb909c6cbf8633c7de347e54fe0",
+      "reviewed_sha256": "b24675792efca0112af3de3e75c51fa4b8e83bb909c6cbf8633c7de347e54fe0",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://milvus.io/docs/ivf-rabitq.md",
+        "https://milvus.io/docs/ivf-flat.md",
+        "https://milvus.io/docs/metric.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "scalar-indexes.md",
+      "slug": "how-scalar-indexes-support-vector-search",
+      "title": "How do scalar indexes support filtered vector search?",
+      "topic": "retrieval",
+      "baseline_sha256": "960e5b28e4c21e7f0239776070f5c5f443f2ca20133f58a9876fac8d2e3fd830",
+      "reviewed_sha256": "960e5b28e4c21e7f0239776070f5c5f443f2ca20133f58a9876fac8d2e3fd830",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://milvus.io/docs/index-scalar-fields.md",
+        "https://milvus.io/docs/inverted.md",
+        "https://milvus.io/docs/bitmap.md",
+        "https://milvus.io/docs/stl-sort.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "sparse-inverted.md",
+      "slug": "how-sparse-inverted-indexes-work",
+      "title": "How does a sparse inverted index differ from dense ANN?",
+      "topic": "retrieval",
+      "baseline_sha256": "560d170e057c1fe45a135c5e749243918ad255d9979064587d86d47ed49c243a",
+      "reviewed_sha256": "560d170e057c1fe45a135c5e749243918ad255d9979064587d86d47ed49c243a",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://milvus.io/docs/sparse-inverted-index.md",
+        "https://milvus.io/docs/sparse_vector.md",
+        "https://milvus.io/docs/full-text-search.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "minhash-lsh.md",
+      "slug": "what-is-minhash-lsh",
+      "title": "How does MINHASH_LSH help find near-duplicate text?",
+      "topic": "retrieval",
+      "baseline_sha256": "8efbda547fbe8af92770fe47a4d32cf1eb6fe9eb31a494cfb94b1a04fe00fa80",
+      "reviewed_sha256": "8efbda547fbe8af92770fe47a4d32cf1eb6fe9eb31a494cfb94b1a04fe00fa80",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://milvus.io/docs/minhash-lsh.md",
+        "https://milvus.io/docs/minhash-function.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "flat-baseline.md",
+      "slug": "why-use-flat-search-as-an-ann-baseline",
+      "title": "Why use a FLAT baseline when tuning an ANN index?",
+      "topic": "retrieval",
+      "baseline_sha256": "640902af4b7e9142cbf19a3b957c639f468845f8bd5264b9e3a77fd0691a3588",
+      "reviewed_sha256": "838c942d8c18a3d9a3ca8ad6cac9a1fa536308672207064452a4a4f0d3649f66",
+      "disposition": "corrected-or-clarified",
+      "notes": [
+        "Exact ground truth and ANN must use the same eligible corpus; query sampling differs from corpus sampling."
+      ],
+      "sources": [
+        "https://milvus.io/docs/flat.md",
+        "https://milvus.io/docs/metric.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "range-search.md",
+      "slug": "when-to-use-vector-range-search",
+      "title": "When should you use range search instead of only top-k?",
+      "topic": "retrieval",
+      "baseline_sha256": "a83be32de911ff12d2def5adbf7e559f653b70b6212662eec6de5c97e4b5810d",
+      "reviewed_sha256": "a95d42020f28be5f924172646f901e1247f75391b800930530cbad0e3d78c8ab",
+      "disposition": "corrected-or-clarified",
+      "notes": [
+        "Range-search ground truth must match the ANN corpus."
+      ],
+      "sources": [
+        "https://milvus.io/docs/range-search.md",
+        "https://milvus.io/docs/metric.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "late-interaction.md",
+      "slug": "what-is-late-interaction-retrieval",
+      "title": "What is late-interaction retrieval, and how can embedding lists help?",
+      "topic": "retrieval",
+      "baseline_sha256": "dca0f87c1faf1cc6d6cefd4b776adb51c8f86e14e1ca166a753ddad0ad1eca5e",
+      "reviewed_sha256": "2e6a47e53d3fc112ada83faa326617d383100dc0357def2b34c82af5188d587f",
+      "disposition": "corrected-or-clarified",
+      "notes": [
+        "Define independent encoding and late scoring; avoid equating every multi-vector design with late interaction."
+      ],
+      "sources": [
+        "https://milvus.io/docs/basic-vector-search-with-structarray.md",
+        "https://milvus.io/docs/index-structarray-fields.md",
+        "https://milvus.io/docs/array-of-structs.md",
+        "https://arxiv.org/abs/2004.12832"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "mmap.md",
+      "slug": "how-mmap-differs-from-diskann",
+      "title": "How does mmap differ from a disk-oriented ANN index?",
+      "topic": "retrieval",
+      "baseline_sha256": "6f5285d1627bac28b95296af2ffe856b069b1b22428633e6ff5c5cd40822f38f",
+      "reviewed_sha256": "b5ff33e0e53f265e56e0178fa64a1a5d6d36c005c77773d412dc0add0de9dd86",
+      "disposition": "corrected-or-clarified",
+      "notes": [
+        "A general diagnostic diagram is not a memory-mapping mechanism diagram."
+      ],
+      "sources": [
+        "https://milvus.io/docs/mmap.md",
+        "https://milvus.io/docs/diskann.md",
+        "https://milvus.io/docs/tiered-storage-overview.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "agentic-search.md",
+      "slug": "what-is-agentic-search",
+      "title": "What is agentic search, and where does a vector database fit?",
+      "topic": "rag-agents",
+      "baseline_sha256": "0c21cc84c578824c3d297af754e83324aca3f37383fedeee0ca83f22074d8094",
+      "reviewed_sha256": "0c21cc84c578824c3d297af754e83324aca3f37383fedeee0ca83f22074d8094",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://milvus.io/docs/agentic_rag_with_milvus_and_langgraph.md",
+        "https://github.com/zilliztech/deep-searcher"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "query-planning-tools.md",
+      "slug": "how-agents-choose-retrieval-tools",
+      "title": "How should an agent choose between vector, keyword, and structured search?",
+      "topic": "rag-agents",
+      "baseline_sha256": "7cbdd2956cc356ee7da75d6a08c570eb4ad9c348c57700a1adf11e988bfbd7af",
+      "reviewed_sha256": "7cbdd2956cc356ee7da75d6a08c570eb4ad9c348c57700a1adf11e988bfbd7af",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://milvus.io/docs/agentic_rag_with_milvus_and_langgraph.md",
+        "https://milvus.io/docs/multi-vector-search.md",
+        "https://milvus.io/docs/get-and-scalar-query.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "memory-types.md",
+      "slug": "what-are-the-types-of-agent-memory",
+      "title": "How do working, episodic, semantic, and procedural agent memory differ?",
+      "topic": "rag-agents",
+      "baseline_sha256": "431b964c1bedc01682443d9a8ed242959732b3832b9fecadae366d55b4744237",
+      "reviewed_sha256": "631cfac258820b7d638a887cbf217cbde81e16752fad61d3e6b879381caa2c9a",
+      "disposition": "corrected-or-clarified",
+      "notes": [
+        "A vector retrieval diagram cannot stand for working state and every memory class."
+      ],
+      "sources": [
+        "https://milvus.io/docs/basic_memory_with_milvus.md",
+        "https://github.com/zilliztech/memsearch/blob/main/docs/design-philosophy.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "memory-lifecycle.md",
+      "slug": "how-to-correct-expire-and-delete-agent-memory",
+      "title": "How should an agent memory system handle corrections, expiry, and deletion?",
+      "topic": "rag-agents",
+      "baseline_sha256": "539d8c1c4972b153ac1b27cfe1442238f4c33693c29565e21680d34bf8ef31bb",
+      "reviewed_sha256": "539d8c1c4972b153ac1b27cfe1442238f4c33693c29565e21680d34bf8ef31bb",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://github.com/zilliztech/memsearch/blob/main/docs/design-philosophy.md",
+        "https://milvus.io/docs/upsert-entities.md",
+        "https://milvus.io/docs/delete-entities.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "agent-trajectory.md",
+      "slug": "what-is-an-agent-trajectory",
+      "title": "What is an agent trajectory, and how should you represent it for retrieval?",
+      "topic": "rag-agents",
+      "baseline_sha256": "09111e0d9cbbd414a18d6f160c4e397e4323935f97196067ed4f89669cf30fe7",
+      "reviewed_sha256": "09111e0d9cbbd414a18d6f160c4e397e4323935f97196067ed4f89669cf30fe7",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://github.com/microsoft/agent-lightning",
+        "https://milvus.io/docs/schema.md",
+        "https://milvus.io/docs/array-of-structs.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "trajectory-retrieval.md",
+      "slug": "how-to-retrieve-agent-trajectories",
+      "title": "How can vector search retrieve useful agent trajectories?",
+      "topic": "rag-agents",
+      "baseline_sha256": "b86462291fd9f78d6f6cbce83db92b1b405d5a451c3cd4a80c814cf94dc5ab95",
+      "reviewed_sha256": "b86462291fd9f78d6f6cbce83db92b1b405d5a451c3cd4a80c814cf94dc5ab95",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://milvus.io/docs/filtered-search.md",
+        "https://milvus.io/docs/grouping-search.md",
+        "https://milvus.io/docs/rerankers-overview.md",
+        "https://github.com/microsoft/agent-lightning"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "rollout.md",
+      "slug": "what-is-a-rollout-in-agent-training",
+      "title": "What is a rollout in agent training, and where can vector search help?",
+      "topic": "rag-agents",
+      "baseline_sha256": "9e911346efcccdef0af3abacc25cdba8938c8e9400e01d40888042938226ec7e",
+      "reviewed_sha256": "9e911346efcccdef0af3abacc25cdba8938c8e9400e01d40888042938226ec7e",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://huggingface.co/docs/trl/grpo_trainer",
+        "https://github.com/microsoft/agent-lightning",
+        "https://verl.readthedocs.io/en/latest/advance/v1_async_trainer.html"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "rollout-selection.md",
+      "slug": "how-to-select-rollouts-for-offline-training",
+      "title": "How should you select rollouts for an offline agent-training dataset?",
+      "topic": "rag-agents",
+      "baseline_sha256": "33dd1c41a4f1150c04004c7958d068568d73a7ee12e8d972c6bbfd778e838159",
+      "reviewed_sha256": "33dd1c41a4f1150c04004c7958d068568d73a7ee12e8d972c6bbfd778e838159",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://github.com/microsoft/agent-lightning",
+        "https://huggingface.co/docs/trl/grpo_trainer",
+        "https://milvus.io/docs/grouping-search.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "semantic-cache.md",
+      "slug": "what-is-a-semantic-cache",
+      "title": "When is a semantic cache useful, and how do you prevent stale answers?",
+      "topic": "rag-agents",
+      "baseline_sha256": "037f8a711fff0abd093d8edd20c656a2e2e61f0f485fbff647dec5405252e598",
+      "reviewed_sha256": "037f8a711fff0abd093d8edd20c656a2e2e61f0f485fbff647dec5405252e598",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://milvus.io/docs/filtered-search.md",
+        "https://milvus.io/docs/range-search.md",
+        "https://milvus.io/docs/upsert-entities.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "search-eval-sets.md",
+      "slug": "how-to-build-search-and-agent-evaluation-datasets",
+      "title": "How do you build an evaluation set for agentic and vector search?",
+      "topic": "rag-agents",
+      "baseline_sha256": "2bec82d797efd2dc5c048ba01d9989797de526cb3e477f46e114e7c67701c7aa",
+      "reviewed_sha256": "2bec82d797efd2dc5c048ba01d9989797de526cb3e477f46e114e7c67701c7aa",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://milvus.io/docs/integrate_with_ragas.md",
+        "https://github.com/beir-cellar/beir/wiki/Metrics-available",
+        "https://milvus.io/docs/agentic_rag_with_milvus_and_langgraph.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "curation.md",
+      "slug": "what-is-data-curation-for-vector-ai",
+      "title": "What is data curation, and how can vector search help?",
+      "topic": "data",
+      "baseline_sha256": "401be306a3b1e0e4198a859502d36bd4056754f7b9f8d2e32dcabfb7e780a14e",
+      "reviewed_sha256": "4c75e5267b794caacb5773785e68297f1ee0ec5c18d9df15ebda2167088af068",
+      "disposition": "corrected-or-clarified",
+      "notes": [
+        "Retrieval cannot directly discover records absent from the indexed dataset."
+      ],
+      "sources": [
+        "https://docs.nvidia.com/nemo/curator/latest/curate-text/process-data/quality-assessment",
+        "https://docs.nvidia.com/nemo/curator/latest/curate-text/process-data/deduplication",
+        "https://milvus.io/docs/grouping-search.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "pretraining-data.md",
+      "slug": "how-vector-search-supports-pretraining-data-preparation",
+      "title": "How can vector retrieval support pretraining data preparation?",
+      "topic": "data",
+      "baseline_sha256": "c80cb9c66e180ec113eab331954dc4841e43ea8c55337eded711fd1974c3c158",
+      "reviewed_sha256": "c80cb9c66e180ec113eab331954dc4841e43ea8c55337eded711fd1974c3c158",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://docs.nvidia.com/nemo/curator/latest/curate-text/process-data/quality-assessment",
+        "https://docs.nvidia.com/nemo/curator/latest/curate-text/process-data/deduplication/semdedup",
+        "https://docs.ray.io/en/latest/data/data.html"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "dedup-methods.md",
+      "slug": "exact-fuzzy-and-semantic-deduplication",
+      "title": "How should you combine exact, fuzzy, and semantic deduplication?",
+      "topic": "data",
+      "baseline_sha256": "b144a4d13627c11c3371faed79b93e2b75b8a7412f6b36085a4f70d1bfc7db4b",
+      "reviewed_sha256": "b144a4d13627c11c3371faed79b93e2b75b8a7412f6b36085a4f70d1bfc7db4b",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://docs.nvidia.com/nemo/curator/latest/curate-text/process-data/deduplication",
+        "https://milvus.io/docs/minhash-function.md",
+        "https://milvus.io/docs/minhash-lsh.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "contamination.md",
+      "slug": "how-to-detect-train-test-contamination",
+      "title": "How can vector search help detect train-test contamination?",
+      "topic": "data",
+      "baseline_sha256": "b0ae61be61cfcd88f8248e7ec74b607b99725f07f6a02cf507bb64465ae4eb2f",
+      "reviewed_sha256": "b0ae61be61cfcd88f8248e7ec74b607b99725f07f6a02cf507bb64465ae4eb2f",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://docs.nvidia.com/nemo/curator/latest/curate-text/process-data/deduplication",
+        "https://huggingface.co/docs/datasets/process",
+        "https://milvus.io/docs/range-search.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "diversity-sampling.md",
+      "slug": "how-to-sample-diverse-data-with-embeddings",
+      "title": "How can embeddings improve dataset diversity sampling?",
+      "topic": "data",
+      "baseline_sha256": "6a51c9397da88db11090eb9adbb70a5b5056aac57f5679abda91e4d61bb0d488",
+      "reviewed_sha256": "6a51c9397da88db11090eb9adbb70a5b5056aac57f5679abda91e4d61bb0d488",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://www.sbert.net/examples/sentence_transformer/applications/clustering/README.html",
+        "https://milvus.io/docs/grouping-search.md",
+        "https://docs.nvidia.com/nemo/curator/latest/curate-text/process-data/quality-assessment"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "hard-negatives.md",
+      "slug": "what-are-hard-negatives-in-retrieval",
+      "title": "What are hard negatives in retrieval training, and how can you mine them?",
+      "topic": "data",
+      "baseline_sha256": "b5d6b1ebe8190f0b66e84fcfc2a92f0897578067abcb37c37fb6ce53c83831ed",
+      "reviewed_sha256": "b3549a1b44b8b42cea92c0920bae673210c62c1e7ebc5c306ff539f97cf61a54",
+      "disposition": "corrected-or-clarified",
+      "notes": [
+        "Relevance negatives, document validity, and authorization exclusions are different labels."
+      ],
+      "sources": [
+        "https://www.sbert.net/docs/package_reference/util/index.html",
+        "https://milvus.io/docs/filtered-search.md",
+        "https://milvus.io/docs/rerankers-overview.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "active-learning.md",
+      "slug": "how-vector-search-supports-active-learning",
+      "title": "How can vector search help choose examples for human labeling?",
+      "topic": "data",
+      "baseline_sha256": "6873ab5fedfcfe49feb3f46f9254f5a7da1e6500498fff39bacb5256a3ac100d",
+      "reviewed_sha256": "2bf25946cf313f0f1c287b6c88b3ce68dbac4aa5edaae2352f2d5787cf833292",
+      "disposition": "corrected-or-clarified",
+      "notes": [
+        "Spark is an optional implementation, not the active-learning mechanism."
+      ],
+      "sources": [
+        "https://milvus.io/docs/grouping-search.md",
+        "https://www.sbert.net/examples/sentence_transformer/applications/clustering/README.html",
+        "https://docs.nvidia.com/nemo/curator/latest/curate-text/process-data/quality-assessment"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "multimodal-curation.md",
+      "slug": "how-to-curate-image-and-video-data",
+      "title": "How should you curate image and video data with vector retrieval?",
+      "topic": "data",
+      "baseline_sha256": "5e7dfab843001028f9b89837b1dcf62587be67c60e69ea1b41e757d8ea1c1f55",
+      "reviewed_sha256": "5e7dfab843001028f9b89837b1dcf62587be67c60e69ea1b41e757d8ea1c1f55",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://docs.nvidia.com/nemo/curator/latest/curate-video/process-data/dedup",
+        "https://milvus.io/docs/text_image_search.md",
+        "https://milvus.io/docs/image_deduplication_system.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "physical-ai.md",
+      "slug": "vector-search-for-physical-ai-data",
+      "title": "How can vector search support physical-AI and autonomous-driving data discovery?",
+      "topic": "data",
+      "baseline_sha256": "dbb5971702438bdc866d6c0bbe5a87c495a7e83e7d75e28394cc5f5cd4ca1c9f",
+      "reviewed_sha256": "a461ecd6626f452f0e00bb1679fd76b31013eb924f657e95d88a8187aad9f07c",
+      "disposition": "corrected-or-clarified",
+      "notes": [
+        "Coverage of the real world cannot be inferred from indexed geometry alone."
+      ],
+      "sources": [
+        "https://docs.nvidia.com/nemo/curator/latest/curate-video/process-data/dedup",
+        "https://milvus.io/docs/multimodal_rag_with_milvus.md",
+        "https://milvus.io/docs/filtered-search.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "training-lineage.md",
+      "slug": "data-lineage-for-embeddings-and-training",
+      "title": "What lineage metadata should connect source data, embeddings, and training sets?",
+      "topic": "data",
+      "baseline_sha256": "233d2e65550fe11cba0f7ed106007365bc8e0f29c34a83129d8d47dd6451323a",
+      "reviewed_sha256": "233d2e65550fe11cba0f7ed106007365bc8e0f29c34a83129d8d47dd6451323a",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://milvus.io/docs/snapshots.md",
+        "https://iceberg.apache.org/docs/latest/maintenance/",
+        "https://milvus.io/docs/schema.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "distributed-embedding.md",
+      "slug": "how-to-build-distributed-embedding-pipelines",
+      "title": "How should you design a scalable embedding-generation pipeline?",
+      "topic": "data",
+      "baseline_sha256": "07df0ead903af796cf6363ce8d69d422fe78745b66795bdf1125179d5ccda774",
+      "reviewed_sha256": "07df0ead903af796cf6363ce8d69d422fe78745b66795bdf1125179d5ccda774",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://docs.ray.io/en/latest/data/batch_inference.html",
+        "https://milvus.io/docs/prepare-source-data.md",
+        "https://milvus.io/docs/import-data.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "quality-scoring.md",
+      "slug": "how-to-score-data-quality-for-curation",
+      "title": "How should you design a quality score for data curation?",
+      "topic": "data",
+      "baseline_sha256": "fabbd6d858925b4769f41db6ecff5a94f3cfc68018c8852dfa69b9eb40557602",
+      "reviewed_sha256": "fabbd6d858925b4769f41db6ecff5a94f3cfc68018c8852dfa69b9eb40557602",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://docs.nvidia.com/nemo/curator/latest/curate-text/process-data/quality-assessment",
+        "https://docs.nvidia.com/nemo/curator/latest/curate-text/process-data/quality-assessment/heuristic",
+        "https://milvus.io/docs/schema.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "legal-retrieval.md",
+      "slug": "vector-search-for-legal-document-agents",
+      "title": "How should you design vector retrieval for legal-document agents?",
+      "topic": "applications",
+      "baseline_sha256": "7b0bf4c6917c530e4bcff78508f322565e0dfed307ca4097ed628818fe970a32",
+      "reviewed_sha256": "7b0bf4c6917c530e4bcff78508f322565e0dfed307ca4097ed628818fe970a32",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://milvus.io/docs/build-rag-with-milvus.md",
+        "https://milvus.io/docs/filtered-search.md",
+        "https://milvus.io/docs/full-text-search.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "healthcare-retrieval.md",
+      "slug": "vector-search-for-healthcare-evidence",
+      "title": "How should you design evidence retrieval for healthcare agents?",
+      "topic": "applications",
+      "baseline_sha256": "49457b95349dad821fd18496d2b41adf7330273fd9ec4be21296ee7242951a92",
+      "reviewed_sha256": "49457b95349dad821fd18496d2b41adf7330273fd9ec4be21296ee7242951a92",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://milvus.io/docs/build-rag-with-milvus.md",
+        "https://milvus.io/docs/filtered-search.md",
+        "https://milvus.io/docs/multi_tenancy.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "code-search.md",
+      "slug": "vector-search-for-coding-agents",
+      "title": "How can vector search improve codebase retrieval for coding agents?",
+      "topic": "applications",
+      "baseline_sha256": "809089ee361a18eb93969c456c1cb5821843cf385c908cd52d2eb19aaee12788",
+      "reviewed_sha256": "809089ee361a18eb93969c456c1cb5821843cf385c908cd52d2eb19aaee12788",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://github.com/zilliztech/claude-context",
+        "https://milvus.io/docs/multi-vector-search.md",
+        "https://milvus.io/docs/filtered-search.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "ecommerce-search.md",
+      "slug": "hybrid-multimodal-product-search",
+      "title": "How can hybrid and multimodal search improve product discovery?",
+      "topic": "applications",
+      "baseline_sha256": "cf7574f2f1f7b06a685119a72e5becb48ee585cdb5ee4eb5284e849f76ced9bb",
+      "reviewed_sha256": "cf7574f2f1f7b06a685119a72e5becb48ee585cdb5ee4eb5284e849f76ced9bb",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://milvus.io/docs/text_image_search.md",
+        "https://milvus.io/docs/full-text-search.md",
+        "https://milvus.io/docs/filtered-search.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "recommendations.md",
+      "slug": "vector-search-for-recommendations",
+      "title": "How do vector databases support recommendation candidate retrieval?",
+      "topic": "applications",
+      "baseline_sha256": "bee315701fccc498b4051b13372a9aa7642c75f90eea773ec889d10b420a31cc",
+      "reviewed_sha256": "2e24a56e34bed140472c113a8196578fe671a621af96fb96cc9cedb2388f3082",
+      "disposition": "corrected-or-clarified",
+      "notes": [
+        "Separate content similarity, personalized retrieval, candidate generation, ranking, and experimentally verified business effects."
+      ],
+      "sources": [
+        "https://milvus.io/docs/recommendation_system.md",
+        "https://milvus.io/docs/grouping-search.md",
+        "https://milvus.io/docs/filtered-search.md",
+        "https://research.google/pubs/deep-neural-networks-for-youtube-recommendations/"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "entity-resolution.md",
+      "slug": "vector-search-for-entity-resolution",
+      "title": "How can vector search help resolve duplicate or related entities?",
+      "topic": "applications",
+      "baseline_sha256": "d23ba6cfdc7fc334e694e3e69878a08868c8eb604a3f1dcc090e712325e1bf09",
+      "reviewed_sha256": "d23ba6cfdc7fc334e694e3e69878a08868c8eb604a3f1dcc090e712325e1bf09",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://milvus.io/docs/range-search.md",
+        "https://milvus.io/docs/full-text-search.md",
+        "https://milvus.io/docs/filtered-search.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "anomaly-discovery.md",
+      "slug": "vector-search-for-anomaly-discovery",
+      "title": "Can vector neighborhoods help discover anomalies and novel cases?",
+      "topic": "applications",
+      "baseline_sha256": "38e7f3f81d5cadac5422e9493fb412316782d82b91458baaee63a2070206fb90",
+      "reviewed_sha256": "38e7f3f81d5cadac5422e9493fb412316782d82b91458baaee63a2070206fb90",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://milvus.io/docs/quickstart.md",
+        "https://milvus.io/docs/metric.md",
+        "https://www.sbert.net/examples/sentence_transformer/applications/clustering/README.html"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "byoc-deployment.md",
+      "slug": "managed-vector-database-byoc-vs-self-hosted",
+      "title": "How should you compare managed vector databases, BYOC, and self-hosted Milvus?",
+      "topic": "production",
+      "baseline_sha256": "4171209d62f82886d85f44843f3870d59c333e286272fa58104104a3857fc88b",
+      "reviewed_sha256": "4171209d62f82886d85f44843f3870d59c333e286272fa58104104a3857fc88b",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://zilliz.com/cloud",
+        "https://docs.zilliz.com/docs/byoc/byoc-intro",
+        "https://milvus.io/docs/install-overview.md",
+        "https://zilliz.com/pricing"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "choose-ai-framework-for-milvus.md",
+      "slug": "choose-ai-framework-for-milvus",
+      "title": "How do you choose an AI framework for a Milvus application?",
+      "topic": "frameworks",
+      "baseline_sha256": "e7c9b8b6a1ca5a5abf9d86f92056fc46942bae966af83f57b568014813cb6a43",
+      "reviewed_sha256": "6b027008f41d8dabe36e0beb050dcd18b417ef47b31867e647665b67ed498821",
+      "disposition": "corrected-or-clarified",
+      "notes": [
+        "Frameworks can choose defaults; suitability remains an application decision."
+      ],
+      "sources": [
+        "https://docs.langchain.com/oss/python/learn",
+        "https://developers.llamaindex.ai/python/framework/community/integrations/vector_stores/",
+        "https://docs.agno.com/knowledge/concepts/vector-db"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "langchain-with-milvus.md",
+      "slug": "langchain-with-milvus",
+      "title": "What does LangChain do, and how does it use Milvus?",
+      "topic": "frameworks",
+      "baseline_sha256": "b8cf0977ef1cf81161a14cb85c4d5b31dc7366632c9e345daf62a76d7584012a",
+      "reviewed_sha256": "b8cf0977ef1cf81161a14cb85c4d5b31dc7366632c9e345daf62a76d7584012a",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://docs.langchain.com/oss/python/integrations/vectorstores/milvus",
+        "https://milvus.io/docs/integrate_with_langchain.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "llamaindex-with-milvus.md",
+      "slug": "llamaindex-with-milvus",
+      "title": "What does LlamaIndex do, and where does Milvus fit?",
+      "topic": "frameworks",
+      "baseline_sha256": "92b00e341ae18ecd82137a8ee9f1ef1704b3665dd55b17fe5578f7114752c8d8",
+      "reviewed_sha256": "92b00e341ae18ecd82137a8ee9f1ef1704b3665dd55b17fe5578f7114752c8d8",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://developers.llamaindex.ai/python/examples/vector_stores/milvusindexdemo/",
+        "https://milvus.io/docs/integrate_with_llamaindex.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "langgraph-with-milvus.md",
+      "slug": "langgraph-with-milvus",
+      "title": "How do LangGraph state and Milvus retrieval work together?",
+      "topic": "frameworks",
+      "baseline_sha256": "dd96072038c77c18286a9da388640e28c129ce08000a1fe364702a32424651f9",
+      "reviewed_sha256": "dd96072038c77c18286a9da388640e28c129ce08000a1fe364702a32424651f9",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://docs.langchain.com/oss/python/langgraph/overview",
+        "https://milvus.io/docs/agentic_rag_with_milvus_and_langgraph.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "haystack-with-milvus.md",
+      "slug": "haystack-with-milvus",
+      "title": "How does Haystack build a retrieval pipeline with Milvus?",
+      "topic": "frameworks",
+      "baseline_sha256": "92d0db857f6f940dad418ead96f4fe8099df731a8ae3be6e48fac9e82530acdd",
+      "reviewed_sha256": "92d0db857f6f940dad418ead96f4fe8099df731a8ae3be6e48fac9e82530acdd",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://github.com/deepset-ai/haystack-integrations/blob/main/integrations/milvus-document-store.md",
+        "https://milvus.io/docs/integrate_with_haystack.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "dify-with-milvus.md",
+      "slug": "dify-with-milvus",
+      "title": "What does Dify manage when Milvus stores application knowledge?",
+      "topic": "frameworks",
+      "baseline_sha256": "cf157e49abb246a642981c44034a2bba27b7ddee9a1f63f3a951332b1ed0397e",
+      "reviewed_sha256": "cf157e49abb246a642981c44034a2bba27b7ddee9a1f63f3a951332b1ed0397e",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://docs.dify.ai/",
+        "https://milvus.io/docs/dify_with_milvus.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "dspy-with-milvus.md",
+      "slug": "dspy-with-milvus",
+      "title": "How can DSPy optimize a retrieval application backed by Milvus?",
+      "topic": "frameworks",
+      "baseline_sha256": "be29fc615dce68d8d753909bcac343f0a1ddc90d18afe5cae1bc53b57edd5e91",
+      "reviewed_sha256": "eb53c301cf822ed731a7fa6c7a7e8aa4098b89b9b08b3b71eca3b2ecf533fe51",
+      "disposition": "corrected-or-clarified",
+      "notes": [
+        "Query-rewriting optimization can change candidates; the fixed-context limit applies to downstream generation."
+      ],
+      "sources": [
+        "https://dspy.ai/3.1.3/learn/programming/modules/",
+        "https://milvus.io/docs/integrate_with_dspy.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "agno-with-milvus.md",
+      "slug": "agno-with-milvus",
+      "title": "How does Agno connect agents to knowledge stored in Milvus?",
+      "topic": "frameworks",
+      "baseline_sha256": "6d895f4095d02bd98f32a36b5643660800a4c2a27526b0ea6d937be55daecd27",
+      "reviewed_sha256": "35e94034379d8b72b222a96033ba7816634eba25f3de45c8de246ce99b75955e",
+      "disposition": "corrected-or-clarified",
+      "notes": [
+        "A measured benefit need not mean that a simpler application is entirely incapable of the task."
+      ],
+      "sources": [
+        "https://docs.agno.com/knowledge/vector-stores/milvus/overview",
+        "https://docs.agno.com/knowledge/concepts/vector-db"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "sentence-transformers-with-milvus.md",
+      "slug": "sentence-transformers-with-milvus",
+      "title": "How do Sentence Transformers models feed a Milvus retrieval pipeline?",
+      "topic": "frameworks",
+      "baseline_sha256": "58cb2857a27785930a290afc1db949442a17f718ff340764aac43194bb24ecf0",
+      "reviewed_sha256": "58291ee656c05b9e59ed6b2df1d6725d1b5a11270c95d49f13b1222c23be71b0",
+      "disposition": "corrected-or-clarified",
+      "notes": [
+        "Pin the version for the dedicated multi-vector API rather than implying it exists in every installation."
+      ],
+      "sources": [
+        "https://sbert.net/",
+        "https://sbert.net/examples/sentence_transformer/applications/retrieve_rerank/README.html"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "milvus-installation-path.md",
+      "slug": "milvus-installation-path",
+      "title": "How do you get from a Milvus deployment to the first verified query?",
+      "topic": "production",
+      "baseline_sha256": "cdddba3959904449429458f9540fec7ec33f8229aec59374e65ff0b034af774e",
+      "reviewed_sha256": "cdddba3959904449429458f9540fec7ec33f8229aec59374e65ff0b034af774e",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://milvus.io/docs/install-overview.md",
+        "https://milvus.io/docs/install_standalone-docker.md",
+        "https://milvus.io/docs/quickstart.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "milvus-lite-to-production.md",
+      "slug": "milvus-lite-to-production",
+      "title": "When should you use Milvus Lite, and how do you move toward production?",
+      "topic": "production",
+      "baseline_sha256": "6776a63a1254de6a12e6153c7e88d0148eebbb46e9429fb2efd1b11762b3d35d",
+      "reviewed_sha256": "6776a63a1254de6a12e6153c7e88d0148eebbb46e9429fb2efd1b11762b3d35d",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://milvus.io/docs/milvus_lite.md",
+        "https://milvus.io/docs/install-overview.md",
+        "https://docs.zilliz.com/docs/home"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "milvus-capacity-planning.md",
+      "slug": "milvus-capacity-planning",
+      "title": "How do you turn a Milvus workload into a capacity and cost estimate?",
+      "topic": "production",
+      "baseline_sha256": "3962cd51e6e701d439ec43ff952cb4395d53dc87eaf4a971269e9ff1951c8a27",
+      "reviewed_sha256": "3962cd51e6e701d439ec43ff952cb4395d53dc87eaf4a971269e9ff1951c8a27",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://milvus.io/tools/sizing",
+        "https://milvus.io/docs/index-explained.md",
+        "https://zilliz.com/pricing"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "milvus-mcp-tools.md",
+      "slug": "milvus-mcp-tools",
+      "title": "What does a Milvus MCP server expose to an AI agent?",
+      "topic": "production",
+      "baseline_sha256": "c74773d3925603fc077acb912be052d79636adb55681e4df1a5410a9ed41c732",
+      "reviewed_sha256": "c74773d3925603fc077acb912be052d79636adb55681e4df1a5410a9ed41c732",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://milvus.io/docs/milvus_and_mcp.md",
+        "https://github.com/zilliztech/mcp-server-milvus"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "milvus-cdc-and-migration.md",
+      "slug": "milvus-cdc-and-migration",
+      "title": "How do bulk migration, backup, and Milvus CDC differ?",
+      "topic": "production",
+      "baseline_sha256": "16a919e89f48a5cdc91aa5d13527347c497147c5b81bd7f66f7a3e4d313b6710",
+      "reviewed_sha256": "16a919e89f48a5cdc91aa5d13527347c497147c5b81bd7f66f7a3e4d313b6710",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://milvus.io/docs/milvus-cdc-overview.md",
+        "https://milvus.io/docs/milvus_backup_overview.md",
+        "https://milvus.io/docs/import-data.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "milvus-security-rbac.md",
+      "slug": "milvus-security-rbac",
+      "title": "How do authentication, RBAC, and tenant filters protect Milvus applications?",
+      "topic": "production",
+      "baseline_sha256": "3e9c52aae5e62de8467535f90fa8fde70b6a76e14d0ade8647b47921d354f244",
+      "reviewed_sha256": "3e9c52aae5e62de8467535f90fa8fde70b6a76e14d0ade8647b47921d354f244",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://milvus.io/docs/authenticate.md",
+        "https://milvus.io/docs/rbac.md",
+        "https://milvus.io/docs/multi_tenancy.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "milvus-version-upgrades.md",
+      "slug": "milvus-version-upgrades",
+      "title": "How do you choose and validate a Milvus version upgrade?",
+      "topic": "production",
+      "baseline_sha256": "9f410e283d99047f9a1f102fe3e047620a1a088daea653b460e59cb3cbb15cff",
+      "reviewed_sha256": "9f410e283d99047f9a1f102fe3e047620a1a088daea653b460e59cb3cbb15cff",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://milvus.io/docs/release_notes.md",
+        "https://milvus.io/docs/upgrade_milvus_cluster-helm.md",
+        "https://milvus.io/docs/milvus_backup_overview.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "mteb-embedding-leaderboards.md",
+      "slug": "mteb-embedding-leaderboards",
+      "title": "How do you read MTEB and compare the current embedding shortlist?",
+      "topic": "models",
+      "baseline_sha256": "72cc1c236b97139cc7204c41aef578a6cc8c2f787b4a3f36ef40b6a02438488b",
+      "reviewed_sha256": "81a0116fe6ecc31233b9566bf8b6d7e47cff5afebab726b7a040e8481b31107c",
+      "disposition": "corrected-or-clarified",
+      "notes": [
+        "MTEB does not measure business activation; a generic four-layer outcome diagram is misleading here."
+      ],
+      "sources": [
+        "https://huggingface.co/spaces/mteb/leaderboard",
+        "https://mteb-leaderboard-backend.hf.space/v1/benchmarks/MTEB%28Multilingual%2C%20v2%29/scores",
+        "https://embeddings-benchmark.github.io/mteb/",
+        "https://huggingface.co/microsoft/harrier-oss-v1-27b",
+        "https://huggingface.co/tencent/KaLM-Embedding-Gemma3-12B-2511",
+        "https://huggingface.co/Qwen/Qwen3-Embedding-8B",
+        "https://leaderboard.mteb.org/models/Bytedance/Seed1.6-embedding-1215",
+        "https://huggingface.co/nvidia/llama-embed-nemotron-8b",
+        "https://huggingface.co/Qwen/Qwen3-Embedding-4B",
+        "https://huggingface.co/microsoft/harrier-oss-v1-0.6b",
+        "https://huggingface.co/codefuse-ai/F2LLM-v2-14B",
+        "https://leaderboard.mteb.org/models/google/gemini-embedding-001",
+        "https://huggingface.co/codefuse-ai/F2LLM-v2-8B",
+        "https://huggingface.co/Octen/Octen-Embedding-8B",
+        "https://huggingface.co/codefuse-ai/F2LLM-v2-4B",
+        "https://huggingface.co/jinaai/jina-embeddings-v5-omni-small",
+        "https://huggingface.co/microsoft/harrier-oss-v1-270m",
+        "https://huggingface.co/ai-sage/Giga-Embeddings-instruct-10B-A1.8B-0826",
+        "https://huggingface.co/jinaai/jina-embeddings-v5-omni-nano",
+        "https://huggingface.co/jinaai/jina-embeddings-v5-text-nano",
+        "https://huggingface.co/codefuse-ai/F2LLM-v2-1.7B",
+        "https://huggingface.co/Qwen/Qwen3-Embedding-0.6B",
+        "https://huggingface.co/ai-sage/Giga-Embeddings-instruct-3B-0826"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "embedding-reranking-model-catalog.md",
+      "slug": "embedding-reranking-model-catalog",
+      "title": "Which current embedding models should you evaluate for Milvus?",
+      "topic": "models",
+      "baseline_sha256": "2ffff95d318e76b367b3310f3400de87931a3dd24a8dd76d68e7ae242f11a6a5",
+      "reviewed_sha256": "2ffff95d318e76b367b3310f3400de87931a3dd24a8dd76d68e7ae242f11a6a5",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://docs.voyageai.com/docs/embeddings",
+        "https://docs.voyageai.com/docs/embeddings",
+        "https://docs.cohere.com/docs/cohere-embed",
+        "https://ai.google.dev/gemini-api/docs/embeddings",
+        "https://huggingface.co/nvidia/Nemotron-3-Embed-1B-BF16",
+        "https://huggingface.co/Qwen/Qwen3-VL-Embedding-8B",
+        "https://huggingface.co/nvidia/nemotron-colembed-vl-8b-v2",
+        "https://huggingface.co/BAAI/bge-m3"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "reranking-model-catalog.md",
+      "slug": "reranking-model-catalog",
+      "title": "Which reranking models fit a Milvus retrieval pipeline?",
+      "topic": "models",
+      "baseline_sha256": "58e301680a24c40f110fa339f0bb674db39dfafb7de996af6b75a3e6a661bd5a",
+      "reviewed_sha256": "58e301680a24c40f110fa339f0bb674db39dfafb7de996af6b75a3e6a661bd5a",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://docs.voyageai.com/docs/reranker",
+        "https://docs.cohere.com/docs/rerank-overview",
+        "https://huggingface.co/jinaai/jina-reranker-v3.5",
+        "https://huggingface.co/Qwen/Qwen3-Reranker-8B",
+        "https://huggingface.co/Qwen/Qwen3-Reranker-0.6B",
+        "https://huggingface.co/Qwen/Qwen3-VL-Reranker-8B",
+        "https://huggingface.co/nvidia/llama-nemotron-rerank-vl-1b-v2",
+        "https://huggingface.co/BAAI/bge-reranker-v2-m3",
+        "https://huggingface.co/KaLM-Embedding/KaLM-Reranker-V1-Small-R2",
+        "https://huggingface.co/tencent/R3-rerank-0.6b",
+        "https://huggingface.co/mixedbread-ai/mxbai-rerank-large-v2",
+        "https://huggingface.co/Alibaba-NLP/gte-multilingual-reranker-base",
+        "https://huggingface.co/ContextualAI/ctxl-rerank-v2-instruct-multilingual-2b",
+        "https://huggingface.co/zeroentropy/zerank-2",
+        "https://huggingface.co/maidalun1020/bce-reranker-base_v1",
+        "https://huggingface.co/cross-encoder/ms-marco-MiniLM-L6-v2"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "mmeb-multimodal-evaluation.md",
+      "slug": "mmeb-multimodal-evaluation",
+      "title": "How do MMEB versions evaluate multimodal embeddings?",
+      "topic": "models",
+      "baseline_sha256": "a3aedaca206276ff710e2c123d679de7ba9bb0774e283e528dd04cc2cdb71aa8",
+      "reviewed_sha256": "f1b5a510cb2c14b9acd8b1fe4d0f727c5e6d2c028a6d671a0ac07d21ae71ddd1",
+      "disposition": "corrected-or-clarified",
+      "notes": [
+        "MMEB is a representation benchmark, not a business-outcome evaluation.",
+        "Qualify raw zero values and historical score-file scope; do not treat missing or unsupported coverage as proven measured failure."
+      ],
+      "sources": [
+        "https://github.com/TIGER-AI-Lab/VLM2Vec",
+        "https://huggingface.co/spaces/TIGER-Lab/MMEB-Leaderboard/raw/6051f646dc453f0b31318b949f66bccaaf5e608c/rankings/mmeb_ranking.jsonl",
+        "https://huggingface.co/spaces/TIGER-Lab/MMEB-Leaderboard",
+        "https://huggingface.co/datasets/VLM2Vec/MMEB-V3"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "wemm-embedding-models.md",
+      "slug": "wemm-embedding-models",
+      "title": "What do WeChat WeMM embeddings represent, and how can Milvus use them?",
+      "topic": "models",
+      "baseline_sha256": "8f1b4166093e609dd16a897bff8e93cb5f29b4ca36369438aeb33617495e7772",
+      "reviewed_sha256": "3463f09649c7218adb0ac0b8a73400d1049d02be25a62969a8f214fc0c7ec0bf",
+      "disposition": "corrected-or-clarified",
+      "notes": [
+        "Remove the token/patch/MaxSim diagram from a single-vector model explanation."
+      ],
+      "sources": [
+        "https://huggingface.co/tencent/WeMM-Embedding-2B",
+        "https://huggingface.co/tencent/WeMM-Embedding-4B",
+        "https://huggingface.co/tencent/WeMM-Embedding-9B",
+        "https://github.com/Tencent/WeMM-Embedding",
+        "https://arxiv.org/abs/2608.24053"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "kalm-embedding-models.md",
+      "slug": "kalm-embedding-models",
+      "title": "How do the KaLM text embedding variants differ?",
+      "topic": "models",
+      "baseline_sha256": "4b85cb3ab4545348ab3219f42125814602336570c80a51acbf2763f5e72e59ed",
+      "reviewed_sha256": "4b85cb3ab4545348ab3219f42125814602336570c80a51acbf2763f5e72e59ed",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://huggingface.co/KaLM-Embedding/KaLM-embedding-multilingual-mini-instruct-v2.5",
+        "https://huggingface.co/tencent/KaLM-Embedding-Gemma3-12B-2511",
+        "https://github.com/HITsz-TMG/KaLM-Embedding",
+        "https://intl.cloud.tencent.com/zh/document/product/845/82238"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "kalm-reranker-models.md",
+      "slug": "kalm-reranker-models",
+      "title": "How does KaLM compressed-document reranking work?",
+      "topic": "models",
+      "baseline_sha256": "3b48a56f5e85419b5fda4dd05e1fab7e5bc9beee36688d398c289d9dd77da5cb",
+      "reviewed_sha256": "3b48a56f5e85419b5fda4dd05e1fab7e5bc9beee36688d398c289d9dd77da5cb",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://huggingface.co/KaLM-Embedding/KaLM-Reranker-V1-Nano-R2",
+        "https://huggingface.co/KaLM-Embedding/KaLM-Reranker-V1-Small-R2",
+        "https://huggingface.co/KaLM-Embedding/KaLM-Reranker-V1-Large-R2",
+        "https://arxiv.org/abs/2606.22807"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "dense-sparse-model-families.md",
+      "slug": "dense-sparse-model-families",
+      "title": "Which dense, sparse, and compact embedding families should you compare?",
+      "topic": "models",
+      "baseline_sha256": "46ef98b4d4b0b3d8ea53c9a7e2b19d993fa407248952a4a3211b28280b30743f",
+      "reviewed_sha256": "46ef98b4d4b0b3d8ea53c9a7e2b19d993fa407248952a4a3211b28280b30743f",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://huggingface.co/intfloat/multilingual-e5-large-instruct",
+        "https://huggingface.co/Alibaba-NLP/gte-multilingual-base",
+        "https://huggingface.co/BAAI/bge-m3",
+        "https://huggingface.co/nomic-ai/nomic-embed-text-v1.5",
+        "https://huggingface.co/nomic-ai/nomic-embed-text-v2-moe",
+        "https://huggingface.co/minishlab/potion-base-8M",
+        "https://huggingface.co/Snowflake/snowflake-arctic-embed-l-v2.0",
+        "https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2",
+        "https://huggingface.co/hkunlp/instructor-xl",
+        "https://huggingface.co/maidalun1020/bce-embedding-base_v1",
+        "https://huggingface.co/naver/splade-cocondenser-ensembledistil",
+        "https://huggingface.co/KaLM-Embedding/KaLM-embedding-multilingual-mini-instruct-v2.5",
+        "https://github.com/milvus-io/milvus-model/tree/v0.3.4/src/pymilvus/model"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "multimodal-model-families.md",
+      "slug": "multimodal-model-families",
+      "title": "Which multimodal embedding families fit image, video, and audio retrieval?",
+      "topic": "models",
+      "baseline_sha256": "b099c2398c0a862a43e87154ec92238b61bca8c06d7219d6560e989e03250484",
+      "reviewed_sha256": "b099c2398c0a862a43e87154ec92238b61bca8c06d7219d6560e989e03250484",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://huggingface.co/tencent/WeMM-Embedding-9B",
+        "https://huggingface.co/Qwen/Qwen3-VL-Embedding-8B",
+        "https://huggingface.co/Alibaba-NLP/gme-Qwen2-VL-7B-Instruct",
+        "https://huggingface.co/OpenSearch-AI/Ops-MM-embedding-v1-7B",
+        "https://huggingface.co/google/siglip2-base-patch16-224",
+        "https://huggingface.co/nvidia/omni-embed-nemotron-3b",
+        "https://huggingface.co/Haon-Chen/e5-omni-7B",
+        "https://huggingface.co/jinaai/jina-embeddings-v5-omni-small",
+        "https://github.com/TIGER-AI-Lab/VLM2Vec"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "visual-document-models.md",
+      "slug": "visual-document-models",
+      "title": "How do ColPali, ColQwen, and other page encoders use Milvus embedding lists?",
+      "topic": "models",
+      "baseline_sha256": "a8ce406810acbae5362b7ed43151121a3f0966a2e8cf3dbea47f0a3c2d49cfd3",
+      "reviewed_sha256": "a8ce406810acbae5362b7ed43151121a3f0966a2e8cf3dbea47f0a3c2d49cfd3",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://huggingface.co/vidore/colpali-v1.3-hf",
+        "https://huggingface.co/vidore/colqwen2.5-v0.2",
+        "https://huggingface.co/vidore/colSmol-500M",
+        "https://huggingface.co/nvidia/nemotron-colembed-vl-8b-v2",
+        "https://milvus.io/docs/basic-vector-search-with-structarray.md",
+        "https://milvus.io/docs/choose-an-embeddinglist-search-strategy.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "tencent-r3-models.md",
+      "slug": "tencent-r3-models",
+      "title": "How do Tencent R3 embedding and reranking models retrieve agent skills?",
+      "topic": "models",
+      "baseline_sha256": "efa6727ecadcf8e4c2c0899b6aa968094879bfb5266d94c7f8595b21541604bb",
+      "reviewed_sha256": "efa6727ecadcf8e4c2c0899b6aa968094879bfb5266d94c7f8595b21541604bb",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://github.com/Tencent/R3-Skill",
+        "https://huggingface.co/tencent/R3-embedding-0.6b",
+        "https://huggingface.co/tencent/R3-rerank-0.6b"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "milvus-model-library-support.md",
+      "slug": "milvus-model-library-support",
+      "title": "What does the released Milvus Model library actually support?",
+      "topic": "ecosystem",
+      "baseline_sha256": "eaed633bd09e8656d3d78547722c7ff2d86a7ed8d50b1ea4f4fcbf8544f17119",
+      "reviewed_sha256": "5630431a279d816f94c282c6139cc8f1fb5055b4a300494c2927d922741a52f5",
+      "disposition": "corrected-or-clarified",
+      "notes": [
+        "BM25 has corpus statistics rather than a model endpoint; the generic default placeholder was wrong.",
+        "CrossEncoder defaults to an empty model name and loads a model locally; it is not an endpoint adapter."
+      ],
+      "sources": [
+        "https://pypi.org/project/pymilvus.model/0.3.4/",
+        "https://github.com/milvus-io/milvus-model/tree/v0.3.4/src/pymilvus/model",
+        "https://github.com/milvus-io/milvus-model/releases/tag/v0.3.4",
+        "https://milvus.io/docs/embeddings.md"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "milvus-model-functions.md",
+      "slug": "milvus-model-functions",
+      "title": "How do client model wrappers, server Functions, and rank fusion differ?",
+      "topic": "production",
+      "baseline_sha256": "e275265aa89619c805d3a64d4dfe9ed4d1509b5c0bb12a94ed223929a7f15a8b",
+      "reviewed_sha256": "8433fb5d2edf995484b570d1049161f711f3e5489c24f39570213167b5b57c00",
+      "disposition": "corrected-or-clarified",
+      "notes": [
+        "Built-in Functions and provider-backed model inference must not be conflated."
+      ],
+      "sources": [
+        "https://milvus.io/docs/embedding-function-overview.md",
+        "https://milvus.io/docs/model-ranker-overview.md",
+        "https://milvus.io/docs/rrf-ranker.md",
+        "https://github.com/milvus-io/milvus-model/tree/v0.3.4/src/pymilvus/model"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    },
+    {
+      "file": "model-inference-serving.md",
+      "slug": "model-inference-serving",
+      "title": "How should you serve and version embedding and reranking models for Milvus?",
+      "topic": "models",
+      "baseline_sha256": "7a912bba8f9169941fb0c34215a49e3c839037ba3818b59a069d4a4d738cca82",
+      "reviewed_sha256": "7a912bba8f9169941fb0c34215a49e3c839037ba3818b59a069d4a4d738cca82",
+      "disposition": "reviewed-no-additional-change",
+      "notes": [
+        "No additional factual correction identified during this reading; not a correctness certification."
+      ],
+      "sources": [
+        "https://github.com/huggingface/text-embeddings-inference",
+        "https://github.com/milvus-io/milvus-model/blob/v0.3.4/src/pymilvus/model/dense/tei.py",
+        "https://github.com/milvus-io/milvus-model/blob/v0.3.4/src/pymilvus/model/reranker/tei.py",
+        "https://github.com/Tencent/WeMM-Embedding"
+      ],
+      "scope": "English body, example, representation/implementation boundaries and source references reviewed; Chinese corrections synchronized. No model inference or production benchmark."
+    }
+  ]
+}

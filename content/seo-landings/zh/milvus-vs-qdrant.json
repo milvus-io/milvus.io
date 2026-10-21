@@ -1,0 +1,491 @@
+{
+  "site": "milvus-zh",
+  "kind": "seo",
+  "slug": "milvus-vs-qdrant",
+  "nav": "对比 Qdrant",
+  "path": "/zh/compare/milvus-vs-qdrant",
+  "title": "Milvus 和 Qdrant 对比：扩展性、性能与功能",
+  "description": "Milvus 和 Qdrant 对比：存算分离、分片与多租户、VectorDBBench 的 QPS、P99 与召回率、功能对比表，以及 Qdrant 更合适的场景，帮你做开源向量数据库选型。",
+  "keywords": {
+    "primary": "Milvus 和 Qdrant 对比",
+    "secondary": [
+      "Qdrant 和 Milvus 对比",
+      "Qdrant 和 Milvus 哪个好",
+      "向量数据库对比",
+      "向量数据库选型",
+      "开源向量数据库选型",
+      "向量数据库性能对比",
+      "存算分离",
+      "分布式向量数据库",
+      "Milvus 分布式部署",
+      "十亿级向量检索",
+      "过滤检索性能",
+      "多租户向量数据库",
+      "VectorDBBench",
+      "混合检索 BM25"
+    ],
+    "questions": [
+      "Qdrant 和 Milvus 哪个好？",
+      "Milvus 和 Qdrant 谁更快？",
+      "Qdrant 能扩展到十亿级向量吗？",
+      "Milvus 自建部署比 Qdrant 复杂吗？",
+      "RAG 场景该选 Milvus 还是 Qdrant？",
+      "Milvus 和 Qdrant 都是开源的吗？",
+      "Milvus 和 Zilliz Cloud 有什么区别？"
+    ]
+  },
+  "research": [
+    "https://f22labs.com/blogs/qdrant-vs-milvus-which-vector-database-should-you-choose/",
+    "https://kunalganglani.com/blog/milvus-vs-qdrant",
+    "https://markaicode.com/vs/qdrant-vs-milvus/",
+    "https://www.firecrawl.dev/blog/best-vector-databases",
+    "https://redis.io/blog/best-open-source-vector-databases-comparison/",
+    "https://qdrant.tech/documentation/scaling/",
+    "https://zhangzqs.cn/posts/ba94/",
+    "https://jishuzhan.net/article/1960208737288892417",
+    "https://kaiyan.net/blog/vector-database-selection-2026/",
+    "https://www.53ai.com/news/OpenSourceLLM/2024102220397.html",
+    "https://cloudnative-tech.com/p/6967/",
+    "https://www.cnblogs.com/bonelee/p/18246278"
+  ],
+  "h1": "Milvus 和 Qdrant 对比：开源向量数据库怎么选",
+  "intro": "Milvus 和 Qdrant 对比，核心区别在架构：两者都是 Apache-2.0 开源向量数据库，但 Milvus 是存算分离的分布式向量数据库，数据在对象存储，查询、写入、索引节点各自弹性扩缩，可支撑数百亿向量；Qdrant 是对等节点架构：分片存在各节点本地磁盘，部署更轻。需要独立扩展写入、查询和索引时，优先评估 Milvus；偏好对等节点部署与 payload 过滤模型时，可评估 Qdrant。",
+  "primary_cta": {
+    "label": "开始 Milvus 快速入门",
+    "href": "https://milvus.io/docs/zh/quickstart.md"
+  },
+  "secondary_cta": {
+    "label": "试用 Zilliz Cloud 托管 Milvus",
+    "href": "https://cloud.zilliz.com.cn/signup"
+  },
+  "proof": [
+    "Apache-2.0，GitHub 40K+ star",
+    "可扩展到数百亿向量",
+    "存储与计算分离",
+    "多租户向量数据库：partition key 支持百万级租户"
+  ],
+  "logos": [
+    "Salesforce",
+    "Walmart",
+    "NVIDIA",
+    "eBay",
+    "IBM",
+    "Cisco",
+    "Roblox",
+    "Reddit",
+    "Exa.ai",
+    "OpenEvidence",
+    "Read.ai",
+    "Plaud",
+    "Filevine"
+  ],
+  "diagram": {
+    "type": "compare",
+    "caption": "Milvus 各类节点在共享对象存储上独立扩缩；Qdrant 对等节点把分片存在本地盘，扩容时要搬分片。",
+    "left": {
+      "title": "Milvus：存算分离",
+      "sub": "无状态 worker，按类型各自扩缩",
+      "nodes": [
+        {
+          "title": "Streaming",
+          "sub": "写入 · WAL"
+        },
+        {
+          "title": "Query",
+          "sub": "检索 · 副本"
+        },
+        {
+          "title": "Data",
+          "sub": "建索引"
+        }
+      ],
+      "storage": {
+        "title": "共享对象存储",
+        "sub": "S3 / MinIO / Azure / GCS，按需分层加载"
+      },
+      "verdict": "加节点：直接从存储加载 segment。可到数百亿向量。"
+    },
+    "right": {
+      "title": "Qdrant：对等节点集群",
+      "sub": "每个节点自己存、自己建索引、自己服务",
+      "nodes": [
+        {
+          "title": "Peer 1",
+          "sub": "分片在本地盘"
+        },
+        {
+          "title": "Peer 2",
+          "sub": "分片在本地盘"
+        },
+        {
+          "title": "Peer 3",
+          "sub": "分片在本地盘"
+        }
+      ],
+      "storage": {
+        "title": "Raft 共识",
+        "sub": "分片数固定；重分片仅 Cloud"
+      },
+      "verdict": "加节点：空节点等分片迁入。小集群省心。"
+    }
+  },
+  "sections": [
+    {
+      "id": "scalability",
+      "nav": "扩展性",
+      "h2": "Milvus 和 Qdrant 扩展性对比：十亿级向量检索怎么撑？",
+      "paragraphs": [
+        "Milvus 是存算分离架构。segment 和 WAL 都在对象存储里，新加的 query 节点直接加载分配给它的 segment，不用从别的节点拷盘；写入、检索、建索引分别由不同类型的节点承担，各自扩缩。tiered storage 还能让单个节点服务超过自身内存和磁盘的数据量。",
+        "Qdrant 采用 shared-nothing 模式：每个节点自己存储、建索引、服务自己的分片。官方文档写明，自建集群的分片数不重建 collection 就无法修改，新节点加入时是空的，自动 rebalance 和 resharding 只在 Qdrant Cloud 提供；文档建议起步时设 12 个分片。"
+      ],
+      "table": {
+        "caption": "扩展性与大规模多租户（依据双方官方文档）",
+        "heads": [
+          "能力",
+          "Milvus",
+          "Qdrant（自建）"
+        ],
+        "rows": [
+          [
+            "架构",
+            "存算分离：proxy、streaming、query、data 节点",
+            "对等节点，Raft 维护集群拓扑和 collection 元数据"
+          ],
+          [
+            "数据存放",
+            "对象存储（S3、MinIO、Azure Blob、GCS），WAL 也在其中",
+            "各节点本地 mmap 文件"
+          ],
+          [
+            "节点独立扩缩",
+            "query、streaming、data 节点分别扩缩",
+            "每个节点同时负责存储、建索引和查询"
+          ],
+          [
+            "新增节点",
+            "从对象存储加载 segment",
+            "空节点，需迁移分片"
+          ],
+          [
+            "分片与 resharding",
+            "分片数建表时设定；segment 可分布到任意数量的 query 节点",
+            "不重建 collection 无法改分片数；resharding 仅 Qdrant Cloud"
+          ],
+          [
+            "数据超过单节点容量",
+            "tiered storage 按需拉取字段数据",
+            "本地磁盘上的 cached / cold 分层"
+          ],
+          [
+            "大规模多租户",
+            "partition key 支持百万级租户；也可按 database、collection、partition 隔离",
+            "is_tenant payload 索引；tiered multitenancy 把大租户提升到独占分片"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "performance",
+      "nav": "性能",
+      "h2": "Milvus 和 Qdrant 性能对比：谁更快？",
+      "paragraphs": [
+        "以下是 VectorDBBench 上指定配置的向量检索和过滤检索结果，保留 QPS、P99、召回率及配置标签。不同配置的硬件、索引参数和召回率不同，适合用来确定自有工作负载的测试起点。"
+      ],
+      "bench": [
+        {
+          "title": "向量检索吞吐（QPS，越高越好）",
+          "caption": "Cohere 1M 数据集，768 维",
+          "unit": "QPS",
+          "rows": [
+            {
+              "system": "Zilliz Cloud",
+              "label": "ZillizCloud-8cu-perf",
+              "value": 13316.23,
+              "detail": "P99 2 ms · 召回率 0.9383",
+              "highlight": true
+            },
+            {
+              "system": "Milvus",
+              "label": "Milvus-16c64g-sq4u-fp16-force_merge",
+              "value": 9575.69,
+              "detail": "P99 2.3 ms · 召回率 0.9189"
+            },
+            {
+              "system": "Qdrant Cloud",
+              "label": "QdrantCloud-16c64g",
+              "value": 1242.43,
+              "detail": "P99 6.4 ms · 召回率 0.9474"
+            }
+          ],
+          "source": "来源：VectorDBBench；配置、召回率及硬件不同。",
+          "sourceUrl": "https://github.com/zilliztech/VectorDBBench/blob/main/vectordb_bench/results/leaderboard_v2.json"
+        },
+        {
+          "title": "过滤检索吞吐（QPS，过滤后保留 1% 数据）",
+          "caption": "Cohere 1M 数据集，768 维，filter ratio 0.99",
+          "unit": "QPS",
+          "rows": [
+            {
+              "system": "Zilliz Cloud",
+              "label": "ZillizCloud-8cu-perf-partition_key",
+              "value": 10020.53,
+              "detail": "P99 2.6 ms · 召回率 0.9788",
+              "highlight": true
+            },
+            {
+              "system": "Milvus",
+              "label": "Milvus-16c64g-sq8-partition_key",
+              "value": 11280.08,
+              "detail": "P99 1.6 ms · 召回率 0.9507"
+            },
+            {
+              "system": "Qdrant Cloud",
+              "label": "QdrantCloud-16c64g-payload-index",
+              "value": 1494.53,
+              "detail": "P99 7.0 ms · 召回率 1.0"
+            }
+          ],
+          "source": "来源：VectorDBBench 排行榜（zilliz.com/vdbbench-leaderboard），系统标签原样引用。结果因配置而异，建议用自己的数据跑一遍。",
+          "cta": {
+            "text": "Zilliz Cloud 就是全托管的 Milvus：同样的引擎、同一梯队的性能，不用自己规划集群、升级和扩容。",
+            "label": "免费试用 Zilliz Cloud",
+            "href": "https://cloud.zilliz.com.cn/signup"
+          },
+          "sourceUrl": "https://github.com/zilliztech/VectorDBBench/blob/main/vectordb_bench/results/leaderboard_v2.json"
+        }
+      ]
+    },
+    {
+      "id": "features",
+      "nav": "功能",
+      "h2": "Qdrant 和 Milvus 功能对比：向量数据库对比表",
+      "paragraphs": [
+        "两者都覆盖了现代检索的核心能力。差别在广度：Milvus 的索引类型更多，便于按成本和硬件选型，全文检索也有服务端内置的 BM25 函数。做向量数据库选型时，建议先回答三个问题：数据会不会长到十亿级，过滤条件是否复杂，是否需要在数据库内完成关键词与语义的混合检索。"
+      ],
+      "table": {
+        "caption": "功能对比：索引类型、量化、混合检索、过滤、部署方式与 SDK",
+        "heads": [
+          "功能",
+          "Milvus",
+          "Qdrant"
+        ],
+        "rows": [
+          [
+            "稠密向量索引类型",
+            "HNSW、IVF（FLAT、SQ8、PQ、RaBitQ）、SCANN、DiskANN、GPU（CAGRA、IVF）",
+            "HNSW"
+          ],
+          [
+            "量化",
+            "SQ8、PQ、PRQ、RaBitQ；HNSW_SQ、HNSW_PQ、HNSW_PRQ",
+            "标量、二值（1、1.5、2 bit）、乘积、非对称量化"
+          ],
+          [
+            "稀疏向量",
+            "SPARSE_INVERTED_INDEX",
+            "稀疏向量，倒排索引"
+          ],
+          [
+            "BM25 与全文检索",
+            "内置 BM25 函数，服务端把原始文本转成稀疏向量",
+            "full-text payload 索引；BM25 通过 qdrant/bm25 模型或 FastEmbed 生成，配 IDF modifier"
+          ],
+          [
+            "混合检索",
+            "单次查询多个向量字段，RRF 或加权 ranker 融合",
+            "Query API prefetch，RRF 或 DBSF 融合"
+          ],
+          [
+            "多向量",
+            "默认每个 collection 最多 10 个向量字段",
+            "named vectors；multivector 支持 MAX_SIM"
+          ],
+          [
+            "JSON / payload 过滤与索引",
+            "JSON 字段 + JSON path 索引；INVERTED、BITMAP、STL_SORT 标量索引",
+            "keyword、integer、float、bool、geo、datetime、uuid、text 索引；filterable HNSW"
+          ],
+          [
+            "多租户",
+            "database、collection、partition 或 partition key",
+            "is_tenant 索引、自定义 shard key、tiered multitenancy"
+          ],
+          [
+            "部署方式",
+            "Milvus Lite、Standalone、Distributed、Zilliz Cloud",
+            "本地模式、单机（Docker）、集群、Qdrant Cloud、Hybrid Cloud、Private Cloud"
+          ],
+          [
+            "许可证与语言",
+            "Apache-2.0；Go 和 C++",
+            "Apache-2.0；Rust"
+          ],
+          [
+            "SDK 语言",
+            "Python、Java、Go、Node.js、C#、C++、Rust、RESTful",
+            "Python、JavaScript/TypeScript、Rust、Go、.NET、Java"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "qdrant-fit",
+      "nav": "选 Qdrant",
+      "h2": "Qdrant 和 Milvus 哪个好？什么情况下 Qdrant 更合适",
+      "paragraphs": [
+        "Qdrant 的对等节点部署可减少需要运维的服务类型。应根据分片规划、过滤需求、运维条件和实测性能选择，不能把集合规模当作产品能力的硬边界。"
+      ],
+      "bullets": [
+        "数据能放进单机或小集群，分片数可以一开始就定好。",
+        "只想跑一个 Rust 进程的 Docker 容器，不引入对象存储和 Kubernetes。",
+        "内存吃紧，需要精细调标量、二值、乘积或非对称量化。",
+        "已经在用 Qdrant Cloud，rebalance 和 resharding 由平台托管。",
+        "SaaS 中少数大租户适合 tiered multitenancy 的独占分片。"
+      ]
+    },
+    {
+      "id": "adopters",
+      "nav": "客户",
+      "h2": "哪些 AI 公司和大型企业在生产环境用 Milvus？",
+      "paragraphs": [
+        "从 AI 原生公司到大型企业，都在生产环境运行 Milvus 或 Zilliz Cloud（托管 Milvus）。milvus.io 用户墙上有 Salesforce、Walmart、NVIDIA、eBay、IBM、Cisco、Roblox、Reddit，也有 Exa.ai、OpenEvidence、Read.ai、Notta.ai、Plaud、Filevine。公开案例中的结果："
+      ],
+      "bullets": [
+        "OpenEvidence：基于 Zilliz Cloud，检索延迟低于 10 ms，峰值 4,000 QPS。",
+        "Plaud：每个区域 100 亿+ 向量块，平均召回延迟低于 200 ms。",
+        "Exa：借助混合检索，神经搜索延迟从秒级降到 200 ms 以内。",
+        "Airtable：在 Kubernetes 上用 Milvus Operator 自建 Milvus，支撑语义检索。"
+      ]
+    }
+  ],
+  "code": null,
+  "stats": [
+    {
+      "value": "数百亿",
+      "label": "Milvus Distributed 支持的向量规模",
+      "source": "https://milvus.io/docs/zh/install-overview.md"
+    },
+    {
+      "value": "百万级",
+      "label": "partition key 支持的单 collection 租户数",
+      "source": "https://milvus.io/docs/zh/multi_tenancy.md"
+    },
+    {
+      "value": "40K+",
+      "label": "milvus-io/milvus GitHub star",
+      "source": "https://github.com/milvus-io/milvus"
+    }
+  ],
+  "faqs": [
+    [
+      "Milvus 和 Qdrant 谁更快？",
+      "VectorDBBench Cohere 1M 测试中，Milvus-16c64g-sq8-force_merge 为 5,973 QPS（召回率 0.9192），QdrantCloud-16c64g 为 1,242.43 QPS（0.9474）。10M 数据边写入 500 行/秒边查询时，QdrantCloud-16c64g 为 393.8 QPS，该 Milvus 配置为 306。"
+    ],
+    [
+      "Qdrant 能扩展到十亿级向量吗？",
+      "Qdrant 靠加节点、加分片横向扩展。自建集群的分片数建表时固定，新节点加入时为空；resharding 和自动 rebalance 只在 Qdrant Cloud 提供。Milvus Distributed 文档标称支持数百亿向量。"
+    ],
+    [
+      "Milvus 自建部署比 Qdrant 复杂吗？",
+      "Milvus Lite 直接跑在 pymilvus 里；Standalone 用 Docker 单机部署，适合约 1 亿向量以内；需要节点独立扩缩时再做 Milvus 分布式部署（Distributed，跑在 Kubernetes 上）。Qdrant 每个节点是一个进程。"
+    ],
+    [
+      "RAG 场景该选 Milvus 还是 Qdrant？",
+      "两者都能做带过滤和混合检索的 RAG。语料和租户数增长后，Milvus 的服务端 BM25、更多索引类型和 partition key 多租户更有优势；偏好对等节点部署与 payload 过滤模型的团队也可评估 Qdrant。"
+    ],
+    [
+      "Milvus 和 Qdrant 都是开源的吗？",
+      "是的，两者都采用 Apache-2.0 许可证，都能自建。托管服务方面，Milvus 对应 Zilliz Cloud，Qdrant 对应 Qdrant Cloud。"
+    ],
+    [
+      "Milvus 和 Zilliz Cloud 有什么区别？",
+      "Zilliz Cloud 是 Milvus 原班团队提供的全托管 Milvus，客户端 API 一致。基于 Milvus Lite 或 Standalone 写的代码，可以直接迁到 Zilliz Cloud，不用重写。"
+    ]
+  ],
+  "stories": [
+    {
+      "name": "Filevine",
+      "text": "在 Zilliz Cloud 上管理 300 亿向量，覆盖数百万份法律文档。",
+      "href": "https://zilliz.com/customers/filevine"
+    },
+    {
+      "name": "美团",
+      "text": "自建 Milvus 生产环境承载 100 亿+ 向量，单个 collection 超过 20 亿。",
+      "href": "https://zilliz.com/customers/meituan"
+    },
+    {
+      "name": "Read AI",
+      "text": "基于 Milvus 为数百万月活用户提供 20–50 ms 检索延迟，活跃租户达百万级。",
+      "href": "https://zilliz.com/customers/read-ai"
+    }
+  ],
+  "aiq": [
+    "how-does-a-vector-database-handle-scaling-up-to-millions-or-billions-of-vectors-and-what-architectural-features-enable-this-scalability",
+    "how-do-distributed-vector-databases-handle-sharding-and-replication",
+    "how-do-you-choose-the-right-index-type-for-your-workload",
+    "what-is-diskann",
+    "what-is-hybrid-search-and-when-should-i-use-it",
+    "what-is-the-role-of-multitenancy-in-scalability-considerations-for-vector-databases-and-how-might-resource-isolation-be-handled-when-multiple-applications-share-the-same-infrastructure",
+    "what-tools-help-benchmark-vector-search-performance"
+  ],
+  "related": [
+    "distributed-vector-database",
+    "open-source-vector-database",
+    "hybrid-search",
+    "milvus-vs-elasticsearch",
+    "search-on-the-lake"
+  ],
+  "managed": {
+    "h2": "不想自己运维集群？",
+    "body": "Zilliz Cloud 是 Milvus 原班团队提供的全托管服务，MilvusClient API 与本地一致。可以先用开源 Milvus 起步，再迁到托管服务，应用代码不用重写。"
+  },
+  "sources": [
+    "https://milvus.io",
+    "https://github.com/milvus-io/milvus",
+    "https://milvus.io/docs/architecture_overview.md",
+    "https://milvus.io/docs/install-overview.md",
+    "https://milvus.io/docs/scaleout.md",
+    "https://milvus.io/docs/tiered-storage-overview.md",
+    "https://milvus.io/docs/create-collection.md",
+    "https://milvus.io/docs/index-explained.md",
+    "https://milvus.io/docs/full-text-search.md",
+    "https://milvus.io/docs/multi-vector-search.md",
+    "https://milvus.io/docs/json-indexing.md",
+    "https://milvus.io/docs/multi_tenancy.md",
+    "https://github.com/qdrant/qdrant",
+    "https://qdrant.tech/documentation/scaling/distributed_deployment/",
+    "https://qdrant.tech/documentation/scaling/horizontal-scaling/",
+    "https://qdrant.tech/documentation/concepts/indexing/",
+    "https://qdrant.tech/documentation/guides/quantization/",
+    "https://qdrant.tech/documentation/concepts/storage/",
+    "https://qdrant.tech/documentation/concepts/vectors/",
+    "https://qdrant.tech/documentation/concepts/hybrid-queries/",
+    "https://qdrant.tech/documentation/search/text-search/full-text-search/",
+    "https://qdrant.tech/documentation/guides/multiple-partitions/",
+    "https://qdrant.tech/course/beginners/module-4/where-it-runs/",
+    "https://zilliz.com/vdbbench-leaderboard",
+    "https://github.com/zilliztech/VectorDBBench",
+    "https://github.com/zilliztech/VectorDBBench/blob/main/vectordb_bench/results/leaderboard_v2.json",
+    "https://github.com/zilliztech/VectorDBBench/blob/main/vectordb_bench/results/leaderboard_v2_streaming.json",
+    "https://zilliz.com/customers/filevine",
+    "https://zilliz.com/customers/openevidence",
+    "https://zilliz.com/customers/exa",
+    "https://zilliz.com/customers/airtable",
+    "https://zilliz.com/customers/plaud",
+    "https://zilliz.com/customers/read-ai",
+    "https://zilliz.com/customers/meituan",
+    "https://milvus.io/docs/zh/quickstart.md",
+    "https://cloud.zilliz.com.cn/signup"
+  ],
+  "notes": [
+    "Filtered rows: the page's 'Filtering Performance' chart shows QdrantCloud-16c64g-payload-index but no self-hosted Milvus series; the Milvus-16c64g-sq8-partition_key series exists only in leaderboard_v2.json. Milvus uses partition key and Qdrant a payload index, as the labels show. Legal should review that the JSON is an acceptable citation.",
+    "Qdrant facts verified 2026-10-21 on qdrant.tech: shard_number fixed without recreating the collection; rebalancing/resharding not in self-hosted (Qdrant Cloud only); new nodes start empty; '12 shards is a common starting point'; Raft for topology/collection metadata; HNSW only for dense; quantization scalar/product/binary (1/1.5/2-bit)/asymmetric (TurboQuant v1.18 omitted); is_tenant (1.11) and tiered multitenancy (1.16, no Cloud-only note); storage = local mmap files with Cached/Cold tiers, no object-storage serving documented; SDKs Python, JS/TS, Rust, Go, .NET, Java. Deployment list (Local mode, Docker, Cloud, Hybrid Cloud, Private Cloud) from qdrant.tech course page via search snippet.",
+    "Milvus: shard count (num_shards) fixed at creation; no resharding documented, so the page does not claim it. SDK list from the GitHub README (docs page lists Python, Node.js, Go, Java).",
+    "Customer facts fetched 2026-10-21 from zilliz.com/customers: Filevine, OpenEvidence, Exa, Plaud (Zilliz Cloud); Meituan (self-run open-source Milvus); Read AI (Milvus; deployment not stated); Airtable (self-hosted Milvus on Kubernetes via Milvus Operator). Meituan is not on the milvus.io logo wall, so it appears only as a story.",
+    "Wanted, unverified: Qdrant per-node vector guidance; Qdrant GPU indexing details; Milvus multivector MAX_SIM (not claimed).",
+    "Perf section simplified 2026-10-21 to one config per system (leaderboard headline rows + filter ratio 0.99 rows from leaderboard_v2.json); streaming/10M rows dropped for readability (Qdrant leads streaming).",
+    "Keyword research 2026-10-21 (session web-search budget exhausted, so query phrasings come from Google/Bing/Baidu autocomplete APIs): 真实中文写法是 'qdrant 和 milvus 对比'、'milvus和qdrant'、'milvus qdrant weaviate/chroma'、'开源向量数据库Qdrant'、'向量数据库选型原则/方法/技术选型'、'向量数据库对比分析'、'向量数据库哪个比较好'、'Milvus分布式部署'、'milvus好用吗'。百度对 'qdrant 替代' 无任何联想，故删除 'Qdrant 替代方案'；新增 'Qdrant 和 Milvus 对比'、'向量数据库选型'、'Milvus 分布式部署'。"
+  ],
+  "lang": "zh",
+  "reviewedOn": "2026-10-21"
+}

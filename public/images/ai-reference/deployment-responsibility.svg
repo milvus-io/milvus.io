@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 856" width="640" height="856" role="img" aria-labelledby="title desc">
+<title id="title">Choose the operational responsibility boundary</title>
+<desc id="desc">Self-hosted Milvus: Your team operates the deployment: Own capacity, upgrades and recovery.. Managed service: Provider runs the database service: Check the documented service boundary.. BYOC: Service runs in your cloud account: Clarify network, IAM and shared duties.. Decision criteria: Data control + SLO + total cost: Validate the support and compliance scope.. Account ownership alone does not describe every operational responsibility.</desc>
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M1 1 L6 4 L1 7" fill="none" stroke="#1E5F70" stroke-width="1.5"/></marker></defs>
+<rect width="640" height="856" fill="#FAF6EE"/>
+<text x="28" y="30" font-family="Arial, sans-serif" font-size="12" font-weight="400" fill="#6B6356"><tspan x="28" dy="0">MILVUS / AI REFERENCE / SCHEMATIC</tspan></text>
+<text x="28" y="72" font-family="Georgia, serif" font-size="28" font-weight="700" fill="#0F1F2E"><tspan x="28" dy="0">Choose the operational</tspan><tspan x="28" dy="36.4">responsibility boundary</tspan></text>
+<rect x="28" y="146" width="584" height="144" fill="#F4ECDC" stroke="#0F1F2E" stroke-width="1.5"/>
+<path d="M230 146 V290" stroke="#0F1F2E" stroke-width="1.5"/>
+<text x="44" y="178" font-family="Arial, sans-serif" font-size="23" font-weight="700" fill="#1E5F70"><tspan x="44" dy="0">Self-hosted</tspan><tspan x="44" dy="29.9">Milvus</tspan></text>
+<text x="248" y="177" font-family="Arial, sans-serif" font-size="21" font-weight="700" fill="#0F1F2E"><tspan x="248" dy="0">Your team operates the</tspan><tspan x="248" dy="27.3">deployment</tspan></text>
+<text x="248" y="239" font-family="Arial, sans-serif" font-size="19" font-weight="400" fill="#6B6356"><tspan x="248" dy="0">Own capacity, upgrades and</tspan><tspan x="248" dy="24.7">recovery.</tspan></text>
+<rect x="28" y="302" width="584" height="144" fill="#F4ECDC" stroke="#0F1F2E" stroke-width="1.5"/>
+<path d="M230 302 V446" stroke="#0F1F2E" stroke-width="1.5"/>
+<text x="44" y="334" font-family="Arial, sans-serif" font-size="23" font-weight="700" fill="#1E5F70"><tspan x="44" dy="0">Managed</tspan><tspan x="44" dy="29.9">service</tspan></text>
+<text x="248" y="333" font-family="Arial, sans-serif" font-size="21" font-weight="700" fill="#0F1F2E"><tspan x="248" dy="0">Provider runs the database</tspan><tspan x="248" dy="27.3">service</tspan></text>
+<text x="248" y="395" font-family="Arial, sans-serif" font-size="19" font-weight="400" fill="#6B6356"><tspan x="248" dy="0">Check the documented service</tspan><tspan x="248" dy="24.7">boundary.</tspan></text>
+<rect x="28" y="458" width="584" height="144" fill="#F4ECDC" stroke="#0F1F2E" stroke-width="1.5"/>
+<path d="M230 458 V602" stroke="#0F1F2E" stroke-width="1.5"/>
+<text x="44" y="490" font-family="Arial, sans-serif" font-size="23" font-weight="700" fill="#1E5F70"><tspan x="44" dy="0">BYOC</tspan></text>
+<text x="248" y="489" font-family="Arial, sans-serif" font-size="21" font-weight="700" fill="#0F1F2E"><tspan x="248" dy="0">Service runs in your cloud</tspan><tspan x="248" dy="27.3">account</tspan></text>
+<text x="248" y="551" font-family="Arial, sans-serif" font-size="19" font-weight="400" fill="#6B6356"><tspan x="248" dy="0">Clarify network, IAM and shared</tspan><tspan x="248" dy="24.7">duties.</tspan></text>
+<rect x="28" y="614" width="584" height="144" fill="#F4ECDC" stroke="#0F1F2E" stroke-width="1.5"/>
+<path d="M230 614 V758" stroke="#0F1F2E" stroke-width="1.5"/>
+<text x="44" y="646" font-family="Arial, sans-serif" font-size="23" font-weight="700" fill="#1E5F70"><tspan x="44" dy="0">Decision</tspan><tspan x="44" dy="29.9">criteria</tspan></text>
+<text x="248" y="645" font-family="Arial, sans-serif" font-size="21" font-weight="700" fill="#0F1F2E"><tspan x="248" dy="0">Data control + SLO + total</tspan><tspan x="248" dy="27.3">cost</tspan></text>
+<text x="248" y="707" font-family="Arial, sans-serif" font-size="19" font-weight="400" fill="#6B6356"><tspan x="248" dy="0">Validate the support and</tspan><tspan x="248" dy="24.7">compliance scope.</tspan></text>
+<path d="M28 780 H612" stroke="#0F1F2E" stroke-width="1.5"/>
+<text x="28" y="806" font-family="Arial, sans-serif" font-size="18" font-weight="400" fill="#6B6356"><tspan x="28" dy="0">Account ownership alone does not describe every operational</tspan><tspan x="28" dy="23.4">responsibility.</tspan></text>
+</svg>

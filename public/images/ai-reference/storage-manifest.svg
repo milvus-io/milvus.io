@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 692" width="640" height="692" role="img" aria-labelledby="title desc">
+<title id="title">Storage readers follow a committed manifest</title>
+<desc id="desc">Prepare typed batches: Compute stages exchange Arrow-compatible data.. Write data files: Persist columnar data in the supported storage layout.. Commit a manifest: Record the visible files and version metadata.. Read the chosen version: Resolve logical rows through the committed state.. milvus-storage is a storage layer; Knowhere serves vector-index algorithms.</desc>
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M1 1 L6 4 L1 7" fill="none" stroke="#1E5F70" stroke-width="1.5"/></marker></defs>
+<rect width="640" height="692" fill="#FAF6EE"/>
+<text x="28" y="30" font-family="Arial, sans-serif" font-size="12" font-weight="400" fill="#6B6356"><tspan x="28" dy="0">MILVUS / AI REFERENCE / SCHEMATIC</tspan></text>
+<text x="28" y="72" font-family="Georgia, serif" font-size="28" font-weight="700" fill="#0F1F2E"><tspan x="28" dy="0">Storage readers follow a committed</tspan><tspan x="28" dy="36.4">manifest</tspan></text>
+<rect x="28" y="146" width="584" height="86" fill="#F4ECDC" stroke="#0F1F2E" stroke-width="1.5"/>
+<rect x="28" y="146" width="5" height="86" fill="#1E5F70"/>
+<text x="48" y="177" font-family="Arial, sans-serif" font-size="23" font-weight="700" fill="#0F1F2E"><tspan x="48" dy="0">Prepare typed batches</tspan></text>
+<text x="48" y="207" font-family="Arial, sans-serif" font-size="20" font-weight="400" fill="#6B6356"><tspan x="48" dy="0">Compute stages exchange Arrow-compatible data.</tspan></text>
+<path d="M320 235 V254" fill="none" stroke="#1E5F70" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="28" y="258" width="584" height="112" fill="#F4ECDC" stroke="#0F1F2E" stroke-width="1.5"/>
+<rect x="28" y="258" width="5" height="112" fill="#1E5F70"/>
+<text x="48" y="289" font-family="Arial, sans-serif" font-size="23" font-weight="700" fill="#0F1F2E"><tspan x="48" dy="0">Write data files</tspan></text>
+<text x="48" y="319" font-family="Arial, sans-serif" font-size="20" font-weight="400" fill="#6B6356"><tspan x="48" dy="0">Persist columnar data in the supported storage</tspan><tspan x="48" dy="26">layout.</tspan></text>
+<path d="M320 373 V392" fill="none" stroke="#1E5F70" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="28" y="396" width="584" height="86" fill="#F4ECDC" stroke="#0F1F2E" stroke-width="1.5"/>
+<rect x="28" y="396" width="5" height="86" fill="#1E5F70"/>
+<text x="48" y="427" font-family="Arial, sans-serif" font-size="23" font-weight="700" fill="#0F1F2E"><tspan x="48" dy="0">Commit a manifest</tspan></text>
+<text x="48" y="457" font-family="Arial, sans-serif" font-size="20" font-weight="400" fill="#6B6356"><tspan x="48" dy="0">Record the visible files and version metadata.</tspan></text>
+<path d="M320 485 V504" fill="none" stroke="#1E5F70" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="28" y="508" width="584" height="86" fill="#F4ECDC" stroke="#0F1F2E" stroke-width="1.5"/>
+<rect x="28" y="508" width="5" height="86" fill="#E85A2B"/>
+<text x="48" y="539" font-family="Arial, sans-serif" font-size="23" font-weight="700" fill="#0F1F2E"><tspan x="48" dy="0">Read the chosen version</tspan></text>
+<text x="48" y="569" font-family="Arial, sans-serif" font-size="20" font-weight="400" fill="#6B6356"><tspan x="48" dy="0">Resolve logical rows through the committed state.</tspan></text>
+<path d="M28 616 H612" stroke="#0F1F2E" stroke-width="1.5"/>
+<text x="28" y="642" font-family="Arial, sans-serif" font-size="18" font-weight="400" fill="#6B6356"><tspan x="28" dy="0">milvus-storage is a storage layer; Knowhere serves</tspan><tspan x="28" dy="23.4">vector-index algorithms.</tspan></text>
+</svg>

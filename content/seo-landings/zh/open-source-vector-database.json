@@ -1,0 +1,349 @@
+{
+  "site": "milvus-zh",
+  "kind": "seo",
+  "slug": "open-source-vector-database",
+  "nav": "开源向量库",
+  "path": "/zh/solutions/open-source-vector-database",
+  "title": "开源向量数据库 Milvus：Apache 2.0 可自部署",
+  "description": "Milvus 是 Apache 2.0 开源向量数据库，GitHub 40K+ star。硬件加速检索，K8s 上扩到百亿级，NVIDIA、Salesforce 等在用。",
+  "keywords": {
+    "primary": "开源向量数据库",
+    "secondary": [
+      "向量数据库 开源",
+      "免费向量数据库",
+      "向量数据库 私有化部署",
+      "向量数据库 github",
+      "milvus 部署",
+      "开源向量数据库有哪些",
+      "向量数据库 对比",
+      "向量数据库 推荐",
+      "向量数据库 本地部署",
+      "milvus 单机部署",
+      "milvus 分布式部署",
+      "向量数据库 docker 部署",
+      "向量数据库 k8s 部署",
+      "RAG 向量数据库"
+    ],
+    "questions": [
+      "Milvus 是免费向量数据库吗？可以商用吗？",
+      "谁在维护 Milvus？会不会改许可证？",
+      "开源向量数据库有哪些？对比和推荐怎么看？",
+      "向量数据库私有化部署，大规模生产能扛住吗？",
+      "向量数据库私有化部署：Milvus 单机部署、分布式部署还是托管"
+    ]
+  },
+  "h1": "开源向量数据库：Apache 2.0，可自部署",
+  "sub": "Milvus 是免费、Apache 2.0 许可的开源向量数据库，由 LF AI & Data 基金会托管，Go 和 C++ 编写，面向大规模高性能向量检索。pip 装上就能跑，数据量上来后在 Kubernetes 上扩到数百亿向量，API 不变。",
+  "primary_cta": {
+    "label": "跟着快速开始跑一遍",
+    "href": "https://milvus.io/docs/zh/quickstart.md"
+  },
+  "secondary_cta": {
+    "label": "不想运维？试试 Zilliz Cloud",
+    "href": "https://cloud.zilliz.com.cn/signup"
+  },
+  "proof": [
+    "Apache License 2.0",
+    "GitHub 40K+ star",
+    "LF AI & Data 毕业项目",
+    "可扩展到数百亿向量",
+    "VectorDBBench 9,575 QPS（Cohere 1M）"
+  ],
+  "logos": [
+    "NVIDIA",
+    "Salesforce",
+    "Walmart",
+    "eBay",
+    "IBM",
+    "Cisco",
+    "Reddit",
+    "Roblox",
+    "Shell",
+    "LINE",
+    "Bosch",
+    "Airtable"
+  ],
+  "benefits": [
+    {
+      "title": "真开源",
+      "body": "Apache 2.0 许可，LF AI & Data 基金会治理，数百位贡献者在 GitHub 上公开协作。"
+    },
+    {
+      "title": "性能吃满硬件",
+      "body": "Knowhere 引擎运行时自动选择 SSE、AVX2、AVX512 或 ARM 指令集，还支持 CAGRA 等 NVIDIA GPU 索引。"
+    },
+    {
+      "title": "横向扩展",
+      "body": "存算分离。无状态的 query、streaming、data 节点在 Kubernetes 上独立扩缩容，可扩到数百亿向量。"
+    },
+    {
+      "title": "生产验证",
+      "body": "NVIDIA、Salesforce、Walmart、eBay、IBM、Reddit 都在 Milvus 用户墙上；美团在自建 Milvus 上跑着 100 亿+ 向量。"
+    }
+  ],
+  "feature_blocks": [
+    {
+      "title": "开放生态，不锁定",
+      "body": "官方 SDK 和 REST API 覆盖主流技术栈，直接接入已有的 AI 工具链。",
+      "bullets": [
+        "Python、Java、Go、Node.js SDK，以及 RESTful API",
+        "集成 LangChain、LlamaIndex、OpenAI、Hugging Face、Spark、Kafka",
+        "运维配套：Attu 图形界面、Prometheus/Grafana 监控、Milvus CDC"
+      ]
+    },
+    {
+      "title": "主流索引一个引擎全覆盖",
+      "body": "每个 collection 按召回、延迟和内存预算选索引，还能叠加标量过滤和全文检索。",
+      "bullets": [
+        "HNSW、IVF、DiskANN、SCANN，以及 RaBitQ 量化（IVF_RABITQ）",
+        "GPU 索引：GPU_CAGRA、GPU_IVF_FLAT、GPU_IVF_PQ",
+        "BM25 全文检索 + 稀疏向量，支持混合检索"
+      ]
+    },
+    {
+      "title": "面向百亿数据和海量租户",
+      "body": "Distributed 版用官方 Helm Chart 或 Milvus Operator 部署，数据增长成本依然可控。",
+      "bullets": [
+        "读多加 query 节点，写多加 streaming / data 节点",
+        "冷热分层存储，冷数据放对象存储",
+        "默认每集群 65,536 个 collection；partition key 可支撑百万级租户"
+      ]
+    }
+  ],
+  "diagram": {
+    "top": {
+      "title": "你的应用（pymilvus MilvusClient）",
+      "sub": "同一套代码，只换 URI"
+    },
+    "branches": [
+      {
+        "title": "Milvus Lite",
+        "sub": "pip 安装，本地 .db 文件"
+      },
+      {
+        "title": "Standalone / Distributed",
+        "sub": "Docker、Helm 或 Milvus Operator"
+      },
+      {
+        "title": "Zilliz Cloud",
+        "sub": "全托管 Milvus"
+      }
+    ],
+    "bottom": {
+      "title": "Apache-2.0 Milvus 内核",
+      "sub": "LF AI & Data 基金会项目"
+    },
+    "caption": "一个开源引擎、一套客户端 API，覆盖所有部署形态。"
+  },
+  "code": {
+    "h2": "向量数据库本地部署：从 pip install 到第一次检索",
+    "intro": "Milvus Lite 随 pymilvus 一起安装。不需要服务器、Docker 或账号，数据库就是一个本地文件。",
+    "lang": "python",
+    "code": "# pip install -U \"pymilvus[milvus-lite]\"\nimport random\nfrom pymilvus import MilvusClient\n\nclient = MilvusClient(\"milvus_demo.db\")  # Milvus Lite: data lives in this local file\nclient.create_collection(collection_name=\"demo\", dimension=768)\n\ndocs = [\"Milvus is an open-source vector database.\", \"It runs on a laptop or on Kubernetes.\"]\nvecs = [[random.random() for _ in range(768)] for _ in docs]  # swap in your embedding model\nclient.insert(collection_name=\"demo\",\n              data=[{\"id\": i, \"vector\": v, \"text\": t} for i, (v, t) in enumerate(zip(vecs, docs))])\n\nprint(client.search(collection_name=\"demo\", data=[vecs[0]], limit=2, output_fields=[\"text\"]))",
+    "note": "要切换到服务端，把 URI（如 http://localhost:19530）传给 MilvusClient 即可。"
+  },
+  "stats": [],
+  "compare": {
+    "h2": "向量数据库私有化部署：Milvus 单机部署、分布式部署还是托管",
+    "caption": "Milvus 向量数据库容量建议，来自安装概览文档",
+    "heads": [
+      "形态",
+      "运行环境",
+      "什么时候用"
+    ],
+    "rows": [
+      [
+        "Milvus Lite",
+        "Python 进程（Linux、macOS）",
+        "原型和 notebook，几百万向量以内"
+      ],
+      [
+        "Standalone（Docker 单机部署）",
+        "单机 Docker",
+        "单机生产环境，约 1 亿向量以内"
+      ],
+      [
+        "Distributed（K8s 分布式部署）",
+        "Kubernetes（Helm 或 Operator）",
+        "1 亿到数百亿向量，需要高可用"
+      ],
+      [
+        "Zilliz Cloud",
+        "全托管 Milvus",
+        "想用 Milvus 但不想运维，有免费档起步"
+      ]
+    ],
+    "note": null
+  },
+  "faqs": [
+    [
+      "Milvus 是免费向量数据库吗？可以商用吗？",
+      "是。Apache 2.0 允许免费商用、修改和再分发。只为自己跑的机器付费；选 Zilliz Cloud 托管则按云服务计费。"
+    ],
+    [
+      "谁在维护 Milvus？会不会改许可证？",
+      "Milvus 是 LF AI & Data 基金会毕业项目，治理公开，Zilliz 是主要贡献者。已发布的 Apache 2.0 代码永远是 Apache 2.0。"
+    ],
+    [
+      "开源向量数据库有哪些？对比和推荐怎么看？",
+      "用 VectorDBBench 在同一数据集上跑各家数据库，看 QPS、延迟和召回率：Cohere 1M 测试中 Milvus-16c64g-sq4u-fp16-force_merge 达到 9,575.69 QPS，P99 2.3 ms。"
+    ],
+    [
+      "向量数据库私有化部署，大规模生产能扛住吗？",
+      "能。Distributed 版跑在 Kubernetes 上，多副本、组件独立扩缩容。美团在自建 Milvus 上承载 100 亿+ 向量；Read AI 为数百万用户提供 20–50 ms 检索延迟。"
+    ]
+  ],
+  "final": {
+    "h2": "五分钟跑起一个开源向量数据库",
+    "body": "pip 安装 pymilvus，打开本地文件，开始检索。数据量上来后切到 Standalone 或 Kubernetes，或交给 Zilliz Cloud 托管，代码不用改。"
+  },
+  "sources": [
+    "https://github.com/milvus-io/milvus",
+    "https://github.com/milvus-io/milvus/blob/master/README.md",
+    "https://github.com/milvus-io/milvus/blob/master/LICENSE",
+    "https://lfaidata.foundation/blog/2021/06/23/lf-ai-data-foundation-announces-graduation-of-milvus-project/",
+    "https://milvus.io/",
+    "https://milvus.io/docs/quickstart.md",
+    "https://milvus.io/docs/milvus_lite.md",
+    "https://milvus.io/docs/install-overview.md",
+    "https://milvus.io/docs/install_cluster-helm.md",
+    "https://milvus.io/docs/install-pymilvus.md",
+    "https://milvus.io/api-reference/restful/v2.6.x/About.md",
+    "https://milvus.io/docs/integrations_overview.md",
+    "https://milvus.io/docs/architecture_overview.md",
+    "https://milvus.io/docs/knowhere.md",
+    "https://milvus.io/docs/index-explained.md",
+    "https://milvus.io/docs/multi_tenancy.md",
+    "https://milvus.io/docs/tiered-storage-overview.md",
+    "https://milvus.io/docs/create-collection.md",
+    "https://zilliz.com/vdbbench-leaderboard",
+    "https://github.com/zilliztech/VectorDBBench",
+    "https://zilliz.com/customers/meituan",
+    "https://zilliz.com/customers/read-ai",
+    "https://docs.zilliz.com/docs/free-trials",
+    "https://milvus.io/docs/zh/quickstart.md",
+    "https://milvus.io/docs/zh/install-overview.md",
+    "https://zilliz.com.cn/cloud"
+  ],
+  "notes": [
+    "Helm install command intentionally not shown in full: the docs' command pins an image tag and streaming flags that change per release; the page links to the Helm guide instead.",
+    "Snippet uses pymilvus[milvus-lite] per milvus_lite.md; re-run on Python 3.10+ before launch.",
+    "'Trusted for production workloads' is milvus.io homepage wording (fetched 2026-10-21). No '10,000+ organizations/users' figure appears in the README or on milvus.io, so none is used.",
+    "SDK list = install-pymilvus.md ('Python, Node.js, GO, and Java') + RESTful API reference. C#/C++/Rust clients exist as community/Zilliz repos but were not verified as official on milvus.io; omitted.",
+    "AVX512 '20% to 30%' vs AVX2 is from docs/knowhere.md; Cardinal is the Zilliz Cloud engine and is not claimed for open-source Milvus.",
+    "Index list per docs/index-explained.md (released). FMINDEX intentionally excluded (master-only).",
+    "Contributor count (README all-contributors badge shows 432) left out of copy as a volatile counter.",
+    "Body intentionally above v3 SEM ceiling (owner asked for a richer page, target 550–750 words).",
+    "Keyword pass 2026-10-21: keywords rebuilt from Google/Baidu autocomplete (WebSearch budget exhausted); research: https://suggestqueries.google.com (autocomplete, hl=en); https://www.baidu.com/sugrec (autocomplete). RAG FAQ folded into benefits_h2 to hold length within ±10%."
+  ],
+  "benefits_h2": "为什么选 Milvus 做 RAG 和大模型应用的开源向量数据库",
+  "bench": [
+    {
+      "title": "向量检索吞吐（QPS，越高越好）",
+      "caption": "Cohere 1M 数据集，768 维",
+      "unit": "QPS",
+      "rows": [
+        {
+          "system": "Zilliz Cloud",
+          "label": "ZillizCloud-8cu-perf",
+          "value": 13316.23,
+          "detail": "P99 2 ms · 召回率 0.9383",
+          "highlight": true
+        },
+        {
+          "system": "Milvus",
+          "label": "Milvus-16c64g-sq4u-fp16-force_merge",
+          "value": 9575.69,
+          "detail": "P99 2.3 ms · 召回率 0.9189"
+        }
+      ],
+      "source": "来源：VectorDBBench 排行榜（zilliz.com/vdbbench-leaderboard），配置名称按原样引用。结果取决于配置，建议用自己的数据跑一遍 VectorDBBench。",
+      "cta": {
+        "text": "Zilliz Cloud 是全托管的 Milvus：API 相同，不用自己规划、升级和扩缩集群。",
+        "label": "免费试用 Zilliz Cloud",
+        "href": "https://cloud.zilliz.com.cn/signup"
+      },
+      "sourceUrl": "https://github.com/zilliztech/VectorDBBench/blob/main/vectordb_bench/results/leaderboard_v2.json"
+    }
+  ],
+  "layout": "pillar",
+  "aiq": [
+    "managed-vector-database-byoc-vs-self-hosted",
+    "how-milvus-separates-ingestion-storage-and-search",
+    "how-do-you-choose-the-right-index-type-for-your-workload",
+    "what-is-hnsw",
+    "what-is-diskann",
+    "what-is-attu",
+    "choose-ai-framework-for-milvus",
+    "what-are-the-tradeoffs-of-using-a-cloudbased-vector-store-service-in-a-rag-system-evaluation-in-terms-of-latency-variance-network-costs-etc-versus-a-local-inmemory-store"
+  ],
+  "related": [
+    "distributed-vector-database",
+    "milvus-vs-qdrant",
+    "vector-database-for-rag",
+    "hybrid-search"
+  ],
+  "sem_seed_for_zilliz": {
+    "ad_groups": [
+      {
+        "name": "开源向量数据库",
+        "keywords": [
+          "开源向量数据库",
+          "\"开源向量数据库\"",
+          "[开源向量数据库]",
+          "向量数据库 开源",
+          "开源向量检索引擎",
+          "开源向量数据库 推荐",
+          "apache 2.0 向量数据库"
+        ]
+      },
+      {
+        "name": "免费 / 私有化部署",
+        "keywords": [
+          "免费向量数据库",
+          "[免费向量数据库]",
+          "向量数据库 私有化部署",
+          "向量数据库 本地部署",
+          "\"向量数据库 k8s 部署\"",
+          "本地向量数据库 python",
+          "向量数据库 docker 部署"
+        ]
+      },
+      {
+        "name": "向量数据库 GitHub / Milvus 安装",
+        "keywords": [
+          "向量数据库 github",
+          "[向量数据库 github]",
+          "milvus github",
+          "milvus 安装",
+          "milvus 部署",
+          "\"milvus 下载\""
+        ]
+      }
+    ],
+    "negative_keywords": [
+      "招聘",
+      "工资",
+      "培训",
+      "课程",
+      "证书",
+      "矢量图",
+      "矢量素材",
+      "矢量图标",
+      "向量 数学",
+      "线性代数",
+      "免费下载",
+      "破解版",
+      "pdf"
+    ],
+    "conversion_events": [
+      "cta_quickstart_click",
+      "copy_install_command",
+      "copy_code_snippet",
+      "cta_github_click",
+      "cta_zilliz_signup_click"
+    ]
+  },
+  "lang": "zh",
+  "reviewedOn": "2026-10-21"
+}

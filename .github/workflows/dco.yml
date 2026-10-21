@@ -1,0 +1,26 @@
+name: Check commit sign-offs
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  dco:
+    name: DCO
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - name: Test sign-off enforcement
+        run: python3 -m unittest discover -s tests -p test_dco_check.py -v
+      - name: Validate every PR commit
+        env:
+          GH_TOKEN: ${{ github.token }}
+          DCO_PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: python3 scripts/dco_check.py

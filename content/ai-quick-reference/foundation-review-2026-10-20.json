@@ -1,0 +1,106 @@
+{
+  "date": "2026-10-20",
+  "baseline": "0fee9b441d63f3942d6e0a073a11dfd8416c6834",
+  "article_count": 131,
+  "changed_existing": 6,
+  "added_articles": 1,
+  "original_figures": 25,
+  "illustrated_articles": 71,
+  "scope": "Bilingual foundation revisions and one new conceptual guide; toy score calculations checked. No model inference, production benchmark, or release-availability certification.",
+  "articles": [
+    {
+      "file": "vector-database.md",
+      "slug": "what-is-a-vector-database-and-why-is-it-important",
+      "baseline_sha256": "ad93b450d6b162542f4fcaf28c2f4a32747e14a203d660b26539f672e5018dce",
+      "reviewed_sha256": "80ad35b9cffdad92976212cb60fec8d241b5820dc6e7140b19dcc86bfe675eef",
+      "sources": [
+        "https://milvus.io/docs/overview.md",
+        "https://milvus.io/docs/quickstart.md",
+        "https://milvus.io/docs/schema.md",
+        "https://milvus.io/docs/build-rag-with-milvus.md",
+        "https://docs.langchain.com/oss/python/concepts/memory"
+      ],
+      "kind": "foundation-revision"
+    },
+    {
+      "file": "embeddings.md",
+      "slug": "what-are-embeddings-in-vector-search",
+      "baseline_sha256": "98cfd319484fd6a8295606a5d8670d0a6f3a06e3c4dbd53c2794a2eea8168d38",
+      "reviewed_sha256": "66628375e3b5198bdc1ae5fdb2bd09cc9ec1e6f9fab3bd941a80bac2dae4465b",
+      "sources": [
+        "https://milvus.io/docs/dense-vector.md",
+        "https://milvus.io/docs/quickstart.md",
+        "https://milvus.io/docs/full-text-search.md",
+        "https://milvus.io/docs/sparse_vector.md",
+        "https://arxiv.org/abs/2107.05720",
+        "https://scikit-learn.org/stable/modules/decomposition.html"
+      ],
+      "kind": "foundation-revision"
+    },
+    {
+      "file": "dense-sparse.md",
+      "slug": "what-are-dense-and-sparse-embeddings",
+      "baseline_sha256": "4670560b3875678215ecf407cec37d1dfd34503fe09a49cdc0700159909f59bc",
+      "reviewed_sha256": "1e78d87598a218cc617ad3fee2645c784a7365df5a10cc1d8b68e701fcd3f4c5",
+      "sources": [
+        "https://milvus.io/docs/dense-vector.md",
+        "https://milvus.io/docs/full-text-search.md",
+        "https://milvus.io/docs/sparse-inverted-index.md",
+        "https://arxiv.org/abs/2107.05720"
+      ],
+      "kind": "foundation-revision"
+    },
+    {
+      "file": "metrics.md",
+      "slug": "what-is-the-role-of-distance-metrics-in-embeddings",
+      "baseline_sha256": "d253695caa8cce35ce51b568e778ab090d6655c2597c13613fa6fd840e7d9ad0",
+      "reviewed_sha256": "54a2e4474bb7599cfedcb3a747293c44229f8d24f63ad256326e981cbe6a378a",
+      "sources": [
+        "https://milvus.io/docs/metric.md"
+      ],
+      "kind": "foundation-revision"
+    },
+    {
+      "file": "multimodal-embeddings.md",
+      "slug": "what-are-multimodal-embeddings",
+      "baseline_sha256": "281c708d4923d0402821c5d547904734c93885435fe2a3d12df7dd1a1800c1f8",
+      "reviewed_sha256": "1b2a24715f1ea4b260ade74a2645d4d58fed5360a845046647e1a9706c3cd588",
+      "sources": [
+        "https://milvus.io/docs/multimodal_rag_with_milvus.md",
+        "https://milvus.io/docs/text_image_search.md",
+        "https://arxiv.org/abs/2103.00020",
+        "https://github.com/openai/CLIP"
+      ],
+      "kind": "foundation-revision"
+    },
+    {
+      "file": "multi-vector.md",
+      "slug": "what-is-multi-vector-retrieval",
+      "baseline_sha256": null,
+      "reviewed_sha256": "9264875bdd2bc62a74e54f54e069a5d984edb32a793908d24f4d2bd710e2cebe",
+      "sources": [
+        "https://arxiv.org/abs/2004.12832",
+        "https://arxiv.org/abs/2405.19504",
+        "https://research.google/blog/muvera-making-multi-vector-retrieval-as-fast-as-single-vector-search/",
+        "https://milvus.io/docs/basic-vector-search-with-structarray.md",
+        "https://milvus.io/docs/index-structarray-fields.md",
+        "https://milvus.io/docs/choose-an-embeddinglist-search-strategy.md"
+      ],
+      "kind": "new-core-article"
+    },
+    {
+      "file": "late-interaction.md",
+      "slug": "what-is-late-interaction-retrieval",
+      "baseline_sha256": "2e6a47e53d3fc112ada83faa326617d383100dc0357def2b34c82af5188d587f",
+      "reviewed_sha256": "89efcfe967c897458af7367d37ab5963eb2e95c3124826948bc9a4186a006b31",
+      "sources": [
+        "https://milvus.io/docs/basic-vector-search-with-structarray.md",
+        "https://milvus.io/docs/index-structarray-fields.md",
+        "https://milvus.io/docs/array-of-structs.md",
+        "https://arxiv.org/abs/2004.12832",
+        "https://milvus.io/docs/choose-an-embeddinglist-search-strategy.md"
+      ],
+      "kind": "foundation-revision"
+    }
+  ]
+}

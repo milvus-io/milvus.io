@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 830" width="640" height="830" role="img" aria-labelledby="title desc">
+<title id="title">DiskANN separates routing codes from SSD data</title>
+<desc id="desc">A query compares compact PQ codes and cached nodes in RAM, selects node IDs to visit, and reads graph neighbors plus full vectors from SSD. Cache and I/O behavior affect latency.</desc>
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M1 1 L7 4 L1 7" fill="none" stroke="#1E5F70" stroke-width="1.5"/></marker></defs>
+<rect width="640" height="830" fill="#FAF6EE"/>
+<text x="28" y="30" text-anchor="start" font-family="Arial, sans-serif" font-size="12" fill="#6B6356" font-weight="400"><tspan x="28" dy="0">MILVUS / AI REFERENCE / MECHANISM</tspan></text>
+<text x="28" y="72" text-anchor="start" font-family="Georgia, serif" font-size="27" fill="#0F1F2E" font-weight="700"><tspan x="28" dy="0">DiskANN separates routing codes from</tspan><tspan x="28" dy="35.1">SSD data</tspan></text>
+<circle cx="70" cy="160" r="9" fill="#E85A2B" stroke="#0F1F2E" stroke-width="1.5"/>
+<text x="92" y="167" text-anchor="start" font-family="Arial, sans-serif" font-size="23" fill="#E85A2B" font-weight="400"><tspan x="92" dy="0">query</tspan></text>
+<path d="M170 160 L240 205" fill="none" stroke="#1E5F70" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="28" y="200" width="584" height="205" fill="#F4ECDC" stroke="#0F1F2E" stroke-width="1.5"/>
+<text x="48" y="235" text-anchor="start" font-family="Arial, sans-serif" font-size="23" fill="#0F1F2E" font-weight="700"><tspan x="48" dy="0">RAM</tspan></text>
+<rect x="60" y="265" width="72" height="43" fill="#FAF6EE" stroke="#0F1F2E" stroke-width="1.5"/>
+<text x="96" y="293" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" fill="#0F1F2E" font-weight="400"><tspan x="96" dy="0">1</tspan></text>
+<rect x="147" y="265" width="72" height="43" fill="#F4B860" stroke="#0F1F2E" stroke-width="1.5"/>
+<text x="183" y="293" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" fill="#0F1F2E" font-weight="400"><tspan x="183" dy="0">2</tspan></text>
+<rect x="234" y="265" width="72" height="43" fill="#FAF6EE" stroke="#0F1F2E" stroke-width="1.5"/>
+<text x="270" y="293" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" fill="#0F1F2E" font-weight="400"><tspan x="270" dy="0">3</tspan></text>
+<rect x="321" y="265" width="72" height="43" fill="#FAF6EE" stroke="#0F1F2E" stroke-width="1.5"/>
+<text x="357" y="293" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" fill="#0F1F2E" font-weight="400"><tspan x="357" dy="0">4</tspan></text>
+<rect x="408" y="265" width="72" height="43" fill="#F4B860" stroke="#0F1F2E" stroke-width="1.5"/>
+<text x="444" y="293" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" fill="#0F1F2E" font-weight="400"><tspan x="444" dy="0">5</tspan></text>
+<rect x="495" y="265" width="72" height="43" fill="#FAF6EE" stroke="#0F1F2E" stroke-width="1.5"/>
+<text x="531" y="293" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" fill="#0F1F2E" font-weight="400"><tspan x="531" dy="0">6</tspan></text>
+<text x="48" y="353" text-anchor="start" font-family="Arial, sans-serif" font-size="20" fill="#0F1F2E" font-weight="400"><tspan x="48" dy="0">Compact PQ codes + selected cached nodes</tspan></text>
+<path d="M220 406 L220 465" fill="none" stroke="#1E5F70" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="245" y="445" text-anchor="start" font-family="Arial, sans-serif" font-size="20" fill="#1E5F70" font-weight="400"><tspan x="245" dy="0">visit selected IDs</tspan></text>
+<rect x="28" y="476" width="584" height="228" fill="#FAF6EE" stroke="#0F1F2E" stroke-width="1.5"/>
+<text x="48" y="510" text-anchor="start" font-family="Arial, sans-serif" font-size="23" fill="#0F1F2E" font-weight="700"><tspan x="48" dy="0">LOCAL SSD</tspan></text>
+<rect x="60" y="540" width="148" height="115" fill="#F4ECDC" stroke="#0F1F2E" stroke-width="1.5"/>
+<circle cx="85" cy="570" r="8" fill="#1E5F70" stroke="#0F1F2E" stroke-width="1.5"/>
+<path d="M93 570 L125 560" fill="none" stroke="#1E5F70" stroke-width="2"/>
+<path d="M93 570 L125 590" fill="none" stroke="#1E5F70" stroke-width="2"/>
+<text x="73" y="630" text-anchor="start" font-family="Arial, sans-serif" font-size="17" fill="#0F1F2E" font-weight="400"><tspan x="73" dy="0">graph + vector</tspan></text>
+<rect x="250" y="540" width="148" height="115" fill="#F4ECDC" stroke="#0F1F2E" stroke-width="1.5"/>
+<circle cx="275" cy="570" r="8" fill="#1E5F70" stroke="#0F1F2E" stroke-width="1.5"/>
+<path d="M283 570 L315 560" fill="none" stroke="#1E5F70" stroke-width="2"/>
+<path d="M283 570 L315 590" fill="none" stroke="#1E5F70" stroke-width="2"/>
+<text x="263" y="630" text-anchor="start" font-family="Arial, sans-serif" font-size="17" fill="#0F1F2E" font-weight="400"><tspan x="263" dy="0">graph + vector</tspan></text>
+<rect x="440" y="540" width="148" height="115" fill="#F4ECDC" stroke="#0F1F2E" stroke-width="1.5"/>
+<circle cx="465" cy="570" r="8" fill="#1E5F70" stroke="#0F1F2E" stroke-width="1.5"/>
+<path d="M473 570 L505 560" fill="none" stroke="#1E5F70" stroke-width="2"/>
+<path d="M473 570 L505 590" fill="none" stroke="#1E5F70" stroke-width="2"/>
+<text x="453" y="630" text-anchor="start" font-family="Arial, sans-serif" font-size="17" fill="#0F1F2E" font-weight="400"><tspan x="453" dy="0">graph + vector</tspan></text>
+<path d="M577 476 L577 406" fill="none" stroke="#1E5F70" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="48" y="678" text-anchor="start" font-family="Arial, sans-serif" font-size="19" fill="#6B6356" font-weight="400"><tspan x="48" dy="0">Fetch neighbors and full vectors as needed</tspan></text>
+<path d="M28 754 L612 754" fill="none" stroke="#0F1F2E" stroke-width="2"/>
+<text x="28" y="782" text-anchor="start" font-family="Arial, sans-serif" font-size="18" fill="#6B6356" font-weight="400"><tspan x="28" dy="0">Schematic residency, not a memory or latency benchmark.</tspan></text>
+</svg>

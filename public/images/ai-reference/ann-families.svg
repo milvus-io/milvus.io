@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 800" width="640" height="800" role="img" aria-labelledby="title desc">
+<title id="title">Three ways to narrow the candidate set</title>
+<desc id="desc">Hashing selects colliding buckets; graph search follows neighbor edges; IVF chooses lists associated with nearby centroids. These select candidates rather than representing vector compression.</desc>
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M1 1 L7 4 L1 7" fill="none" stroke="#1E5F70" stroke-width="1.5"/></marker></defs>
+<rect width="640" height="800" fill="#FAF6EE"/>
+<text x="28" y="30" text-anchor="start" font-family="Arial, sans-serif" font-size="12" fill="#6B6356" font-weight="400"><tspan x="28" dy="0">MILVUS / AI REFERENCE / MECHANISM</tspan></text>
+<text x="28" y="72" text-anchor="start" font-family="Georgia, serif" font-size="27" fill="#0F1F2E" font-weight="700"><tspan x="28" dy="0">Three ways to narrow the candidate set</tspan></text>
+<path d="M28 140 L612 140" fill="none" stroke="#E5DDD0" stroke-width="2"/>
+<path d="M28 335 L612 335" fill="none" stroke="#E5DDD0" stroke-width="2"/>
+<path d="M28 530 L612 530" fill="none" stroke="#E5DDD0" stroke-width="2"/>
+<text x="28" y="167" text-anchor="start" font-family="Arial, sans-serif" font-size="22" fill="#0F1F2E" font-weight="700"><tspan x="28" dy="0">Hash / LSH</tspan></text>
+<rect x="45" y="197" width="64" height="66" fill="#FAF6EE" stroke="#E5DDD0" stroke-width="1.5"/>
+<circle cx="59" cy="231" r="5" fill="#E5DDD0" stroke="#0F1F2E" stroke-width="1.5"/>
+<rect x="125" y="197" width="64" height="66" fill="#F4ECDC" stroke="#1E5F70" stroke-width="1.5"/>
+<circle cx="139" cy="231" r="5" fill="#1E5F70" stroke="#0F1F2E" stroke-width="1.5"/>
+<circle cx="154" cy="231" r="5" fill="#1E5F70" stroke="#0F1F2E" stroke-width="1.5"/>
+<rect x="205" y="197" width="64" height="66" fill="#FAF6EE" stroke="#E5DDD0" stroke-width="1.5"/>
+<circle cx="219" cy="231" r="5" fill="#E5DDD0" stroke="#0F1F2E" stroke-width="1.5"/>
+<circle cx="234" cy="231" r="5" fill="#E5DDD0" stroke="#0F1F2E" stroke-width="1.5"/>
+<circle cx="249" cy="231" r="5" fill="#E5DDD0" stroke="#0F1F2E" stroke-width="1.5"/>
+<circle cx="190" cy="167" r="7" fill="#E85A2B" stroke="#0F1F2E" stroke-width="1.5"/>
+<path d="M190 178 L155 195" fill="none" stroke="#1E5F70" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="320" y="210" text-anchor="start" font-family="Arial, sans-serif" font-size="20" fill="#0F1F2E" font-weight="400"><tspan x="320" dy="0">Inspect colliding buckets.</tspan></text>
+<text x="320" y="256" text-anchor="start" font-family="Arial, sans-serif" font-size="19" fill="#6B6356" font-weight="400"><tspan x="320" dy="0">Collisions are candidates.</tspan></text>
+<text x="28" y="362" text-anchor="start" font-family="Arial, sans-serif" font-size="22" fill="#0F1F2E" font-weight="700"><tspan x="28" dy="0">Graph / HNSW</tspan></text>
+<path d="M55 430 L115 395" fill="none" stroke="#1E5F70" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M115 395 L170 445" fill="none" stroke="#1E5F70" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M170 445 L240 405" fill="none" stroke="#1E5F70" stroke-width="2" marker-end="url(#arrow)"/>
+<circle cx="55" cy="430" r="8" fill="#1E5F70" stroke="#0F1F2E" stroke-width="1.5"/>
+<circle cx="115" cy="395" r="8" fill="#1E5F70" stroke="#0F1F2E" stroke-width="1.5"/>
+<circle cx="170" cy="445" r="8" fill="#1E5F70" stroke="#0F1F2E" stroke-width="1.5"/>
+<circle cx="240" cy="405" r="8" fill="#1E5F70" stroke="#0F1F2E" stroke-width="1.5"/>
+<circle cx="270" cy="445" r="7" fill="#E85A2B" stroke="#0F1F2E" stroke-width="1.5"/>
+<text x="320" y="405" text-anchor="start" font-family="Arial, sans-serif" font-size="20" fill="#0F1F2E" font-weight="400"><tspan x="320" dy="0">Follow neighbor links.</tspan></text>
+<text x="320" y="451" text-anchor="start" font-family="Arial, sans-serif" font-size="19" fill="#6B6356" font-weight="400"><tspan x="320" dy="0">Explore near the query.</tspan></text>
+<text x="28" y="557" text-anchor="start" font-family="Arial, sans-serif" font-size="22" fill="#0F1F2E" font-weight="700"><tspan x="28" dy="0">IVF</tspan></text>
+<circle cx="75" cy="610" r="28" fill="#FAF6EE" stroke="#E5DDD0" stroke-width="1.5"/>
+<rect x="70" y="605" width="10" height="10" fill="#F4B860" stroke="#0F1F2E" stroke-width="1.5"/>
+<circle cx="160" cy="635" r="28" fill="#F4ECDC" stroke="#1E5F70" stroke-width="1.5"/>
+<rect x="155" y="630" width="10" height="10" fill="#F4B860" stroke="#0F1F2E" stroke-width="1.5"/>
+<circle cx="245" cy="600" r="28" fill="#FAF6EE" stroke="#E5DDD0" stroke-width="1.5"/>
+<rect x="240" y="595" width="10" height="10" fill="#F4B860" stroke="#0F1F2E" stroke-width="1.5"/>
+<circle cx="160" cy="585" r="7" fill="#E85A2B" stroke="#0F1F2E" stroke-width="1.5"/>
+<path d="M160 593 L160 625" fill="none" stroke="#1E5F70" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="320" y="600" text-anchor="start" font-family="Arial, sans-serif" font-size="20" fill="#0F1F2E" font-weight="400"><tspan x="320" dy="0">Probe selected lists.</tspan></text>
+<text x="320" y="646" text-anchor="start" font-family="Arial, sans-serif" font-size="19" fill="#6B6356" font-weight="400"><tspan x="320" dy="0">Skip the other regions.</tspan></text>
+<path d="M28 724 L612 724" fill="none" stroke="#0F1F2E" stroke-width="2"/>
+<text x="28" y="752" text-anchor="start" font-family="Arial, sans-serif" font-size="18" fill="#6B6356" font-weight="400"><tspan x="28" dy="0">MINHASH_LSH in Milvus is a binary MinHash / Jaccard path.</tspan></text>
+</svg>

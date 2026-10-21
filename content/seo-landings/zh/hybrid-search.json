@@ -1,0 +1,354 @@
+{
+  "site": "milvus-zh",
+  "kind": "seo",
+  "slug": "hybrid-search",
+  "nav": "混合检索",
+  "path": "/zh/solutions/hybrid-search",
+  "title": "混合检索向量数据库 Milvus：BM25 + 向量",
+  "description": "在一个开源向量数据库里做混合检索：内置 BM25 全文检索，稠密与稀疏向量同库，RRF 或加权融合，过滤条件一次查询生效，不用再维护 Elasticsearch。",
+  "keywords": {
+    "primary": "混合检索",
+    "secondary": [
+      "混合检索 向量数据库",
+      "BM25 向量检索",
+      "全文检索 向量检索",
+      "关键词检索 语义检索",
+      "稀疏向量 稠密向量",
+      "混合检索 RAG",
+      "混合检索 重排序",
+      "混合检索 策略",
+      "RRF 融合",
+      "bm25 混合检索",
+      "混合检索 向量检索 区别",
+      "多路召回"
+    ],
+    "questions": [
+      "混合检索是什么？",
+      "混合检索里 BM25 和向量检索的区别：关键词检索和语义检索各自什么时候更好",
+      "RRF 融合怎么算，k 怎么取？",
+      "混合检索一定比纯向量检索好吗？",
+      "关键词检索还需要 Elasticsearch 吗？",
+      "RAG 怎么做混合检索？"
+    ]
+  },
+  "h1": "混合检索：BM25 与向量检索一库搞定",
+  "sub": "Milvus 是内置 BM25 的混合检索向量数据库：原始文本、稠密和稀疏向量在一次 hybrid_search 调用里检索并融合，不用再同步第二套搜索引擎。",
+  "primary_cta": {
+    "label": "在 Milvus 中实现混合检索",
+    "href": "https://milvus.io/docs/zh/multi-vector-search.md"
+  },
+  "secondary_cta": {
+    "label": "在 Zilliz Cloud 上用托管 Milvus",
+    "href": "https://cloud.zilliz.com.cn/signup"
+  },
+  "proof": [
+    "Apache-2.0 开源",
+    "GitHub 40K+ star",
+    "内置 BM25 全文检索",
+    "RRF 与加权 ranker"
+  ],
+  "logos": [
+    "Salesforce",
+    "Exa.ai",
+    "Walmart",
+    "Reddit",
+    "NVIDIA",
+    "eBay",
+    "Roblox",
+    "Airtable"
+  ],
+  "benefits": [
+    {
+      "title": "内置 BM25",
+      "body": "在文本字段上声明 BM25 Function，Milvus 写入时生成稀疏向量，查询直接用原始文本打分，无需双写。"
+    },
+    {
+      "title": "稀疏向量与稠密向量，一份结果",
+      "body": "错误码、SKU 靠 BM25 命中，换了说法的问题靠 embedding 命中，一次调用返回一份排序结果。"
+    },
+    {
+      "title": "融合与过滤",
+      "body": "多路召回后用 RRF 或加权 ranker 融合，混合检索重排序也在同一次调用里完成。每路请求都带自己的过滤表达式，租户约束对两路同样生效。"
+    }
+  ],
+  "feature_blocks": [
+    {
+      "title": "微软：混合胜过关键词和纯向量",
+      "body": "Azure AI Search 在 4 个客户数据集和公开基准上对比了 BM25、Ada-002 向量和 RRF 混合检索，每组数据里混合检索都最高。",
+      "bullets": [
+        "客户数据 NDCG@3：关键词 40.6，向量 43.8，混合 48.4",
+        "BEIR NDCG@10：40.6、45.0、48.4",
+        "MIRACL（18 种语言）NDCG@10：49.6、58.3、58.8"
+      ]
+    },
+    {
+      "title": "Anthropic：召回失败减少 49%",
+      "body": "在代码库、小说、ArXiv 和科学论文上，上下文 embedding 加上下文 BM25 让 top-20 召回失败率（1 − recall@20）明显下降。",
+      "bullets": [
+        "只用 embedding：失败率 5.7%",
+        "上下文 embedding + 上下文 BM25：2.9%",
+        "Anthropic 给出的降幅是 49%"
+      ]
+    },
+    {
+      "title": "学术研究：两路信号互补",
+      "body": "BEIR 在 18 个数据集上做零样本评测：BM25 是稳健基线，稠密模型跨领域泛化常常不足。Bruch 等人表明词法和语义打分互补。",
+      "bullets": [
+        "加权（凸组合）融合在域内、域外都优于 RRF",
+        "只需少量标注数据即可调好权重"
+      ]
+    }
+  ],
+  "diagram": {
+    "top": {
+      "title": "一次查询",
+      "sub": "\"white headphones, quiet and comfortable\""
+    },
+    "branches": [
+      {
+        "title": "BM25 全文检索",
+        "sub": "原始文本 -> 内置 BM25 稀疏向量"
+      },
+      {
+        "title": "稠密向量",
+        "sub": "Embedding -> FLOAT_VECTOR 上的 ANN"
+      },
+      {
+        "title": "过滤 / TEXT_MATCH",
+        "sub": "每一路都可带 expr"
+      }
+    ],
+    "bottom": {
+      "title": "Ranker",
+      "sub": "RRF 或加权 -> 一份排序结果"
+    },
+    "caption": "所有召回路径都在一次 Milvus hybrid_search 调用中完成。"
+  },
+  "code": {
+    "h2": "RAG 怎么做混合检索？BM25 + 稠密向量 + RRF，一次调用",
+    "intro": "BM25 混合检索两步：定义 BM25 Function，Milvus 自动生成稀疏向量；再把稠密请求和原始文本请求用 RRF 融合。",
+    "lang": "python",
+    "code": "from pymilvus import (MilvusClient, DataType, Function, FunctionType,\n                      AnnSearchRequest, RRFRanker)\n\nclient = MilvusClient(uri=\"http://localhost:19530\")\n\nschema = client.create_schema()\nschema.add_field(\"id\", DataType.INT64, is_primary=True, auto_id=True)\nschema.add_field(\"text\", DataType.VARCHAR, max_length=1000, enable_analyzer=True)\nschema.add_field(\"dense\", DataType.FLOAT_VECTOR, dim=768)\nschema.add_field(\"sparse\", DataType.SPARSE_FLOAT_VECTOR)\nschema.add_function(Function(name=\"bm25\", input_field_names=[\"text\"],\n                             output_field_names=[\"sparse\"], function_type=FunctionType.BM25))\n\nindex_params = client.prepare_index_params()\nindex_params.add_index(\"dense\", index_type=\"AUTOINDEX\", metric_type=\"IP\")\nindex_params.add_index(\"sparse\", index_type=\"SPARSE_INVERTED_INDEX\", metric_type=\"BM25\")\nclient.create_collection(\"docs\", schema=schema, index_params=index_params)\n\n# Insert a document before searching. embed() is your 768-dimensional model.\nclient.insert(collection_name=\"docs\", data=[{\n    \"text\": \"Quiet white headphones with comfortable ear pads.\",\n    \"dense\": embed(\"Quiet white headphones with comfortable ear pads.\"),\n}])\n\nquery = \"white headphones, quiet and comfortable\"\nres = client.hybrid_search(\n    collection_name=\"docs\",\n    reqs=[AnnSearchRequest([embed(query)], \"dense\", {}, limit=10),   # semantic\n          AnnSearchRequest([query], \"sparse\", {}, limit=10)],        # BM25 on raw text\n    ranker=RRFRanker(60),\n    limit=5,\n    output_fields=[\"text\"],\n)",
+    "note": "embed() 换成你的 768 维 embedding 模型。给任一请求加 expr=\"...\" 即可过滤。"
+  },
+  "stats": [],
+  "compare": {
+    "h2": "混合检索里 BM25 和向量检索的区别：关键词检索和语义检索各自什么时候更好",
+    "caption": "按查询类型的 NDCG@3，来自微软 Azure AI Search 基准（BM25 对比 Ada-002 向量），另有标注的除外",
+    "heads": [
+      "",
+      "BM25 全文检索占优",
+      "稠密向量占优"
+    ],
+    "rows": [
+      [
+        "查询措辞",
+        "纯关键词查询：79.2 对 11.7",
+        "答案和问题用词不同：36.1 对 23.0"
+      ],
+      [
+        "查询长度",
+        "短查询（少于 5 个 token）：53.1 对 38.8",
+        "自然语言事实类问题：49.0 对 37.8"
+      ],
+      [
+        "精确字符串",
+        "原文片段：51.1 对 41.5；错误码如 TS-999（Anthropic）",
+        "带错别字的查询：39.1 对 28.8"
+      ],
+      [
+        "词汇",
+        "关键专有词，embedding 容易把它稀释",
+        "同义词和不同说法"
+      ],
+      [
+        "领域与语言",
+        "未经微调的新领域（BEIR）",
+        "多语言查询，MIRACL NDCG@10：58.3 对 49.6"
+      ]
+    ],
+    "note": "同一基准里，混合检索在 10 类查询中的 9 类上超过较好的单路，或与之相差不到 0.2 分；例外是纯关键词查询（混合 61.0）。"
+  },
+  "faqs": [
+    [
+      "混合检索是什么？",
+      "BM25 关键词检索和向量语义检索同时跑，ranker 合成一份结果，Milvus 在一次 hybrid_search 调用里完成。"
+    ],
+    [
+      "关键词检索还需要 Elasticsearch 吗？",
+      "做 BM25 检索不需要。Milvus 原生计算 BM25，直接用原始文本查询；只有日志分析、聚合这类需求才要另一套引擎。"
+    ],
+    [
+      "RRF 融合怎么算，k 怎么取？",
+      "RRF 对每份列表按 1/(k + 名次) 打分再求和，不用校准分数，k 默认 60。有标注查询后再调加权 ranker，Bruch 等人发现少量数据就能调得比 RRF 好。"
+    ],
+    [
+      "混合检索一定比纯向量检索好吗？",
+      "不是每条都更好：微软测得纯关键词查询上单用 BM25 为 79.2，混合为 61.0。建议用自己的查询对比纯稠密、纯 BM25 和混合。"
+    ]
+  ],
+  "final": {
+    "h2": "一个数据库上线关键词检索 + 语义检索",
+    "body": "schema 里加 BM25 Function，发两路请求，RRF 融合。从混合检索文档开始，或用托管 Milvus。"
+  },
+  "sources": [
+    "https://techcommunity.microsoft.com/blog/azure-ai-foundry-blog/azure-ai-search-outperforming-vector-search-with-hybrid-retrieval-and-reranking/3929167",
+    "https://www.anthropic.com/news/contextual-retrieval",
+    "https://arxiv.org/abs/2104.08663",
+    "https://arxiv.org/abs/2210.11934",
+    "https://zilliz.com/vdbbench-leaderboard",
+    "https://github.com/zilliztech/VectorDBBench/blob/main/vectordb_bench/results/leaderboard_v2.json",
+    "https://github.com/zilliztech/VectorDBBench/blob/main/vectordb_bench/results/FullTextSearch/ZillizCloud/result_20260626_fts_standard_zillizcloud.json",
+    "https://milvus.io/docs/full-text-search.md",
+    "https://milvus.io/docs/multi-vector-search.md",
+    "https://milvus.io/docs/rrf-ranker.md",
+    "https://milvus.io/docs/weighted-ranker.md",
+    "https://milvus.io/docs/keyword-match.md",
+    "https://raw.githubusercontent.com/milvus-io/pymilvus/master/pymilvus/client/abstract.py",
+    "https://github.com/milvus-io/milvus",
+    "https://milvus.io/docs/zh/multi-vector-search.md",
+    "https://zilliz.com.cn/cloud"
+  ],
+  "notes": [
+    "Evidence numbers quoted verbatim: Microsoft Azure AI Search hybrid retrieval post (Tables 1-2; Ada-002 embeddings, BM25, RRF, 512-token chunks w/25% overlap; customer data NDCG@3, BEIR/MIRACL NDCG@10); Anthropic Contextual Retrieval (1 minus recall@20, codebases/fiction/ArXiv/science papers); BEIR abstract; Bruch et al. abstract.",
+    "Anthropic's 5.7% -> 2.9% compares embeddings-only with contextual embeddings + contextual BM25 (both use Anthropic's contextualized chunks); copy says so. The 49% figure is Anthropic's own.",
+    "BM25 perf: VectorDBBench FullTextSearch results exist only for Zilliz Cloud (managed Milvus), ElasticCloud, OpenSearch, TurboPuffer; no open-source Milvus FTS result is published, so the chart is labeled Zilliz Cloud (managed Milvus). Config from the result file: db_label task15919-perf-8cu-oneseg-26-retest, 8 CU performance, standalone, 1 replica, aws-us-west-2, AUTOINDEX, metric BM25, DAAT_MAXSCORE, standard analyzer, k=100, ids_only payload; QPS = best of concurrency 40/60/80; P99 = serial_latency_p99 converted s->ms. Unfiltered rows only (filter_rate rows ignored).",
+    "Not shown on the zilliz.com/vdbbench-leaderboard page as far as verified (page is JS-rendered); FTS numbers come from the VectorDBBench GitHub repo results file.",
+    "Not used: Milvus 2.6 blog claim '3-4x higher throughput than Elasticsearch on BEIR, up to 7x' (no dataset/hardware/config given; competitor x-times claim).",
+    "Dense rows from leaderboard_v2.json: Cohere (Medium) = Cohere 1M 768d, filter_ratio 0: ZillizCloud-8cu-perf 13316.2336 QPS / 2.0 ms / 0.9383; Milvus-16c64g-sq4u-fp16-force_merge 9575.6863 QPS / 2.3 ms / 0.9189.",
+    "Dense and BM25 charts use different datasets and systems; do not compare their bars with each other.",
+    "Snippet needs a Milvus server (BM25 Function); not executed against a live server. RRFRanker(60) still in pymilvus; docs also show Function(FunctionType.RERANK).",
+    "Keyword pass 2026-10-21: keywords rebuilt from Google/Baidu autocomplete (WebSearch budget exhausted); research: https://suggestqueries.google.com (autocomplete, hl=en); https://www.baidu.com/sugrec (autocomplete). \"有托管版吗？\" FAQ dropped; managed CTA stays in the bench block."
+  ],
+  "benefits_h2": "为什么用 Milvus 做混合检索向量数据库",
+  "bench": [
+    {
+      "title": "稠密向量检索（QPS，越高越好）",
+      "caption": "Cohere 1M，768 维",
+      "unit": "QPS",
+      "rows": [
+        {
+          "system": "Zilliz Cloud",
+          "label": "ZillizCloud-8cu-perf",
+          "value": 13316.23,
+          "detail": "P99 2 ms · 召回率 0.9383",
+          "highlight": true
+        },
+        {
+          "system": "Milvus",
+          "label": "Milvus-16c64g-sq4u-fp16-force_merge",
+          "value": 9575.69,
+          "detail": "P99 2.3 ms · 召回率 0.9189"
+        }
+      ],
+      "source": "来源：VectorDBBench leaderboard，配置标签照原样引用。结果取决于配置，建议用 VectorDBBench 在自己的数据上跑一遍。",
+      "sourceUrl": "https://github.com/zilliztech/VectorDBBench/blob/main/vectordb_bench/results/leaderboard_v2.json"
+    },
+    {
+      "title": "MS MARCO 上的 BM25 全文检索（QPS）",
+      "caption": "Zilliz Cloud（托管 Milvus），8 CU 性能型，内置 BM25，AUTOINDEX，top 100",
+      "unit": "QPS",
+      "rows": [
+        {
+          "system": "100K 文档",
+          "label": "task15919-perf-8cu-oneseg-26-retest / MS MARCO Small",
+          "value": 12134.21,
+          "detail": "P99 3.5 ms"
+        },
+        {
+          "system": "1M 文档",
+          "label": "task15919-perf-8cu-oneseg-26-retest / MS MARCO Medium",
+          "value": 9734.75,
+          "detail": "P99 5.2 ms"
+        },
+        {
+          "system": "8.8M 文档",
+          "label": "task15919-perf-8cu-oneseg-26-retest / MS MARCO Large",
+          "value": 4252.64,
+          "detail": "P99 17.1 ms"
+        }
+      ],
+      "source": "来源：VectorDBBench FullTextSearch 结果（GitHub）。延迟为串行 P99。结果取决于配置。",
+      "cta": {
+        "text": "Zilliz Cloud 跑的是同一个 Milvus 引擎（含 BM25），全托管。",
+        "label": "免费试用 Zilliz Cloud",
+        "href": "https://cloud.zilliz.com.cn/signup"
+      },
+      "sourceUrl": "https://github.com/zilliztech/VectorDBBench/blob/main/vectordb_bench/results/FullTextSearch/ZillizCloud/result_20260626_fts_standard_zillizcloud.json"
+    }
+  ],
+  "feature_blocks_h2": "混合检索策略为什么有效：证据",
+  "layout": "pillar",
+  "aiq": [
+    "what-is-hybrid-search-and-when-should-i-use-it",
+    "what-is-fulltext-search",
+    "what-are-dense-and-sparse-embeddings",
+    "how-sparse-inverted-indexes-work",
+    "what-is-vector-reranking-and-when-should-you-apply-it",
+    "hybrid-multimodal-product-search",
+    "how-does-applying-boolean-filters-or-metadatabased-prefiltering-alongside-vector-similarity-search-influence-the-overall-query-performance"
+  ],
+  "related": [
+    "vector-database-for-rag",
+    "milvus-vs-elasticsearch",
+    "database-for-ai-agents",
+    "open-source-vector-database"
+  ],
+  "sem_seed_for_zilliz": {
+    "ad_groups": [
+      {
+        "name": "混合检索",
+        "keywords": [
+          "混合检索",
+          "[混合检索]",
+          "\"混合检索 向量数据库\"",
+          "混合搜索",
+          "\"向量 混合检索\"",
+          "多路召回 向量数据库"
+        ]
+      },
+      {
+        "name": "BM25 + 向量",
+        "keywords": [
+          "bm25 向量检索",
+          "\"bm25 混合检索\"",
+          "bm25 向量数据库",
+          "\"稀疏向量 稠密向量\"",
+          "稀疏向量检索",
+          "rrf 融合 检索"
+        ]
+      },
+      {
+        "name": "全文 + 语义检索",
+        "keywords": [
+          "全文检索 向量检索",
+          "\"关键词检索 语义检索\"",
+          "\"关键词 语义 混合检索\"",
+          "向量数据库 全文检索",
+          "elasticsearch 向量检索 替代"
+        ]
+      }
+    ],
+    "negative_keywords": [
+      "混合动力",
+      "油电混合",
+      "混合云",
+      "混合办公",
+      "混合式教学",
+      "招聘",
+      "工资",
+      "课程",
+      "免费下载",
+      "seo"
+    ],
+    "conversion_events": [
+      "cta_quickstart_click",
+      "cta_hybrid_docs_click",
+      "copy_code_snippet",
+      "copy_install_command",
+      "cta_zilliz_signup_click"
+    ]
+  },
+  "lang": "zh",
+  "reviewedOn": "2026-10-21"
+}

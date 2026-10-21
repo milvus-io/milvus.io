@@ -1,0 +1,351 @@
+{
+  "site": "milvus",
+  "kind": "seo",
+  "slug": "hybrid-search",
+  "nav": "Hybrid search",
+  "path": "/solutions/hybrid-search",
+  "title": "Hybrid Search Vector Database: BM25 + Vectors | Milvus",
+  "description": "Hybrid search in one open-source vector database: built-in BM25 full-text search, dense and sparse vectors, RRF or weighted fusion, and filters in one query.",
+  "keywords": {
+    "primary": "hybrid search vector database",
+    "secondary": [
+      "hybrid search",
+      "BM25 vector search",
+      "hybrid search RAG",
+      "hybrid search vs vector search",
+      "reciprocal rank fusion",
+      "hybrid search with reranking",
+      "hybrid search BM25 embeddings",
+      "keyword and semantic search",
+      "full text and vector search",
+      "sparse and dense vectors",
+      "BM25 and dense retrieval",
+      "keyword search vs semantic search"
+    ],
+    "questions": [
+      "What is hybrid search in a vector database?",
+      "Hybrid search vs vector search: does hybrid always win?",
+      "How does reciprocal rank fusion (RRF) work?",
+      "When does BM25 beat vector search?",
+      "How do I build hybrid search for RAG?",
+      "Do I still need Elasticsearch for keyword search?"
+    ]
+  },
+  "h1": "Hybrid search: BM25 full-text and vector search in one database",
+  "sub": "Milvus is a hybrid search vector database with BM25 built in: raw text, dense and sparse vectors are searched and fused in one hybrid_search call, no second search engine to sync.",
+  "primary_cta": {
+    "label": "Build hybrid search in Milvus",
+    "href": "https://milvus.io/docs/multi-vector-search.md"
+  },
+  "secondary_cta": {
+    "label": "Try managed Milvus on Zilliz Cloud",
+    "href": "https://cloud.zilliz.com/signup"
+  },
+  "proof": [
+    "Apache-2.0 open source",
+    "40K+ GitHub stars",
+    "Built-in BM25 full-text search",
+    "RRF and weighted rankers"
+  ],
+  "logos": [
+    "Salesforce",
+    "Exa.ai",
+    "Walmart",
+    "Reddit",
+    "NVIDIA",
+    "eBay",
+    "Roblox",
+    "Airtable"
+  ],
+  "benefits": [
+    {
+      "title": "BM25 built in",
+      "body": "Declare a BM25 Function on a text field. Milvus builds sparse vectors on insert and scores raw-text queries. No dual writes."
+    },
+    {
+      "title": "Sparse and dense vectors, one list",
+      "body": "Error codes and SKUs match through BM25; paraphrased questions match through embeddings. One call returns one ranked list."
+    },
+    {
+      "title": "Fusion and filters",
+      "body": "Fuse with RRF or a weighted ranker, or run hybrid search with reranking on the same call. Each request takes its own filter, so tenant rules apply to both paths."
+    }
+  ],
+  "feature_blocks": [
+    {
+      "title": "Microsoft: hybrid beats keyword and vector alone",
+      "body": "Azure AI Search tested BM25, Ada-002 vectors and RRF hybrid on four customer datasets and public benchmarks. Hybrid scored highest of the three modes on each.",
+      "bullets": [
+        "Customer data, NDCG@3: keyword 40.6, vector 43.8, hybrid 48.4",
+        "BEIR, NDCG@10: 40.6, 45.0, 48.4",
+        "MIRACL (18 languages), NDCG@10: 49.6, 58.3, 58.8"
+      ]
+    },
+    {
+      "title": "Anthropic: 49% fewer failed retrievals",
+      "body": "Across codebases, fiction, ArXiv and science papers, combining contextual embeddings with contextual BM25 cut the top-20 failure rate (1 minus recall@20).",
+      "bullets": [
+        "Embeddings only: 5.7% failed",
+        "Contextual embeddings + contextual BM25: 2.9%",
+        "Anthropic reports a 49% reduction"
+      ]
+    },
+    {
+      "title": "Research: complementary signals",
+      "body": "BEIR, an 18-dataset zero-shot benchmark, found BM25 a robust baseline and that dense retrievers often generalize poorly. Bruch et al. show lexical and semantic scores are complementary.",
+      "bullets": [
+        "Weighted (convex) fusion beat RRF in and out of domain",
+        "It needs only a small labeled set to tune"
+      ]
+    }
+  ],
+  "diagram": {
+    "top": {
+      "title": "One query",
+      "sub": "\"white headphones, quiet and comfortable\""
+    },
+    "branches": [
+      {
+        "title": "BM25 full-text",
+        "sub": "Raw text -> built-in BM25 sparse vector"
+      },
+      {
+        "title": "Dense vector",
+        "sub": "Embedding -> ANN on FLOAT_VECTOR"
+      },
+      {
+        "title": "Filters / TEXT_MATCH",
+        "sub": "Per-request expr on every path"
+      }
+    ],
+    "bottom": {
+      "title": "Ranker",
+      "sub": "RRF or weighted -> one ranked list"
+    },
+    "caption": "Every retrieval path runs inside one Milvus hybrid_search call."
+  },
+  "code": {
+    "h2": "How do I build hybrid search for RAG?",
+    "intro": "Hybrid search with BM25 and embeddings: one BM25 Function, then a dense request and a raw-text request fused with RRF.",
+    "lang": "python",
+    "code": "from pymilvus import (MilvusClient, DataType, Function, FunctionType,\n                      AnnSearchRequest, RRFRanker)\n\nclient = MilvusClient(uri=\"http://localhost:19530\")\n\nschema = client.create_schema()\nschema.add_field(\"id\", DataType.INT64, is_primary=True, auto_id=True)\nschema.add_field(\"text\", DataType.VARCHAR, max_length=1000, enable_analyzer=True)\nschema.add_field(\"dense\", DataType.FLOAT_VECTOR, dim=768)\nschema.add_field(\"sparse\", DataType.SPARSE_FLOAT_VECTOR)\nschema.add_function(Function(name=\"bm25\", input_field_names=[\"text\"],\n                             output_field_names=[\"sparse\"], function_type=FunctionType.BM25))\n\nindex_params = client.prepare_index_params()\nindex_params.add_index(\"dense\", index_type=\"AUTOINDEX\", metric_type=\"IP\")\nindex_params.add_index(\"sparse\", index_type=\"SPARSE_INVERTED_INDEX\", metric_type=\"BM25\")\nclient.create_collection(\"docs\", schema=schema, index_params=index_params)\n\n# Insert a document before searching. embed() is your 768-dimensional model.\nclient.insert(collection_name=\"docs\", data=[{\n    \"text\": \"Quiet white headphones with comfortable ear pads.\",\n    \"dense\": embed(\"Quiet white headphones with comfortable ear pads.\"),\n}])\n\nquery = \"white headphones, quiet and comfortable\"\nres = client.hybrid_search(\n    collection_name=\"docs\",\n    reqs=[AnnSearchRequest([embed(query)], \"dense\", {}, limit=10),   # semantic\n          AnnSearchRequest([query], \"sparse\", {}, limit=10)],        # BM25 on raw text\n    ranker=RRFRanker(60),\n    limit=5,\n    output_fields=[\"text\"],\n)",
+    "note": "Replace embed() with your 768-dim embedding model. Add expr=\"...\" to either request to filter. Code requires a running server and your own embedding model; it is an example, not a benchmark."
+  },
+  "stats": [],
+  "compare": {
+    "h2": "When does BM25 beat vector search?",
+    "caption": "Keyword search vs semantic search by query type, NDCG@3; Microsoft Azure AI Search (BM25 vs Ada-002) unless noted",
+    "heads": [
+      "",
+      "BM25 full-text wins",
+      "Dense vectors win"
+    ],
+    "rows": [
+      [
+        "Query wording",
+        "Keyword-only queries: 79.2 vs 11.7",
+        "Answer uses different words than the query: 36.1 vs 23.0"
+      ],
+      [
+        "Query length",
+        "Short queries, under 5 tokens: 53.1 vs 38.8",
+        "Natural-language fact questions: 49.0 vs 37.8"
+      ],
+      [
+        "Exact strings",
+        "Exact snippets: 51.1 vs 41.5; error codes such as TS-999 (Anthropic)",
+        "Misspelled queries: 39.1 vs 28.8"
+      ],
+      [
+        "Vocabulary",
+        "Specific, important words an embedding can dilute",
+        "Synonyms and phrasing differences"
+      ],
+      [
+        "Domain and language",
+        "New domains without fine-tuning (BEIR)",
+        "Multilingual queries, MIRACL NDCG@10: 58.3 vs 49.6"
+      ]
+    ],
+    "note": "In the same benchmark, hybrid beat or came within 0.2 points of the better single path on 9 of 10 query types. The exception: keyword-only queries (hybrid 61.0)."
+  },
+  "faqs": [
+    [
+      "What is hybrid search in a vector database?",
+      "BM25 keyword search and vector search run on one query, and a ranker merges the lists. Milvus does both in one hybrid_search call, filters included."
+    ],
+    [
+      "Do I still need Elasticsearch for keyword search?",
+      "Not for BM25 retrieval. Milvus computes BM25 natively and searches with raw text. Keep a separate engine only for needs like log analytics or aggregations."
+    ],
+    [
+      "How does reciprocal rank fusion (RRF) work?",
+      "RRF sums 1/(k + rank) across lists, so it needs no score calibration. With labeled queries, tune a weighted ranker: Bruch et al. found it beat RRF with little training data."
+    ],
+    [
+      "Hybrid search vs vector search: does hybrid always win?",
+      "Not on every query: Microsoft measured BM25 alone at 79.2 vs hybrid 61.0 on keyword-only queries. Compare dense-only, BM25-only and hybrid on your own queries."
+    ]
+  ],
+  "final": {
+    "h2": "Ship keyword and semantic search on one database",
+    "body": "Add a BM25 Function to your schema, send two requests, fuse with RRF. Start from the hybrid search guide, or run it on managed Milvus."
+  },
+  "sources": [
+    "https://techcommunity.microsoft.com/blog/azure-ai-foundry-blog/azure-ai-search-outperforming-vector-search-with-hybrid-retrieval-and-reranking/3929167",
+    "https://www.anthropic.com/news/contextual-retrieval",
+    "https://arxiv.org/abs/2104.08663",
+    "https://arxiv.org/abs/2210.11934",
+    "https://zilliz.com/vdbbench-leaderboard",
+    "https://github.com/zilliztech/VectorDBBench/blob/main/vectordb_bench/results/leaderboard_v2.json",
+    "https://github.com/zilliztech/VectorDBBench/blob/main/vectordb_bench/results/FullTextSearch/ZillizCloud/result_20260626_fts_standard_zillizcloud.json",
+    "https://milvus.io/docs/full-text-search.md",
+    "https://milvus.io/docs/multi-vector-search.md",
+    "https://milvus.io/docs/rrf-ranker.md",
+    "https://milvus.io/docs/weighted-ranker.md",
+    "https://milvus.io/docs/keyword-match.md",
+    "https://raw.githubusercontent.com/milvus-io/pymilvus/master/pymilvus/client/abstract.py",
+    "https://github.com/milvus-io/milvus"
+  ],
+  "notes": [
+    "Evidence numbers quoted verbatim: Microsoft Azure AI Search hybrid retrieval post (Tables 1-2; Ada-002 embeddings, BM25, RRF, 512-token chunks w/25% overlap; customer data NDCG@3, BEIR/MIRACL NDCG@10); Anthropic Contextual Retrieval (1 minus recall@20, codebases/fiction/ArXiv/science papers); BEIR abstract; Bruch et al. abstract.",
+    "Anthropic's 5.7% -> 2.9% compares embeddings-only with contextual embeddings + contextual BM25 (both use Anthropic's contextualized chunks); copy says so. The 49% figure is Anthropic's own.",
+    "BM25 perf: VectorDBBench FullTextSearch results exist only for Zilliz Cloud (managed Milvus), ElasticCloud, OpenSearch, TurboPuffer; no open-source Milvus FTS result is published, so the chart is labeled Zilliz Cloud (managed Milvus). Config from the result file: db_label task15919-perf-8cu-oneseg-26-retest, 8 CU performance, standalone, 1 replica, aws-us-west-2, AUTOINDEX, metric BM25, DAAT_MAXSCORE, standard analyzer, k=100, ids_only payload; QPS = best of concurrency 40/60/80; P99 = serial_latency_p99 converted s->ms. Unfiltered rows only (filter_rate rows ignored).",
+    "Not shown on the zilliz.com/vdbbench-leaderboard page as far as verified (page is JS-rendered); FTS numbers come from the VectorDBBench GitHub repo results file.",
+    "Not used: Milvus 2.6 blog claim '3-4x higher throughput than Elasticsearch on BEIR, up to 7x' (no dataset/hardware/config given; competitor x-times claim).",
+    "Dense rows from leaderboard_v2.json: Cohere (Medium) = Cohere 1M 768d, filter_ratio 0: ZillizCloud-8cu-perf 13316.2336 QPS / 2.0 ms / 0.9383; Milvus-16c64g-sq4u-fp16-force_merge 9575.6863 QPS / 2.3 ms / 0.9189.",
+    "Dense and BM25 charts use different datasets and systems; do not compare their bars with each other.",
+    "Snippet needs a Milvus server (BM25 Function); not executed against a live server. RRFRanker(60) still in pymilvus; docs also show Function(FunctionType.RERANK).",
+    "Keyword pass 2026-10-21: keywords rebuilt from Google/Baidu autocomplete (WebSearch budget exhausted); research: https://suggestqueries.google.com (autocomplete, hl=en); https://www.baidu.com/sugrec (autocomplete). Primary kept as \"hybrid search vector database\" (head term \"hybrid search\" is dominated by Azure/Elastic/OpenSearch docs and definitional intent). \"Is there a managed option?\" FAQ dropped; managed CTA stays in the bench block."
+  ],
+  "benefits_h2": "Why Milvus as a hybrid search vector database",
+  "bench": [
+    {
+      "title": "Dense vector search (QPS, higher is better)",
+      "caption": "Cohere 1M, 768 dimensions",
+      "unit": "QPS",
+      "rows": [
+        {
+          "system": "Zilliz Cloud",
+          "label": "ZillizCloud-8cu-perf",
+          "value": 13316.23,
+          "detail": "P99 2 ms · recall 0.9383",
+          "highlight": true
+        },
+        {
+          "system": "Milvus",
+          "label": "Milvus-16c64g-sq4u-fp16-force_merge",
+          "value": 9575.69,
+          "detail": "P99 2.3 ms · recall 0.9189"
+        }
+      ],
+      "source": "Source: VectorDBBench leaderboard, labels as published. Results depend on configuration; run VectorDBBench on your own data.",
+      "sourceUrl": "https://github.com/zilliztech/VectorDBBench/blob/main/vectordb_bench/results/leaderboard_v2.json"
+    },
+    {
+      "title": "BM25 full-text search on MS MARCO (QPS)",
+      "caption": "Zilliz Cloud (managed Milvus), 8 CU performance, built-in BM25, AUTOINDEX, top 100",
+      "unit": "QPS",
+      "rows": [
+        {
+          "system": "100K documents",
+          "label": "task15919-perf-8cu-oneseg-26-retest / MS MARCO Small",
+          "value": 12134.21,
+          "detail": "P99 3.5 ms"
+        },
+        {
+          "system": "1M documents",
+          "label": "task15919-perf-8cu-oneseg-26-retest / MS MARCO Medium",
+          "value": 9734.75,
+          "detail": "P99 5.2 ms"
+        },
+        {
+          "system": "8.8M documents",
+          "label": "task15919-perf-8cu-oneseg-26-retest / MS MARCO Large",
+          "value": 4252.64,
+          "detail": "P99 17.1 ms"
+        }
+      ],
+      "source": "Source: VectorDBBench FullTextSearch results (GitHub). Serial P99 latency. Results depend on configuration.",
+      "cta": {
+        "text": "Zilliz Cloud runs the same Milvus engine, BM25 included, fully managed.",
+        "label": "Try Zilliz Cloud free",
+        "href": "https://cloud.zilliz.com/signup"
+      },
+      "sourceUrl": "https://github.com/zilliztech/VectorDBBench/blob/main/vectordb_bench/results/FullTextSearch/ZillizCloud/result_20260626_fts_standard_zillizcloud.json"
+    }
+  ],
+  "feature_blocks_h2": "Hybrid search vs vector search: the evidence",
+  "layout": "pillar",
+  "aiq": [
+    "what-is-hybrid-search-and-when-should-i-use-it",
+    "what-is-fulltext-search",
+    "what-are-dense-and-sparse-embeddings",
+    "how-sparse-inverted-indexes-work",
+    "what-is-vector-reranking-and-when-should-you-apply-it",
+    "hybrid-multimodal-product-search",
+    "how-does-applying-boolean-filters-or-metadatabased-prefiltering-alongside-vector-similarity-search-influence-the-overall-query-performance"
+  ],
+  "related": [
+    "vector-database-for-rag",
+    "milvus-vs-elasticsearch",
+    "database-for-ai-agents",
+    "open-source-vector-database"
+  ],
+  "sem_seed_for_zilliz": {
+    "ad_groups": [
+      {
+        "name": "Hybrid search",
+        "keywords": [
+          "hybrid search",
+          "[hybrid search]",
+          "\"hybrid search vector database\"",
+          "[hybrid search vector database]",
+          "\"hybrid vector search\"",
+          "\"hybrid search database\""
+        ]
+      },
+      {
+        "name": "BM25 + vector",
+        "keywords": [
+          "\"bm25 vector search\"",
+          "[bm25 vector search]",
+          "\"bm25 and vector search\"",
+          "\"bm25 hybrid search\"",
+          "\"dense and sparse search\""
+        ]
+      },
+      {
+        "name": "Full text + semantic",
+        "keywords": [
+          "\"full text and vector search\"",
+          "[full text and vector search]",
+          "\"keyword and semantic search\"",
+          "[keyword and semantic search]",
+          "\"full text search vector database\""
+        ]
+      }
+    ],
+    "negative_keywords": [
+      "jobs",
+      "salary",
+      "course",
+      "tutorial pdf",
+      "google search",
+      "seo",
+      "hybrid car",
+      "hybrid cloud",
+      "hybrid work",
+      "free download"
+    ],
+    "conversion_events": [
+      "cta_quickstart_click",
+      "cta_hybrid_docs_click",
+      "copy_code_snippet",
+      "copy_install_command",
+      "cta_zilliz_signup_click"
+    ]
+  },
+  "lang": "en",
+  "reviewedOn": "2026-10-21"
+}

@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 752" width="640" height="752" role="img" aria-labelledby="title desc">
+<title id="title">Agent memory has different jobs and owners</title>
+<desc id="desc">Working: Current task state: Keep a bounded prompt or explicit state store.. Episodic: Past experiences: Retrieve applicable episodes and outcomes.. Semantic: Reusable facts: Track provenance, validity and corrections.. Procedural: Skills and routines: Version instructions and verify applicability.. One vector collection does not replace every state or persistence mechanism.</desc>
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M1 1 L6 4 L1 7" fill="none" stroke="#1E5F70" stroke-width="1.5"/></marker></defs>
+<rect width="640" height="752" fill="#FAF6EE"/>
+<text x="28" y="30" font-family="Arial, sans-serif" font-size="12" font-weight="400" fill="#6B6356"><tspan x="28" dy="0">MILVUS / AI REFERENCE / SCHEMATIC</tspan></text>
+<text x="28" y="72" font-family="Georgia, serif" font-size="28" font-weight="700" fill="#0F1F2E"><tspan x="28" dy="0">Agent memory has different jobs and</tspan><tspan x="28" dy="36.4">owners</tspan></text>
+<rect x="28" y="146" width="584" height="118" fill="#F4ECDC" stroke="#0F1F2E" stroke-width="1.5"/>
+<path d="M230 146 V264" stroke="#0F1F2E" stroke-width="1.5"/>
+<text x="44" y="178" font-family="Arial, sans-serif" font-size="23" font-weight="700" fill="#1E5F70"><tspan x="44" dy="0">Working</tspan></text>
+<text x="248" y="177" font-family="Arial, sans-serif" font-size="21" font-weight="700" fill="#0F1F2E"><tspan x="248" dy="0">Current task state</tspan></text>
+<text x="248" y="213" font-family="Arial, sans-serif" font-size="19" font-weight="400" fill="#6B6356"><tspan x="248" dy="0">Keep a bounded prompt or explicit</tspan><tspan x="248" dy="24.7">state store.</tspan></text>
+<rect x="28" y="276" width="584" height="118" fill="#F4ECDC" stroke="#0F1F2E" stroke-width="1.5"/>
+<path d="M230 276 V394" stroke="#0F1F2E" stroke-width="1.5"/>
+<text x="44" y="308" font-family="Arial, sans-serif" font-size="23" font-weight="700" fill="#1E5F70"><tspan x="44" dy="0">Episodic</tspan></text>
+<text x="248" y="307" font-family="Arial, sans-serif" font-size="21" font-weight="700" fill="#0F1F2E"><tspan x="248" dy="0">Past experiences</tspan></text>
+<text x="248" y="343" font-family="Arial, sans-serif" font-size="19" font-weight="400" fill="#6B6356"><tspan x="248" dy="0">Retrieve applicable episodes and</tspan><tspan x="248" dy="24.7">outcomes.</tspan></text>
+<rect x="28" y="406" width="584" height="118" fill="#F4ECDC" stroke="#0F1F2E" stroke-width="1.5"/>
+<path d="M230 406 V524" stroke="#0F1F2E" stroke-width="1.5"/>
+<text x="44" y="438" font-family="Arial, sans-serif" font-size="23" font-weight="700" fill="#1E5F70"><tspan x="44" dy="0">Semantic</tspan></text>
+<text x="248" y="437" font-family="Arial, sans-serif" font-size="21" font-weight="700" fill="#0F1F2E"><tspan x="248" dy="0">Reusable facts</tspan></text>
+<text x="248" y="473" font-family="Arial, sans-serif" font-size="19" font-weight="400" fill="#6B6356"><tspan x="248" dy="0">Track provenance, validity and</tspan><tspan x="248" dy="24.7">corrections.</tspan></text>
+<rect x="28" y="536" width="584" height="118" fill="#F4ECDC" stroke="#0F1F2E" stroke-width="1.5"/>
+<path d="M230 536 V654" stroke="#0F1F2E" stroke-width="1.5"/>
+<text x="44" y="568" font-family="Arial, sans-serif" font-size="23" font-weight="700" fill="#1E5F70"><tspan x="44" dy="0">Procedural</tspan></text>
+<text x="248" y="567" font-family="Arial, sans-serif" font-size="21" font-weight="700" fill="#0F1F2E"><tspan x="248" dy="0">Skills and routines</tspan></text>
+<text x="248" y="603" font-family="Arial, sans-serif" font-size="19" font-weight="400" fill="#6B6356"><tspan x="248" dy="0">Version instructions and verify</tspan><tspan x="248" dy="24.7">applicability.</tspan></text>
+<path d="M28 676 H612" stroke="#0F1F2E" stroke-width="1.5"/>
+<text x="28" y="702" font-family="Arial, sans-serif" font-size="18" font-weight="400" fill="#6B6356"><tspan x="28" dy="0">One vector collection does not replace every state or</tspan><tspan x="28" dy="23.4">persistence mechanism.</tspan></text>
+</svg>

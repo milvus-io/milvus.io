@@ -44,6 +44,7 @@ yarn-error.log*
 public/*
 !public/fonts
 !public/images
+!public/og
 !public/inkeep
 !public/favicon.ico
 !public/favicon-32x32.png

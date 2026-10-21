@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 702" width="640" height="702" role="img" aria-labelledby="title desc">
+<title id="title">Vector bytes are only one part of memory</title>
+<desc id="desc">Vector representation: Count x dimension x bytes, or compressed code size.. Index and payload: Add graph links, centroids, IDs and scalar fields.. Serving copies: Include the actual shard and replica placement.. Runtime headroom: Budget for queries, ingestion, caches and maintenance.. Payload compression ratios are not whole-service memory reductions.</desc>
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M1 1 L6 4 L1 7" fill="none" stroke="#1E5F70" stroke-width="1.5"/></marker></defs>
+<rect width="640" height="702" fill="#FAF6EE"/>
+<text x="28" y="30" font-family="Arial, sans-serif" font-size="12" font-weight="400" fill="#6B6356"><tspan x="28" dy="0">MILVUS / AI REFERENCE / SCHEMATIC</tspan></text>
+<text x="28" y="72" font-family="Georgia, serif" font-size="28" font-weight="700" fill="#0F1F2E"><tspan x="28" dy="0">Vector bytes are only one part of</tspan><tspan x="28" dy="36.4">memory</tspan></text>
+<rect x="28" y="146" width="584" height="112" fill="#F4ECDC" stroke="#0F1F2E" stroke-width="1.5"/>
+<rect x="28" y="146" width="5" height="112" fill="#1E5F70"/>
+<text x="48" y="177" font-family="Arial, sans-serif" font-size="23" font-weight="700" fill="#0F1F2E"><tspan x="48" dy="0">Vector representation</tspan></text>
+<text x="48" y="207" font-family="Arial, sans-serif" font-size="20" font-weight="400" fill="#6B6356"><tspan x="48" dy="0">Count x dimension x bytes, or compressed code</tspan><tspan x="48" dy="26">size.</tspan></text>
+<rect x="28" y="270" width="584" height="112" fill="#F4ECDC" stroke="#0F1F2E" stroke-width="1.5"/>
+<rect x="28" y="270" width="5" height="112" fill="#1E5F70"/>
+<text x="48" y="301" font-family="Arial, sans-serif" font-size="23" font-weight="700" fill="#0F1F2E"><tspan x="48" dy="0">Index and payload</tspan></text>
+<text x="48" y="331" font-family="Arial, sans-serif" font-size="20" font-weight="400" fill="#6B6356"><tspan x="48" dy="0">Add graph links, centroids, IDs and scalar</tspan><tspan x="48" dy="26">fields.</tspan></text>
+<rect x="28" y="394" width="584" height="86" fill="#F4ECDC" stroke="#0F1F2E" stroke-width="1.5"/>
+<rect x="28" y="394" width="5" height="86" fill="#1E5F70"/>
+<text x="48" y="425" font-family="Arial, sans-serif" font-size="23" font-weight="700" fill="#0F1F2E"><tspan x="48" dy="0">Serving copies</tspan></text>
+<text x="48" y="455" font-family="Arial, sans-serif" font-size="20" font-weight="400" fill="#6B6356"><tspan x="48" dy="0">Include the actual shard and replica placement.</tspan></text>
+<rect x="28" y="492" width="584" height="112" fill="#F4ECDC" stroke="#0F1F2E" stroke-width="1.5"/>
+<rect x="28" y="492" width="5" height="112" fill="#E85A2B"/>
+<text x="48" y="523" font-family="Arial, sans-serif" font-size="23" font-weight="700" fill="#0F1F2E"><tspan x="48" dy="0">Runtime headroom</tspan></text>
+<text x="48" y="553" font-family="Arial, sans-serif" font-size="20" font-weight="400" fill="#6B6356"><tspan x="48" dy="0">Budget for queries, ingestion, caches and</tspan><tspan x="48" dy="26">maintenance.</tspan></text>
+<path d="M28 626 H612" stroke="#0F1F2E" stroke-width="1.5"/>
+<text x="28" y="652" font-family="Arial, sans-serif" font-size="18" font-weight="400" fill="#6B6356"><tspan x="28" dy="0">Payload compression ratios are not whole-service memory</tspan><tspan x="28" dy="23.4">reductions.</tspan></text>
+</svg>

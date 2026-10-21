@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 800" width="640" height="800" role="img" aria-labelledby="title desc">
+<title id="title">CAGRA expands graph candidates in parallel</title>
+<desc id="desc">Several illustrative GPU work groups expand a candidate frontier using a graph resident on the GPU. Search width and candidate-pool size trade search effort for recall; GPU memory and utilization are separate constraints.</desc>
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M1 1 L7 4 L1 7" fill="none" stroke="#1E5F70" stroke-width="1.5"/></marker></defs>
+<rect width="640" height="800" fill="#FAF6EE"/>
+<text x="28" y="30" text-anchor="start" font-family="Arial, sans-serif" font-size="12" fill="#6B6356" font-weight="400"><tspan x="28" dy="0">MILVUS / AI REFERENCE / MECHANISM</tspan></text>
+<text x="28" y="72" text-anchor="start" font-family="Georgia, serif" font-size="27" fill="#0F1F2E" font-weight="700"><tspan x="28" dy="0">CAGRA expands graph candidates in</tspan><tspan x="28" dy="35.1">parallel</tspan></text>
+<rect x="28" y="168" width="584" height="430" fill="#FAF6EE" stroke="#0F1F2E" stroke-width="1.5"/>
+<text x="48" y="203" text-anchor="start" font-family="Arial, sans-serif" font-size="22" fill="#0F1F2E" font-weight="700"><tspan x="48" dy="0">GPU: graph + vector representation</tspan></text>
+<path d="M405 315 L485 265" fill="none" stroke="#E5DDD0" stroke-width="2"/>
+<path d="M405 315 L545 355" fill="none" stroke="#E5DDD0" stroke-width="2"/>
+<path d="M405 315 L440 435" fill="none" stroke="#E5DDD0" stroke-width="2"/>
+<path d="M485 265 L545 355" fill="none" stroke="#E5DDD0" stroke-width="2"/>
+<path d="M545 355 L440 435" fill="none" stroke="#E5DDD0" stroke-width="2"/>
+<path d="M545 355 L530 485" fill="none" stroke="#E5DDD0" stroke-width="2"/>
+<path d="M440 435 L530 485" fill="none" stroke="#E5DDD0" stroke-width="2"/>
+<circle cx="405" cy="315" r="11" fill="#F4B860" stroke="#0F1F2E" stroke-width="1.5"/>
+<circle cx="485" cy="265" r="11" fill="#F4B860" stroke="#0F1F2E" stroke-width="1.5"/>
+<circle cx="545" cy="355" r="11" fill="#F4B860" stroke="#0F1F2E" stroke-width="1.5"/>
+<circle cx="440" cy="435" r="11" fill="#F4B860" stroke="#0F1F2E" stroke-width="1.5"/>
+<circle cx="530" cy="485" r="11" fill="#F4B860" stroke="#0F1F2E" stroke-width="1.5"/>
+<rect x="48" y="265" width="210" height="44" fill="#F4ECDC" stroke="#0F1F2E" stroke-width="1.5"/>
+<text x="62" y="294" text-anchor="start" font-family="Arial, sans-serif" font-size="20" fill="#0F1F2E" font-weight="400"><tspan x="62" dy="0">work group 1</tspan></text>
+<path d="M258 287 L405 315" fill="none" stroke="#1E5F70" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="48" y="340" width="210" height="44" fill="#F4ECDC" stroke="#0F1F2E" stroke-width="1.5"/>
+<text x="62" y="369" text-anchor="start" font-family="Arial, sans-serif" font-size="20" fill="#0F1F2E" font-weight="400"><tspan x="62" dy="0">work group 2</tspan></text>
+<path d="M258 362 L485 265" fill="none" stroke="#1E5F70" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="48" y="415" width="210" height="44" fill="#F4ECDC" stroke="#0F1F2E" stroke-width="1.5"/>
+<text x="62" y="444" text-anchor="start" font-family="Arial, sans-serif" font-size="20" fill="#0F1F2E" font-weight="400"><tspan x="62" dy="0">work group 3</tspan></text>
+<path d="M258 437 L440 435" fill="none" stroke="#1E5F70" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="48" y="490" width="210" height="44" fill="#F4ECDC" stroke="#0F1F2E" stroke-width="1.5"/>
+<text x="62" y="519" text-anchor="start" font-family="Arial, sans-serif" font-size="20" fill="#0F1F2E" font-weight="400"><tspan x="62" dy="0">work group 4</tspan></text>
+<path d="M258 512 L530 485" fill="none" stroke="#1E5F70" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="48" y="566" text-anchor="start" font-family="Arial, sans-serif" font-size="18" fill="#6B6356" font-weight="400"><tspan x="48" dy="0">Illustrative work groups; not a fixed thread layout</tspan></text>
+<text x="28" y="647" text-anchor="start" font-family="Arial, sans-serif" font-size="20" fill="#0F1F2E" font-weight="400"><tspan x="28" dy="0">Search width + candidate pool → work / recall</tspan><tspan x="28" dy="26">trade-off</tspan></text>
+<path d="M28 724 L612 724" fill="none" stroke="#0F1F2E" stroke-width="2"/>
+<text x="28" y="752" text-anchor="start" font-family="Arial, sans-serif" font-size="18" fill="#6B6356" font-weight="400"><tspan x="28" dy="0">Benchmark transfer cost, batching, VRAM and realistic</tspan><tspan x="28" dy="23.4">utilization.</tspan></text>
+</svg>

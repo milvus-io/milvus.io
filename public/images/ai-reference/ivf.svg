@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 780" width="640" height="780" role="img" aria-labelledby="title desc">
+<title id="title">IVF probes lists around selected centroids</title>
+<desc id="desc">Four schematic cells have one centroid each. With nprobe set to two, the query probes the two closer centroids on the left and scores their list members. Unprobed lists are skipped.</desc>
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M1 1 L7 4 L1 7" fill="none" stroke="#1E5F70" stroke-width="1.5"/></marker></defs>
+<rect width="640" height="780" fill="#FAF6EE"/>
+<text x="28" y="30" text-anchor="start" font-family="Arial, sans-serif" font-size="12" fill="#6B6356" font-weight="400"><tspan x="28" dy="0">MILVUS / AI REFERENCE / MECHANISM</tspan></text>
+<text x="28" y="72" text-anchor="start" font-family="Georgia, serif" font-size="27" fill="#0F1F2E" font-weight="700"><tspan x="28" dy="0">IVF probes lists around selected</tspan><tspan x="28" dy="35.1">centroids</tspan></text>
+<text x="28" y="156" text-anchor="start" font-family="Arial, sans-serif" font-size="23" fill="#0F1F2E" font-weight="700"><tspan x="28" dy="0">nlist = 4  |  nprobe = 2</tspan></text>
+<rect x="78" y="182" width="224" height="166" fill="#F4ECDC" stroke="#1E5F70" stroke-width="1.5"/>
+<circle cx="125" cy="235" r="6" fill="#1E5F70" stroke="#1E5F70" stroke-width="1.5"/>
+<circle cx="165" cy="305" r="6" fill="#1E5F70" stroke="#1E5F70" stroke-width="1.5"/>
+<circle cx="240" cy="222" r="6" fill="#1E5F70" stroke="#1E5F70" stroke-width="1.5"/>
+<circle cx="254" cy="290" r="6" fill="#1E5F70" stroke="#1E5F70" stroke-width="1.5"/>
+<circle cx="120" cy="310" r="6" fill="#1E5F70" stroke="#1E5F70" stroke-width="1.5"/>
+<rect x="182" y="257" width="16" height="16" fill="#F4B860" stroke="#0F1F2E" stroke-width="1.5"/>
+<text x="206" y="271" text-anchor="start" font-family="Arial, sans-serif" font-size="20" fill="#0F1F2E" font-weight="400"><tspan x="206" dy="0">c1</tspan></text>
+<rect x="338" y="182" width="224" height="166" fill="#FAF6EE" stroke="#E5DDD0" stroke-width="1.5"/>
+<circle cx="385" cy="235" r="6" fill="#E5DDD0" stroke="#6B6356" stroke-width="1.5"/>
+<circle cx="425" cy="305" r="6" fill="#E5DDD0" stroke="#6B6356" stroke-width="1.5"/>
+<circle cx="500" cy="222" r="6" fill="#E5DDD0" stroke="#6B6356" stroke-width="1.5"/>
+<circle cx="514" cy="290" r="6" fill="#E5DDD0" stroke="#6B6356" stroke-width="1.5"/>
+<circle cx="380" cy="310" r="6" fill="#E5DDD0" stroke="#6B6356" stroke-width="1.5"/>
+<rect x="442" y="257" width="16" height="16" fill="#F4B860" stroke="#0F1F2E" stroke-width="1.5"/>
+<text x="466" y="271" text-anchor="start" font-family="Arial, sans-serif" font-size="20" fill="#0F1F2E" font-weight="400"><tspan x="466" dy="0">c2</tspan></text>
+<rect x="78" y="382" width="224" height="166" fill="#F4ECDC" stroke="#1E5F70" stroke-width="1.5"/>
+<circle cx="125" cy="435" r="6" fill="#1E5F70" stroke="#1E5F70" stroke-width="1.5"/>
+<circle cx="165" cy="505" r="6" fill="#1E5F70" stroke="#1E5F70" stroke-width="1.5"/>
+<circle cx="240" cy="422" r="6" fill="#1E5F70" stroke="#1E5F70" stroke-width="1.5"/>
+<circle cx="254" cy="490" r="6" fill="#1E5F70" stroke="#1E5F70" stroke-width="1.5"/>
+<circle cx="120" cy="510" r="6" fill="#1E5F70" stroke="#1E5F70" stroke-width="1.5"/>
+<rect x="182" y="457" width="16" height="16" fill="#F4B860" stroke="#0F1F2E" stroke-width="1.5"/>
+<text x="206" y="471" text-anchor="start" font-family="Arial, sans-serif" font-size="20" fill="#0F1F2E" font-weight="400"><tspan x="206" dy="0">c3</tspan></text>
+<rect x="338" y="382" width="224" height="166" fill="#FAF6EE" stroke="#E5DDD0" stroke-width="1.5"/>
+<circle cx="385" cy="435" r="6" fill="#E5DDD0" stroke="#6B6356" stroke-width="1.5"/>
+<circle cx="425" cy="505" r="6" fill="#E5DDD0" stroke="#6B6356" stroke-width="1.5"/>
+<circle cx="500" cy="422" r="6" fill="#E5DDD0" stroke="#6B6356" stroke-width="1.5"/>
+<circle cx="514" cy="490" r="6" fill="#E5DDD0" stroke="#6B6356" stroke-width="1.5"/>
+<circle cx="380" cy="510" r="6" fill="#E5DDD0" stroke="#6B6356" stroke-width="1.5"/>
+<rect x="442" y="457" width="16" height="16" fill="#F4B860" stroke="#0F1F2E" stroke-width="1.5"/>
+<text x="466" y="471" text-anchor="start" font-family="Arial, sans-serif" font-size="20" fill="#0F1F2E" font-weight="400"><tspan x="466" dy="0">c4</tspan></text>
+<circle cx="280" cy="355" r="10" fill="#E85A2B" stroke="#0F1F2E" stroke-width="1.5"/>
+<text x="300" y="361" text-anchor="start" font-family="Arial, sans-serif" font-size="22" fill="#E85A2B" font-weight="700"><tspan x="300" dy="0">q</tspan></text>
+<path d="M280 355 L190 265" fill="none" stroke="#1E5F70" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M280 355 L190 465" fill="none" stroke="#1E5F70" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="28" y="595" text-anchor="start" font-family="Arial, sans-serif" font-size="21" fill="#0F1F2E" font-weight="700"><tspan x="28" dy="0">Probe centroids → score vectors in those lists</tspan></text>
+<text x="28" y="636" text-anchor="start" font-family="Arial, sans-serif" font-size="20" fill="#6B6356" font-weight="400"><tspan x="28" dy="0">More probes inspect more lists and do more work.</tspan></text>
+<path d="M28 704 L612 704" fill="none" stroke="#0F1F2E" stroke-width="2"/>
+<text x="28" y="732" text-anchor="start" font-family="Arial, sans-serif" font-size="18" fill="#6B6356" font-weight="400"><tspan x="28" dy="0">Schematic cells. ANN can miss a neighbor in an unprobed</tspan><tspan x="28" dy="23.4">list.</tspan></text>
+</svg>

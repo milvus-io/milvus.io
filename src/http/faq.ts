@@ -1,154 +1,49 @@
-import fs from 'fs';
-import path from 'path';
-import csv from 'csv-parser';
 import { ABSOLUTE_BASE_URL } from '@/consts';
 import {
   OriginalFAQDetailType,
   FAQDetailType,
   DemoTypeEnum,
 } from '@/types/faq';
-
-const FAQ_PATH = 'public/assets';
-const FAQ_FILE_NAME = 'milvus-faq.csv';
-
-const faqCache: FAQDetailType[] = [];
-const simpleFaqCache: Pick<FAQDetailType, 'title' | 'url'>[] = [];
-
-const fileBasePath = path.join(process.cwd(), FAQ_PATH);
+import {
+  loadPublishedFaqRows,
+  publication,
+} from '@/server/ai-reference-catalog';
 
 let faqPromise: Promise<FAQDetailType[]> | null = null;
 
-export const getFAQs = async (): Promise<FAQDetailType[]> => {
-  if (faqCache.length > 0) {
-    return faqCache;
+export const getFAQs = (): Promise<FAQDetailType[]> => {
+  if (!faqPromise) {
+    faqPromise = loadPublishedFaqRows()
+      .then((rows: OriginalFAQDetailType[]) =>
+        rows
+          .map(row => ({
+            id: row.URL,
+            title: row.Questions,
+            content: row.Answers,
+            url: row.URL,
+            topic: publication[row.URL].topic,
+            description: row.Answers.slice(0, 120),
+            canonical_rel: `${ABSOLUTE_BASE_URL}/ai-quick-reference/${row.URL}`,
+            demo: (row.Demo || '') as DemoTypeEnum,
+            demoDescription: row.Demo_description || '',
+          }))
+          .sort(
+            (a, b) =>
+              Number(publication[b.url].status === 'source-checked') -
+              Number(publication[a.url].status === 'source-checked')
+          )
+      )
+      .catch((error: Error) => {
+        faqPromise = null;
+        throw error;
+      });
   }
-
-  if (faqPromise) {
-    return faqPromise;
-  }
-
-  const csvFilePath = path.join(fileBasePath, FAQ_FILE_NAME);
-
-  faqPromise = new Promise((resolve, reject) => {
-    const stream = fs.createReadStream(csvFilePath);
-    const csvParser = csv({
-      mapHeaders: ({ header }) => header.trim(),
-      separator: ',',
-    });
-
-    const cleanup = () => {
-      faqPromise = null;
-      stream.destroy();
-      csvParser.destroy();
-    };
-
-    const handleData = (row: OriginalFAQDetailType) => {
-      if (row.Order !== undefined) {
-        faqCache.push({
-          id: row.URL,
-          title: row.Questions,
-          content: row.Answers,
-          url: row.URL,
-          description: row.Answers.slice(0, 120),
-          canonical_rel: `${ABSOLUTE_BASE_URL}/ai-quick-reference/${row.URL}`,
-          demo: (row.Demo?.match(/'([^']*)'/g)?.[0]?.slice(1, -1) ||
-            '') as DemoTypeEnum,
-          demoDescription: row.Demo_description || '',
-        });
-      }
-    };
-
-    const handleEnd = () => {
-      cleanup();
-      resolve(faqCache);
-    };
-
-    const handleError = (error: Error) => {
-      cleanup();
-      reject(error);
-    };
-
-    stream
-      .pipe(csvParser)
-      .on('data', handleData)
-      .on('end', handleEnd)
-      .on('error', handleError);
-
-    stream.on('error', handleError);
-  });
-
-  return faqPromise;
+  return faqPromise!;
 };
-
-let simpleFaqPromise: Promise<Pick<FAQDetailType, 'title' | 'url'>[]> | null =
-  null;
 
 export const generateSimpleFaqList = async (): Promise<
-  Pick<FAQDetailType, 'title' | 'url'>[]
-> => {
-  if (simpleFaqCache.length > 0) {
-    return simpleFaqCache;
-  }
-
-  if (faqCache.length > 0) {
-    simpleFaqCache.push(
-      ...faqCache.map(faq => ({
-        title: faq.title,
-        url: faq.url,
-      }))
-    );
-    return simpleFaqCache;
-  }
-
-  if (simpleFaqPromise) {
-    return simpleFaqPromise;
-  }
-
-  const csvFilePath = path.join(fileBasePath, FAQ_FILE_NAME);
-
-  simpleFaqPromise = new Promise((resolve, reject) => {
-    const stream = fs.createReadStream(csvFilePath);
-    const csvParser = csv({
-      mapHeaders: ({ header }) => header.trim(),
-      separator: ',',
-    });
-
-    const cleanup = () => {
-      simpleFaqPromise = null;
-      stream.destroy();
-      csvParser.destroy();
-    };
-
-    const handleData = (row: OriginalFAQDetailType) => {
-      if (row.Order !== undefined) {
-        simpleFaqCache.push({
-          title: row.Questions,
-          url: row.URL,
-        });
-      }
-    };
-
-    const handleEnd = () => {
-      cleanup();
-      resolve(simpleFaqCache);
-    };
-
-    const handleError = (error: Error) => {
-      cleanup();
-      reject(error);
-    };
-
-    stream
-      .pipe(csvParser)
-      .on('data', handleData)
-      .on('end', handleEnd)
-      .on('error', handleError);
-
-    stream.on('error', handleError);
-  });
-
-  return simpleFaqPromise;
-};
+  Pick<FAQDetailType, 'title' | 'url' | 'topic'>[]
+> => (await getFAQs()).map(({ title, url, topic }) => ({ title, url, topic }));
 
 export const getFAQById = async (
   url: string
@@ -157,22 +52,7 @@ export const getFAQById = async (
   item: FAQDetailType;
 }> => {
   const faqs = await getFAQs();
-  let curIndex = 0;
-
-  const target = faqs.find((faq, index) => {
-    if (faq.url === url) {
-      curIndex = index;
-      return true;
-    }
-    return false;
-  });
-
-  if (!target) {
-    throw new Error(`FAQ with URL ${url} not found`);
-  }
-
-  return {
-    list: faqs,
-    item: { ...(target as FAQDetailType), curIndex },
-  };
+  const curIndex = faqs.findIndex(faq => faq.url === url);
+  if (curIndex < 0) throw new Error(`FAQ with URL ${url} not found`);
+  return { list: faqs, item: { ...faqs[curIndex], curIndex } };
 };

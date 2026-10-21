@@ -1,0 +1,478 @@
+{
+  "site": "milvus",
+  "kind": "seo",
+  "slug": "distributed-vector-database",
+  "nav": "Distributed architecture",
+  "path": "/solutions/distributed-vector-database",
+  "title": "Milvus Architecture: Distributed Vector Database at Scale",
+  "description": "Milvus architecture explained: a distributed vector database with storage-compute separation, stateless nodes on object storage, RaBitQ, DiskANN and tiered storage.",
+  "keywords": {
+    "primary": "milvus architecture",
+    "secondary": [
+      "distributed vector database",
+      "vector database architecture",
+      "milvus architecture overview",
+      "milvus cluster architecture",
+      "milvus standalone vs distributed",
+      "scalable vector database",
+      "storage compute separation vector database",
+      "billion-scale vector search",
+      "vector database sharding and replication",
+      "vector quantization",
+      "RaBitQ",
+      "DiskANN vs HNSW",
+      "HNSW memory usage",
+      "disk-based vector index",
+      "tiered storage vector database"
+    ],
+    "questions": [
+      "What is a distributed vector database?",
+      "What does storage-compute separation mean for a vector database?",
+      "How do distributed vector databases handle sharding and replication?",
+      "How much memory does billion-scale vector search need?",
+      "What is RaBitQ and how is it different from PQ?",
+      "DiskANN vs HNSW: when should I use which?",
+      "Does Milvus still need Kafka or Pulsar?"
+    ]
+  },
+  "research": [
+    "https://www.databricks.com/blog/decoupled-design-billion-scale-vector-search",
+    "https://www.pinecone.io/learn/vector-database/",
+    "https://www.uber.com/us/en/blog/powering-billion-scale-vector-search-with-opensearch/",
+    "https://www.tigerdata.com/blog/understanding-diskann",
+    "https://github.com/gaoj0017/RaBitQ",
+    "https://arxiv.org/abs/2409.09913",
+    "https://www.microsoft.com/en-us/research/publication/diskann-fast-accurate-billion-point-nearest-neighbor-search-on-a-single-node/",
+    "https://docs.weaviate.io/weaviate/concepts/replication-architecture",
+    "https://qdrant.tech/documentation/scaling/distributed_deployment/",
+    "https://milvus.io/docs/architecture_overview.md",
+    "https://milvus.io/docs/ivf-rabitq.md",
+    "https://milvus.io/docs/diskann.md"
+  ],
+  "h1": "Milvus architecture: a distributed vector database built on storage-compute separation",
+  "intro": "Milvus architecture is built on storage-compute separation: stateless proxies and workers over object storage that holds every segment and index. That is what makes it a distributed vector database, one that spreads vectors, writes, and search across many nodes so each can grow on its own. Add quantized and disk-based indexes, and it scales to tens of billions of vectors.",
+  "primary_cta": {
+    "label": "Install Milvus Distributed",
+    "href": "https://milvus.io/docs/install-overview.md"
+  },
+  "secondary_cta": {
+    "label": "Run managed Milvus on Zilliz Cloud",
+    "href": "https://cloud.zilliz.com/signup"
+  },
+  "proof": [
+    "Apache-2.0, 40K+ GitHub stars",
+    "Scales to tens of billions of vectors",
+    "Object storage is the source of truth",
+    "IVF_RABITQ: 1-to-32 compression",
+    "Partition key: millions of tenants"
+  ],
+  "logos": [
+    "Salesforce",
+    "Walmart",
+    "Reddit",
+    "eBay",
+    "NVIDIA",
+    "Roblox",
+    "Filevine",
+    "Shell"
+  ],
+  "diagram": {
+    "top": {
+      "title": "Access layer: stateless proxies",
+      "sub": "Validate, route by shard, merge results; one active Coordinator schedules the cluster"
+    },
+    "branches": [
+      {
+        "title": "Streaming nodes",
+        "sub": "Write path: own each shard's WAL, serve fresh data"
+      },
+      {
+        "title": "Query nodes",
+        "sub": "Read path: load sealed segments and indexes"
+      },
+      {
+        "title": "Data nodes",
+        "sub": "Compaction and index building, off the query path"
+      }
+    ],
+    "bottom": {
+      "title": "Shared storage = source of truth",
+      "sub": "Object storage (S3, MinIO, Azure Blob, GCS) + WAL storage (Woodpecker) + meta storage (etcd)"
+    },
+    "caption": "Compute nodes keep no data that object storage cannot rebuild, so reads, writes, and indexing scale independently."
+  },
+  "stats": [
+    {
+      "value": "Tens of billions",
+      "label": "vectors Milvus is designed to scale to",
+      "source": "https://milvus.io/"
+    },
+    {
+      "value": "30B+",
+      "label": "vectors Filevine manages on Zilliz Cloud (managed Milvus)",
+      "source": "https://zilliz.com/customers/filevine"
+    },
+    {
+      "value": "10B+",
+      "label": "vectors in Kling AI's largest open-source Milvus cluster, 400+ query nodes",
+      "source": "https://zilliz.com/customers/kling-ai"
+    }
+  ],
+  "sections": [
+    {
+      "id": "architecture",
+      "nav": "Architecture",
+      "h2": "What does the Milvus architecture look like as a distributed vector database?",
+      "paragraphs": [
+        "The Milvus cluster architecture splits into four layers that scale and recover independently. Stream processing (new writes) runs on streaming nodes; batch processing (sealed data) runs on query and data nodes, so write processing and sealed-data search can scale independently; growing-data search still runs on streaming nodes."
+      ],
+      "table": {
+        "caption": "Milvus architecture overview: components and roles",
+        "heads": [
+          "Component",
+          "Layer",
+          "Role",
+          "Scale it when"
+        ],
+        "rows": [
+          [
+            "Proxy (stateless)",
+            "Access",
+            "Validates requests, routes by shard, merges results",
+            "Connections or request rate grow"
+          ],
+          [
+            "Coordinator",
+            "Control",
+            "Topology, DDL, timestamps, load balancing, task scheduling; one active instance",
+            "Not scaled out; standby for HA"
+          ],
+          [
+            "Streaming node",
+            "Worker",
+            "Owns each shard's WAL, orders writes, searches growing data",
+            "Write throughput grows"
+          ],
+          [
+            "Query node",
+            "Worker",
+            "Loads sealed segments and indexes, runs search",
+            "Data loaded or QPS grows"
+          ],
+          [
+            "Data node",
+            "Worker",
+            "Compaction and index building",
+            "Index or compaction backlog grows"
+          ],
+          [
+            "Object, WAL, meta storage",
+            "Storage",
+            "Segments and indexes; write-ahead log; schemas and checkpoints",
+            "Data volume grows"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "storage-compute",
+      "nav": "Storage/compute",
+      "h2": "How does storage-compute separation work in a vector database?",
+      "paragraphs": [
+        "In Milvus, object storage is the source of truth. Every sealed segment, index file, and log snapshot lands in S3, MinIO, Azure Blob, or Google Cloud Storage. Worker nodes are stateless executors: a new query node pulls its segments from object storage, so scaling out never copies data between peers.",
+        "The write-ahead log follows the same design. Since Milvus 2.6, Woodpecker writes the WAL directly to object storage with no local disks, replacing Kafka or Pulsar; Milvus 3.0 can also run Woodpecker as its own service."
+      ],
+      "bullets": [
+        "Scale reads, writes, and indexing independently by adding only the node type you lack.",
+        "Lose a node without losing data; the coordinator reassigns its segments or shards.",
+        "Keep durable storage on cheap object storage while compute stays elastic.",
+        "Isolate workloads with resource groups instead of separate clusters."
+      ]
+    },
+    {
+      "id": "scaling",
+      "nav": "Scaling",
+      "h2": "How does a scalable vector database grow reads, writes, and indexing?",
+      "paragraphs": [
+        "Writes flow proxy → streaming node → WAL and become visible according to the requested consistency level. Sealed segments go to object storage, where data nodes index them and query nodes load them. Each step has its own lever."
+      ],
+      "table": {
+        "caption": "Vector database sharding and replication: scaling levers by bottleneck",
+        "heads": [
+          "Bottleneck",
+          "Lever"
+        ],
+        "rows": [
+          [
+            "Insert throughput",
+            "More shards (up to 16 per collection) and streaming nodes"
+          ],
+          [
+            "Index build lags ingest",
+            "More data nodes"
+          ],
+          [
+            "Data exceeds query-node memory",
+            "Quantized or disk indexes, mmap, tiered storage, more query nodes"
+          ],
+          [
+            "Search QPS",
+            "In-memory replicas on separate query nodes"
+          ],
+          [
+            "Noisy neighbors",
+            "Resource groups that pin query nodes to collections"
+          ],
+          [
+            "Many tenants",
+            "Partition key: one collection, millions of tenants"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "quantization",
+      "nav": "Quantization",
+      "h2": "Which vector quantization indexes cut memory for billion-scale vector search?",
+      "paragraphs": [
+        "Raw float32 vectors cost dimensions × 4 bytes each, and HNSW memory usage adds graph links on top. At billions of vectors, memory is the bill, so Milvus offers vector quantization at several compression levels, most with an optional refine step that reranks candidates at higher precision to recover recall."
+      ],
+      "table": {
+        "caption": "Milvus vector indexes: memory footprint and when to use them (figures from Milvus docs)",
+        "heads": [
+          "Index",
+          "Vector memory footprint",
+          "When to use"
+        ],
+        "rows": [
+          [
+            "HNSW (FP32)",
+            "Full raw vectors plus graph links",
+            "Data fits in RAM; lowest latency, highest recall"
+          ],
+          [
+            "HNSW_SQ (SQ8, SQ6, SQ4U, FP16, BF16)",
+            "8, 6, 4, or 16 bits per dimension; SQ8 cuts 75% vs FP32",
+            "Keep HNSW speed with smaller memory"
+          ],
+          [
+            "HNSW_PQ / HNSW_PRQ",
+            "PQ compresses 4–32x; PRQ adds residual quantization for accuracy",
+            "Graph search under a tight memory budget"
+          ],
+          [
+            "IVF_SQ8 / IVF_PQ",
+            "1 byte per dimension / PQ codes",
+            "Large batches, high throughput, cheaper builds"
+          ],
+          [
+            "IVF_RABITQ",
+            "1 bit per dimension: 1-to-32 compression; refine with SQ6, SQ8, FP16, BF16, or FP32",
+            "Maximum compression; replaces IVF_FLAT or IVF_SQ8 when memory is short"
+          ],
+          [
+            "GPU_CAGRA / GPU_IVF_PQ",
+            "Data loaded into GPU memory",
+            "High-throughput, high-recall search on GPUs"
+          ]
+        ]
+      },
+      "note": "RaBitQ (Gao & Long, SIGMOD 2024) gives a theoretical error bound for 1-bit codes; it runs faster on CPUs with AVX-512 VPOPCNTDQ."
+    },
+    {
+      "id": "disk-tiered",
+      "nav": "Disk & tiering",
+      "h2": "DiskANN vs HNSW, mmap, and tiered storage: what handles data larger than memory?",
+      "paragraphs": [
+        "When even compressed vectors outgrow RAM, move the index to local NVMe or leave cold data in object storage. The Milvus docs suggest DiskANN once only about a quarter of raw data fits in memory."
+      ],
+      "table": {
+        "caption": "Disk-based vector index and hot/cold tiering options in Milvus",
+        "heads": [
+          "Option",
+          "What stays in RAM",
+          "Where the rest lives",
+          "When to use"
+        ],
+        "rows": [
+          [
+            "DiskANN",
+            "PQ codes, 1/8 of raw vector size by default",
+            "Vamana graph and raw vectors on NVMe SSD",
+            "Billion-scale search with stable latency"
+          ],
+          [
+            "AISAQ (Milvus 2.6.4+)",
+            "Near-zero DRAM; optional PQ cache",
+            "All index structures on SSD",
+            "Ultra-large data on standard servers; RAG and offline search"
+          ],
+          [
+            "mmap",
+            "Hot pages only",
+            "Fields and indexes memory-mapped from local disk",
+            "Data slightly above RAM; quantized IVF + mmap"
+          ],
+          [
+            "Tiered storage (Milvus 2.6.4+)",
+            "Metadata plus cached hot chunks",
+            "Object storage, fetched on demand and evicted when cold",
+            "Collections beyond a node's memory or disk; warm up critical fields"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "scale",
+      "nav": "Scale numbers",
+      "h2": "How far does Milvus scale?",
+      "paragraphs": [
+        "Milvus standalone vs distributed is mostly a question of scale: Standalone packs the same components into one process, Distributed spreads them across nodes. Entities per collection are unlimited either way; capacity grows with segments, shards, and nodes. These defaults come from the Milvus docs and config."
+      ],
+      "table": {
+        "caption": "Milvus scale: documented defaults and limits",
+        "heads": [
+          "Item",
+          "Default / documented scale"
+        ],
+        "rows": [
+          [
+            "Vectors",
+            "Tens of billions"
+          ],
+          [
+            "Collections per cluster",
+            "65,536 (maxCollectionNum, configurable)"
+          ],
+          [
+            "Databases per cluster",
+            "64"
+          ],
+          [
+            "Partitions per collection",
+            "1,024"
+          ],
+          [
+            "Tenants with partition key",
+            "Millions, in one collection"
+          ],
+          [
+            "Shards per collection",
+            "16"
+          ],
+          [
+            "Vector dimensions",
+            "32,768"
+          ]
+        ]
+      }
+    }
+  ],
+  "code": null,
+  "stories": [
+    {
+      "name": "Meituan",
+      "text": "Grew self-run Milvus to 10B+ vectors and 100+ use cases in about a year, using DiskANN to keep a 2B-vector collection mostly on disk.",
+      "href": "https://zilliz.com/customers/meituan"
+    },
+    {
+      "name": "Kling AI",
+      "text": "Scales storage and compute separately, using SQ8 and DiskANN to cut memory, with 10B+ vectors and 10,000+ QPS peaks in one cluster.",
+      "href": "https://zilliz.com/customers/kling-ai"
+    }
+  ],
+  "faqs": [
+    [
+      "What is a distributed vector database?",
+      "A vector database that shards data and spreads ingestion, indexing, and search across many nodes, so each capacity grows by adding machines. Milvus Distributed is an Apache-2.0 example built on shared object storage."
+    ],
+    [
+      "What does storage-compute separation mean for a vector database?",
+      "Durable data lives in object storage, and compute nodes are stateless caches and executors. You add query, streaming, or data nodes without moving data between them, and a failed node is replaced, not repaired."
+    ],
+    [
+      "How do distributed vector databases handle sharding and replication?",
+      "In Milvus, shards split a collection's write stream by primary key (up to 16 per collection), each owned by a streaming node, and proxies route by shard. Replicas are in-memory copies of loaded segments on separate query nodes that raise search QPS; data itself is replicated once, durably, in object storage."
+    ],
+    [
+      "How much memory does billion-scale vector search need?",
+      "Raw float32 vectors need dimensions × 4 bytes each before index overhead. Quantization (SQ8, PQ, RaBitQ), DiskANN, and tiered storage shrink what must sit in RAM; check sizes with milvus.io/tools/sizing."
+    ],
+    [
+      "What is RaBitQ and how is it different from PQ?",
+      "RaBitQ encodes each dimension as 1 bit with a theoretical error bound; IVF_RABITQ reaches 1-to-32 compression. PQ splits vectors into subvectors and stores codebook IDs, typically 4–32x. Both can rerank with a refine step."
+    ],
+    [
+      "DiskANN vs HNSW: when should I use which?",
+      "Use HNSW when raw vectors fit in memory and latency matters most. Use DiskANN when data is far larger than RAM: the graph and raw vectors sit on NVMe SSD and only PQ codes stay in memory."
+    ],
+    [
+      "Does Milvus still need Kafka or Pulsar?",
+      "No. Since Milvus 2.6, the Woodpecker write-ahead log writes directly to object storage; Kafka and Pulsar remain supported."
+    ]
+  ],
+  "aiq": [
+    "how-milvus-separates-ingestion-storage-and-search",
+    "how-does-a-vector-database-handle-scaling-up-to-millions-or-billions-of-vectors-and-what-architectural-features-enable-this-scalability",
+    "how-do-distributed-vector-databases-handle-sharding-and-replication",
+    "what-is-ivf-rabitq",
+    "what-is-diskann",
+    "how-mmap-differs-from-diskann",
+    "what-is-vector-quantization-in-embeddings",
+    "milvus-capacity-planning"
+  ],
+  "related": [
+    "open-source-vector-database",
+    "search-on-the-lake",
+    "milvus-vs-elasticsearch",
+    "milvus-vs-qdrant",
+    "vector-database-for-rag",
+    "hybrid-search"
+  ],
+  "managed": {
+    "h2": "Prefer not to operate the cluster yourself?",
+    "body": "Zilliz Cloud runs managed Milvus with the same MilvusClient API; node counts, upgrades, and storage tiering are handled for you. Filevine manages over 30 billion vectors there."
+  },
+  "sources": [
+    "https://milvus.io/",
+    "https://milvus.io/docs/architecture_overview.md",
+    "https://milvus.io/docs/woodpecker_architecture.md",
+    "https://milvus.io/docs/release_notes.md",
+    "https://milvus.io/docs/scaleout.md",
+    "https://milvus.io/docs/resource_group.md",
+    "https://milvus.io/docs/replica.md",
+    "https://milvus.io/docs/multi_tenancy.md",
+    "https://milvus.io/docs/index-explained.md",
+    "https://milvus.io/docs/hnsw-sq.md",
+    "https://milvus.io/docs/hnsw-pq.md",
+    "https://milvus.io/docs/hnsw-prq.md",
+    "https://milvus.io/docs/ivf-rabitq.md",
+    "https://milvus.io/docs/diskann.md",
+    "https://milvus.io/docs/aisaq.md",
+    "https://milvus.io/docs/mmap.md",
+    "https://milvus.io/docs/tiered-storage-overview.md",
+    "https://milvus.io/docs/gpu-cagra.md",
+    "https://milvus.io/docs/gpu-index-overview.md",
+    "https://milvus.io/docs/gcs.md",
+    "https://milvus.io/docs/limitations.md",
+    "https://github.com/milvus-io/milvus/blob/v3.0.3/configs/milvus.yaml",
+    "https://github.com/gaoj0017/RaBitQ",
+    "https://zilliz.com/customers/meituan",
+    "https://zilliz.com/customers/kling-ai",
+    "https://zilliz.com/customers/filevine",
+    "https://github.com/milvus-io/milvus",
+    "https://github.com/milvus-io/milvus-docs/tree/v3.0.x"
+  ],
+  "notes": [
+    "v3.1 rewrite 2026-10-21: headline = storage-compute separation; quantization/disk-index breadth; no code block, no limitations section.",
+    "Docs verified in milvus-docs branch v3.0.x (cloned this session): architecture_overview (Proxy, Coordinator, Streaming/Query/Data Node, meta/object/WAL storage; MinIO, S3, Azure Blob named; GCS via adminGuide/clouds/gcp/gcs.md), index-explained (SQ8 -75%, PQ 4-32x, DiskANN when ~1/4 raw data fits), ivf-rabitq (1-to-32, refine SQ6/SQ8/FP16/BF16/FP32, AVX-512 VPOPCNTDQ), hnsw-sq (SQ4U 2.6.8+, SQ6, SQ8, BF16, FP16), diskann (PQCodeBudgetGBRatio 0.125, NVMe recommended), aisaq (beta, 2.6.4+), tiered-storage-overview (beta, 2.6.4+), multi_tenancy (partition key: millions of tenants), release_notes (3.0.0 Woodpecker standalone).",
+    "Released-only: no HNSW/graph RaBitQ variant in released docs (only IVF_RABITQ). IVF_RABITQ, AISAQ and Tiered Storage carry a 'beta' label in docs front-matter; copy does not say beta. Decide whether to show it.",
+    "milvus.io doc ids confirmed from milvus-docs v3.0.x front-matter (gpu-index-overview.md, gcs.md, scaleout.md, multi_tenancy.md, mmap.md); milvus.io pages themselves not opened this session.",
+    "Customer facts from zilliz.com pages fetched this session: Meituan (10B+, 100+ use cases, 2B+ collection, DiskANN, self-run), Kling AI (10B+ largest cluster, 400+ query nodes, 10,000+ QPS, SQ8/DiskANN, storage and compute scale separately), Filevine (30B+ vectors on Zilliz Cloud).",
+    "Research URLs studied (SERP, en): https://www.databricks.com/blog/decoupled-design-billion-scale-vector-search, https://www.pinecone.io/learn/vector-database/, https://www.uber.com/us/en/blog/powering-billion-scale-vector-search-with-opensearch/, https://www.tigerdata.com/blog/understanding-diskann, https://github.com/gaoj0017/RaBitQ, https://arxiv.org/abs/2409.09913, https://www.microsoft.com/en-us/research/publication/diskann-fast-accurate-billion-point-nearest-neighbor-search-on-a-single-node/, https://docs.weaviate.io/weaviate/concepts/replication-architecture, https://qdrant.tech/documentation/scaling/distributed_deployment/. zh: see Chinese file.",
+    "wanted, unverified: VectorDBBench multi-node 100M+ results; documented max nodes per cluster; HNSW_RABITQ if/when released.",
+    "v3.1 keyword pass (2026-10-21): primary switched to 'milvus architecture' (Google autocomplete: 10 expansions vs 1 for 'distributed vector database'; SERP fully branded); 'distributed vector database' kept as secondary in title/h1/h2. Added sharding/replication FAQ (facts from scaleout/replica docs: 16 shards, in-memory replicas). 'HNSW memory usage' preferred over 'footprint' per autocomplete."
+  ],
+  "lang": "en",
+  "reviewedOn": "2026-10-21"
+}

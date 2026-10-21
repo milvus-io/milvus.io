@@ -1,0 +1,374 @@
+{
+  "site": "milvus-zh",
+  "kind": "seo",
+  "slug": "search-on-the-lake",
+  "nav": "湖上检索",
+  "path": "/zh/solutions/search-on-the-lake",
+  "title": "数据湖向量检索：Lance 与 Iceberg 外部表",
+  "description": "数据湖向量检索不必拷贝数据：Milvus 外部集合（外部表）直接给 Lance 数据集和 Iceberg 表建索引并提供检索服务，湖仓一体、存算分离、一份数据。",
+  "keywords": {
+    "primary": "数据湖 向量检索",
+    "secondary": [
+      "向量数据湖",
+      "Lance 向量检索",
+      "Lance 存储格式",
+      "Lance vs Parquet",
+      "Iceberg 向量检索",
+      "湖仓一体 向量检索",
+      "湖仓一体 向量数据库",
+      "多模态数据湖",
+      "Milvus 外部集合",
+      "Milvus 3.0 外部集合",
+      "外部表 向量检索",
+      "零拷贝 向量检索",
+      "存算分离 向量数据库",
+      "LanceDB 和 Milvus 对比"
+    ],
+    "questions": [
+      "数据湖里的向量能直接检索，还是必须导入向量数据库？",
+      "Iceberg 表能直接做向量检索吗？",
+      "Spark / Ray 写湖后怎么接入向量检索？",
+      "外部表做向量检索，湖表更新后索引怎么刷新？",
+      "Lance 和 Parquet 有什么区别，向量该放哪种格式？",
+      "湖仓一体和向量数据库是替代还是互补？",
+      "LanceDB 和 Milvus 对比，怎么选？"
+    ]
+  },
+  "h1": "数据湖向量检索：Lance 和 Iceberg 上直接建索引，数据不搬",
+  "intro": "数据湖向量检索，就是直接对已经躺在 Lance 数据集或 Apache Iceberg 表里的向量建索引、提供检索，而不是再导出一份到向量数据库。Milvus 3.0+ 用外部集合（external collection，也就是外部表）做到零拷贝的向量检索：把湖里的列映射成 schema，Milvus 自己建索引，用标准 API 提供向量检索、标量过滤和混合检索，行数据始终留在对象存储里。",
+  "primary_cta": {
+    "label": "创建外部集合",
+    "href": "https://milvus.io/docs/zh/create-an-external-collection.md"
+  },
+  "secondary_cta": {
+    "label": "在 Zilliz Cloud 上试用",
+    "href": "https://cloud.zilliz.com.cn/signup"
+  },
+  "proof": [
+    "Milvus 3.0+",
+    "支持 Lance、Iceberg、Parquet、Vortex",
+    "源数据只读，不拷贝",
+    "Apache-2.0，GitHub 40K+ star"
+  ],
+  "diagram": {
+    "top": {
+      "title": "你的应用",
+      "sub": "通过 MilvusClient 做 search / query / 混合检索"
+    },
+    "branches": [
+      {
+        "title": "Lance 数据集",
+        "sub": "format: lance-table"
+      },
+      {
+        "title": "Apache Iceberg 表",
+        "sub": "format: iceberg-table + snapshot_id"
+      },
+      {
+        "title": "Parquet / Vortex 文件",
+        "sub": "format: parquet | vortex"
+      }
+    ],
+    "bottom": {
+      "title": "Milvus 外部集合",
+      "sub": "只存字段映射、manifest、索引和缓存；行数据留在对象存储"
+    },
+    "caption": "数据由 Spark、Ray 等写湖任务负责；Milvus 只管映射、manifest 和索引。"
+  },
+  "code": {
+    "h2": "怎样用 Milvus 检索 Lance 数据集或 Iceberg 表？",
+    "intro": "先开启 Storage V3（common.storage.useLoonFFI: true），再创建指向湖上数据源的 schema，用 external_field 映射字段，然后 refresh、建索引、load、检索。",
+    "lang": "python",
+    "code": "import json, os, time\nfrom pymilvus import DataType, MilvusClient\n\nclient = MilvusClient(uri=\"http://localhost:19530\", token=\"root:Milvus\")\nextfs = {\n    \"cloud_provider\": \"aws\",\n    \"region\": \"us-east-1\",\n    \"access_key_id\": os.environ[\"AWS_ACCESS_KEY_ID\"],\n    \"access_key_value\": os.environ[\"AWS_SECRET_ACCESS_KEY\"],\n}\n\ndef lake_collection(name, source, spec):\n    schema = client.create_schema(external_source=source, external_spec=json.dumps(spec))\n    # Map Milvus fields to existing source columns.\n    schema.add_field(field_name=\"id\", datatype=DataType.INT64, external_field=\"doc_id\")\n    schema.add_field(field_name=\"emb\", datatype=DataType.FLOAT_VECTOR, dim=1024, external_field=\"embedding\")\n    schema.add_field(field_name=\"title\", datatype=DataType.VARCHAR, max_length=1024, external_field=\"title\")\n    client.create_collection(collection_name=name, schema=schema)\n\n# Lance: point at the dataset directory.\nlake_collection(\"docs_lance\", \"s3://lake/docs.lance\",\n                {\"format\": \"lance-table\", \"extfs\": extfs})\n\n# Iceberg: point at the table metadata file and pin a snapshot.\nlake_collection(\"docs_iceberg\", \"s3://lake/docs/metadata/v1.metadata.json\",\n                {\"format\": \"iceberg-table\", \"snapshot_id\": 123456789, \"extfs\": extfs})\n\nname = \"docs_iceberg\"\njob_id = client.refresh_external_collection(collection_name=name)\ndeadline = time.monotonic() + 600\nwhile (p := client.get_refresh_external_collection_progress(job_id=job_id)).state != \"RefreshCompleted\":\n    if time.monotonic() > deadline:\n        raise TimeoutError(\"External collection refresh timed out; inspect the job before retrying\")\n    if p.state == \"RefreshFailed\":\n        raise RuntimeError(p.reason)\n    time.sleep(1)\n\nindex_params = client.prepare_index_params()\nindex_params.add_index(field_name=\"emb\", index_type=\"HNSW\", metric_type=\"COSINE\")\nclient.create_index(collection_name=name, index_params=index_params)\nclient.load_collection(collection_name=name)\n\nhits = client.search(collection_name=name, data=[embed(\"rotate credentials\")],  # your 1024-d embedding\n                     anns_field=\"emb\", limit=5, output_fields=[\"title\"])\nprint(hits)\n",
+    "note": "format 取值：lance-table、iceberg-table、parquet、vortex。snapshot_id 只对 iceberg-table 生效。extfs 也支持 AWS IAM、Milvus 全局凭证和 IAM Role ARN；S3 兼容存储用 endpoint_url。"
+  },
+  "sections": [
+    {
+      "id": "what-is-external-collection",
+      "nav": "是什么",
+      "h2": "Milvus 外部集合（外部表）是什么？",
+      "paragraphs": [
+        "外部集合是行数据存放在数据湖、而不在 Milvus 里的 collection。external_source 指向 Lance 数据集、Iceberg 表或 Parquet / Vortex 前缀，每个字段的 external_field 写明它读哪一列。数据源对 Milvus 只读，文件不会被改写，也不会被复制。",
+        "湖仍然是唯一的数据源（single source of truth），数据工程师照常追加数据、演进 schema、跑分析；Milvus 在上面加一层低延迟的在线检索：ANN 索引、标量过滤、BM25 全文检索和混合检索。一份数据同时服务离线分析和在线召回，这就是向量数据湖的形态。"
+      ],
+      "bullets": [
+        "湖里：权威数据，由 Spark、Ray、DuckDB 或训练任务写入。",
+        "Milvus 里：字段映射、manifest，向量 / 标量 / JSON / BM25 索引和缓存。",
+        "API 与普通 collection 一致：search、query、get、混合检索。",
+        "不用搭 ETL 同步链路，也没有第二份向量要对齐。"
+      ]
+    },
+    {
+      "id": "external-vs-import",
+      "nav": "外部表对比",
+      "h2": "数据湖里的向量能直接检索，还是必须导入向量数据库？",
+      "paragraphs": [
+        "向量已经在湖仓表里，就不必再拷。传统做法是导出到独立的向量数据库：存储翻倍，每次插入、删除、改 schema 都要靠同步链路跟上。外部集合直接在原表上建索引。如果应用本身要通过 Milvus 高频写入向量，导入原生 collection 仍是合适的选择。"
+      ],
+      "table": {
+        "caption": "湖仓一体向量数据库的两种做法：导入 vs 外部集合",
+        "heads": [
+          "",
+          "导入原生 collection",
+          "外部集合（外部表）"
+        ],
+        "rows": [
+          [
+            "数据存放",
+            "拷进 Milvus 存储",
+            "留在 Lance / Iceberg / Parquet / Vortex"
+          ],
+          [
+            "数据份数",
+            "两份（湖 + Milvus）",
+            "一份（湖）"
+          ],
+          [
+            "谁来写",
+            "应用通过 insert、upsert、delete",
+            "湖上任务（Spark、Ray、Flink、dbt）"
+          ],
+          [
+            "数据新鲜度",
+            "写入即可见",
+            "refresh_external_collection 之后可见"
+          ],
+          [
+            "索引",
+            "向量、标量、JSON、全文",
+            "映射字段上的向量、标量、JSON、BM25"
+          ],
+          [
+            "数据治理",
+            "分散在两套系统",
+            "跟着湖表走"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "lance",
+      "nav": "Lance",
+      "h2": "Lance 向量检索：怎样用 Milvus 服务 Lance 数据集？",
+      "paragraphs": [
+        "Lance 是为 AI 数据设计的开放列式存储格式：随机读快、数据集自带版本、在对象存储上加列成本低。随机读在在线检索时很关键，因为 ANN 召回之后，Milvus 要回源读取输出字段（回表）。external_source 指向数据集目录，format 设为 lance-table 即可。",
+        "Lance vs Parquet 的差别主要在随机读：Parquet 为顺序扫描优化，Lance 在列式布局之上兼顾按行号取数，更适合检索后回表、训练采样这类随机访问。两种格式 Milvus 都能直接读，不需要为检索专门转换格式。"
+      ],
+      "bullets": [
+        "照常用 Lance 的 Python、Spark 或 Ray 集成写入和追加。",
+        "Milvus 把数据集的 fragment 映射进 manifest，不复制任何行。",
+        "新 fragment 写入后 refresh：没变的数据沿用原有 segment 和索引。",
+        "多模态数据湖里的图片、文本、向量放同一张表，Milvus 只映射需要的列。"
+      ]
+    },
+    {
+      "id": "iceberg",
+      "nav": "Iceberg",
+      "h2": "Iceberg 向量检索：怎样给 Apache Iceberg 里的向量建索引？",
+      "paragraphs": [
+        "Iceberg 没有向量类型，向量通常存成 float 的 list 或定长 list；只要长度等于 dim，Milvus 都能按 FLOAT_VECTOR 读取。external_source 指向表的 metadata JSON 文件，并固定一个 snapshot_id，检索就始终对应一个确定的表状态，直到你主动推进。"
+      ],
+      "bullets": [
+        "继续用 Spark、Flink 或任意 Iceberg 引擎写表。",
+        "Milvus 规划该 snapshot 的数据文件，并处理 position delete。",
+        "refresh 前把 equality delete 改写成 position delete，例如通过 compaction。",
+        "用更新的 metadata 文件和 snapshot_id 调 refresh，即可前进到新快照。"
+      ]
+    },
+    {
+      "id": "refresh-and-indexes",
+      "nav": "索引与刷新",
+      "h2": "湖上建索引和刷新，怎样保证湖是唯一数据源？",
+      "paragraphs": [
+        "湖上数据的索引和原生 collection 一样，区别只在新鲜度。刷新是显式、异步的：扫描源端元数据、发布新的 manifest，元数据阶段通常 150–250 ms（不含建索引）。刷新完成前，查询继续读旧状态，不会看到改了一半的数据。",
+        "需要暴露源表新增的列时，用 add_collection_field 映射过去再 refresh，不必重建集合。外部字段还可以作为 Function 的输入，在 Milvus 内生成 BM25 稀疏向量或文本 embedding，源表不用多写一列。"
+      ],
+      "table": {
+        "caption": "外部表向量检索的生命周期",
+        "heads": [
+          "步骤",
+          "Milvus 做什么",
+          "对湖的影响"
+        ],
+        "rows": [
+          [
+            "创建",
+            "保存 schema 和 external_field 映射",
+            "无"
+          ],
+          [
+            "刷新",
+            "扫描元数据、写 manifest、复用未变的 segment",
+            "只读"
+          ],
+          [
+            "建索引",
+            "HNSW/AUTOINDEX、标量、JSON、BM25 索引",
+            "无，索引存在 Milvus 存储里"
+          ],
+          [
+            "服务",
+            "search、query、get、混合检索，按需回源取输出字段",
+            "只读"
+          ],
+          [
+            "演进",
+            "add_collection_field 映射新列，再 refresh",
+            "无"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "cost-architecture",
+      "nav": "成本",
+      "h2": "数据湖向量检索的成本：存算分离怎么省？",
+      "paragraphs": [
+        "存储成本就是你已经在付的对象存储，加上 Milvus 的 manifest 和索引；原始行和向量都没有第二份，也省掉了同步链路的计算和运维。计算与存储分离（存算分离），QueryNode 按查询负载配，而不是按数据量配。"
+      ],
+      "bullets": [
+        "一份数据，开放格式，放在 S3、GCS、Azure 或 S3 兼容存储上。",
+        "Tiered Storage 懒加载 segment、预热热点字段，缓存可以比数据小。",
+        "对湖的读 IOPS 有限速且可配置，保护共享 bucket。",
+        "同一份湖上数据可以同时由多个 Milvus 实例提供服务。"
+      ]
+    },
+    {
+      "id": "lake-stack",
+      "nav": "湖仓栈",
+      "h2": "湖仓一体和向量数据库是替代还是互补？",
+      "paragraphs": [
+        "互补。湖仓一体的向量检索按长处分工：批处理引擎（Spark、Ray）负责写入和加工（包括批量生成 embedding），分析引擎（DuckDB、Trino）负责扫描和评估，Milvus 在同一批表上提供低延迟检索。三者读写的是同一份开放格式数据，不存在谁同步谁的问题。"
+      ],
+      "table": {
+        "caption": "基于 Lance 和 Iceberg 的湖仓向量检索架构",
+        "heads": [
+          "层",
+          "常用工具",
+          "职责"
+        ],
+        "rows": [
+          [
+            "写入与向量化",
+            "Spark、Ray、Flink、PyArrow",
+            "生成行和向量，写入 Lance 或 Iceberg"
+          ],
+          [
+            "存储",
+            "对象存储上的 Lance 数据集、Iceberg 表",
+            "唯一数据源，带版本"
+          ],
+          [
+            "分析",
+            "DuckDB、Spark SQL、Trino",
+            "在同一批文件上扫描、join、评估"
+          ],
+          [
+            "在线检索",
+            "Milvus 外部集合",
+            "ANN、过滤、全文和混合检索"
+          ],
+          [
+            "回流",
+            "Milvus Snapshot、Spark-Milvus connector",
+            "批处理任务读取 Milvus collection"
+          ]
+        ]
+      }
+    }
+  ],
+  "stories": [],
+  "faqs": [
+    [
+      "Iceberg 表能直接做向量检索吗？",
+      "可以。Milvus 3.0+ 创建外部集合，设置 \"format\": \"iceberg-table\"，指向表的 metadata JSON 文件和 snapshot_id，然后 refresh、建索引、检索。存成 float list 的向量映射为 FLOAT_VECTOR。"
+    ],
+    [
+      "Spark / Ray 写湖后怎么接入向量检索？",
+      "不用导入。继续用 Spark、Ray 把行和向量写进 Lance 数据集或 Iceberg 表，然后在 Milvus 里创建外部集合：external_source 指向数据集目录或表的 metadata 文件，用 external_field 映射字段，再 refresh、建索引、检索。数据始终留在湖里。"
+    ],
+    [
+      "LanceDB 和 Milvus 对比，怎么选？",
+      "两者都可以把数据放在 Lance 里。LanceDB OSS 是嵌入式库，在进程内查询数据集；Milvus 是分布式服务，能给 Lance、Iceberg、Parquet、Vortex 数据源建索引，并对多个客户端提供检索。"
+    ],
+    [
+      "外部表做向量检索，湖表更新后索引怎么刷新？",
+      "湖上数据变化后调用 refresh_external_collection。它是异步、增量的：没变的数据沿用原有 segment 和索引，刷新完成前查询继续读旧状态。"
+    ],
+    [
+      "Lance 和 Parquet 有什么区别，向量该放哪种格式？",
+      "Milvus 两种都能读。需要快速随机读、版本管理、频繁加列的 AI 数据集适合 Lance；看重工具生态兼容的适合 Parquet。Iceberg 则在 Parquet 数据文件之上提供表级快照。"
+    ],
+    [
+      "Milvus 会拷贝或修改湖里的数据吗？",
+      "不会。外部数据源只读，Milvus 只保存字段映射、manifest、索引和缓存。"
+    ]
+  ],
+  "aiq": [
+    "when-to-use-milvus-external-collections",
+    "how-can-milvus-search-lance-data",
+    "how-can-milvus-search-iceberg-tables",
+    "lance-iceberg-parquet-for-vector-data-lakes",
+    "how-to-refresh-milvus-external-collections",
+    "how-spark-integrates-with-milvus",
+    "how-to-propagate-lake-deletions-to-vector-search",
+    "what-is-a-vector-data-lake"
+  ],
+  "related": [
+    "vector-database-for-rag",
+    "hybrid-search",
+    "distributed-vector-database",
+    "open-source-vector-database",
+    "database-for-ai-agents"
+  ],
+  "managed": {
+    "h2": "想用全托管的湖上检索？",
+    "body": "Zilliz Cloud 是全托管的 Milvus 服务，以 Public Preview 形式提供 Lance、Iceberg、Parquet、Vortex 外部集合，API 与 MilvusClient 一致。"
+  },
+  "research": [
+    "https://www.cnblogs.com/Jackeyzhe/p/22706002",
+    "https://juejin.cn/post/7684064249389105204",
+    "https://juejin.cn/post/7678155545884016692",
+    "https://help.aliyun.com/zh/dlf/dlf-2-0/use-cases/end-to-end-guide-multimodal-data-ingestion-and-vector-search",
+    "https://cloud.tencent.com/developer/article/2614389",
+    "https://www.cnblogs.com/Aitozi/p/20065133",
+    "https://forum.mirrorship.cn/t/topic/21772",
+    "https://juejin.cn/pin/7696046079676137491",
+    "https://ericfu.me/lancedb-and-binary-data-lake/"
+  ],
+  "sources": [
+    "https://milvus.io/docs/create-an-external-collection.md",
+    "https://milvus.io/docs/storage-v3.md",
+    "https://milvus.io/docs/alter-external-collection-schema.md",
+    "https://milvus.io/docs/tiered-storage-overview.md",
+    "https://milvus.io/docs/snapshots.md",
+    "https://milvus.io/docs/integrate_with_spark.md",
+    "https://milvus.io/api-reference/pymilvus/v3.0.x/MilvusClient/Collections/refresh_external_collection.md",
+    "https://milvus.io/docs/release_notes.md",
+    "https://milvus.io/docs/import-data.md",
+    "https://milvus.io/blog/announcing-milvus-3-lake-native-vector-search-and-a-more-powerful-retrieval-engine.md",
+    "https://github.com/milvus-io/milvus/blob/v3.0.3/pkg/util/externalspec/specutil/spec.go",
+    "https://github.com/milvus-io/milvus-docs/tree/v3.0.x/site/en",
+    "https://docs.lancedb.com/lance",
+    "https://docs.zilliz.com/docs/external-collection-limits",
+    "https://github.com/milvus-io/milvus"
+  ],
+  "notes": [
+    "FORMAT STRING CONFLICT: create-an-external-collection.md says 'iceberg_table' (underscore); the Milvus source (pkg/util/externalspec/specutil/spec.go at v3.0.3: FormatIcebergTable = \"iceberg-table\", validated against a fixed set), storage-v3.md, the pymilvus API reference, and both 3.0 blogs use 'iceberg-table'. 'iceberg_table' would be rejected. Page uses 'iceberg-table'; recommend fixing the docs page.",
+    "Code: unchanged from v3; Iceberg part follows the Milvus 3.0 announcement blog; Lance call derived from the storage-v3 format table. Not executed in this session.",
+    "Index-before-refresh (create doc) vs refresh-before-index (announcement blog): both orders appear in official material; code uses refresh first.",
+    "150–250 ms refresh = docs' typical metadata scan + manifest generation, not index build time.",
+    "Source-verified (origin/3.0, not stated in docs): (1) refresh keeps unchanged segments ('keptSegments' in internal/datacoord/external_collection_refresh_manager.go); (2) vector columns accepted as Arrow LIST or FIXED_SIZE_LIST with length=dim (internal/core/src/storage/Util.cpp) -> Iceberg list<float> claim; (3) output fields fetched from external storage via take() (queryNode.externalCollection.useTakeForOutput default true); (4) external segment loading integrates with tiered eviction (queryNode.externalCollection.rawDataFactor doc) -> Tiered Storage bullet; (5) pymilvus 3.0 refresh_external_collection accepts external_source/external_spec -> 'advance snapshot by refresh'.",
+    "Release notes facts used: incremental refresh + zero-copy (3.0.0/3.0-beta); 'single lake-resident dataset can be served from multiple Milvus instances' (3.0-beta); configurable read IOPS rates for External Tables (3.0.1); extfs.endpoint_url S3-compatible (3.0.2); Spark reads Milvus collections through Snapshot (3.0-beta).",
+    "Function-from-external-field claim (BM25 / text embedding generated in Milvus) = 3.0.0 release notes 'External fields can now feed function output fields such as BM25 sparse vectors, MinHash signatures, and text embeddings'. Lance-vs-Parquet access-pattern sentence is general format knowledge (docs.lancedb.com/lance, tontinton.com/posts/lance), no numbers.",
+    "Azure Blob Storage supports parquet/vortex/lance-table only (iceberg-table needs ADLS Gen2) per storage-v3.md; copy says 'Azure' generically in the storage bullet. Equality deletes unsupported is phrased as a workflow step per owner's no-limitations rule.",
+    "Lance claims (random access, versioning, cheap column adds, Spark/Ray integrations) from docs.lancedb.com/lance and lancedb.com blogs; no Lance-vs-Parquet numbers quoted on purpose.",
+    "Zilliz Cloud external collections are Public Preview, created in an on-demand compute database; Dedicated cluster support is not yet available (docs.zilliz.com, 2026-10-21). Re-check before publishing; do not add 'coming soon' to the copy.",
+    "wanted, unverified: Iceberg v3 deletion vectors; pinning Lance versions/tags; latency of external vs native collections (no VectorDBBench result exists).",
+    "v3.1 rewrite (2026-10-21): limits section removed per owner; added Lance, Iceberg, cost, lake-stack sections and LanceDB/Lance-vs-Parquet FAQs from SERP research.",
+    "中文版：/docs/zh/create-an-external-collection.md 链接未单独核实是否存在中文页。Zilliz Cloud 中国站（zilliz.com.cn）是否提供外部集合未核实。中文 SERP：'Iceberg 向量检索' 与 '外部表 向量检索' 基本无相关结果，竞争主要来自 Paimon 2.0 Global Index + Doris/StarRocks。",
+    "v3.1 关键词优化（2026-10-21）：按 360/Sogou SERP 对齐措辞——'Lance vs Parquet'、'向量数据湖'、'多模态数据湖'、'湖仓一体 向量检索'；FAQ 问句改成搜索原句；'Iceberg 向量检索' 中文 SERP 被 IceBerg Benchmark 论文占据，仅作副词。"
+  ],
+  "lang": "zh",
+  "reviewedOn": "2026-10-21"
+}

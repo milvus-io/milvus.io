@@ -1,0 +1,312 @@
+{
+  "site": "milvus-zh",
+  "kind": "seo",
+  "slug": "database-for-ai-agents",
+  "nav": "Agent 数据库",
+  "path": "/zh/solutions/database-for-ai-agents",
+  "title": "为 AI Agent 而生的数据库 | Milvus",
+  "description": "Milvus 为 AI Agent 提供长期记忆、多租户、RBAC 和混合检索；Zilliz Cloud 企业版支持行级权限，覆盖语义检索与精确字符串过滤。",
+  "keywords": {
+    "primary": "AI Agent 数据库",
+    "secondary": [
+      "为 Agent 而生的数据库",
+      "Agent 用什么数据库",
+      "Agent 记忆",
+      "AI Agent 长期记忆",
+      "Agent 记忆系统",
+      "Agent 记忆管理",
+      "智能体记忆",
+      "智能体 数据库",
+      "Agent 数据库 多租户",
+      "Agent 权限 RBAC",
+      "行级权限（仅企业版）",
+      "混合检索",
+      "grep 式正则过滤"
+    ],
+    "questions": [
+      "Agent 用什么数据库",
+      "AI Agent 长期记忆怎么存",
+      "Agent 长期记忆和短期记忆的区别",
+      "Milvus 能给每个 Agent 或用户一张独立的表吗",
+      "怎么防止一个 Agent 读到别的用户的数据",
+      "Agent 能同时像 grep 一样查、又按语义查吗",
+      "Agent 数据库怎么做多租户隔离"
+    ]
+  },
+  "h1": "Milvus：为 AI Agent 而生的数据库",
+  "sub": "Milvus 是为 AI Agent 而生的数据库，不是给向量索引套个壳：Agent、用户、会话各占一份记忆，规模到百万级；谁能读什么由数据库管住；混合检索加 grep 一次查完。Apache-2.0 开源。",
+  "primary_cta": {
+    "label": "开始 Milvus 快速入门",
+    "href": "https://milvus.io/docs/zh/quickstart.md"
+  },
+  "secondary_cta": {
+    "label": "在 Zilliz Cloud 上托管运行",
+    "href": "https://cloud.zilliz.com.cn/signup"
+  },
+  "proof": [
+    "开源 Agent 数据库，GitHub 40K+ star",
+    "Partition key：单 collection 百万级租户",
+    "RBAC：内置与自定义权限组",
+    "混合检索 + RE2 正则过滤（Milvus 3.0+）"
+  ],
+  "logos": [
+    "Salesforce",
+    "Exa.ai",
+    "OpenEvidence",
+    "Read.ai",
+    "Notta.ai",
+    "Filevine",
+    "NVIDIA",
+    "Airtable"
+  ],
+  "diagram": {
+    "top": {
+      "title": "Agent、用户、会话、工具",
+      "sub": "各自拥有独立的记忆范围"
+    },
+    "branches": [
+      {
+        "title": "百万级租户",
+        "sub": "partition key 或每租户一个 collection"
+      },
+      {
+        "title": "权限",
+        "sub": "RBAC；Zilliz Cloud 行级权限（仅企业版）"
+      },
+      {
+        "title": "Agent 查询",
+        "sub": "混合检索、正则、LIKE、TEXT_MATCH"
+      }
+    ],
+    "bottom": {
+      "title": "一个 Milvus 集群：Agent 的数据库",
+      "sub": "开源自部署，或托管在 Zilliz Cloud"
+    },
+    "caption": "为 Agent 而生的数据库：按 Agent 隔离记忆，权限交给数据库，精确匹配和语义排序在一次请求里完成。"
+  },
+  "benefits": [
+    {
+      "title": "百万级租户的记忆",
+      "body": "每个 Agent、用户、会话或工具一份记忆：Agent 数据库多租户用 partition key 让单个 collection 承载百万级租户；需要独立 schema 时，每集群默认可建 65,536 个 collection。"
+    },
+    {
+      "title": "绕不过去的权限",
+      "body": "RBAC 给每个 Agent 或工具独立角色；行级权限仅在 Zilliz Cloud 企业版提供。"
+    },
+    {
+      "title": "混合检索加 grep",
+      "body": "dense 与 BM25 一起召回，叠加正则、LIKE、短语过滤，再统一重排，一次请求完成。"
+    }
+  ],
+  "feature_blocks": [
+    {
+      "title": "Agent 记忆系统：百万级租户的长期记忆",
+      "body": "把 agent_id、user_id 或 session_id 设为 partition key，一个 collection 就能服务百万级租户；schema 或权限不同时，再按 collection 拆分。",
+      "bullets": [
+        "每次请求都需带租户过滤条件；partition key 可减少扫描范围，不代替权限控制。",
+        "每集群默认 65,536 个 collection、64 个 database，可调。",
+        "Entity TTL（Milvus 3.0+）让单条记忆按时过期。"
+      ]
+    },
+    {
+      "title": "Agent 权限：RBAC 与企业版行级权限",
+      "body": "开源 Milvus 提供用户、角色和权限，可授权到实例、database、collection 三级。Zilliz Cloud 企业版增加行级权限，应对一个服务账号背后大量终端用户。",
+      "bullets": [
+        "内置 COLL_RO、COLL_RW 等权限组，也可自定义。",
+        "企业版可按 collection 定义行级策略，将过滤条件绑定到调用者身份和标签。",
+        "读写都生效；身份或策略缺失时默认拒绝。"
+      ]
+    },
+    {
+      "title": "丰富的查询：混合检索 + grep",
+      "body": "Agent 既要语义也要原文：错误码、文件路径、订单号。向量数据库的正则过滤和各种匹配既能单独用，也能放进向量检索和混合检索。",
+      "bullets": [
+        "dense + sparse/BM25 混合检索，RRF 或加权重排。",
+        "正则 =~ / !~（RE2，Milvus 3.0+）和 LIKE，NGRAM 索引加速。",
+        "TEXT_MATCH、PHRASE_MATCH、TEXT_MATCH_FUZZY 与 JSON 路径过滤。"
+      ]
+    }
+  ],
+  "compare": {
+    "h2": "Agent 记忆管理需求与 Milvus 能力对照",
+    "caption": "Agent 平台需求与 Milvus 能力：向量数据库多租户、权限、混合检索（默认值，可配置）",
+    "heads": [
+      "Agent 需求",
+      "Milvus 能力",
+      "可用版本"
+    ],
+    "rows": [
+      [
+        "按用户、Agent、会话隔离记忆，百万级规模",
+        "Partition key：单 collection 百万级租户",
+        "开源"
+      ],
+      [
+        "每个租户独立 schema 或角色",
+        "每租户一个 collection 或 database：默认 65,536 / 64 个",
+        "开源"
+      ],
+      [
+        "每个 Agent、工具最小权限",
+        "RBAC：角色、内置与自定义权限组",
+        "开源"
+      ],
+      [
+        "一个服务账号，背后大量终端用户",
+        "绑定调用者的行级权限",
+        "Zilliz Cloud（仅企业版）"
+      ],
+      [
+        "语义召回 + 精确字符串召回",
+        "混合检索叠加正则、LIKE、TEXT_MATCH 过滤",
+        "开源，Milvus 3.0+"
+      ]
+    ],
+    "note": "来源：milvus.io/docs/zh 的 multi_tenancy、rbac、privilege_group、multi-vector-search、pattern-matching 文档。"
+  },
+  "code": {
+    "h2": "混合检索和 grep，一次调用",
+    "intro": "召回某个用户命中正则的记忆，dense 与 BM25 两路结果用 RRF 融合排序。",
+    "lang": "python",
+    "code": "from pymilvus import MilvusClient, AnnSearchRequest, RRFRanker\n\nclient = MilvusClient(uri=\"http://localhost:19530\", token=\"root:Milvus\")\nquestion = \"what did we promise about the refund?\"\nscope = 'user_id == \"u42\" and content =~ \"(?i)refund.*order [0-9]+\"'\n\n# embed() stands for your embedding model; it returns a list of floats.\ndense = AnnSearchRequest(data=[embed(question)], anns_field=\"dense\",\n                         param={}, limit=20, expr=scope)\n# BM25 sparse field generated from content: pass the raw query text.\nsparse = AnnSearchRequest(data=[question], anns_field=\"sparse\",\n                          param={}, limit=20, expr=scope)\n\nhits = client.hybrid_search(\n    collection_name=\"agent_memory\",\n    reqs=[dense, sparse],\n    ranker=RRFRanker(),\n    limit=5,\n    output_fields=[\"content\"],\n)",
+    "note": "假设 user_id 为 partition key，content 为 VARCHAR 字段，另有一个 dense 向量字段和一个 BM25 sparse 字段。给 content 建 NGRAM 索引可加速正则。"
+  },
+  "faqs": [
+    [
+      "Agent（智能体）用什么数据库？",
+      "应能按用户管理记忆、在数据库中执行权限控制，同时检索语义和精确字符串。Milvus 开源版提供租户过滤与 RBAC，Zilliz Cloud 企业版增加行级权限。"
+    ],
+    [
+      "AI Agent 长期记忆和短期记忆的区别？长期记忆怎么存？",
+      "短期记忆在上下文窗口，长期记忆要落库：每条智能体记忆一行，embedding 加 user_id、时间戳等标量字段，按租户混合检索召回，Entity TTL（Milvus 3.0+）按时过期。"
+    ],
+    [
+      "Milvus 能给每个 Agent 或用户一张独立的表吗？",
+      "能。partition key 在一个 collection 里承载百万级租户；schema 或权限不同时，每租户一个 collection（每集群默认 65,536 个，可调）。"
+    ],
+    [
+      "怎么防止一个 Agent 读到别的用户的数据？",
+      "开源 RBAC 把角色限定在指定 database 和 collection；共享 collection 时，应用必须为每次请求添加租户过滤。Zilliz Cloud 企业版可用行级权限按调用者过滤读写。"
+    ],
+    [
+      "Agent 能同时像 grep 一样查、又按语义查吗？",
+      "能。正则（=~、!~）、LIKE、TEXT_MATCH、PHRASE_MATCH 都能作为过滤条件放进向量或混合检索，精确匹配和语义排序一次请求完成。"
+    ]
+  ],
+  "final": {
+    "h2": "用 Milvus 搭建 AI Agent 长期记忆",
+    "body": "从快速入门开始，给每个 Agent 或用户一个 partition key 和一个角色，同一套代码可以平滑迁到集群或 Zilliz Cloud。"
+  },
+  "aiq": [
+    "what-are-best-practices-for-structuring-agent-memory-in-milvus",
+    "what-are-the-types-of-agent-memory",
+    "how-to-correct-expire-and-delete-agent-memory",
+    "how-agents-choose-retrieval-tools",
+    "what-is-agentic-search",
+    "milvus-security-rbac",
+    "milvus-mcp-tools",
+    "vector-search-for-coding-agents"
+  ],
+  "related": [
+    "vector-database-for-rag",
+    "hybrid-search",
+    "open-source-vector-database",
+    "distributed-vector-database"
+  ],
+  "sources": [
+    "https://milvus.io/docs/multi_tenancy.md",
+    "https://milvus.io/docs/use-partition-key.md",
+    "https://github.com/milvus-io/milvus/blob/v3.0.3/configs/milvus.yaml",
+    "https://milvus.io/docs/rbac.md",
+    "https://milvus.io/docs/privilege_group.md",
+    "https://milvus.io/docs/grant_privileges.md",
+    "https://milvus.io/docs/multi-vector-search.md",
+    "https://milvus.io/docs/pattern-matching.md",
+    "https://milvus.io/docs/ngram.md",
+    "https://milvus.io/docs/keyword-match.md",
+    "https://milvus.io/docs/phrase-match.md",
+    "https://milvus.io/docs/release_notes.md",
+    "https://github.com/milvus-io/milvus",
+    "https://docs.zilliz.com/docs/multi-tenancy",
+    "https://docs.zilliz.com/docs/limits",
+    "https://zilliz.com/cloud",
+    "https://milvus.io/docs/zh/multi_tenancy.md",
+    "https://milvus.io/docs/zh/rbac.md",
+    "https://milvus.io/docs/zh/quickstart.md",
+    "https://zilliz.com.cn/cloud"
+  ],
+  "notes": [
+    "\"百万表\" (one million collections/tables) is UNVERIFIED and not claimed. Checked 2026-10-21: milvus.io multi_tenancy.md (v3.0.x docs) says 65,536 collections per cluster by default, raisable via maxCollectionNum, and 'millions of tenants' only for the partition-key strategy; configs/milvus.yaml on origin/3.0 has maxCollectionNum 65536 / maxCollectionNumPerDB 65536 / maxDatabaseNum 64 / maxPartitionNum 1024; GitHub issue/PR search for 'million collections', '1M collections', 'massive collections', 'lightweight collection' found no feature or release note (only perf work such as #33236 '10k collections', #49587 / #51915 mention 100k collections in internal optimization context); Zilliz Cloud docs/limits caps collections at min(1,024 x CUs, 16,384) per cluster and docs/multi-tenancy says 'up to 16,384 collections' and partition key 'millions of tenants'. Page therefore says 'millions of tenants per collection via partition key' + '65,536 collections by default (configurable)'. If engineering wants to publish a 1M-collection claim, it needs a released doc/benchmark first.",
+    "Resolved 2026-10-21: owner confirmed RLS availability in the enterprise edition only. It is not an open-source Milvus feature. Public RLS documentation link remains pending.",
+    "RLS behavior described (per-collection policies, filters bound to the calling principal and its tags, enforced on reads and writes, fail-closed) follows the Milvus RLS design doc 20250610-rls_design.md; re-check against the Zilliz Cloud docs once published.（仅企业版）",
+    "On Milvus 3.0.x, LIKE and regex apply to VARCHAR fields, JSON string paths, and a specified ARRAY<VARCHAR> element (e.g. tags[0]) — not TEXT fields (pattern-matching.md). Regex =~/!~ requires Milvus 3.0+; NGRAM requires 2.6+; (?i) regex may skip NGRAM optimization.",
+    "Code assumes collection agent_memory with user_id (VARCHAR, partition key), content (VARCHAR with analyzer enabled), a dense float vector field 'dense' and a BM25-function output sparse field 'sparse'. AnnSearchRequest(expr=...) and hybrid_search(reqs, ranker, limit) per multi-vector-search.md; RRFRanker is the pymilvus helper for the 'rrf' reranker.",
+    "Entity TTL (per-row expiration via a TIMESTAMPTZ field) is a Milvus 3.0 feature per release_notes.md; element-level partial update of JSON paths is in 3.0.3 for Go SDK and REST v2 only, so the page says 'partial update' generically.",
+    "FMINDEX removed (master-only, not in a released version).",
+    "Customer stories specific to agent memory: wanted, unverified. Logos are from the verified homepage adopter list, not claims of agent-memory use.",
+    "Keyword pass 2026-10-21: keywords.primary/secondary/questions rebuilt from Google/Bing/Baidu autocomplete (WebSearch budget exhausted in session). research: https://suggestqueries.google.com (autocomplete, hl=en / zh-CN); https://api.bing.com/osjson.aspx (autocomplete, en-US / zh-CN); https://www.baidu.com/sugrec (autocomplete). 「必须自己运维吗」FAQ 并入多租户隔离 FAQ。短期/长期记忆定义为通用说法，非 Milvus 功能声明。",
+    "Owner confirmed RLS is available in the enterprise edition only on 2026-10-21; all RLS calls must distinguish it from open-source Milvus. Public documentation link pending."
+  ],
+  "benefits_h2": "为 AI Agent 而生的数据库要做到三件事",
+  "feature_blocks_h2": "Agent 数据库怎么做多租户隔离、权限和检索",
+  "layout": "pillar",
+  "sem_seed_for_zilliz": {
+    "ad_groups": [
+      {
+        "name": "Agent 向量数据库",
+        "keywords": [
+          "ai agent 向量数据库",
+          "智能体 向量数据库",
+          "agent 向量库",
+          "开源向量数据库 agent",
+          "agentic ai 向量数据库",
+          "agent 用什么向量数据库"
+        ]
+      },
+      {
+        "name": "Agent 记忆数据库",
+        "keywords": [
+          "agent 记忆",
+          "ai agent 记忆",
+          "agent 长期记忆",
+          "ai agent 长期记忆",
+          "agent 记忆存储",
+          "智能体 记忆 数据库"
+        ]
+      },
+      {
+        "name": "多租户与权限",
+        "keywords": [
+          "Agent 数据库多租户",
+          "向量数据库 多租户",
+          "向量数据库 权限",
+          "向量数据库 rbac",
+          "向量数据库 行级权限（仅企业版）",
+          "agent 记忆 隔离",
+          "partition key 向量数据库"
+        ]
+      }
+    ],
+    "negative_keywords": [
+      "内存条",
+      "显存",
+      "内存卡",
+      "房产中介",
+      "保险代理",
+      "旅行社",
+      "招聘",
+      "工资",
+      "培训",
+      "免费下载"
+    ],
+    "conversion_events": [
+      "cta_quickstart_click",
+      "copy_install_command",
+      "copy_code_snippet",
+      "cta_zilliz_signup_click",
+      "cta_github_click"
+    ]
+  },
+  "lang": "zh",
+  "reviewedOn": "2026-10-21"
+}

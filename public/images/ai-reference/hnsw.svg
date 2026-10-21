@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 810" width="640" height="810" role="img" aria-labelledby="title desc">
+<title id="title">HNSW: coarse hops, then local exploration</title>
+<desc id="desc">Upper layers contain fewer nodes and permit coarse navigation. Search descends to the bottom layer and explores a candidate frontier. M controls graph connectivity and ef controls search effort.</desc>
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M1 1 L7 4 L1 7" fill="none" stroke="#1E5F70" stroke-width="1.5"/></marker></defs>
+<rect width="640" height="810" fill="#FAF6EE"/>
+<text x="28" y="30" text-anchor="start" font-family="Arial, sans-serif" font-size="12" fill="#6B6356" font-weight="400"><tspan x="28" dy="0">MILVUS / AI REFERENCE / MECHANISM</tspan></text>
+<text x="28" y="72" text-anchor="start" font-family="Georgia, serif" font-size="27" fill="#0F1F2E" font-weight="700"><tspan x="28" dy="0">HNSW: coarse hops, then local</tspan><tspan x="28" dy="35.1">exploration</tspan></text>
+<text x="28" y="155" text-anchor="start" font-family="Arial, sans-serif" font-size="21" fill="#0F1F2E" font-weight="700"><tspan x="28" dy="0">Upper layers: fewer nodes, longer hops</tspan></text>
+<path d="M100 210 L315 210" fill="none" stroke="#E5DDD0" stroke-width="2"/>
+<path d="M315 210 L530 210" fill="none" stroke="#E5DDD0" stroke-width="2"/>
+<circle cx="100" cy="210" r="10" fill="#FAF6EE" stroke="#0F1F2E" stroke-width="1.5"/>
+<circle cx="315" cy="210" r="10" fill="#FAF6EE" stroke="#0F1F2E" stroke-width="1.5"/>
+<circle cx="530" cy="210" r="10" fill="#FAF6EE" stroke="#0F1F2E" stroke-width="1.5"/>
+<path d="M100 370 L220 370" fill="none" stroke="#E5DDD0" stroke-width="2"/>
+<path d="M220 370 L315 370" fill="none" stroke="#E5DDD0" stroke-width="2"/>
+<path d="M315 370 L425 370" fill="none" stroke="#E5DDD0" stroke-width="2"/>
+<path d="M425 370 L530 370" fill="none" stroke="#E5DDD0" stroke-width="2"/>
+<circle cx="100" cy="370" r="10" fill="#FAF6EE" stroke="#0F1F2E" stroke-width="1.5"/>
+<circle cx="220" cy="370" r="10" fill="#FAF6EE" stroke="#0F1F2E" stroke-width="1.5"/>
+<circle cx="315" cy="370" r="10" fill="#FAF6EE" stroke="#0F1F2E" stroke-width="1.5"/>
+<circle cx="425" cy="370" r="10" fill="#FAF6EE" stroke="#0F1F2E" stroke-width="1.5"/>
+<circle cx="530" cy="370" r="10" fill="#FAF6EE" stroke="#0F1F2E" stroke-width="1.5"/>
+<path d="M100 545 L170 510" fill="none" stroke="#E5DDD0" stroke-width="2"/>
+<path d="M170 510 L220 585" fill="none" stroke="#E5DDD0" stroke-width="2"/>
+<path d="M220 585 L285 530" fill="none" stroke="#E5DDD0" stroke-width="2"/>
+<path d="M285 530 L315 580" fill="none" stroke="#E5DDD0" stroke-width="2"/>
+<path d="M315 580 L425 510" fill="none" stroke="#E5DDD0" stroke-width="2"/>
+<path d="M425 510 L485 560" fill="none" stroke="#E5DDD0" stroke-width="2"/>
+<path d="M485 560 L530 545" fill="none" stroke="#E5DDD0" stroke-width="2"/>
+<path d="M530 545 L550 520" fill="none" stroke="#E5DDD0" stroke-width="2"/>
+<circle cx="100" cy="545" r="10" fill="#FAF6EE" stroke="#0F1F2E" stroke-width="1.5"/>
+<circle cx="170" cy="510" r="10" fill="#FAF6EE" stroke="#0F1F2E" stroke-width="1.5"/>
+<circle cx="220" cy="585" r="10" fill="#FAF6EE" stroke="#0F1F2E" stroke-width="1.5"/>
+<circle cx="285" cy="530" r="10" fill="#FAF6EE" stroke="#0F1F2E" stroke-width="1.5"/>
+<circle cx="315" cy="580" r="10" fill="#FAF6EE" stroke="#0F1F2E" stroke-width="1.5"/>
+<circle cx="425" cy="510" r="10" fill="#FAF6EE" stroke="#0F1F2E" stroke-width="1.5"/>
+<circle cx="485" cy="560" r="10" fill="#FAF6EE" stroke="#0F1F2E" stroke-width="1.5"/>
+<circle cx="530" cy="545" r="10" fill="#FAF6EE" stroke="#0F1F2E" stroke-width="1.5"/>
+<circle cx="550" cy="520" r="10" fill="#FAF6EE" stroke="#0F1F2E" stroke-width="1.5"/>
+<path d="M100 210 L315 210" fill="none" stroke="#1E5F70" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M315 210 L530 210" fill="none" stroke="#1E5F70" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M530 210 L530 370" fill="none" stroke="#1E5F70" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M530 370 L530 545" fill="none" stroke="#1E5F70" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M530 545 L485 560" fill="none" stroke="#1E5F70" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M530 545 L425 510" fill="none" stroke="#1E5F70" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M530 545 L550 520" fill="none" stroke="#1E5F70" stroke-width="2" marker-end="url(#arrow)"/>
+<circle cx="100" cy="210" r="10" fill="#1E5F70" stroke="#0F1F2E" stroke-width="1.5"/>
+<circle cx="315" cy="210" r="10" fill="#1E5F70" stroke="#0F1F2E" stroke-width="1.5"/>
+<circle cx="530" cy="210" r="10" fill="#1E5F70" stroke="#0F1F2E" stroke-width="1.5"/>
+<circle cx="530" cy="370" r="10" fill="#1E5F70" stroke="#0F1F2E" stroke-width="1.5"/>
+<circle cx="530" cy="545" r="10" fill="#1E5F70" stroke="#0F1F2E" stroke-width="1.5"/>
+<circle cx="425" cy="510" r="12" fill="#F4B860" stroke="#0F1F2E" stroke-width="1.5"/>
+<circle cx="485" cy="560" r="12" fill="#F4B860" stroke="#0F1F2E" stroke-width="1.5"/>
+<circle cx="550" cy="520" r="12" fill="#F4B860" stroke="#0F1F2E" stroke-width="1.5"/>
+<circle cx="490" cy="475" r="8" fill="#E85A2B" stroke="#0F1F2E" stroke-width="1.5"/>
+<text x="510" y="473" text-anchor="start" font-family="Arial, sans-serif" font-size="23" fill="#E85A2B" font-weight="700"><tspan x="510" dy="0">q</tspan></text>
+<text x="28" y="306" text-anchor="start" font-family="Arial, sans-serif" font-size="21" fill="#0F1F2E" font-weight="700"><tspan x="28" dy="0">Descend near the query</tspan></text>
+<text x="28" y="450" text-anchor="start" font-family="Arial, sans-serif" font-size="21" fill="#0F1F2E" font-weight="700"><tspan x="28" dy="0">Bottom layer: explore several candidates</tspan></text>
+<text x="28" y="648" text-anchor="start" font-family="Arial, sans-serif" font-size="20" fill="#0F1F2E" font-weight="400"><tspan x="28" dy="0">M: graph links  |  ef: search candidate budget</tspan></text>
+<path d="M28 734 L612 734" fill="none" stroke="#0F1F2E" stroke-width="2"/>
+<text x="28" y="762" text-anchor="start" font-family="Arial, sans-serif" font-size="18" fill="#6B6356" font-weight="400"><tspan x="28" dy="0">The highlighted path is illustrative, not a guaranteed</tspan><tspan x="28" dy="23.4">search trace.</tspan></text>
+</svg>

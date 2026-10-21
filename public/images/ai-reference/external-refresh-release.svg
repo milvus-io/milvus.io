@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 734" width="640" height="734" role="img" aria-labelledby="title desc">
+<title id="title">Refresh is a small data release</title>
+<desc id="desc">Commit a coherent source version: Finish the source write and record the snapshot or version.. Trigger and observe refresh: Keep the job ID; wait for completion and handle failures.. Check serving readiness: Inspect indexes and verify added, changed and deleted IDs.. Report verified freshness: Measure source commit to validated search results.. An accepted refresh request does not prove that the new data is searchable.</desc>
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M1 1 L6 4 L1 7" fill="none" stroke="#1E5F70" stroke-width="1.5"/></marker></defs>
+<rect width="640" height="734" fill="#FAF6EE"/>
+<text x="28" y="30" font-family="Arial, sans-serif" font-size="12" font-weight="400" fill="#6B6356"><tspan x="28" dy="0">MILVUS / AI REFERENCE / SCHEMATIC</tspan></text>
+<text x="28" y="72" font-family="Georgia, serif" font-size="28" font-weight="700" fill="#0F1F2E"><tspan x="28" dy="0">Refresh is a small data release</tspan></text>
+<rect x="28" y="110" width="584" height="112" fill="#F4ECDC" stroke="#0F1F2E" stroke-width="1.5"/>
+<rect x="28" y="110" width="5" height="112" fill="#1E5F70"/>
+<text x="48" y="141" font-family="Arial, sans-serif" font-size="23" font-weight="700" fill="#0F1F2E"><tspan x="48" dy="0">Commit a coherent source version</tspan></text>
+<text x="48" y="171" font-family="Arial, sans-serif" font-size="20" font-weight="400" fill="#6B6356"><tspan x="48" dy="0">Finish the source write and record the snapshot</tspan><tspan x="48" dy="26">or version.</tspan></text>
+<path d="M320 225 V244" fill="none" stroke="#1E5F70" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="28" y="248" width="584" height="112" fill="#F4ECDC" stroke="#0F1F2E" stroke-width="1.5"/>
+<rect x="28" y="248" width="5" height="112" fill="#1E5F70"/>
+<text x="48" y="279" font-family="Arial, sans-serif" font-size="23" font-weight="700" fill="#0F1F2E"><tspan x="48" dy="0">Trigger and observe refresh</tspan></text>
+<text x="48" y="309" font-family="Arial, sans-serif" font-size="20" font-weight="400" fill="#6B6356"><tspan x="48" dy="0">Keep the job ID; wait for completion and handle</tspan><tspan x="48" dy="26">failures.</tspan></text>
+<path d="M320 363 V382" fill="none" stroke="#1E5F70" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="28" y="386" width="584" height="112" fill="#F4ECDC" stroke="#0F1F2E" stroke-width="1.5"/>
+<rect x="28" y="386" width="5" height="112" fill="#1E5F70"/>
+<text x="48" y="417" font-family="Arial, sans-serif" font-size="23" font-weight="700" fill="#0F1F2E"><tspan x="48" dy="0">Check serving readiness</tspan></text>
+<text x="48" y="447" font-family="Arial, sans-serif" font-size="20" font-weight="400" fill="#6B6356"><tspan x="48" dy="0">Inspect indexes and verify added, changed and</tspan><tspan x="48" dy="26">deleted IDs.</tspan></text>
+<path d="M320 501 V520" fill="none" stroke="#1E5F70" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="28" y="524" width="584" height="112" fill="#F4ECDC" stroke="#0F1F2E" stroke-width="1.5"/>
+<rect x="28" y="524" width="5" height="112" fill="#E85A2B"/>
+<text x="48" y="555" font-family="Arial, sans-serif" font-size="23" font-weight="700" fill="#0F1F2E"><tspan x="48" dy="0">Report verified freshness</tspan></text>
+<text x="48" y="585" font-family="Arial, sans-serif" font-size="20" font-weight="400" fill="#6B6356"><tspan x="48" dy="0">Measure source commit to validated search</tspan><tspan x="48" dy="26">results.</tspan></text>
+<path d="M28 658 H612" stroke="#0F1F2E" stroke-width="1.5"/>
+<text x="28" y="684" font-family="Arial, sans-serif" font-size="18" font-weight="400" fill="#6B6356"><tspan x="28" dy="0">An accepted refresh request does not prove that the new</tspan><tspan x="28" dy="23.4">data is searchable.</tspan></text>
+</svg>

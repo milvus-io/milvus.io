@@ -15,6 +15,10 @@ export const submitHubspotForm = async (params: {
   email: string;
 }): Promise<{ statusCode: number }> => {
   const data = {
+    context: typeof window === 'undefined' ? undefined : {
+      pageUri: window.location.origin + window.location.pathname,
+      pageName: document.title.slice(0, 200),
+    },
     fields: [
       {
         name: 'email',

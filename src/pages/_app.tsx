@@ -53,9 +53,10 @@ function MyApp({ Component, pageProps }) {
           <Component {...pageProps} />
           {ENABLE_ANALYTICS && (
             <Script
-              strategy="lazyOnload"
+              strategy="afterInteractive"
               dangerouslySetInnerHTML={{
                 __html: `(function (w, d, s, l, i) {
+                    if (!/^(www\\.)?milvus\\.io$/.test(w.location.hostname)) return;
                     function loadGtm() {
                       w[l] = w[l] || [];
                       w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
@@ -63,11 +64,7 @@ function MyApp({ Component, pageProps }) {
                       j.async = true; j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
                       w[l].push({event: 'consent_update'});
                     }
-                    if ('requestIdleCallback' in w) {
-                      requestIdleCallback(function () { setTimeout(loadGtm, 3000); }, { timeout: 5000 });
-                    } else {
-                      setTimeout(loadGtm, 5000);
-                    }
+                    loadGtm();
                 })(window, document, 'script', 'dataLayer', 'GTM-5WPVTGSN');`,
               }}
               id="google-tag-manager"

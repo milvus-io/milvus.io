@@ -21,6 +21,8 @@ export const ACQUISITION_KEYS = [
   'bd_vid',
   'gad_source',
   'gad_campaignid',
+  'rdt_cid',
+  'hsa_acc', 'hsa_cam', 'hsa_grp', 'hsa_ad', 'hsa_src', 'hsa_tgt', 'hsa_kw', 'hsa_mt', 'hsa_net', 'hsa_ver',
 ] as const;
 
 export type AcquisitionParams = Partial<
@@ -43,7 +45,7 @@ export function getAcquisitionParams(
   const current: AcquisitionParams = {};
   for (const key of ACQUISITION_KEYS) {
     const value = query.get(key);
-    if (value) current[key] = value;
+    if (value && value.length <= 500 && !/[\r\n]/.test(value)) current[key] = value;
   }
 
   if (Object.keys(current).length) {
@@ -63,7 +65,7 @@ export function getAcquisitionParams(
     const cached: AcquisitionParams = {};
     if (!saved || typeof saved !== 'object' || Array.isArray(saved)) return cached;
     for (const key of ACQUISITION_KEYS) {
-      if (typeof saved[key] === 'string' && saved[key]) cached[key] = saved[key];
+      if (typeof saved[key] === 'string' && saved[key] && saved[key].length <= 500 && !/[\r\n]/.test(saved[key])) cached[key] = saved[key];
     }
     return cached;
   } catch {
@@ -90,6 +92,14 @@ export function parseCloudEntryUrl(href: string): URL | undefined {
     return;
   }
   return url;
+}
+
+export function parseZillizEntryUrl(href: string): URL | undefined {
+  if (!/^(?:https:)?\/\//i.test(href)) return;
+  try {
+    const url = new URL(href, 'https://milvus.io');
+    if (['zilliz.com', 'www.zilliz.com'].includes(url.hostname) && !url.username && !url.password && !url.port && /^\/(cloud|pricing|contact-sales)?\/?$/.test(url.pathname)) return url;
+  } catch {}
 }
 
 export function buildCloudEntryUrl(

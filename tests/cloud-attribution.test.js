@@ -214,3 +214,32 @@ test('real Cloud navigation sends only the Milvus origin and isolates new tabs',
     await popup.close();
   }
 });
+
+test('new context survives marketing handoff and does not create observer or CTA duplicates', async ({ page }) => {
+  await page.setContent(`<header><a id="signup" href="https://cloud.zilliz.com/signup">Cloud</a></header>
+    <a id="marketing" href="https://zilliz.com/pricing?utm_source=old&utm_campaign=old">Pricing</a>
+    <a id="landing" href="https://cloud.zilliz.com/signup" data-track="cta_final_click">Final</a>`);
+  await page.evaluate(({ attributionSource, trackingSource }) => {
+    const attribution = new Function('exports', attributionSource + '; return exports;')({});
+    const tracking = new Function('exports', 'require', trackingSource + '; return exports;')({}, () => attribution);
+    window.dataLayer = [];
+    document.body.addEventListener('click', e => e.preventDefault());
+    window.cleanup = tracking.trackCloudLinks(document.body, 'docs/quickstart.md', {gclid: 'new'}, new WeakMap(), {
+      attribution_version: '1', first_entry_site: 'milvus.io', first_landing_page: '/docs/overview.md',
+      first_touch_at: '2026-01-01T00:00:00Z', first_touch_scope: 'browser_session',
+    });
+  }, {attributionSource, trackingSource});
+  const query = await page.locator('#marketing').evaluate(a => Object.fromEntries(new URL(a.href).searchParams));
+  expect(query).toMatchObject({gclid:'new', attribution_version:'1', first_landing_page:'/docs/overview.md', entry_page:'docs/quickstart.md'});
+  expect(query).not.toHaveProperty('utm_campaign');
+  expect(query).not.toHaveProperty('utm_source');
+  // A live observer must settle; an unstable handoff timestamp would starve this read.
+  const href = await page.locator('#signup').getAttribute('href');
+  await page.locator('#signup').evaluate(a => a.setAttribute('data-entry-button','header'));
+  await expect(page.locator('#signup')).toHaveAttribute('href', /entry_button=header/);
+  expect(new URL(await page.locator('#signup').getAttribute('href')).searchParams.get('handoff_at')).toBe(new URL(href).searchParams.get('handoff_at'));
+  await page.locator('#signup').click();
+  await page.locator('#landing').click();
+  expect(await page.evaluate(() => window.dataLayer)).toMatchObject([{event:'cta_zilliz_signup_click', cta_location:'header', cta_destination:'cloud_signup'}]);
+  expect(await page.evaluate(() => window.dataLayer.length)).toBe(1);
+});

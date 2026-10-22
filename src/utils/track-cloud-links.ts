@@ -1,7 +1,9 @@
 import {
+  ACQUISITION_KEYS,
   AcquisitionParams,
   buildCloudEntryUrl,
   parseCloudEntryUrl,
+  parseZillizEntryUrl,
 } from './cloud-attribution';
 
 export type TrackedCloudLinks = WeakMap<
@@ -20,8 +22,10 @@ export function trackCloudLinks(
   root: HTMLElement,
   page: string,
   acquisition: AcquisitionParams,
-  links: TrackedCloudLinks
+  links: TrackedCloudLinks,
+  context: Record<string, string> = {}
 ): () => void {
+  const handoffAt = new Date().toISOString();
   const decorate = (anchor: HTMLAnchorElement) => {
     if (anchor.hasAttribute('download') || anchor.closest('pre, code')) return;
     const current = anchor.getAttribute('href');
@@ -30,7 +34,8 @@ export function trackCloudLinks(
     const original = previous?.decorated === current ? previous.original : current;
     const currentRel = anchor.getAttribute('rel');
     const currentPolicy = anchor.getAttribute('referrerpolicy');
-    if (!parseCloudEntryUrl(original)) {
+    const marketing = parseZillizEntryUrl(original);
+    if (!parseCloudEntryUrl(original) && !marketing) {
       // A reused anchor may now point outside Cloud. Restore only attributes
       // we still own; do not overwrite new values supplied by React/content.
       if (previous) {
@@ -46,12 +51,25 @@ export function trackCloudLinks(
       }
       return;
     }
-    const decorated = buildCloudEntryUrl(
+    let decorated = marketing ? marketing.toString() : buildCloudEntryUrl(
       original,
       page,
       acquisition,
       anchor.dataset.entryButton
     );
+    const entry = new URL(decorated);
+    if (marketing) {
+      if (Object.keys(acquisition).length) ACQUISITION_KEYS.forEach(key => entry.searchParams.delete(key));
+      Object.entries(acquisition).forEach(([key, value]) => entry.searchParams.set(key, value));
+      entry.searchParams.set('entry_site', 'milvus.io');
+      entry.searchParams.set('entry_page', page);
+      entry.searchParams.set('entry_button', anchor.dataset.entryButton || 'milvus_to_zilliz');
+    }
+    if (marketing || entry.hostname === 'cloud.zilliz.com') {
+      Object.entries(context).forEach(([key, value]) => entry.searchParams.set(key, value));
+      entry.searchParams.set('handoff_at', handoffAt);
+      decorated = entry.toString();
+    }
     if (decorated !== current) anchor.setAttribute('href', decorated);
 
     // Cloud may use the referring origin as a second source signal. Send only
@@ -81,6 +99,18 @@ export function trackCloudLinks(
 
   // Keep right-click/copy-link behavior correct, including asynchronously loaded HTML.
   scan(root);
+  const onClick = (event: MouseEvent) => {
+    const target = event.target;
+    if (!(target instanceof Element)) return;
+    const anchor = target.closest<HTMLAnchorElement>('a[href]');
+    if (!anchor || anchor.closest('[data-track]') || !parseCloudEntryUrl(anchor.href)) return;
+    const location = anchor.closest('header') ? 'header' : anchor.closest('footer') ? 'footer' : 'content';
+    const button = new URL(anchor.href).searchParams.get('entry_button') || `milvus_${location}_cloud`;
+    const w = window as Window & { dataLayer?: Record<string, unknown>[] };
+    const signup = new URL(anchor.href).pathname.replace(/\/$/, '') === '/signup';
+    (w.dataLayer = w.dataLayer || []).push({ event: signup ? 'cta_zilliz_signup_click' : 'cta_link_click', landing_page: '/' + page.replace(/^homepage$/, ''), landing_topic: 'site', cta_location: location, cta_destination: signup ? 'cloud_signup' : 'cloud_login', entry_button: button, link_url: new URL(anchor.href).pathname });
+  };
+  root.addEventListener('click', onClick);
   const observer = new MutationObserver(records => {
     for (const record of records) {
       if (record.type === 'attributes' && record.target instanceof HTMLAnchorElement) {
@@ -110,6 +140,7 @@ export function trackCloudLinks(
 
   return () => {
     observer.disconnect();
+    root.removeEventListener('click', onClick);
     root.removeEventListener('click', onNavigate, true);
     root.removeEventListener('auxclick', onNavigate, true);
   };

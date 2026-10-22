@@ -539,8 +539,7 @@
     "open-source-vector-database",
     "distributed-vector-database",
     "vector-database-for-rag",
-    "milvus-vs-qdrant",
-    "milvus-vs-vespa"
+    "milvus-vs-qdrant"
   ],
   "managed": {
     "h2": "Want the benchmarked results without running a cluster?",

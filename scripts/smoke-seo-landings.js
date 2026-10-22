@@ -33,7 +33,7 @@ const get = async path => {
     console.log('SSR passed', loc);
   }
   for (const path of assets) await get(path);
-  for (const path of ['/solutions/unknown-topic', '/fr/solutions/hybrid-search']) assert.equal((await fetch(base + path)).status, 404);
-  assert.equal(pages.length, 24);
+  for (const path of ['/solutions/unknown-topic', '/fr/solutions/hybrid-search', '/compare/milvus-vs-vespa', '/compare/milvus-vs-weaviate', '/zh/compare/milvus-vs-vespa', '/zh/compare/milvus-vs-weaviate']) assert.equal((await fetch(base + path)).status, 404);
+  assert.equal(pages.length, 20);
   console.log(JSON.stringify({ pages: pages.length, hubs: 4, assets: assets.size, status: 'passed' }));
 })().catch(e => { console.error(e); process.exitCode = 1; });

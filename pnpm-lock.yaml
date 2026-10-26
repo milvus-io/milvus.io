@@ -115,8 +115,8 @@ importers:
         specifier: ^23.16.8
         version: 23.16.8
       instantsearch.css:
-        specifier: ^7.4.5
-        version: 7.4.5
+        specifier: ^8.24.1
+        version: 8.24.1
       js-cookie:
         specifier: ^3.0.8
         version: 3.0.8
@@ -2896,8 +2896,8 @@ packages:
   inline-style-parser@0.2.7:
     resolution: {integrity: sha512-Nb2ctOyNR8DqQoR0OwRG95uNWIC0C1lCgf5Naz5H6Ji72KZ8OcFZLz2P5sNgwlyoJ8Yif11oMuYs5pBQa86csA==}
 
-  instantsearch.css@7.4.5:
-    resolution: {integrity: sha512-iIGBYjCokU93DDB8kbeztKtlu4qVEyTg1xvS6iSO1YvqRwkIZgf0tmsl/GytsLdZhuw8j4wEaeYsCzNbeJ/zEQ==}
+  instantsearch.css@8.24.1:
+    resolution: {integrity: sha512-CCEFv86Ecu8Dz6GW7zGoCxHNkn4g3IdKzVYlvAsU3Zyu5VosYR81IO0h+sk6s3rlAc6o2k7GvYgnRsVQ5Hi6Og==}
 
   internmap@2.0.3:
     resolution: {integrity: sha512-5Hh7Y1wQbvY5ooGgPbDaL5iYLAPzMTUrjMulskHLH6wnv/A+1q5rgEaiuqEjB+oxGXIVZs1FF+R/KPN3ZSQYYg==}
@@ -3930,6 +3930,9 @@ packages:
 
   tslib@2.8.1:
     resolution: {integrity: sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==}
+
+  tweakpane@4.0.5:
+    resolution: {integrity: sha512-rxEXdSI+ArlG1RyO6FghC4ZUX8JkEfz8F3v1JuteXSV0pEtHJzyo07fcDG+NsJfN5L39kSbCYbB9cBGHyuI/tQ==}
 
   type-check@0.4.0:
     resolution: {integrity: sha512-XleUoc9uwGXqjWwXaUTZAmzMcFZ5858QA2vvx1Ur5xIcixXIP+8LnFDgRplU30us6teqdlskFfu+ae4K79Ooew==}
@@ -6926,7 +6929,9 @@ snapshots:
 
   inline-style-parser@0.2.7: {}
 
-  instantsearch.css@7.4.5: {}
+  instantsearch.css@8.24.1:
+    dependencies:
+      tweakpane: 4.0.5
 
   internmap@2.0.3: {}
 
@@ -8251,6 +8256,8 @@ snapshots:
   ts-interface-checker@0.1.13: {}
 
   tslib@2.8.1: {}
+
+  tweakpane@4.0.5: {}
 
   type-check@0.4.0:
     dependencies:

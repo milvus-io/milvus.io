@@ -2,6 +2,7 @@ import {
   ACQUISITION_KEYS,
   AcquisitionParams,
   buildCloudEntryUrl,
+  normalizeAttributionPage,
   parseCloudEntryUrl,
   parseZillizEntryUrl,
 } from './cloud-attribution';
@@ -62,7 +63,7 @@ export function trackCloudLinks(
       if (Object.keys(acquisition).length) ACQUISITION_KEYS.forEach(key => entry.searchParams.delete(key));
       Object.entries(acquisition).forEach(([key, value]) => entry.searchParams.set(key, value));
       entry.searchParams.set('entry_site', 'milvus.io');
-      entry.searchParams.set('entry_page', page);
+      entry.searchParams.set('entry_page', normalizeAttributionPage(page));
       entry.searchParams.set('entry_button', anchor.dataset.entryButton || 'milvus_to_zilliz');
     }
     if (marketing || entry.hostname === 'cloud.zilliz.com') {

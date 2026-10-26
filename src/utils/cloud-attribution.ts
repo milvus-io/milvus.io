@@ -29,9 +29,17 @@ export type AcquisitionParams = Partial<
 
 type AttributionStorage = Pick<Storage, 'getItem' | 'setItem'>;
 
+export function normalizeAttributionPage(page: string): string {
+  // Versioned API groups such as "Partition (v2)/Has.md" trigger Cloud's
+  // request filtering even with correct URL encoding. Use a stable page label
+  // for attribution only; never change the actual documentation route.
+  // Accept router paths and cached labels without repeatedly decoding them.
+  return page.replace(/(?:%20| )*(?:\(|%28)(v\d+)(?:\)|%29)(?=\/|$)/gi, '-$1');
+}
+
 export function getMilvusEntryPage(asPath: string): string {
   const route = asPath.split(/[?#]/)[0];
-  return !route || route === '/' ? 'homepage' : route.replace(/^\//, '');
+  return !route || route === '/' ? 'homepage' : normalizeAttributionPage(route.replace(/^\//, ''));
 }
 
 export function getAcquisitionParams(
@@ -119,7 +127,7 @@ export function buildCloudEntryUrl(
   }
 
   url.searchParams.set('entry_site', 'milvus.io');
-  url.searchParams.set('entry_page', page);
+  url.searchParams.set('entry_page', normalizeAttributionPage(page));
   url.searchParams.set('entry_button', entryButton);
   return url.toString();
 }

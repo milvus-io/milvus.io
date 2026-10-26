@@ -702,6 +702,8 @@ html[lang='ar'] {
   .language-cli,
   .language-shell,
   .language-cpp,
+  .language-rust,
+  .language-csharp,
   .language-curl,
   .language-bash {
     display: none;
@@ -1207,6 +1209,8 @@ html[lang='ar'] {
   .language-cli,
   .language-shell,
   .language-cpp,
+  .language-rust,
+  .language-csharp,
   .language-curl,
   .language-bash {
     display: inline;

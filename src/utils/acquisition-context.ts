@@ -1,3 +1,5 @@
+import { normalizeAttributionPage } from './cloud-attribution';
+
 // Session-scoped observations; these are not a lifetime first-touch claim.
 export const CONTEXT_KEY = 'growth_entry_context_v1';
 export const CONTEXT_FIELDS = [
@@ -17,6 +19,7 @@ function clean(field: string, value: unknown): string | undefined {
   if (field.endsWith('_page')) {
     text = text.split(/[?#]/)[0];
     if (!text.startsWith('/') || text.startsWith('//') || /[@\\]/.test(text)) return;
+    text = normalizeAttributionPage(text);
   }
   if (field === 'first_entry_site' && !['milvus.io', 'zilliz.com', 'cloud.zilliz.com'].includes(text)) return;
   if (field === 'first_referrer_host' && text && !/^[a-z0-9.-]+$/i.test(text)) return;
@@ -36,11 +39,12 @@ export function getAcquisitionContext(site: string, path: string, referrer: stri
   let referrerHost = '';
   try { referrerHost = new URL(referrer).hostname; } catch {}
   const now = new Date().toISOString();
+  const entryPage = normalizeAttributionPage(path.split(/[?#]/)[0] || '/');
   const result: Context = {
     attribution_version: '1', first_touch_scope: 'browser_session',
-    first_entry_site: site, first_landing_page: path.split(/[?#]/)[0] || '/',
+    first_entry_site: site, first_landing_page: entryPage,
     first_referrer_host: referrerHost, first_touch_at: now,
-    session_entry_page: path.split(/[?#]/)[0] || '/', session_started_at: now,
+    session_entry_page: entryPage, session_started_at: now,
   };
   // Never spread arbitrary cached/query properties into a URL or analytics.
   for (const field of CONTEXT_FIELDS) {

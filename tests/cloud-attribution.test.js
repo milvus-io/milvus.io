@@ -12,6 +12,7 @@ function compile(file) {
 
 const attributionSource = compile('src/utils/cloud-attribution.ts');
 const trackingSource = compile('src/utils/track-cloud-links.ts');
+const contextSource = compile('src/utils/acquisition-context.ts');
 const scope = { exports: {}, URL, URLSearchParams };
 vm.runInNewContext(attributionSource, scope);
 const { buildCloudEntryUrl, getAcquisitionParams, getMilvusEntryPage, CLOUD_ACQUISITION_STORAGE_KEY } = scope.exports;
@@ -28,6 +29,48 @@ test('homepage with query or fragment keeps its page label', () => {
   }
   expect(getMilvusEntryPage('/docs/quickstart.md?utm_source=adwords#install')).toBe('docs/quickstart.md');
   expect(getMilvusEntryPage('/zh?gclid=click')).toBe('zh');
+});
+
+test('versioned API routes use stable attribution labels without changing other paths', () => {
+  for (const group of ['Partition (v2)', 'Partition%20(v2)', 'Partition%20%28v2%29']) {
+    const route = `/api-reference/restful/v2.5.x/v2/${group}/Has.md`;
+    const label = 'api-reference/restful/v2.5.x/v2/Partition-v2/Has.md';
+    expect(getMilvusEntryPage(route + '?tab=example#code')).toBe(label);
+    expect(getMilvusEntryPage('/' + label)).toBe(label);
+    expect(new URL(buildCloudEntryUrl(nav, route.slice(1), {})).searchParams.get('entry_page')).toBe(label);
+  }
+  for (const route of ['/docs/100%25.md', '/docs/hello%20world.md', '/docs/example(other).md', '/zh/docs/overview.md']) {
+    expect(getMilvusEntryPage(route)).toBe(route.slice(1));
+  }
+});
+
+test('API banner handoff normalizes all four path fields and survives repeated decoration', async ({ page }) => {
+  const label = 'api-reference/restful/v2.5.x/v2/Partition-v2/Has.md';
+  await page.setContent('<a id="banner">Cloud</a><a id="marketing" href="https://zilliz.com/pricing">Pricing</a>');
+  await page.evaluate(({ attributionSource, trackingSource, contextSource }) => {
+    const attribution = new Function('exports', attributionSource + '; return exports;')({});
+    const tracking = new Function('exports', 'require', trackingSource + '; return exports;')({}, () => attribution);
+    const context = new Function('exports', 'require', contextSource + '; return exports;')({}, () => attribution);
+    const path = '/api-reference/restful/v2.5.x/v2/Partition%20(v2)/Has.md';
+    const label = attribution.getMilvusEntryPage(path);
+    document.querySelector('#banner').href = 'https://cloud.zilliz.com/signup?utm_source=milvusio&utm_medium=referral&utm_campaign=milvus_top_banner&utm_content=' + label;
+    const links = new WeakMap();
+    const entry = context.getAcquisitionContext('milvus.io', path, '');
+    const cleanup = tracking.trackCloudLinks(document.body, label, {}, links, entry);
+    cleanup();
+    window.cleanup = tracking.trackCloudLinks(document.body, label, {}, links, entry);
+  }, { attributionSource, trackingSource, contextSource });
+  const url = new URL(await page.locator('#banner').getAttribute('href'));
+  expect(Object.fromEntries(url.searchParams)).toMatchObject({
+    utm_source: 'milvusio', utm_medium: 'referral', utm_campaign: 'milvus_top_banner',
+    utm_content: label, entry_page: label, entry_button: 'milvus_top_banner',
+    first_landing_page: '/' + label, session_entry_page: '/' + label,
+  });
+  expect(url.href).not.toMatch(/%25(?:20|28|29)|%28v2%29/);
+  const marketing = new URL(await page.locator('#marketing').getAttribute('href'));
+  expect(marketing.searchParams.get('entry_page')).toBe(label);
+  expect(marketing.searchParams.get('first_landing_page')).toBe('/' + label);
+  await page.evaluate(() => window.cleanup());
 });
 
 test('tagged arrival survives unrelated query parameters and is replaced coherently by a new campaign', () => {

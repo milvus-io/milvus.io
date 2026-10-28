@@ -12,6 +12,7 @@ function compile(file) {
 
 const attributionSource = compile('src/utils/cloud-attribution.ts');
 const trackingSource = compile('src/utils/track-cloud-links.ts');
+const contextSource = compile('src/utils/acquisition-context.ts');
 const scope = { exports: {}, URL, URLSearchParams };
 vm.runInNewContext(attributionSource, scope);
 const { buildCloudEntryUrl, getAcquisitionParams, getMilvusEntryPage, CLOUD_ACQUISITION_STORAGE_KEY } = scope.exports;
@@ -43,26 +44,32 @@ test('versioned API routes use stable attribution labels without changing other 
   }
 });
 
-test('API banner handoff normalizes path fields and survives repeated decoration', async ({ page }) => {
+test('API banner handoff normalizes all four path fields and survives repeated decoration', async ({ page }) => {
   const label = 'api-reference/restful/v2.5.x/v2/Partition-v2/Has.md';
-  await page.setContent('<a id="banner">Cloud</a>');
-  await page.evaluate(({ attributionSource, trackingSource }) => {
+  await page.setContent('<a id="banner">Cloud</a><a id="marketing" href="https://zilliz.com/pricing">Pricing</a>');
+  await page.evaluate(({ attributionSource, trackingSource, contextSource }) => {
     const attribution = new Function('exports', attributionSource + '; return exports;')({});
     const tracking = new Function('exports', 'require', trackingSource + '; return exports;')({}, () => attribution);
+    const context = new Function('exports', 'require', contextSource + '; return exports;')({}, () => attribution);
     const path = '/api-reference/restful/v2.5.x/v2/Partition%20(v2)/Has.md';
     const label = attribution.getMilvusEntryPage(path);
     document.querySelector('#banner').href = 'https://cloud.zilliz.com/signup?utm_source=milvusio&utm_medium=referral&utm_campaign=milvus_top_banner&utm_content=' + label;
     const links = new WeakMap();
-    const cleanup = tracking.trackCloudLinks(document.body, label, {}, links);
+    const entry = context.getAcquisitionContext('milvus.io', path, '');
+    const cleanup = tracking.trackCloudLinks(document.body, label, {}, links, entry);
     cleanup();
-    window.cleanup = tracking.trackCloudLinks(document.body, label, {}, links);
-  }, { attributionSource, trackingSource });
+    window.cleanup = tracking.trackCloudLinks(document.body, label, {}, links, entry);
+  }, { attributionSource, trackingSource, contextSource });
   const url = new URL(await page.locator('#banner').getAttribute('href'));
   expect(Object.fromEntries(url.searchParams)).toMatchObject({
     utm_source: 'milvusio', utm_medium: 'referral', utm_campaign: 'milvus_top_banner',
     utm_content: label, entry_page: label, entry_button: 'milvus_top_banner',
+    first_landing_page: '/' + label, session_entry_page: '/' + label,
   });
   expect(url.href).not.toMatch(/%25(?:20|28|29)|%28v2%29/);
+  const marketing = new URL(await page.locator('#marketing').getAttribute('href'));
+  expect(marketing.searchParams.get('entry_page')).toBe(label);
+  expect(marketing.searchParams.get('first_landing_page')).toBe('/' + label);
   await page.evaluate(() => window.cleanup());
 });
 
@@ -249,4 +256,33 @@ test('real Cloud navigation sends only the Milvus origin and isolates new tabs',
     expect(query.has('private_field')).toBe(false);
     await popup.close();
   }
+});
+
+test('new context survives marketing handoff and does not create observer or CTA duplicates', async ({ page }) => {
+  await page.setContent(`<header><a id="signup" href="https://cloud.zilliz.com/signup">Cloud</a></header>
+    <a id="marketing" href="https://zilliz.com/pricing?utm_source=old&utm_campaign=old">Pricing</a>
+    <a id="landing" href="https://cloud.zilliz.com/signup" data-track="cta_final_click">Final</a>`);
+  await page.evaluate(({ attributionSource, trackingSource }) => {
+    const attribution = new Function('exports', attributionSource + '; return exports;')({});
+    const tracking = new Function('exports', 'require', trackingSource + '; return exports;')({}, () => attribution);
+    window.dataLayer = [];
+    document.body.addEventListener('click', e => e.preventDefault());
+    window.cleanup = tracking.trackCloudLinks(document.body, 'docs/quickstart.md', {gclid: 'new'}, new WeakMap(), {
+      attribution_version: '1', first_entry_site: 'milvus.io', first_landing_page: '/docs/overview.md',
+      first_touch_at: '2026-01-01T00:00:00Z', first_touch_scope: 'browser_session',
+    });
+  }, {attributionSource, trackingSource});
+  const query = await page.locator('#marketing').evaluate(a => Object.fromEntries(new URL(a.href).searchParams));
+  expect(query).toMatchObject({gclid:'new', attribution_version:'1', first_landing_page:'/docs/overview.md', entry_page:'docs/quickstart.md'});
+  expect(query).not.toHaveProperty('utm_campaign');
+  expect(query).not.toHaveProperty('utm_source');
+  // A live observer must settle; an unstable handoff timestamp would starve this read.
+  const href = await page.locator('#signup').getAttribute('href');
+  await page.locator('#signup').evaluate(a => a.setAttribute('data-entry-button','header'));
+  await expect(page.locator('#signup')).toHaveAttribute('href', /entry_button=header/);
+  expect(new URL(await page.locator('#signup').getAttribute('href')).searchParams.get('handoff_at')).toBe(new URL(href).searchParams.get('handoff_at'));
+  await page.locator('#signup').click();
+  await page.locator('#landing').click();
+  expect(await page.evaluate(() => window.dataLayer)).toMatchObject([{event:'cta_zilliz_signup_click', cta_location:'header', cta_destination:'cloud_signup'}]);
+  expect(await page.evaluate(() => window.dataLayer.length)).toBe(1);
 });

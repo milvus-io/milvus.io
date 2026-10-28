@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import {
   DISCORD_INVITE_URL,
   MILVUS_BILIBILI_LINK,
-  MILVUS_SLACK_LINK,
+  getMilvusSlackLink,
 } from '@/consts';
 import classes from '@/styles/community.module.css';
 import pageClasses from '@/styles/responsive.module.css';
@@ -50,7 +50,7 @@ export const Community: FC<Props> = (props: Props) => {
     {
       label: 'Slack',
       imgUrl: '/images/community/socialMedia/slack.svg',
-      href: MILVUS_SLACK_LINK,
+      href: getMilvusSlackLink(locale),
       catLabel: t('join'),
       show: true,
     },

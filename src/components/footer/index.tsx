@@ -15,7 +15,7 @@ import {
   GITHUB_VTS_LINK,
   GITHUB_DEEP_SEARCHER_LINK,
   GITHUB_CLAUDE_CONTEXT_LINK,
-  MILVUS_SLACK_LINK,
+  getMilvusSlackLink,
 } from '@/consts/links';
 import { RightTopArrowIcon } from '@/components/icons';
 import { SocialMedias, SocialMediasCN } from '../socialMedias';
@@ -136,7 +136,7 @@ const Footer = (props: Props) => {
         {
           id: 'community-2',
           name: t('header:community.slack'),
-          to: MILVUS_SLACK_LINK,
+          to: getMilvusSlackLink(locale),
           isExternal: true,
         },
         {

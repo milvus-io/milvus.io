@@ -5,11 +5,12 @@ import {
   MILVUS_YOUTUBE_CHANNEL_LINK,
   MILVUS_LINKEDIN_URL,
   MILVUS_BILIBILI_LINK,
-  MILVUS_SLACK_LINK,
+  getMilvusSlackLink,
 } from '@/consts/links';
 import clsx from 'clsx';
 import styles from './index.module.css';
 import CustomButton from '../customButton';
+import { useStore } from '@/hooks/use-store';
 import {
   MediaGithub,
   MediaX,
@@ -22,7 +23,7 @@ import {
   MediaSlack,
 } from '@/components/icons';
 
-const socialJson = [
+const getSocialMediaLinks = (locale: string) => [
   {
     icon: <MediaGithub />,
     name: 'GitHub',
@@ -32,7 +33,7 @@ const socialJson = [
   {
     icon: <MediaSlack />,
     name: 'Slack',
-    link: MILVUS_SLACK_LINK,
+    link: getMilvusSlackLink(locale),
   },
   {
     icon: <MediaDiscord />,
@@ -60,9 +61,12 @@ export function SocialMedias(props: {
 }) {
   const { classes = {} } = props;
   const { root = '', link = '' } = classes;
+  const {
+    state: { locale },
+  } = useStore();
   return (
     <div className={clsx('flex items-center justify-start gap-[12px]', root)}>
-      {socialJson.map(s => {
+      {getSocialMediaLinks(locale).map(s => {
         return (
           <CustomButton
             variant="text"

@@ -48,7 +48,7 @@ const Header: React.FC<{
     getLocalePath,
   } = useGlobalLocale();
   const { t } = useTranslation('header', { lng: locale });
-  const navItems = useHeaderNavItems({ t, getLocalePath });
+  const navItems = useHeaderNavItems({ t, getLocalePath, locale });
   const trackPath = useUtmTrackPath();
   const signupUrl = getCloudSignupUrl(trackPath);
   const containerClassName = className || responsiveClasses.homeContainer;

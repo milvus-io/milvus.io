@@ -11,10 +11,11 @@ import {
   GITHUB_MILVUS_CLI_LINK,
   GITHUB_MILVUS_COMMUNITY_LINK,
   GITHUB_VTS_LINK,
-  MILVUS_SLACK_LINK,
+  getMilvusSlackLink,
   MILVUS_VIDEO_LINK,
 } from '@/consts/links';
 import { MILVUS_OFFICE_HOURS_URL } from '@/consts/externalLinks';
+import { LanguageEnum } from '@/types/localization';
 
 export type HeaderNavItem = {
   label: string;
@@ -26,11 +27,13 @@ export type HeaderNavItem = {
 
 type HeaderNavItemsParams = {
   t: TFunction;
+  locale: LanguageEnum;
   getLocalePath: (path: string) => string;
 };
 
 export const useHeaderNavItems = ({
   t,
+  locale,
   getLocalePath,
 }: HeaderNavItemsParams): HeaderNavItem[] => {
   return useMemo(
@@ -134,7 +137,7 @@ export const useHeaderNavItems = ({
           },
           {
             label: t('community.slack'),
-            href: MILVUS_SLACK_LINK,
+            href: getMilvusSlackLink(locale),
             rel: 'noopener noreferrer',
             external: true,
           },
@@ -157,7 +160,7 @@ export const useHeaderNavItems = ({
         ],
       },
     ],
-    [getLocalePath, t]
+    [getLocalePath, locale, t]
   );
 };
 

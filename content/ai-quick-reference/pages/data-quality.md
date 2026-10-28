@@ -72,6 +72,8 @@ Milvus is also a good tool for auditing the data in it:
 
 Keep a small, fixed set of real queries with known correct chunks and track recall@k and MRR on it after every pipeline change. When a query fails, trace it backward through ranking, filtering, embedding, chunking, and extraction until you find the stage that lost the answer, and fix that stage. Alongside retrieval metrics, monitor operational signals: extraction failure rate, rejected rows at import, chunks per document, duplicate rate, ingestion lag, and the count of stale versions still indexed. Methods are covered in [how to evaluate retrieval quality](/ai-quick-reference/how-can-we-measure-the-accuracy-of-the-retrieval-component-in-a-rag-system-for-example-using-metrics-like-precisionk-and-recallk-on-the-documents-retrieved).
 
+For upstream data issues, tools such as [DataHub](https://datahub.com/products/data-lineage/) can help trace data lineage.
+
 ## Next step
 
 Define the schema with typed metadata and model provenance, load a sample corpus with the [Milvus Quickstart](https://milvus.io/docs/quickstart.md), and run the duplicate and stale-version checks above on it. The [RAG tutorial](https://milvus.io/docs/build-rag-with-milvus.md) shows the full data flow these checks plug into, and [data curation with vector search](/ai-quick-reference/what-is-data-curation-for-vector-ai) covers turning the findings into reviewable decisions.

@@ -52,7 +52,7 @@ const SubscribeNewsletter: React.FC<Props> = props => {
   };
 
   const handleSubmitInfo = async () => {
-    if (subscribeStatus === SubscribeEnum.SUCCESS) {
+    if (subscribeStatus === SubscribeEnum.SUCCESS || subscribeStatus === SubscribeEnum.LOADING) {
       return;
     }
     if (!REGEX.test(value)) {
@@ -66,8 +66,14 @@ const SubscribeNewsletter: React.FC<Props> = props => {
       await submitHubspotForm({
         email: value,
       });
-    } finally {
       setSubscribeStatus(SubscribeEnum.SUCCESS);
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({ event: 'newsletter_submit_success', form_id: 'milvus_newsletter', page_path: window.location.pathname });
+    } catch {
+      setSubscribeStatus(SubscribeEnum.FAIL);
+      setErrMsg(t('common:status.failed'));
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({ event: 'newsletter_submit_failed', form_id: 'milvus_newsletter', page_path: window.location.pathname, error_category: 'request_failed' });
     }
   };
 

@@ -26,8 +26,8 @@ const NotFoundPage = (props: { blogList: BlogDataType[] }) => {
   useEffect(() => {
     window.dataLayer = window.dataLayer || [];
     window.dataLayer.push({
-      event: 'page_view_sp',
-      page_path: pagePath,
+      event: 'page_view_404',
+      page_path: pagePath.split(/[?#]/)[0],
       referrer: document.referrer,
     });
   }, [pagePath]);

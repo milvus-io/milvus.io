@@ -1,5 +1,5 @@
-import { VectorTypeEnum } from '@/types/sizing';
-export { VectorTypeEnum };
+import { VectorTypeEnum, SegmentSizeMetricEnum } from '@/types/sizing';
+export { VectorTypeEnum, SegmentSizeMetricEnum };
 
 /**
  * Common utility functions shared between sizing tool versions
@@ -120,8 +120,9 @@ export const createRawDataSizeCalculator = (ONE_MILLION: number) => {
     scalarAvg: number;
     vectorType?: VectorTypeEnum;
     avgNnz?: number;
+    sindiCompression?: boolean;
   }) => {
-    const { num, d, withScalar, scalarAvg, vectorType, avgNnz } = params;
+    const { num, d, withScalar, scalarAvg, vectorType, avgNnz, sindiCompression } = params;
 
     let vectorBytesPerItem: number;
     switch (vectorType) {
@@ -136,7 +137,9 @@ export const createRawDataSizeCalculator = (ONE_MILLION: number) => {
         vectorBytesPerItem = d / 8;
         break;
       case VectorTypeEnum.SPARSE_FLOAT_VECTOR:
-        vectorBytesPerItem = (avgNnz ?? d) * 8;
+        // Standard sparse vector: avgNnz * 8 bytes (dim int32 + val float32)
+        // Milvus 3.0 SINDI compressed: avgNnz * 2.8 bytes
+        vectorBytesPerItem = (avgNnz ?? d) * (sindiCompression ? 2.8 : 8);
         break;
       case VectorTypeEnum.FLOAT_VECTOR:
       default:
@@ -207,4 +210,18 @@ export const createDataSizeConstants = (
     $500M768D,
     $1B768D,
   };
+};
+
+/**
+ * SINDI sparse vector memory calculator (Milvus 3.0):
+ * Returns estimated memory footprint in bytes.
+ * Memory_sindi = N * avg_nnz * 2.8 bytes (compressed inverted index & posting list)
+ */
+export const sindiSparseMemoryCalculator = (params: {
+  num: number;
+  avgNnz: number;
+  ONE_MILLION?: number;
+}) => {
+  const { num, avgNnz, ONE_MILLION = 1000000 } = params;
+  return num * ONE_MILLION * avgNnz * 2.8;
 };

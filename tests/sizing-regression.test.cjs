@@ -22,14 +22,14 @@ Module._resolveFilename = function(request, parent, isMain, options) {
   return origResolve.call(this, request, parent, isMain, options);
 };
 
-const { operatorYmlGenerator } = require('../src/utils/sizingToolV250.ts');
+const { operatorYmlGenerator, helmYmlGenerator: helmYmlGeneratorV250 } = require('../src/utils/sizingToolV250.ts');
 const { ModeEnum, DependencyComponentEnum, IndexTypeEnum } = require('../src/types/sizingV250.ts');
 const { INDEX_TYPE_OPTIONS } = require('../src/consts/sizingV250.ts');
 const { REFINE_OPTIONS } = require('../src/consts/sizing.ts');
-const { RefineValueEnum, REFINE_VALUE_TO_N_MAP, VectorTypeEnum, IndexTypeEnum: IndexTypeEnum26 } = require('../src/types/sizing.ts');
+const { RefineValueEnum, REFINE_VALUE_TO_N_MAP, VectorTypeEnum, IndexTypeEnum: IndexTypeEnum26, DependencyComponentEnum: DependencyComponentEnum26 } = require('../src/types/sizing.ts');
 const { GpuIndexTypeEnum } = require('../src/types/sizingGpu.ts');
 const { fetchMilvusReleases } = require('../src/http/milvus.ts');
-const { unitBYTE2Any, rawDataSizeCalculator, memoryAndDiskCalculator } = require('../src/utils/sizingTool.ts');
+const { unitBYTE2Any, rawDataSizeCalculator, memoryAndDiskCalculator, sindiSparseMemoryCalculator, SegmentSizeMetricEnum, helmYmlGenerator, operatorYmlGenerator: operatorYmlGeneratorV24 } = require('../src/utils/sizingTool.ts');
 const { gpuIndexMemoryCalculator, rmmPoolSizeCalculator, gpuOperatorYmlGenerator } = require('../src/utils/sizingToolGpu.ts');
 
 const dummyClusterConfig = {
@@ -366,4 +366,102 @@ test('gpuOperatorYmlGenerator exports Kubernetes YAML with nvidia.com/gpu limit 
   });
   assert.ok(clusterYml.includes('spec:\n  mode: cluster'), 'Must specify mode: cluster');
   assert.ok(clusterYml.includes('nvidia.com/gpu: "1"'), 'Cluster must configure nvidia.com/gpu: "1"');
+});
+
+test('SINDI sparse compression algorithm reduces memory footprint to ~2.8 bytes per non-zero element', () => {
+  const numVectors = 1; // 1 Million vectors
+  const avgNnz = 120; // 120 non-zero elements per sparse vector
+
+  // 1. Dedicated sindiSparseMemoryCalculator test
+  const expectedSindiBytes = 1000000 * avgNnz * 2.8;
+  const calculatedSindiBytes = sindiSparseMemoryCalculator({ num: numVectors, avgNnz });
+  assert.equal(calculatedSindiBytes, expectedSindiBytes, 'sindiSparseMemoryCalculator calculates N * avg_nnz * 2.8 bytes');
+
+  // 2. rawDataSizeCalculator with and without SINDI
+  const uncompressedRaw = rawDataSizeCalculator({
+    num: numVectors,
+    d: 30000,
+    withScalar: false,
+    scalarAvg: 0,
+    vectorType: VectorTypeEnum.SPARSE_FLOAT_VECTOR,
+    avgNnz,
+    sindiCompression: false,
+  });
+  const sindiRaw = rawDataSizeCalculator({
+    num: numVectors,
+    d: 30000,
+    withScalar: false,
+    scalarAvg: 0,
+    vectorType: VectorTypeEnum.SPARSE_FLOAT_VECTOR,
+    avgNnz,
+    sindiCompression: true,
+  });
+
+  assert.equal(uncompressedRaw, 1000000 * avgNnz * 8, 'Standard sparse is 8 bytes per NNZ');
+  assert.equal(sindiRaw, expectedSindiBytes, 'SINDI compressed sparse is 2.8 bytes per NNZ');
+  assert.ok(sindiRaw < uncompressedRaw * 0.4, 'SINDI achieves > 60% memory savings compared to uncompressed sparse');
+
+  // 3. memoryAndDiskCalculator with SPARSE_INVERTED_INDEX and SINDI
+  const sindiMemResult = memoryAndDiskCalculator({
+    rawDataSize: sindiRaw,
+    indexTypeParams: {
+      indexType: IndexTypeEnum26.SPARSE_INVERTED_INDEX,
+      widthRawData: false,
+      maxDegree: 0,
+      flatNList: 0,
+      sq8NList: 0,
+      rabitqNList: 0,
+      m: 0,
+      inlinePq: 0,
+    },
+    d: 30000,
+    num: numVectors,
+    withScalar: false,
+    offLoading: false,
+    scalarAvg: 0,
+    segSize: 512,
+    mode: ModeEnum.Cluster,
+    refineType: RefineValueEnum.None,
+    vectorType: VectorTypeEnum.SPARSE_FLOAT_VECTOR,
+    avgNnz,
+    sindiCompression: true,
+  });
+
+  // Verify memory calculation reflects SINDI compressed size plus segment safety buffer
+  const segmentSizeByte = 512 * 1024 * 1024;
+  const expectedLoadingMemory = (expectedSindiBytes + segmentSizeByte * 2) * 1.15;
+  assert.equal(Math.round(sindiMemResult.memory), Math.round(expectedLoadingMemory), 'memoryAndDiskCalculator applies SINDI 2.8 bytes formula');
+});
+
+test('Woodpecker streaming architecture and mainIndex segment sizeMetric are correctly emitted in Helm and Operator YAML', () => {
+  assert.equal(SegmentSizeMetricEnum.MAIN_INDEX, 'mainIndex', 'SegmentSizeMetricEnum.MAIN_INDEX must be "mainIndex"');
+
+  const dummyClusterWithStreamNode = {
+    ...dummyClusterConfig,
+    streamNode: { count: 1, cpu: 2, memory: 8 },
+  };
+
+  // 1. Operator YAML (v2.5+ generator)
+  const operatorYml = operatorYmlGenerator(dummyClusterConfig, (DependencyComponentEnum26.Woodpecker || DependencyComponentEnum.Woodpecker), ModeEnum.Cluster);
+  assert.ok(operatorYml.includes('msgStreamType: woodpecker'), 'Operator YAML must specify msgStreamType: woodpecker');
+  assert.ok(/woodpecker:\s+embedded:\s*true/.test(operatorYml), 'Operator YAML must specify embedded woodpecker dependency');
+  assert.ok(operatorYml.includes('type: woodpecker'), 'Operator YAML must configure streaming.type: woodpecker');
+  assert.ok(operatorYml.includes('sizeMetric: mainIndex'), 'Operator YAML must configure dataCoord.segment.sizeMetric: mainIndex');
+
+  // 2. Helm YAML (v2.5+ generator)
+  const helmYml = helmYmlGeneratorV250(dummyClusterConfig, (DependencyComponentEnum26.Woodpecker || DependencyComponentEnum.Woodpecker), ModeEnum.Cluster);
+  assert.ok(/pulsarv3:\s+enabled:\s*false/.test(helmYml), 'Helm YAML must disable pulsar when Woodpecker is selected');
+  assert.ok(helmYml.includes('type: woodpecker'), 'Helm YAML must configure streaming.type: woodpecker');
+  assert.ok(/woodpecker:\s+embedded:\s*true/.test(helmYml), 'Helm YAML must configure woodpecker.embedded: true');
+  assert.ok(helmYml.includes('sizeMetric: mainIndex'), 'Helm YAML must configure dataCoord.segment.sizeMetric: mainIndex');
+
+  // 3. Operator YAML (v2.4 generator)
+  const operatorYml24 = operatorYmlGeneratorV24(dummyClusterWithStreamNode, (DependencyComponentEnum26.Woodpecker || DependencyComponentEnum.Woodpecker), ModeEnum.Cluster);
+  assert.ok(operatorYml24.includes('msgStreamType: woodpecker'), 'v2.4 Operator YAML must specify msgStreamType: woodpecker');
+  assert.ok(operatorYml24.includes('sizeMetric: mainIndex'), 'v2.4 Operator YAML must specify sizeMetric: mainIndex');
+
+  // 4. Helm YAML (v2.4 generator)
+  const helmYml24 = helmYmlGenerator(dummyClusterWithStreamNode, (DependencyComponentEnum26.Woodpecker || DependencyComponentEnum.Woodpecker), ModeEnum.Cluster);
+  assert.ok(helmYml24.includes('type: woodpecker'), 'v2.4 Helm YAML must specify streaming.type: woodpecker');
+  assert.ok(helmYml24.includes('sizeMetric: mainIndex'), 'v2.4 Helm YAML must specify sizeMetric: mainIndex');
 });

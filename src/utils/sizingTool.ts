@@ -11,11 +11,14 @@ import {
   NodesKeyType,
   REFINE_VALUE_TO_N_MAP,
   RefineValueEnum,
+  VectorTypeEnum,
 } from '@/types/sizing';
 
 // Re-export common utilities
 export {
   VectorTypeEnum,
+  SegmentSizeMetricEnum,
+  sindiSparseMemoryCalculator,
   unitBYTE2Any,
   unitAny2BYTE,
   formatNumber,
@@ -56,6 +59,9 @@ export const memoryAndDiskCalculator = (params: {
   segSize: number;
   mode: ModeEnum;
   refineType: RefineValueEnum;
+  vectorType?: VectorTypeEnum;
+  avgNnz?: number;
+  sindiCompression?: boolean;
 }) => {
   const {
     rawDataSize,
@@ -68,6 +74,9 @@ export const memoryAndDiskCalculator = (params: {
     segSize,
     mode,
     refineType,
+    vectorType,
+    avgNnz,
+    sindiCompression,
   } = params;
   const {
     indexType,
@@ -80,7 +89,10 @@ export const memoryAndDiskCalculator = (params: {
     inlinePq,
   } = indexTypeParams;
   const segmentSizeByte = unitAny2BYTE(segSize, 'MB');
-  const vectorRawDataSize = ((num * d * 32) / 8) * ONE_MILLION;
+  let vectorRawDataSize = ((num * d * 32) / 8) * ONE_MILLION;
+  if (vectorType === VectorTypeEnum.SPARSE_FLOAT_VECTOR) {
+    vectorRawDataSize = num * ONE_MILLION * (avgNnz ?? d) * (sindiCompression ? 2.8 : 8);
+  }
   const N = REFINE_VALUE_TO_N_MAP[refineType];
   const PQ_CODE_BUDGET_GB_RATIO = 0.125;
   const AISAQ_MEMORY_BYTE = unitAny2BYTE(16, 'MB'); // 16 MB
@@ -144,7 +156,9 @@ export const memoryAndDiskCalculator = (params: {
       break;
     case IndexTypeEnum.SPARSE_INVERTED_INDEX:
       result = {
-        memory: vectorRawDataSize * 1.2,
+        memory: sindiCompression
+          ? num * ONE_MILLION * (avgNnz ?? d) * 2.8
+          : vectorRawDataSize * 1.2,
         disk: 0,
       };
       break;
@@ -922,7 +936,7 @@ export const helmYmlGenerator: (
     mode === ModeEnum.Cluster && apacheType === DependencyComponentEnum.Kafka;
   const useWoodpecker =
     mode === ModeEnum.Cluster &&
-    apacheType === DependencyComponentEnum.Woodpecker;
+    (apacheType === DependencyComponentEnum.Woodpecker || (apacheType as any) === 'woodpecker' || (apacheType as any) === 2);
 
   const pulsarConfig = usePulsar
     ? `
@@ -1008,8 +1022,13 @@ kafka:
     ? `
 pulsarv3:
   enabled: false
-woodpecker:
-  enabled: true
+streaming:
+  type: woodpecker
+  woodpecker:
+    embedded: true
+dataCoord:
+  segment:
+    sizeMetric: mainIndex
     `
     : undefined;
 
@@ -1124,7 +1143,7 @@ export const operatorYmlGenerator: (
     mode === ModeEnum.Cluster && apacheType === DependencyComponentEnum.Kafka;
   const useWoodpecker =
     mode === ModeEnum.Cluster &&
-    apacheType === DependencyComponentEnum.Woodpecker;
+    (apacheType === DependencyComponentEnum.Woodpecker || (apacheType as any) === 'woodpecker' || (apacheType as any) === 2);
 
   const pulsarConfig = usePulsar
     ? `
@@ -1206,6 +1225,8 @@ export const operatorYmlGenerator: (
 
   const woodpeckerMsg = `
     msgStreamType: woodpecker
+    woodpecker:
+      embedded: true
   `;
 
   const apacheConfig = pulsarConfig || kafkaConfig || '';
@@ -1249,7 +1270,14 @@ spec:
         limits:
           cpu: ${dataNode.cpu}
           memory: ${dataNode.memory}Gi
-  config: {}
+  config: ${useWoodpecker ? `
+    streaming:
+      type: woodpecker
+      woodpecker:
+        embedded: true
+    dataCoord:
+      segment:
+        sizeMetric: mainIndex` : '{}'}
   dependencies:
 ${useWoodpecker ? woodpeckerMsg : ''}
     etcd:

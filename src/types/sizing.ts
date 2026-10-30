@@ -14,6 +14,11 @@ export enum SegmentSizeEnum {
   _2048MB = '2048',
 }
 
+export enum SegmentSizeMetricEnum {
+  RAW = 'raw',
+  MAIN_INDEX = 'mainIndex',
+}
+
 export enum IndexTypeEnum {
   FLAT = 'FLAT',
   SCANN = 'SCANN',

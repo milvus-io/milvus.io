@@ -38,6 +38,7 @@ export interface IIndexType {
 export enum DependencyComponentEnum {
   Pulsar,
   Kafka,
+  Woodpecker,
 }
 
 export enum ModeEnum {

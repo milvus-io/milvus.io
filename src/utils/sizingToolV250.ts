@@ -800,7 +800,21 @@ etcd:
     requests:
       cpu: ${etcdData.cpu}
       memory: ${etcdData.memory}Gi
-${apacheType === DependencyComponentEnum.Pulsar ? pulsarConfig : kafkaConfig}
+${apacheType === DependencyComponentEnum.Pulsar
+  ? pulsarConfig
+  : (apacheType === DependencyComponentEnum.Woodpecker || (apacheType as any) === 'woodpecker' || (apacheType as any) === 2)
+  ? `
+pulsarv3:
+  enabled: false
+streaming:
+  type: woodpecker
+  woodpecker:
+    embedded: true
+dataCoord:
+  segment:
+    sizeMetric: mainIndex
+`
+  : kafkaConfig}
 minio:
   resources:
     limits:
@@ -926,8 +940,26 @@ export const operatorYmlGenerator: (
                 memory: ${kafkaData.zookeeper.memory}Gi
   `;
 
-  const apacheConfig =
-    apacheType === DependencyComponentEnum.Pulsar ? pulsarConfig : kafkaConfig;
+  const useWoodpecker =
+    mode === ModeEnum.Cluster &&
+    (apacheType === DependencyComponentEnum.Woodpecker || (apacheType as any) === 'woodpecker' || (apacheType as any) === 2);
+
+  const woodpeckerConfig = useWoodpecker
+    ? `
+    msgStreamType: woodpecker
+    woodpecker:
+      embedded: true
+  `
+    : '';
+
+  let apacheConfig = '';
+  if (apacheType === DependencyComponentEnum.Pulsar) {
+    apacheConfig = pulsarConfig;
+  } else if ((apacheType === DependencyComponentEnum.Woodpecker || (apacheType as any) === 'woodpecker' || (apacheType as any) === 2)) {
+    apacheConfig = woodpeckerConfig;
+  } else {
+    apacheConfig = kafkaConfig;
+  }
 
   return `apiVersion: milvus.io/v1beta1
 kind: Milvus
@@ -968,7 +1000,14 @@ spec:
         limits:
           cpu: ${dataNode.cpu}
           memory: ${dataNode.memory}Gi
-  config: {}
+  config: ${useWoodpecker ? `
+    streaming:
+      type: woodpecker
+      woodpecker:
+        embedded: true
+    dataCoord:
+      segment:
+        sizeMetric: mainIndex` : '{}'}
   dependencies:
     etcd:
       inCluster:

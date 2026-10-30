@@ -117,7 +117,7 @@ export default function ResultSection(props: ResultSectionProps) {
     (milvusMemory + dependencyMemory) * 1024 * 1024 * 1024
   );
   const { size: singleNodeDiskSize, unit: singleNodeDiskUnit } = unitBYTE2Any(
-    localDiskSize / queryNode.count
+    queryNode.count > 0 ? localDiskSize / queryNode.count : 0
   );
 
   const { size: diskSize, unit: diskUnit } = unitBYTE2Any(localDiskSize);
@@ -427,8 +427,12 @@ sudo docker compose up -d`,
                   standaloneNodeConfig={standaloneNodeConfig}
                   clusterNodeConfig={clusterNodeConfig}
                   isOutOfCalculate={isOutOfCalculate}
-                  diskSize={singleNodeDiskSize}
-                  diskUnit={singleNodeDiskUnit}
+                  diskSize={
+                    mode === ModeEnum.Standalone ? diskSize : singleNodeDiskSize
+                  }
+                  diskUnit={
+                    mode === ModeEnum.Standalone ? diskUnit : singleNodeDiskUnit
+                  }
                   mode={mode}
                   rawDataSize={rawDataSize}
                   memorySize={memorySize}

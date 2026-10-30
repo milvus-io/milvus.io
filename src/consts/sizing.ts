@@ -136,8 +136,8 @@ export const REFINE_OPTIONS = [
     value: RefineValueEnum.BF16,
   },
   {
-    label: 'SQ32',
-    value: RefineValueEnum.SQ32,
+    label: 'FP32',
+    value: RefineValueEnum.FP32,
   },
 ];
 

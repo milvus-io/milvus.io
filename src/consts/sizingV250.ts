@@ -81,7 +81,7 @@ export const INDEX_TYPE_OPTIONS = [
     value: IndexTypeEnum.IVF_FLAT,
   },
   {
-    label: 'IVFSQ8',
+    label: 'IVF_SQ8',
     value: IndexTypeEnum.IVFSQ8,
   },
   {

@@ -33,7 +33,7 @@ export enum RefineValueEnum {
   SQ8 = 'SQ8',
   FP16 = 'FP16',
   BF16 = 'BF16',
-  SQ32 = 'SQ32',
+  FP32 = 'FP32',
 }
 
 export const REFINE_VALUE_TO_N_MAP = {
@@ -41,7 +41,7 @@ export const REFINE_VALUE_TO_N_MAP = {
   [RefineValueEnum.SQ8]: 8,
   [RefineValueEnum.FP16]: 16,
   [RefineValueEnum.BF16]: 16,
-  [RefineValueEnum.SQ32]: 32,
+  [RefineValueEnum.FP32]: 32,
   [RefineValueEnum.None]: 0,
 } as const;
 

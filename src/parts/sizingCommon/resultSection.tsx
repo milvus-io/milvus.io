@@ -21,7 +21,7 @@ import {
 } from '@/components/icons';
 import { DependencyComponent } from './dependencyComponent';
 import { Trans, useTranslation } from 'react-i18next';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import CustomButton from '@/components/customButton';
 import { MilvusComponent } from './milvusComponent';
 import { CONTACT_SALES_URL } from '@/consts/externalLinks';
@@ -34,7 +34,6 @@ enum InstallTypeEnum {
   Operator = 'operator',
 }
 
-let timer: NodeJS.Timeout | null = null;
 
 interface ResultSectionProps {
   className?: string;
@@ -124,6 +123,16 @@ export default function ResultSection(props: ResultSectionProps) {
 
   const [isMilvusOpen, setIsMilvusOpen] = useState(true);
   const [isDependencyOpen, setIsDependencyOpen] = useState(true);
+  const [isCopied, setIsCopied] = useState(false);
+  const copyTimerRef = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (copyTimerRef.current) {
+        clearTimeout(copyTimerRef.current);
+      }
+    };
+  }, []);
 
   const standaloneInstallOptions = [
     {
@@ -195,20 +204,14 @@ sudo docker compose up -d`,
   }, [installInfo]);
 
   const handleCopyCode = useCallback(() => {
-    if (timer) {
+    if (copyTimerRef.current) {
       return;
     }
     navigator.clipboard.writeText(exampleCode || '');
-    const copyBtn = document.querySelector('.copy-code-btn');
-    if (copyBtn) {
-      copyBtn.innerHTML = checkIconTpl;
-    }
-    timer = setTimeout(() => {
-      if (copyBtn) {
-        copyBtn.innerHTML = copyIconTpl;
-      }
-      timer && clearTimeout(timer);
-      timer = null;
+    setIsCopied(true);
+    copyTimerRef.current = setTimeout(() => {
+      setIsCopied(false);
+      copyTimerRef.current = null;
     }, 3000);
   }, [exampleCode]);
 
@@ -562,9 +565,13 @@ sudo docker compose up -d`,
             {installInfo.options.find(v => v.value === installInfo.value)?.code}
           </code>
           <button
+            type="button"
             className={clsx('copy-code-btn', classes.copyBtn)}
             onClick={handleCopyCode}
-            dangerouslySetInnerHTML={{ __html: copyIconTpl }}
+            aria-label="copy code"
+            dangerouslySetInnerHTML={{
+              __html: isCopied ? checkIconTpl : copyIconTpl,
+            }}
           ></button>
         </pre>
 

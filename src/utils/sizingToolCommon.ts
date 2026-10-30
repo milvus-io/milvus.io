@@ -18,14 +18,19 @@ export const unitBYTE2Any = (size: number, unit?: DataSizeUnit) => {
   }
 
   let sizeStatus = 0;
-  let baseUnit = 'BYTE';
-  while (sizeStatus < units.length - 1 && size > 1024) {
+  while (sizeStatus < units.length - 1 && size >= 1024) {
     size = size / 1024;
     sizeStatus++;
   }
-  baseUnit = units[sizeStatus];
   const decimal = sizeStatus >= 4 ? 100 : 10;
   size = Math.round(size * decimal) / decimal;
+  if (size >= 1024 && sizeStatus < units.length - 1) {
+    size = size / 1024;
+    sizeStatus++;
+    const nextDecimal = sizeStatus >= 4 ? 100 : 10;
+    size = Math.round(size * nextDecimal) / nextDecimal;
+  }
+  const baseUnit = units[sizeStatus];
   return {
     size,
     unit: baseUnit,

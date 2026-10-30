@@ -28,6 +28,7 @@ const { INDEX_TYPE_OPTIONS } = require('../src/consts/sizingV250.ts');
 const { REFINE_OPTIONS } = require('../src/consts/sizing.ts');
 const { RefineValueEnum, REFINE_VALUE_TO_N_MAP } = require('../src/types/sizing.ts');
 const { fetchMilvusReleases } = require('../src/http/milvus.ts');
+const { unitBYTE2Any, rawDataSizeCalculator } = require('../src/utils/sizingTool.ts');
 
 const dummyClusterConfig = {
   mixCoord: { count: 1, cpu: 1, memory: 2 },
@@ -117,4 +118,40 @@ test('standalone mode and zero queryNode guards prevent NaN and preserve ModeEnu
   // Fixed test: nullish coalescing preserves 0 (Standalone)
   const fixedResolvedMode = disableStandalone ? ModeEnum.Cluster : (manuallySelectedMode ?? computedMode);
   assert.equal(fixedResolvedMode, ModeEnum.Standalone, 'Fix: ?? correctly preserves ModeEnum.Standalone (0)');
+});
+
+test('unitBYTE2Any correctly rolls over at 1024 boundaries instead of displaying 1024 MB or 1024 GB', () => {
+  const oneGbInBytes = 1024 * 1024 * 1024;
+  const resGb = unitBYTE2Any(oneGbInBytes);
+  assert.deepEqual(resGb, { size: 1, unit: 'GB' }, '1024*1024*1024 bytes must format to 1 GB, not 1024 MB');
+
+  const oneMbInBytes = 1024 * 1024;
+  const resMb = unitBYTE2Any(oneMbInBytes);
+  assert.deepEqual(resMb, { size: 1, unit: 'MB' }, '1024*1024 bytes must format to 1 MB, not 1024 KB');
+
+  const oneTbInBytes = 1024 * 1024 * 1024 * 1024;
+  const resTb = unitBYTE2Any(oneTbInBytes);
+  assert.deepEqual(resTb, { size: 1, unit: 'TB' }, '1024*1024*1024*1024 bytes must format to 1 TB, not 1024 GB');
+});
+
+test('rawDataSizeCalculator correctly computes raw data size for sub-million vector counts (0.001M = 1,000 vectors)', () => {
+  // 1,000 vectors (0.001 million), dimension 768, float32 (4 bytes per element)
+  const rawSize = rawDataSizeCalculator({
+    num: 0.001,
+    d: 768,
+    withScalar: false,
+    scalarAvg: 0,
+  });
+  // Expected: (0.001 * 768 * 1,000,000 * 32) / 8 = 3,072,000 bytes
+  assert.equal(rawSize, 3072000, '1,000 vectors of 768d float32 must equal exactly 3,072,000 bytes');
+
+  // With scalar field of 500 bytes per vector
+  const rawSizeWithScalar = rawDataSizeCalculator({
+    num: 0.001,
+    d: 768,
+    withScalar: true,
+    scalarAvg: 500,
+  });
+  // Expected: 3,072,000 + (0.001 * 500 * 1,000,000) = 3,572,000 bytes
+  assert.equal(rawSizeWithScalar, 3572000, 'Must include scalar payload size correctly for sub-million vectors');
 });

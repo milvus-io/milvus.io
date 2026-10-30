@@ -10,11 +10,11 @@ export const ONE_MILLION = Math.pow(10, 6);
 export const ONE_BILLION = Math.pow(10, 9);
 
 export const VECTOR_RANGE_CONFIG = {
-  min: 1,
+  min: 0.001,
   max: 10000,
   defaultValue: 1,
-  domain: [0, 25, 50, 75, 100],
-  range: [1, 10, 100, 1000, 10000],
+  domain: [0, 20, 40, 60, 80, 100],
+  range: [0.001, 0.1, 1, 10, 100, 10000],
 };
 
 export const DIMENSION_RANGE_CONFIG = {

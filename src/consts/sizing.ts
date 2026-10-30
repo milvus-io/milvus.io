@@ -78,6 +78,14 @@ export const INDEX_TYPE_OPTIONS = [
     value: IndexTypeEnum.HNSW,
   },
   {
+    label: 'HNSW_SQ',
+    value: IndexTypeEnum.HNSW_SQ,
+  },
+  {
+    label: 'HNSW_PQ',
+    value: IndexTypeEnum.HNSW_PQ,
+  },
+  {
     label: 'IVF_FLAT',
     value: IndexTypeEnum.IVF_FLAT,
   },
@@ -88,6 +96,10 @@ export const INDEX_TYPE_OPTIONS = [
   {
     label: 'IVF_RABITQ',
     value: IndexTypeEnum.IVFRABITQ,
+  },
+  {
+    label: 'SPARSE_INVERTED_INDEX',
+    value: IndexTypeEnum.SPARSE_INVERTED_INDEX,
   },
   {
     label: 'DISKANN',

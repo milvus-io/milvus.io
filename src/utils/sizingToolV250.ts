@@ -107,7 +107,24 @@ export const memoryAndDiskCalculator = (params: {
         memory: (1 + (2 * m) / d) * vectorRawDataSize,
         disk: 0,
       };
-
+      break;
+    case IndexTypeEnum.HNSW_SQ:
+      result = {
+        memory: (0.25 + (2 * m) / d) * vectorRawDataSize,
+        disk: 0,
+      };
+      break;
+    case IndexTypeEnum.HNSW_PQ:
+      result = {
+        memory: (0.125 + (2 * m) / d) * vectorRawDataSize,
+        disk: 0,
+      };
+      break;
+    case IndexTypeEnum.SPARSE_INVERTED_INDEX:
+      result = {
+        memory: vectorRawDataSize * 1.2,
+        disk: 0,
+      };
       break;
     case IndexTypeEnum.DISKANN:
       result = {

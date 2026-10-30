@@ -26,9 +26,9 @@ const { operatorYmlGenerator } = require('../src/utils/sizingToolV250.ts');
 const { ModeEnum, DependencyComponentEnum, IndexTypeEnum } = require('../src/types/sizingV250.ts');
 const { INDEX_TYPE_OPTIONS } = require('../src/consts/sizingV250.ts');
 const { REFINE_OPTIONS } = require('../src/consts/sizing.ts');
-const { RefineValueEnum, REFINE_VALUE_TO_N_MAP } = require('../src/types/sizing.ts');
+const { RefineValueEnum, REFINE_VALUE_TO_N_MAP, VectorTypeEnum, IndexTypeEnum: IndexTypeEnum26 } = require('../src/types/sizing.ts');
 const { fetchMilvusReleases } = require('../src/http/milvus.ts');
-const { unitBYTE2Any, rawDataSizeCalculator } = require('../src/utils/sizingTool.ts');
+const { unitBYTE2Any, rawDataSizeCalculator, memoryAndDiskCalculator } = require('../src/utils/sizingTool.ts');
 
 const dummyClusterConfig = {
   mixCoord: { count: 1, cpu: 1, memory: 2 },
@@ -154,4 +154,123 @@ test('rawDataSizeCalculator correctly computes raw data size for sub-million vec
   });
   // Expected: 3,072,000 + (0.001 * 500 * 1,000,000) = 3,572,000 bytes
   assert.equal(rawSizeWithScalar, 3572000, 'Must include scalar payload size correctly for sub-million vectors');
+});
+
+test('rawDataSizeCalculator accurately handles new VectorTypeEnum variants (FP16, BF16, INT8, BINARY, SPARSE)', () => {
+  const num = 1; // 1M vectors
+  const d = 768;
+
+  // 1. FLOAT_VECTOR (4 bytes / dim) -> 3,072,000,000 bytes
+  const fp32 = rawDataSizeCalculator({ num, d, withScalar: false, scalarAvg: 0, vectorType: VectorTypeEnum.FLOAT_VECTOR });
+  assert.equal(fp32, 3072000000, 'FP32: 1M * 768 * 4 = 3.072GB');
+
+  // 2. FLOAT16_VECTOR (2 bytes / dim) -> 1,536,000,000 bytes
+  const fp16 = rawDataSizeCalculator({ num, d, withScalar: false, scalarAvg: 0, vectorType: VectorTypeEnum.FLOAT16_VECTOR });
+  assert.equal(fp16, 1536000000, 'FP16: 1M * 768 * 2 = 1.536GB');
+
+  // 3. BFLOAT16_VECTOR (2 bytes / dim) -> 1,536,000,000 bytes
+  const bf16 = rawDataSizeCalculator({ num, d, withScalar: false, scalarAvg: 0, vectorType: VectorTypeEnum.BFLOAT16_VECTOR });
+  assert.equal(bf16, 1536000000, 'BF16: 1M * 768 * 2 = 1.536GB');
+
+  // 4. INT8_VECTOR (1 byte / dim) -> 768,000,000 bytes
+  const int8 = rawDataSizeCalculator({ num, d, withScalar: false, scalarAvg: 0, vectorType: VectorTypeEnum.INT8_VECTOR });
+  assert.equal(int8, 768000000, 'INT8: 1M * 768 * 1 = 768MB');
+
+  // 5. BINARY_VECTOR (1/8 byte / dim) -> 96,000,000 bytes
+  const bin = rawDataSizeCalculator({ num, d, withScalar: false, scalarAvg: 0, vectorType: VectorTypeEnum.BINARY_VECTOR });
+  assert.equal(bin, 96000000, 'Binary: 1M * (768/8) = 96MB');
+
+  // 6. SPARSE_FLOAT_VECTOR (avg_nnz * 8 bytes)
+  const sparse = rawDataSizeCalculator({ num, d: 0, withScalar: false, scalarAvg: 0, vectorType: VectorTypeEnum.SPARSE_FLOAT_VECTOR, avgNnz: 120 });
+  assert.equal(sparse, 120 * 8 * 1000000, 'Sparse: 1M * 120 * 8 = 960MB');
+});
+
+test('memoryAndDiskCalculator correctly calculates advanced indexes (HNSW_SQ, HNSW_PQ, SPARSE_INVERTED_INDEX)', () => {
+  const rawDataSize = 3072000000;
+  const num = 1;
+  const d = 768;
+  const m = 30;
+
+  // HNSW_SQ: SQ8 (0.25) + graph ((2*m)/d = 60/768) => (0.25 + 60/768) * 3,072,000,000 = 768,000,000 + 240,000,000 = 1,008,000,000
+  const hnswSqResult = memoryAndDiskCalculator({
+    rawDataSize,
+    d,
+    num,
+    withScalar: false,
+    offLoading: false,
+    scalarAvg: 0,
+    segSize: 1024,
+    mode: ModeEnum.Cluster,
+    refineType: RefineValueEnum.None,
+    indexTypeParams: {
+      indexType: IndexTypeEnum26.HNSW_SQ,
+      widthRawData: false,
+      maxDegree: 56,
+      flatNList: 128,
+      sq8NList: 128,
+      rabitqNList: 128,
+      m: 30,
+      inlinePq: 56,
+    }
+  });
+  // Base memory = 1,008,000,000 bytes, vectorLoadingMemory = (1,008,000,000 + 2GB) * 1.15
+  assert.ok(hnswSqResult.memory > 0, 'HNSW_SQ memory calculated');
+  assert.equal(hnswSqResult.disk, 0, 'HNSW_SQ disk is 0');
+
+  // SPARSE_INVERTED_INDEX: 1.2 * vectorRawDataSize
+  const sparseResult = memoryAndDiskCalculator({
+    rawDataSize,
+    d,
+    num,
+    withScalar: false,
+    offLoading: false,
+    scalarAvg: 0,
+    segSize: 1024,
+    mode: ModeEnum.Cluster,
+    refineType: RefineValueEnum.None,
+    indexTypeParams: {
+      indexType: IndexTypeEnum26.SPARSE_INVERTED_INDEX,
+      widthRawData: false,
+      maxDegree: 56,
+      flatNList: 128,
+      sq8NList: 128,
+      rabitqNList: 128,
+      m: 30,
+      inlinePq: 56,
+    }
+  });
+  assert.ok(sparseResult.memory > 0, 'SPARSE_INVERTED_INDEX memory calculated');
+});
+
+test('BUG-06 fix: AISAQ on-disk index does not accumulate phantom ~2.35 GB segment RAM buffer', () => {
+  const rawDataSize = 3072000000;
+  const num = 1;
+  const d = 768;
+
+  const aisaqResult = memoryAndDiskCalculator({
+    rawDataSize,
+    d,
+    num,
+    withScalar: false,
+    offLoading: false,
+    scalarAvg: 0,
+    segSize: 1024, // 1024MB segment size
+    mode: ModeEnum.Cluster,
+    refineType: RefineValueEnum.None,
+    indexTypeParams: {
+      indexType: IndexTypeEnum26.AISAQ,
+      widthRawData: false,
+      maxDegree: 56,
+      flatNList: 128,
+      sq8NList: 128,
+      rabitqNList: 128,
+      m: 30,
+      inlinePq: 56,
+    }
+  });
+
+  // AISAQ memory is 16 MB * 1.15 = 18.4 MB (around 19,293,798 bytes).
+  // Before fix: it added segmentSizeByte * 2 * 1.15 = 2.35 GB, exceeding 2,400,000,000 bytes.
+  assert.ok(aisaqResult.memory < 50 * 1024 * 1024, `AISAQ memory must be ~18.4 MB (got ${aisaqResult.memory} bytes, must be under 50MB)`);
+  assert.ok(aisaqResult.disk > 0, 'AISAQ index data resides on disk');
 });

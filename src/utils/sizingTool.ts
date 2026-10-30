@@ -15,6 +15,7 @@ import {
 
 // Re-export common utilities
 export {
+  VectorTypeEnum,
   unitBYTE2Any,
   unitAny2BYTE,
   formatNumber,
@@ -128,7 +129,24 @@ export const memoryAndDiskCalculator = (params: {
         memory: (1 + (2 * m) / d) * vectorRawDataSize,
         disk: 0,
       };
-
+      break;
+    case IndexTypeEnum.HNSW_SQ:
+      result = {
+        memory: (0.25 + (N / 32) + (2 * m) / d) * vectorRawDataSize,
+        disk: 0,
+      };
+      break;
+    case IndexTypeEnum.HNSW_PQ:
+      result = {
+        memory: (PQ_CODE_BUDGET_GB_RATIO + (N / 32) + (2 * m) / d) * vectorRawDataSize,
+        disk: 0,
+      };
+      break;
+    case IndexTypeEnum.SPARSE_INVERTED_INDEX:
+      result = {
+        memory: vectorRawDataSize * 1.2,
+        disk: 0,
+      };
       break;
     case IndexTypeEnum.DISKANN:
       result = {
@@ -160,7 +178,7 @@ export const memoryAndDiskCalculator = (params: {
 
   const scalarLocalDisk = offLoading ? num * scalarAvg * ONE_MILLION : 0;
 
-  if (indexType === IndexTypeEnum.DISKANN) {
+  if (indexType === IndexTypeEnum.DISKANN || indexType === IndexTypeEnum.AISAQ) {
     const vectorLoadingMemory = result.memory * 1.15;
     return {
       memory: vectorLoadingMemory + scalarLoadingMemory, // bytes

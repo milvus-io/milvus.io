@@ -5,7 +5,7 @@ import classes from '@/styles/faq.module.css';
 
 export default function RetiredReference() {
   return (
-    <Layout disableSelfHreflang>
+    <Layout disableSelfHreflang disableLangSelector>
       <Head>
         <title>Article retired | Milvus AI Reference</title>
         <meta name="robots" content="noindex" />

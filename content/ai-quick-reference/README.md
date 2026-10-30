@@ -206,3 +206,29 @@ metric rankings, MaxSim, RAM/SSD residency, GPU expansion, BM25 saturation,
 range bounds, and coverage versus scoring errors. Toy coordinates and
 calculations are not benchmarks. Article Markdown and publication hashes are
 unchanged. `reading-review-2026-10-21.json` records the scoped follow-up.
+
+## Reference indexing follow-up, 2026-10-30
+
+The list's page and topic parameters identify different result sets, so each
+valid page has its own canonical URL. Keyword searches remain available to
+readers but return `noindex, follow` in both HTTP and HTML. Invalid or out-of-range
+page numbers return 404 for HTML (400 for the API), rather than duplicating the
+last page indefinitely. Pagination links retain the active topic and keyword
+without requiring JavaScript. The English-only collection and its list API keep
+English routing even for visitors with a saved non-English language preference;
+the collection does not offer unavailable translations.
+
+Reference sitemap entries omit `lastmod`: the source-check date does not establish
+a content-modified date, and an unrelated site build must not make every article
+appear newly revised. Article hashes still gate publication. The agentic-search
+comparison was narrowed to control-flow differences, removing unsourced latency,
+model-call-count and universal quality comparisons; its arithmetic example is
+explicitly illustrative. This was a scoped claim correction, not a fresh review
+of every unchanged source or a new model benchmark.
+
+Run the catalog and indexing unit tests plus `scripts/smoke-ai-reference.js`
+against a preview before release. The full smoke checks retained pages, direct
+merge targets, retired response codes, search directives and pagination canonicals.
+These fixes address reproducible defects; they do not identify Google's reason
+for rejecting a reconsideration or establish that the manual action is resolved.
+No deployment or reconsideration submission is part of this change.

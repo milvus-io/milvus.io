@@ -8,7 +8,7 @@
     "dev:fe": "node scripts/migrateAssets.js && next dev -p 8000",
     "build": "node scripts/validate-ai-reference.js && node scripts/migrateAssets.js && node scripts/generate-llms-txt.js && node scripts/build.js",
     "validate:ai-reference": "node scripts/validate-ai-reference.js",
-    "test:ai-reference": "node --test tests/ai-reference-catalog.test.cjs",
+    "test:ai-reference": "node --test tests/ai-reference-catalog.test.cjs tests/ai-reference-indexing.test.cjs",
     "postbuild": "next-sitemap --config sitemap.config.js",
     "start": "npx next start",
     "lint": "next lint",

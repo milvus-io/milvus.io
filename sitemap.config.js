@@ -113,6 +113,11 @@ module.exports = {
   // next-sitemap's default transform so kept URLs are unchanged.
   transform: async (config, path) => {
     if (isExcludedFromSitemap(path)) return null;
+    // The Reference review date is not a content-modified date. Do not
+    // refresh its lastmod on every unrelated site build.
+    if (path === '/ai-quick-reference' || path.startsWith('/ai-quick-reference/')) {
+      return { loc: path, priority: 0.7 };
+    }
     const landing = landingSitemapByPath.get(path);
     if (landing) return landing;
     return {
@@ -127,9 +132,7 @@ module.exports = {
     const simpleList = await generateFaqPaths();
     const faqPaths = simpleList.map(v => ({
       loc: `/ai-quick-reference/${v.url}`,
-      changefreq: 'daily',
       priority: 0.7,
-      lastmod: new Date().toISOString(),
     }));
 
     // Localized and old-version docs reach the sitemap through these segments

@@ -4,8 +4,6 @@ import styles from '@/styles/blog.module.css';
 import { ELLIPSIS } from '@/consts/blog';
 import { generatePaginationNavigators } from '@/utils/format';
 
-const PAGEINDEX_QUERY_KEY = 'page';
-
 const ChevronLeft = () => (
   <svg
     className="h-4 w-4"
@@ -71,25 +69,13 @@ const MoreHorizontal = () => (
   </svg>
 );
 
-const generatePagingHref = (
-  curIndex: number,
-  index: number,
-  totalPages: number
-) => {
-  if (curIndex === 1 && index === -1) {
-    return '';
-  }
-  if (curIndex === totalPages && index === 1) {
-    return '';
-  }
-  return `/ai-quick-reference?${PAGEINDEX_QUERY_KEY}=${curIndex + index}`;
-};
-
 export default function FaqPagination({
   pageIndex,
   totalPages,
   onPageChange,
+  pageHref = page => `/ai-quick-reference?page=${page}`,
 }: {
+  pageHref?: (page: number) => string;
   pageIndex: number;
   totalPages: number;
   onPageChange: (e: React.MouseEvent<HTMLAnchorElement>, page: number) => void;
@@ -118,7 +104,7 @@ export default function FaqPagination({
               aria-label="Go to previous page"
               scroll={false}
               onClick={e => onPageChange(e, pageIndex - 1)}
-              href={generatePagingHref(pageIndex, -1, totalPages)}
+              href={pageHref(pageIndex - 1)}
               className={clsx('gap-1 pl-2.5', styles.paginationLink)}
             >
               <ChevronLeft />
@@ -152,7 +138,7 @@ export default function FaqPagination({
               <Link
                 scroll={false}
                 onClick={e => onPageChange(e, v as number)}
-                href={`/ai-quick-reference?${PAGEINDEX_QUERY_KEY}=${v}`}
+                href={pageHref(v as number)}
                 aria-current={pageIndex === v ? 'page' : undefined}
                 className={clsx(styles.paginationLink, {
                   [styles.activePaginationLink]: pageIndex === v,
@@ -168,7 +154,7 @@ export default function FaqPagination({
           {hasNext ? (
             <Link
               aria-label="Go to next page"
-              href={generatePagingHref(pageIndex, 1, totalPages)}
+              href={pageHref(pageIndex + 1)}
               scroll={false}
               onClick={e => onPageChange(e, pageIndex + 1)}
               className={clsx('gap-1 pr-2.5', styles.paginationLink)}

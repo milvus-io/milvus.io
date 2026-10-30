@@ -23,24 +23,24 @@ Milvus's [agentic RAG with LangGraph tutorial](https://milvus.io/docs/agentic_ra
 
 ## Agentic search vs classic RAG
 
-| | Classic RAG | Agentic search |
+| | Fixed retrieval pipeline | Agent-controlled retrieval loop |
 | --- | --- | --- |
-| Retrieval calls | One, always | Zero to many, decided per question |
-| Query | The user's text, maybe rewritten once | Generated, decomposed, and revised by the agent |
-| Sources | Usually one index | Several tools: vector, keyword, structured, web, APIs |
-| Handles multi-step questions | Poorly | Well, by chaining lookups |
-| Latency | Predictable, often well under a second of retrieval | Variable; several LLM turns, often seconds to minutes |
-| Cost | One LLM call | Several LLM calls plus tool calls |
+| Retrieval calls | Scheduled by application logic; may include several retrievers or query variants | Selected during execution, subject to a configured budget |
+| Query | User text or application-defined rewriting and decomposition | Generated, decomposed, and revised by the agent |
+| Sources | One or several sources configured by the application | One or several tools selected during the task |
+| Multi-step questions | Requires an explicit sequence or parallel retrieval plan | Can choose follow-up lookups; success depends on the model, tools, and evidence |
+| Latency | Depends on retrievers, reranking, models, and load | Also depends on the number of sequential model/tool turns |
+| Cost | Depends on the configured model and retrieval stages | Adds the model and tool calls actually executed by the loop |
 | Failure modes | Missed evidence | Loops, drift, over-searching, tool misuse |
 | Debuggability | Linear pipeline | Needs traces of every step |
 
-Agentic search is not "better RAG" in general. It wins on questions that need several pieces of evidence, a choice of source, or verification; a single well-tuned retrieval still wins on simple lookups because it is faster and cheaper.
+These are control-flow differences, not benchmark results. Fixed pipelines can also combine sources and answer multi-step questions. Evaluate whether adaptive follow-up calls improve evidence coverage on your tasks enough to justify their measured latency and cost; the architecture alone does not establish a winner.
 
 ## Where does a vector database fit?
 
 Inside the loop, the vector database is the semantic-recall tool. Its job is to answer each tool call quickly and correctly so the agent spends its turns reasoning instead of waiting or recovering from bad results. That puts specific requirements on it:
 
-- **Low latency per call.** An agent may issue five to twenty searches per task; tens of milliseconds each keeps the loop responsive.
+- **A measured per-call latency budget.** Sequential searches add to the critical path. For an illustrative task with five sequential retrieval calls, 100 ms per call contributes 500 ms before model and tool overhead; this is arithmetic, not a Milvus performance claim. Measure tail latency under your expected concurrency.
 - **Hybrid retrieval.** Agents generate a mix of conceptual queries and exact strings. Milvus can serve both from one collection: dense vectors for meaning, a BM25 full-text field (Milvus 2.5+) for exact terms, and `hybrid_search` to fuse them.
 - **Filters the agent cannot bypass.** Tenant, permission, and document-status constraints should be added by the tool wrapper from trusted context, not chosen by the model. Milvus applies them in the same query as the vector search.
 - **Stable IDs and metadata in results.** The agent needs source IDs, versions, and URLs to cite, deduplicate across iterations, and avoid re-reading the same passage.

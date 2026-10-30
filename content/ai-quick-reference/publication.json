@@ -35135,8 +35135,8 @@
   "status": "source-checked",
   "file": "agentic-search.md",
   "topic": "rag-agents",
-  "sha256": "6fec4b812b4e303db4d34d2fa95fc4046aea8f1a29f5407b9e25d21648c7da1b",
-  "checkedAt": "2026-10-20",
+  "sha256": "bde9cb8042b9695d1a93b7f929136c3225c347b1d656e7d406cff276be0c7f49",
+  "checkedAt": "2026-10-30",
   "sources": [
    "https://milvus.io/docs/agentic_rag_with_milvus_and_langgraph.md",
    "https://github.com/zilliztech/deep-searcher",

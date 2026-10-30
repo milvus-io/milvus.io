@@ -2,6 +2,8 @@ import classes from '@/styles/faq.module.css';
 import pageClasses from '@/styles/responsive.module.css';
 import clsx from 'clsx';
 import Head from 'next/head';
+import { ABSOLUTE_BASE_URL } from '@/consts';
+import { referenceListPath, referencePageIndex } from '@/utils/ai-reference-query';
 import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
 import Layout from '@/components/layout/commonLayout';
@@ -48,17 +50,6 @@ type FaqListResponse = {
   total: number;
   pageIndex: number;
   pageSize: number;
-};
-
-const normalizePageIndex = (page: unknown, total: number) => {
-  const pageIndex = Number(Array.isArray(page) ? page[0] : page || 1);
-  const totalPages = Math.max(1, Math.ceil(total / DEFAULT_PAGE_SIZE));
-
-  if (!Number.isFinite(pageIndex) || pageIndex < 1) {
-    return 1;
-  }
-
-  return Math.min(Math.floor(pageIndex), totalPages);
 };
 
 export default function AiFaq(props: {
@@ -137,12 +128,7 @@ export default function AiFaq(props: {
     [topic]
   );
 
-  const pageUrl = (page: number, search = '') => {
-    const params = new URLSearchParams({ page: String(page) });
-    if (topic) params.set('topic', topic);
-    if (search) params.set('keyword', search);
-    return `/ai-quick-reference?${params}`;
-  };
+  const pageUrl = (page: number, search = '') => referenceListPath(page, topic, search);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const keyword = e.target.value;
@@ -206,10 +192,15 @@ export default function AiFaq(props: {
   }, [fetchFaqPage, searchData.keyword]);
 
   return (
-    <Layout>
+    <Layout
+      disableLangSelector
+      disableSelfHreflang
+      canonicalUrl={`${ABSOLUTE_BASE_URL}${pageUrl(paginationData.pageIndex, searchData.keyword)}`}
+    >
       <main>
         <Head>
-          <title>AI Quick Reference | Milvus</title>
+          <title>{`AI Quick Reference${topic ? `: ${topics.find(item => item.id === topic)?.label}` : ''}${paginationData.pageIndex > 1 ? ` — Page ${paginationData.pageIndex}` : ''} | Milvus`}</title>
+          {searchData.keyword.trim() && <meta name="robots" content="noindex, follow" />}
           <meta name="description" content={t('desc')} />
         </Head>
 
@@ -266,6 +257,7 @@ export default function AiFaq(props: {
               pageIndex={paginationData.pageIndex}
               totalPages={totalPages}
               onPageChange={handlePaging}
+              pageHref={page => pageUrl(page, searchData.keyword)}
             />
           ) : null}
         </section>
@@ -276,6 +268,8 @@ export default function AiFaq(props: {
 
 export const getServerSideProps = async ({ query, res }) => {
   try {
+    if (['topic', 'keyword'].some(key => query?.[key] !== undefined && typeof query[key] !== 'string'))
+      return { notFound: true };
     const topic = String(query?.topic || '');
     if (topic && !topics.some(item => item.id === topic))
       return { notFound: true };
@@ -285,10 +279,13 @@ export const getServerSideProps = async ({ query, res }) => {
         (!topic || item.topic === topic) &&
         (!keyword || item.title.toLowerCase().includes(keyword.toLowerCase()))
     );
-    const pageIndex = normalizePageIndex(
+    const pageIndex = referencePageIndex(
       query?.[PAGEINDEX_QUERY_KEY],
-      simpleFaqList.length
+      simpleFaqList.length,
+      DEFAULT_PAGE_SIZE
     );
+    if (pageIndex === null) return { notFound: true };
+    if (keyword) res.setHeader('X-Robots-Tag', 'noindex, follow');
     const start = DEFAULT_PAGE_SIZE * (pageIndex - 1);
     res.setHeader(
       'Cache-Control',

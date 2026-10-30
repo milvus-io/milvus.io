@@ -1,27 +1,19 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { generateSimpleFaqList } from '@/http/faq';
+import { referencePageIndex } from '@/utils/ai-reference-query';
 import topics from '../../../content/ai-quick-reference/topics.json';
 import { AI_REFERENCE_PAGE_SIZE as DEFAULT_PAGE_SIZE } from '@/consts/faq';
-
-const normalizePageIndex = (
-  page: string | string[] | undefined,
-  total: number
-) => {
-  const pageIndex = Number(Array.isArray(page) ? page[0] : page || 1);
-  const totalPages = Math.max(1, Math.ceil(total / DEFAULT_PAGE_SIZE));
-
-  if (!Number.isFinite(pageIndex) || pageIndex < 1) {
-    return 1;
-  }
-
-  return Math.min(Math.floor(pageIndex), totalPages);
-};
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
   try {
+    // JSON listings are navigation data, not search landing pages.
+    res.setHeader('X-Robots-Tag', 'noindex, follow');
+    if (['topic', 'keyword'].some(key => req.query[key] !== undefined && typeof req.query[key] !== 'string')) {
+      return res.status(400).json({ message: 'Invalid reference filter' });
+    }
     const keyword = String(req.query.keyword || '')
       .trim()
       .toLowerCase();
@@ -35,7 +27,8 @@ export default async function handler(
         (!topic || item.topic === topic) &&
         (!keyword || item.title.toLowerCase().includes(keyword))
     );
-    const pageIndex = normalizePageIndex(req.query.page, filteredList.length);
+    const pageIndex = referencePageIndex(req.query.page, filteredList.length, DEFAULT_PAGE_SIZE);
+    if (pageIndex === null) return res.status(400).json({ message: 'Invalid reference page' });
     const start = DEFAULT_PAGE_SIZE * (pageIndex - 1);
 
     res.setHeader(

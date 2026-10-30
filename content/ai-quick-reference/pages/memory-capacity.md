@@ -24,7 +24,7 @@ Milvus supports several dense vector types, and the element size changes the res
 
 Sparse vectors (`SPARSE_FLOAT_VECTOR`) scale with the number of non-zero entries, not the dimension, so measure them from real data.
 
-Keep decimal and binary units apart. One million 768-dimensional float32 vectors are 3,072,000,000 bytes: 3.07 GB, or 2.86 GiB. Cloud instance memory is usually quoted in GiB, so mixing the two understates need by about 7%.
+Keep decimal and binary units apart. One million 768-dimensional float32 vectors are 3,072,000,000 bytes: 3.07 GB, or 2.86 GiB. Check which unit the instance specification uses: 1 GiB is about 1.074 GB. Treating a GB figure as GiB overstates the byte capacity; treating a GiB figure as GB understates it.
 
 ## Step 2: How much does the index add?
 
@@ -71,7 +71,7 @@ Swapping the index changes the picture. The same vectors as IVF_SQ8 need about 1
 ## How can you reduce memory in Milvus?
 
 - **Load only what you query.** The `load_fields` option loads just the listed fields; only those can be used as filters or output fields. Always include the primary key and at least one vector field. `skip_load_dynamic_field=True` skips the dynamic `$meta` field when no query needs it. See [load and release](https://milvus.io/docs/load-and-release.md).
-- **Release idle collections.** Unloaded collections use no query-node memory.
+- **Release idle collections.** Releasing a collection frees its loaded data and indexes; it does not guarantee that the query-node process RSS or all metadata and caches fall to zero.
 - **Use mmap.** [Memory mapping](https://milvus.io/docs/mmap.md) lets the OS page field data and indexes from local disk, configurable per cluster (`queryNode.mmap.*`), per collection (`mmap.enabled`), or per index. Performance stays close to in-memory while the working set fits in page cache; HNSW tolerates mmap better than IVF indexes when memory runs short. It must be set before the collection is loaded.
 - **Use tiered storage.** From Milvus 2.6.4, [tiered storage](https://milvus.io/docs/tiered-storage-overview.md) loads only metadata at first and fetches field data and index files from object storage on demand, with eviction controlled by watermarks such as `memoryHighWatermarkRatio`. Queries that touch cold data pay extra latency.
 - **Pick a smaller representation.** FLOAT16 or INT8 vectors, a quantized index, or DISKANN.

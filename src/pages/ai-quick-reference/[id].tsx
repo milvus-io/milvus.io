@@ -109,7 +109,7 @@ function FaqDetail(props: FaqDetailProps) {
   ];
 
   return (
-    <Layout>
+    <Layout canonicalUrl={canonical_rel} disableLangSelector>
       <main>
         <Head>
           <title>{title}</title>

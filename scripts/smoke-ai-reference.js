@@ -43,6 +43,7 @@ async function get(path) {
     const rendered = await get(`/ai-quick-reference?page=${page}`);
     assert.equal(rendered.status, 200);
     const html = await rendered.text();
+    assert.ok(html.includes(`href="https://milvus.io/ai-quick-reference?page=${page}"`), 'pagination must not canonicalize to page one');
     const nextData = JSON.parse(
       html.match(
         /<script\b[^>]*id="__NEXT_DATA__"[^>]*>([\s\S]*?)<\/script>/
@@ -66,6 +67,11 @@ async function get(path) {
     400
   );
   assert.equal((await get('/ai-quick-reference?topic=unknown')).status, 404);
+  assert.equal((await get('/ai-quick-reference?page=999999')).status, 404);
+  const emptySearch = await get('/ai-quick-reference?keyword=no-such-reference-20261030');
+  assert.equal(emptySearch.status, 200);
+  assert.equal(emptySearch.headers.get('x-robots-tag'), 'noindex, follow');
+  assert.match(await emptySearch.text(), /name="robots" content="noindex, follow"/);
   const filtered = await (
     await get('/api/ai-quick-reference?topic=retrieval&keyword=hybrid')
   ).json();

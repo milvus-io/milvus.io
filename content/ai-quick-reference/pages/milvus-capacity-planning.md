@@ -42,7 +42,7 @@ Separate the quantities, because they land on different resources:
 
 Memory determines whether the data fits; QPS determines how many copies you need. Measure throughput for one replica at your recall and latency target, then add [in-memory replicas](https://milvus.io/docs/replica.md) until the peak load fits with headroom. Every replica holds a full copy of the loaded segments, so memory scales linearly with replica count. If the service needs to survive a query-node failure without a reload, plan for at least two, even when one would carry the load.
 
-Then choose the deployment mode. The [Milvus installation overview](https://milvus.io/docs/install-overview.md) gives rough ranges: Milvus Lite for prototypes up to a few million vectors, Standalone on one machine for up to 100 million, and Distributed on Kubernetes for 100 million to tens of billions, with ingestion and search handled by separate nodes.
+Then choose the deployment mode using the [Milvus installation overview](https://milvus.io/docs/install-overview.md): Lite is local to an application, Standalone is a single-machine service, and Distributed separates components for scale and availability. Vector count alone does not establish a supported capacity or the right deployment; include dimensions, query and ingestion load, resources, and availability requirements.
 
 ## A worked example
 
@@ -61,11 +61,11 @@ Add loaded scalar fields, growing segments, and query working memory, then leave
 
 ## How does this translate to Zilliz Cloud?
 
-Zilliz Cloud Dedicated clusters are sized in compute units (CUs), and the [pricing page](https://zilliz.com/pricing) publishes approximate per-CU capacity for 768-dimensional vectors by cluster type. At the time of writing those figures are about 2 million vectors per CU for performance-optimized, 8 million for capacity-optimized, and 40 million for tiered-storage clusters.
+Zilliz Cloud Dedicated clusters are sized in compute units (CUs). Use the current [pricing page](https://zilliz.com/pricing) and calculator for the selected cluster type, cloud, region, dimensions, and replica configuration rather than treating a fixed vectors-per-CU ratio as a deployment guarantee.
 
-An illustrative first pass for 10 million 768-dimensional vectors, per replica: 10 ÷ 2 = 5 CUs performance-optimized, 10 ÷ 8 = 1.25, rounded up to 2 CUs capacity-optimized, or 10 ÷ 40 = 0.25, rounded up to 1 CU tiered-storage. Multiply by replicas for availability or throughput. Different dimensions, indexes, and filters change the result, so confirm with the pricing calculator and a trial cluster.
+For a first estimate, divide the expected data size by the capacity of one CU under those assumptions, then choose a supported cluster size. A fractional result does not establish that a 1-CU cluster is available, and rounding to an arbitrary integer does not establish that size is supported. Check the minimum and scaling increments in the current console, include replicas and serving load, and validate with a trial cluster.
 
-Pick the cluster type by latency, not just capacity. Performance-optimized targets real-time search with high concurrency; capacity-optimized trades some latency for density; tiered-storage suits very large, cost-sensitive corpora where queries can tolerate more latency. Published customer results show how this plays out: [Consensus](https://zilliz.com/customers/consensus) reports searching 400M+ research papers at about 45 ms p99, and moving to 4× larger vectors for 2.5× the cluster size. [OpenEvidence](https://zilliz.com/customers/openevidence) reports sub-10 ms search latency at 4,000 QPS peak traffic.
+Pick the cluster type by latency, not just capacity. Performance-optimized targets real-time search with high concurrency; capacity-optimized trades some latency for density; tiered-storage suits very large, cost-sensitive corpora where queries can tolerate more latency. Published customer results show how this plays out: [Consensus](https://zilliz.com/customers/consensus) reports searching 400M+ scholarly sources at about 45 ms p99 for dense retrieval, and moving to 4× larger vectors for 2.5× the cluster size. [OpenEvidence](https://zilliz.com/customers/openevidence) reports sub-10 ms search latency at 4,000 QPS peak traffic.
 
 ## Pass 3: Add headroom and growth
 

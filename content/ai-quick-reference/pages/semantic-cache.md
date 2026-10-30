@@ -50,7 +50,7 @@ The numbers are illustrative; plug in your own. Note that every miss now pays th
 
 ## How do you choose the similarity threshold?
 
-The threshold is the main quality dial. With cosine similarity on modern sentence-embedding models, useful thresholds commonly sit somewhere around 0.85-0.95, but the right value depends on the model and domain, so calibrate it:
+The threshold is the main quality dial. A cosine score is not a probability that two prompts can safely share an answer, and a cutoff does not transfer reliably between models or domains. Calibrate it on labeled examples:
 
 1. Collect a few hundred pairs of real prompts and label each pair "same answer" or "different answer". Include hard negatives that differ only in a number, a negation, a product name, a version, or a date ("refund window for EU orders" vs "for US orders").
 2. For each candidate threshold, compute the **false-hit rate** (different-answer pairs accepted) and the **hit rate** (same-answer pairs accepted).

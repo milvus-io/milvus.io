@@ -229,6 +229,10 @@ of every unchanged source or a new model benchmark.
 Run the catalog and indexing unit tests plus `scripts/smoke-ai-reference.js`
 against a preview before release. The full smoke checks retained pages, direct
 merge targets, retired response codes, search directives and pagination canonicals.
+A further targeted pass qualifies GPU paper results and single-query behavior,
+IVF build-time comparisons, cache thresholds, memory-unit/release semantics, and
+workload-specific deployment and Cloud sizing. The 113-file risk scan is only
+triage; neither article length nor passing source-link checks certifies quality.
 These fixes address reproducible defects; they do not identify Google's reason
 for rejecting a reconsideration or establish that the manual action is resolved.
 No deployment or reconsideration submission is part of this change.

@@ -7,7 +7,7 @@ order: 60
 
 GPU_CAGRA is Milvus's GPU graph index, built on CAGRA (CUDA ANNS GRAph-based), an approximate nearest-neighbor algorithm designed from the ground up for NVIDIA GPUs. Like [HNSW](/ai-quick-reference/what-is-hnsw), it searches a proximity graph by walking from candidate to better candidate. Unlike HNSW, both the graph build and the search are organized to run thousands of GPU threads in parallel, so it shines when you have large batches of queries or need to build indexes over big datasets quickly.
 
-CAGRA was introduced by NVIDIA researchers at ICDE 2024 ([arXiv:2308.15136](https://arxiv.org/abs/2308.15136)) and ships in the open-source [cuVS](https://github.com/NVIDIA/cuvs) library, which Milvus uses for its GPU indexes. The paper reports graph construction 2.2 to 27 times faster than CPU HNSW and large-batch search 33 to 77 times faster, which is the kind of gap that makes GPUs worth considering for vector search.
+CAGRA was introduced by NVIDIA researchers at ICDE 2024 ([arXiv:2308.15136](https://arxiv.org/abs/2308.15136)) and ships in the open-source [cuVS](https://github.com/NVIDIA/cuvs) library, which Milvus uses for its GPU indexes. The paper reports graph construction 2.2 to 27 times faster than its CPU HNSW baseline and large-batch throughput 33 to 77 times higher at 90–95% recall in its experiments. These are hardware-, dataset-, and configuration-specific research results, not guaranteed speedups for a Milvus deployment.
 
 ![CAGRA uses parallel GPU graph search. A GPU needs enough useful work; compare at the same recall target.](/images/ai-reference/cagra-parallel.svg)
 
@@ -106,7 +106,7 @@ GPU_CAGRA pays off when the GPU is kept busy:
 - **Fast or frequent index builds** on large collections, where CPU HNSW construction takes hours.
 - **High recall at high throughput**, where a CPU fleet large enough to match would cost more than a GPU node.
 
-It helps much less for a low-rate interactive service that sends one query at a time. A single query cannot fill a GPU, so latency may be no better than a well-tuned CPU HNSW index, and you still pay for the GPU. Always measure end to end, including time spent forming batches and moving queries and results between host and device. The [batching and throughput guide](/ai-quick-reference/how-does-batching-multiple-queries-together-affect-latency-and-throughput-in-what-scenarios-is-batch-querying-beneficial-or-detrimental-for-vector-search) covers how batch size trades latency for throughput.
+For a low-rate interactive service, measure single-query latency separately from batch throughput and include GPU utilization and cost. The CAGRA paper also reports single-query gains on its tested workloads, so batch size alone does not determine whether GPU search is beneficial. Always measure end to end, including time spent forming batches and moving queries and results between host and device. The [batching and throughput guide](/ai-quick-reference/how-does-batching-multiple-queries-together-affect-latency-and-throughput-in-what-scenarios-is-batch-querying-beneficial-or-detrimental-for-vector-search) covers how batch size trades latency for throughput.
 
 ## GPU_CAGRA or GPU_IVF?
 

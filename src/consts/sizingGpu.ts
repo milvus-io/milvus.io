@@ -62,17 +62,17 @@ export const PQ_DIM_RANGE_CONFIG = {
 export const GRAPH_DEGREE_RANGE_CONFIG = {
   min: 1,
   max: 1024,
-  defaultValue: 64,
+  defaultValue: 32,
   domain: [0, 25, 50, 75, 100],
-  range: [1, 8, 64, 256, 1024],
+  range: [1, 8, 32, 128, 1024],
 };
 
 export const INTERMEDIATE_GRAPH_DEGREE_RANGE_CONFIG = {
   min: 1,
   max: 2048,
-  defaultValue: 128,
+  defaultValue: 64,
   domain: [0, 25, 50, 75, 100],
-  range: [1, 16, 128, 512, 2048],
+  range: [1, 16, 64, 256, 2048],
 };
 
 export const PQ_BITS_OPTIONS = [4, 5, 6, 7, 8].map(value => ({
@@ -86,8 +86,9 @@ export const DEFAULT_GPU_INDEX_PARAMS: IGpuIndexParams = {
   trainFraction: TRAIN_FRACTION_RANGE_CONFIG.defaultValue,
   pqDim: PQ_DIM_RANGE_CONFIG.defaultValue,
   pqBits: PQ_BITS_DEFAULT_VALUE,
-  graphDegree: GRAPH_DEGREE_RANGE_CONFIG.defaultValue,
-  intermediateDegree: INTERMEDIATE_GRAPH_DEGREE_RANGE_CONFIG.defaultValue,
+  graphDegree: 32,
+  intermediateDegree: 64,
+  cacheDatasetOnDevice: true,
 };
 
 /** Index parameters that actually reach the memory formulas, per index type. */
@@ -98,7 +99,7 @@ export const GPU_INDEX_PARAM_KEYS: Record<
   [GpuIndexTypeEnum.GPU_BRUTE_FORCE]: [],
   [GpuIndexTypeEnum.GPU_IVF_FLAT]: ['nlist', 'trainFraction'],
   [GpuIndexTypeEnum.GPU_IVF_PQ]: ['nlist', 'pqDim', 'pqBits', 'trainFraction'],
-  [GpuIndexTypeEnum.GPU_CAGRA]: ['graphDegree', 'intermediateDegree'],
+  [GpuIndexTypeEnum.GPU_CAGRA]: ['graphDegree', 'intermediateDegree', 'cacheDatasetOnDevice'],
 };
 
 export const GPU_INDEX_TYPE_OPTIONS = [

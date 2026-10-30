@@ -27,8 +27,10 @@ const { ModeEnum, DependencyComponentEnum, IndexTypeEnum } = require('../src/typ
 const { INDEX_TYPE_OPTIONS } = require('../src/consts/sizingV250.ts');
 const { REFINE_OPTIONS } = require('../src/consts/sizing.ts');
 const { RefineValueEnum, REFINE_VALUE_TO_N_MAP, VectorTypeEnum, IndexTypeEnum: IndexTypeEnum26 } = require('../src/types/sizing.ts');
+const { GpuIndexTypeEnum } = require('../src/types/sizingGpu.ts');
 const { fetchMilvusReleases } = require('../src/http/milvus.ts');
 const { unitBYTE2Any, rawDataSizeCalculator, memoryAndDiskCalculator } = require('../src/utils/sizingTool.ts');
+const { gpuIndexMemoryCalculator, rmmPoolSizeCalculator, gpuOperatorYmlGenerator } = require('../src/utils/sizingToolGpu.ts');
 
 const dummyClusterConfig = {
   mixCoord: { count: 1, cpu: 1, memory: 2 },
@@ -213,7 +215,6 @@ test('memoryAndDiskCalculator correctly calculates advanced indexes (HNSW_SQ, HN
       inlinePq: 56,
     }
   });
-  // Base memory = 1,008,000,000 bytes, vectorLoadingMemory = (1,008,000,000 + 2GB) * 1.15
   assert.ok(hnswSqResult.memory > 0, 'HNSW_SQ memory calculated');
   assert.equal(hnswSqResult.disk, 0, 'HNSW_SQ disk is 0');
 
@@ -273,4 +274,96 @@ test('BUG-06 fix: AISAQ on-disk index does not accumulate phantom ~2.35 GB segme
   // Before fix: it added segmentSizeByte * 2 * 1.15 = 2.35 GB, exceeding 2,400,000,000 bytes.
   assert.ok(aisaqResult.memory < 50 * 1024 * 1024, `AISAQ memory must be ~18.4 MB (got ${aisaqResult.memory} bytes, must be under 50MB)`);
   assert.ok(aisaqResult.disk > 0, 'AISAQ index data resides on disk');
+});
+
+test('GPU_CAGRA memory formula correctly calculates adjacency list and device dataset cache', () => {
+  const n = 1000;
+  const d = 768;
+  const graphDegree = 32;
+
+  // 1. With cacheDatasetOnDevice = true: VRAM = N * graphDegree * 4 + vectorRawData
+  const cagraWithCache = gpuIndexMemoryCalculator({
+    n,
+    d,
+    indexType: GpuIndexTypeEnum.GPU_CAGRA,
+    indexParams: {
+      graphDegree,
+      intermediateDegree: 64,
+      cacheDatasetOnDevice: true,
+      nlist: 128,
+      trainFraction: 0.5,
+      pqDim: 0,
+      pqBits: 8,
+    }
+  });
+
+  const expectedDataset = n * d * 4; // 1000 * 768 * 4 = 3,072,000 bytes
+  const expectedGraph = n * graphDegree * 4; // 1000 * 32 * 4 = 128,000 bytes
+  assert.equal(cagraWithCache.dataset, expectedDataset, 'CAGRA dataset size with cache = true');
+  assert.equal(cagraWithCache.graph, expectedGraph, 'CAGRA adjacency list size');
+  assert.equal(cagraWithCache.total, expectedDataset + expectedGraph, 'Total CAGRA VRAM with cache');
+
+  // 2. With cacheDatasetOnDevice = false: VRAM = N * graphDegree * 4 (dataset not cached on device)
+  const cagraWithoutCache = gpuIndexMemoryCalculator({
+    n,
+    d,
+    indexType: GpuIndexTypeEnum.GPU_CAGRA,
+    indexParams: {
+      graphDegree,
+      intermediateDegree: 64,
+      cacheDatasetOnDevice: false,
+      nlist: 128,
+      trainFraction: 0.5,
+      pqDim: 0,
+      pqBits: 8,
+    }
+  });
+  assert.equal(cagraWithoutCache.dataset, 0, 'CAGRA dataset size with cache = false must be 0');
+  assert.equal(cagraWithoutCache.graph, expectedGraph, 'CAGRA adjacency list remains same');
+  assert.equal(cagraWithoutCache.total, expectedGraph, 'Total CAGRA VRAM without cache is graph only');
+});
+
+test('rmmPoolSizeCalculator computes initMemSize and maxMemSize according to cuVS spec', () => {
+  // Test case 1: 1 GB GPU Index Memory
+  // init = Math.max(2, Math.ceil(1 * 0.5)) = 2 GB
+  // max = Math.max(4, Math.ceil(1 * 1.5)) = 4 GB
+  const pool1Gb = rmmPoolSizeCalculator(1 * 1024 * 1024 * 1024);
+  assert.equal(pool1Gb.initMemSize, 2, '1 GB index: initMemSize is clamped to 2 GB minimum');
+  assert.equal(pool1Gb.maxMemSize, 4, '1 GB index: maxMemSize is clamped to 4 GB minimum');
+
+  // Test case 2: 10 GB GPU Index Memory
+  // init = Math.max(2, Math.ceil(10 * 0.5)) = 5 GB
+  // max = Math.max(4, Math.ceil(10 * 1.5)) = 15 GB
+  const pool10Gb = rmmPoolSizeCalculator(10 * 1024 * 1024 * 1024);
+  assert.equal(pool10Gb.initMemSize, 5, '10 GB index: initMemSize is 5 GB');
+  assert.equal(pool10Gb.maxMemSize, 15, '10 GB index: maxMemSize is 15 GB');
+});
+
+test('gpuOperatorYmlGenerator exports Kubernetes YAML with nvidia.com/gpu limit in standalone and cluster mode', () => {
+  const dummyGpuCluster = {
+    queryNode: { count: 2, cpu: 4, memory: 16, gpuMemory: 16 * 1024 * 1024 * 1024 },
+    proxy: { count: 1, cpu: 2, memory: 8 },
+    mixCoord: { count: 1, cpu: 2, memory: 8 },
+    dataNode: { count: 1, cpu: 4, memory: 16, gpuMemory: 16 * 1024 * 1024 * 1024 },
+    streamNode: { count: 1, cpu: 2, memory: 8 },
+  };
+  const dummyGpuStandalone = { count: 1, cpu: 4, memory: 16, gpuMemory: 16 * 1024 * 1024 * 1024 };
+
+  // Standalone mode
+  const standaloneYml = gpuOperatorYmlGenerator({
+    clusterNodeConfig: dummyGpuCluster,
+    standaloneNodeConfig: dummyGpuStandalone,
+    mode: ModeEnum.Standalone,
+  });
+  assert.ok(standaloneYml.includes('spec:\n  mode: standalone'), 'Must specify mode: standalone');
+  assert.ok(standaloneYml.includes('nvidia.com/gpu: "1"'), 'Standalone must configure nvidia.com/gpu: "1"');
+
+  // Cluster mode
+  const clusterYml = gpuOperatorYmlGenerator({
+    clusterNodeConfig: dummyGpuCluster,
+    standaloneNodeConfig: dummyGpuStandalone,
+    mode: ModeEnum.Cluster,
+  });
+  assert.ok(clusterYml.includes('spec:\n  mode: cluster'), 'Must specify mode: cluster');
+  assert.ok(clusterYml.includes('nvidia.com/gpu: "1"'), 'Cluster must configure nvidia.com/gpu: "1"');
 });

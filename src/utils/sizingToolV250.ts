@@ -833,7 +833,8 @@ export const operatorYmlGenerator: (
     mode === ModeEnum.Standalone
       ? ''
       : `
-    pulsarv3:
+    msgStreamType: pulsar
+    pulsar:
       inCluster:
         values:
           proxy:
@@ -918,6 +919,7 @@ metadata:
   labels:
     app: milvus
 spec:
+  mode: ${mode === ModeEnum.Cluster ? 'cluster' : 'standalone'}
   components:
     mixCoord:
       replicas: ${mixCoord.count}

@@ -3,7 +3,6 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const { readPages, getLandingProps, getLandingPaths, getLandingSitemapPaths } = require('../src/server/seo-landing-catalog');
 const evidence = require('../content/seo-landings/benchmark-evidence.json');
-const aiq = require('../content/seo-landings/aiq-index.json');
 
 test('six solution and four comparison pages have reciprocal Chinese twins', () => {
   const en = readPages('en'), zh = readPages('zh');
@@ -45,17 +44,15 @@ test('published props exclude editorial caveats, research and paid campaign seed
     assert.ok(props.twinPath);
     for (const key of ['notes', 'research', 'sem_seed_for_zilliz', 'keywords']) assert.equal(props.page[key], undefined);
     assert.ok(props.related.length);
-    assert.equal(props.references.length, p.aiq.length);
-    for (const slug of p.aiq) assert.ok(aiq[slug], slug);
+    assert.equal(props.references, undefined);
+    assert.equal(props.page.aiq, undefined);
     for (const r of props.related) assert.ok(readPages(lang).some(x => x.path === r.path));
   }
 });
 
-test('concept links point to the actual published AI Reference catalog', async () => {
-  const { loadPublishedFaqRows } = require('../src/server/ai-reference-catalog');
-  const published = new Set((await loadPublishedFaqRows()).map(p => p.URL));
+test('landing pages do not advertise the retired Reference collection', () => {
   for (const lang of ['en', 'zh']) for (const page of readPages(lang)) {
-    for (const slug of page.aiq) assert.ok(published.has(slug), `${page.path}: ${slug}`);
+    assert.doesNotMatch(JSON.stringify(page), /ai-quick-reference|"aiq"/);
   }
 });
 

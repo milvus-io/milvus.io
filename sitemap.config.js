@@ -1,6 +1,5 @@
 const fs = require('fs');
 const { join } = require('path');
-const { loadPublishedFaqRows } = require('./src/server/ai-reference-catalog');
 const { getLandingSitemapPaths } = require('./src/server/seo-landing-catalog');
 const landingSitemapPaths = getLandingSitemapPaths();
 const landingSitemapByPath = new Map(landingSitemapPaths.map(page => [page.loc, page]));
@@ -37,16 +36,13 @@ const readDocSitemapPaths = () => {
   }
 };
 
-const generateFaqPaths = async () =>
-  (await loadPublishedFaqRows()).map(row => ({ title: row.Questions, url: row.URL }));
-
 // Keep the sitemap focused on high-value canonical URLs: English plus the
 // non-English languages that carry real GSC traffic (zh/ko/zh-hant/ja), at
 // their latest doc version only. We stop advertising the rest of the localized
 // and old-version long tail — Google discovers those from the sitemap but
 // defers crawling/indexing them ("Discovered/Crawled - currently not indexed"),
-// which just dilutes crawl budget. api-reference, ai-quick-reference and landing
-// pages (incl. localized landing pages) are intentionally left untouched.
+// which just dilutes crawl budget. API reference and landing pages (including
+// localized landing pages) are intentionally left untouched.
 //
 // INDEXABLE_NON_EN_LANGS must stay in sync with INDEXABLE_LANGUAGES in
 // src/types/localization.ts (this file is CommonJS and cannot import it).
@@ -71,6 +67,9 @@ const LOCALIZED_DOCS_RE = new RegExp(`^/docs/(${CUT_LANGS.join('|')})(/|$)`);
 const VERSIONED_DOCS_RE = new RegExp(
   `^/docs/(?:(?:${INDEXABLE_NON_EN_LANGS.join('|')})/)?v\\d+\\.\\d+\\.x(/|$)`
 );
+// The entire retired collection, including historical locale-prefixed URLs,
+// must stay out of generated sitemaps.
+const RETIRED_REFERENCE_RE = /^\/(?:(?:en|zh-hant|zh|ja|jp|fr|ko|ru|de|es|pt|it|ar|id|cn)\/)?(?:ai-quick-reference|api\/ai-quick-reference)(?:\/|$)/i;
 
 const toPathname = loc => {
   try {
@@ -85,6 +84,7 @@ const toPathname = loc => {
 const isExcludedFromSitemap = loc => {
   const pathname = toPathname(loc);
   return (
+    RETIRED_REFERENCE_RE.test(pathname) ||
     LOCALIZED_BLOG_RE.test(pathname) ||
     LOCALIZED_DOCS_RE.test(pathname) ||
     VERSIONED_DOCS_RE.test(pathname)
@@ -124,14 +124,6 @@ module.exports = {
     };
   },
   additionalPaths: async config => {
-    const simpleList = await generateFaqPaths();
-    const faqPaths = simpleList.map(v => ({
-      loc: `/ai-quick-reference/${v.url}`,
-      changefreq: 'daily',
-      priority: 0.7,
-      lastmod: new Date().toISOString(),
-    }));
-
     // Localized and old-version docs reach the sitemap through these segments
     // (English latest is auto-discovered above), so the same filter is applied
     // here. api-reference URLs also live in these segments and are kept.
@@ -144,7 +136,7 @@ module.exports = {
         lastmod: new Date().toISOString(),
       }));
 
-    return [...faqPaths, ...docPaths, ...landingSitemapPaths];
+    return [...docPaths, ...landingSitemapPaths];
   },
   outDir: './public',
 };

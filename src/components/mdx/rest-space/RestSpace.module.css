@@ -99,6 +99,84 @@ input[type='radio']:checked + .tabLabel + .tabPanel {
   min-width: 100%;
 }
 
+.sectionMeta {
+  flex-shrink: 0;
+  align-self: center;
+  color: rgb(74, 83, 104);
+  font-family: 'Geist Mono', monospace;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.responseStatuses {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.responseStatus,
+.responseStatusActive {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 32px;
+  padding: 5px 10px;
+  border: 1px solid rgba(223, 225, 236, 0.9);
+  border-radius: 5px;
+  background: transparent;
+  color: var(--color-text-primary);
+  font-family: 'Geist Mono', monospace;
+  font-size: 13px;
+  line-height: 1.4;
+  cursor: pointer;
+}
+
+.responseStatus:hover {
+  border-color: rgb(74, 83, 104);
+  background: rgb(240, 244, 249);
+}
+
+.responseStatusActive {
+  border-color: var(--color-text-primary);
+  background: var(--color-text-primary);
+  color: #ffffff;
+}
+
+.responseStatus:focus-visible,
+.responseStatusActive:focus-visible {
+  outline: 2px solid rgb(74, 83, 104);
+  outline-offset: 2px;
+}
+
+.responseDescription {
+  margin: 0 0 1rem;
+  color: rgb(74, 83, 104);
+  font-size: 14px;
+}
+
+.responseDescription > :last-child {
+  margin-bottom: 0;
+}
+
+.emptyResponse {
+  margin: 1rem 0 0;
+  color: rgb(74, 83, 104);
+  font-size: 14px;
+}
+
+.singleExample {
+  margin-top: 1rem;
+}
+
+/* Panel body of a combinator that collapsed to a single option — rendered
+   without a radio, so unlike .tabPanel it must be visible unconditionally. */
+.singlePanel {
+  display: block;
+  margin-top: 0.5rem;
+  border-radius: 5px;
+}
+
 .exampleContainer {
   margin-top: 4.5rem;
   font-size: 0.85rem;

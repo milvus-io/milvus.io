@@ -1,8 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { RestHeader } from './RestHeader';
 import {
   chooseParamExample,
+  filterSchemaOptions,
+  getDefaultResponseStatus,
+  getExampleLabel,
+  getLocalizedDescription,
   getRandomString,
+  getResponseEntries,
   isControlPlane,
   textFilter,
 } from './utils';
@@ -26,6 +31,16 @@ const admonitionIcons: Record<string, string> = {
   warning: '⚠️',
   danger: '🛑',
 };
+
+// Title-case tab labels instead of shouting them in full upper case
+// (ported from zdoc RestSpecs).
+const capitalizeDisplayLabel = (value = '') =>
+  value
+    .toString()
+    .replace(
+      /(^|[\s([/-])([a-z])/g,
+      (_match, prefix, char) => `${prefix}${char.toUpperCase()}`
+    );
 
 const Admonitions = ({ admonitions, lang }: any) => {
   if (!admonitions || admonitions.length === 0) {
@@ -92,7 +107,7 @@ const Enums = ({
       <div>
         <select id="enumSelect" value={enumItem} onChange={handleEnumChange}>
           {enums
-            .map(enumValue => textFilter(enumValue, target))
+            .map(enumValue => textFilter(enumValue, target, lang))
             .filter(enumValue => enumValue !== '')
             .map((enumValue, index) => {
               enumValue = enumValue
@@ -143,7 +158,7 @@ const Param = ({
         className={styles.description}
         dangerouslySetInnerHTML={{
           __html: translatedDescription
-            ? textFilter(translatedDescription, target)
+            ? textFilter(translatedDescription, target, lang)
             : `<i>${i18n[lang]['to.be.added.soon']}</i>`,
         }}
       ></div>
@@ -195,7 +210,7 @@ const Primitive = ({ name, obj, required, lang, target }: any) => {
         className={styles.description}
         dangerouslySetInnerHTML={{
           __html: description
-            ? textFilter(description, target)
+            ? textFilter(description, target, lang)
             : `<i>${i18n[lang]['to.be.added.soon']}</i>`,
         }}
       ></div>
@@ -264,15 +279,14 @@ const Tab = ({
     return null;
   }
 
-  const value =
-    optionValue ||
-    (content.label
-      ? content.label
-      : `${i18n[lang]['tab.option']} ${id}`
-    ).toUpperCase();
-  const label = (
-    content?.['x-tab-label'] ? content['x-tab-label'] : value
-  ).toUpperCase();
+  const fallbackLabel = content.label
+    ? content.label
+    : `${i18n[lang]['tab.option']} ${id}`;
+  const value = (optionValue || fallbackLabel).toUpperCase();
+  const label = content?.['x-tab-label']
+    ? content['x-tab-label']
+    : fallbackLabel;
+  const displayLabel = capitalizeDisplayLabel(label);
 
   // Handle x-i18n for content description
   const translatedDescription = content?.['x-i18n']?.[lang]?.description
@@ -291,8 +305,21 @@ const Tab = ({
           setSelected(e.target.value);
         }}
       />
-      <label className={styles.tabLabel} htmlFor={`${name}-tab${id}`}>
-        {label}
+      <label
+        className={styles.tabLabel}
+        htmlFor={`${name}-tab${id}`}
+        onMouseDown={e => e.preventDefault()}
+        onClick={e => {
+          // Drive selection from the label click and cancel the native
+          // label→radio activation. The radio is visually hidden, so letting
+          // it receive focus makes the browser scroll it into view — yanking
+          // the page to a blank spot on every tab switch. Keyboard users
+          // still get onChange above. (Ported from zdoc RestSpecs.)
+          e.preventDefault();
+          setSelected(value);
+        }}
+      >
+        {displayLabel}
       </label>
       <div className={styles.tabPanel}>
         {content?.type === 'object' && (
@@ -337,6 +364,103 @@ const Tab = ({
   );
 };
 
+// A combinator (anyOf/oneOf) whose option list filtered down to a single
+// entry renders its content directly — a lone tab label carries no choice
+// and only adds noise. The panel body is exactly Tab's, minus the radio and
+// label. (Ported from zdoc RestSpecs.)
+const SingleOption = ({ content, lang, target }: any) => {
+  if (!content) {
+    return null;
+  }
+
+  const translatedDescription = content?.['x-i18n']?.[lang]?.description
+    ? content['x-i18n'][lang].description
+    : content?.description;
+
+  return (
+    <div className={styles.singlePanel}>
+      {content?.type === 'object' && (
+        <Properties
+          description={translatedDescription}
+          properties={content.properties}
+          requiredFields={content.required}
+          lang={lang}
+          target={target}
+        />
+      )}
+      {content?.type === 'array' && (
+        <Items
+          description={translatedDescription}
+          obj={content.items}
+          required={content.items.required}
+          lang={lang}
+          target={target}
+        />
+      )}
+      {(content?.type === 'string' ||
+        content?.type === 'number' ||
+        content?.type === 'integer' ||
+        content?.type === 'boolean') && (
+        <Primitive
+          obj={{ ...content, description: translatedDescription }}
+          lang={lang}
+          target={target}
+        />
+      )}
+      {content?.$ref && (
+        <Primitive
+          obj={{
+            type: 'object',
+            description:
+              translatedDescription ||
+              `\`${content.$ref.slice('#/components/schemas/'.length)}\` (recursive reference).`,
+          }}
+          lang={lang}
+          target={target}
+        />
+      )}
+      {content?.properties && content?.type === undefined && (
+        <Properties
+          description={translatedDescription}
+          properties={content.properties}
+          requiredFields={content.required}
+          lang={lang}
+          target={target}
+        />
+      )}
+    </div>
+  );
+};
+
+// A $ref left in place is a recursive component the generator deliberately
+// stopped expanding, so the specs blob stays small. Name the type instead of
+// falling through to an empty primitive. (Ported from zdoc RestSpecs.)
+const RecursiveRef = ({ name, refPath, description, required, lang }: any) => {
+  const typeName = refPath.startsWith('#/components/schemas/')
+    ? refPath.slice('#/components/schemas/'.length)
+    : refPath;
+
+  return (
+    <div className={styles.paramContainer}>
+      <div className={styles.paramLabels}>
+        <span className={styles.paramName}>{name}</span>
+        <span className={styles.label}>object ({typeName})</span>
+        {required && (
+          <span className={styles.required}>
+            {i18n[lang]['label.required']}
+          </span>
+        )}
+      </div>
+      {description && (
+        <div
+          className={styles.description}
+          dangerouslySetInnerHTML={{ __html: description }}
+        ></div>
+      )}
+    </div>
+  );
+};
+
 const AnyOf = ({
   name,
   description,
@@ -351,6 +475,7 @@ const AnyOf = ({
   const translatedDescription = x_i18n?.[lang]?.description
     ? x_i18n[lang].description
     : description;
+  const validItems = filterSchemaOptions(arr, lang, target);
 
   // Map tab labels to option values for responses and requestBody
   const getOptionValue = (label, index) => {
@@ -358,11 +483,29 @@ const AnyOf = ({
       // For responses and requestBody, map labels to OPTION 1, OPTION 2, etc.
       return `OPTION ${index + 1}`;
     }
-    return (label ? label : `${i18n[lang]['tab.option']} ${index + 1}`).toUpperCase();
+    return (
+      label ? label : `${i18n[lang]['tab.option']} ${index + 1}`
+    ).toUpperCase();
   };
 
-  const defaultValue = getOptionValue(arr[0].label, 0);
+  const defaultValue =
+    validItems.length > 0
+      ? getOptionValue(validItems[0].item.label, validItems[0].originalIndex)
+      : '';
   const [selected, setSelected] = useState(defaultValue);
+
+  useEffect(() => {
+    if (defaultValue && selected !== defaultValue) {
+      setSelected(defaultValue);
+    }
+    if (onValueChange && defaultValue) {
+      onValueChange(defaultValue);
+    }
+  }, [defaultValue]);
+
+  if (validItems.length === 0) {
+    return null;
+  }
 
   const setSelectedOption = value => {
     setSelected(value);
@@ -384,39 +527,47 @@ const AnyOf = ({
             className={styles.description}
             dangerouslySetInnerHTML={{
               __html: translatedDescription
-                ? textFilter(translatedDescription, target)
+                ? textFilter(translatedDescription, target, lang)
                 : `<i>${i18n[lang]['to.be.added.soon']}</i>`,
             }}
           ></div>
         </div>
       )}
-      <div
-        style={{
-          margin:
-            name && name !== 'responses' && name !== 'requestBody'
-              ? '0 0 0 2rem'
-              : '0',
-        }}
-      >
-        <div className={styles.tabs} style={{ marginTop: '1rem' }}>
-          {arr.map((item, index) => {
-            const optionValue = getOptionValue(item.label, index);
-            return (
-              <Tab
-                key={index}
-                name={`${name}-${r}`}
-                id={index + 1}
-                content={item}
-                lang={lang}
-                target={target}
-                selected={selected}
-                setSelected={setSelectedOption}
-                optionValue={optionValue}
-              />
-            );
-          })}
+      {validItems.length === 1 ? (
+        <SingleOption
+          content={validItems[0].item}
+          lang={lang}
+          target={target}
+        />
+      ) : (
+        <div
+          style={{
+            margin:
+              name && name !== 'responses' && name !== 'requestBody'
+                ? '0 0 0 2rem'
+                : '0',
+          }}
+        >
+          <div className={styles.tabs} style={{ marginTop: '1rem' }}>
+            {validItems.map(({ item, originalIndex }) => {
+              const optionValue = getOptionValue(item.label, originalIndex);
+              return (
+                <Tab
+                  key={originalIndex}
+                  name={`${name}-${r}`}
+                  id={originalIndex + 1}
+                  content={item}
+                  lang={lang}
+                  target={target}
+                  selected={selected}
+                  setSelected={setSelectedOption}
+                  optionValue={optionValue}
+                />
+              );
+            })}
+          </div>
         </div>
-      </div>
+      )}
     </>
   );
 };
@@ -435,6 +586,7 @@ const OneOf = ({
   const translatedDescription = x_i18n?.[lang]?.description
     ? x_i18n[lang].description
     : description;
+  const validItems = filterSchemaOptions(arr, lang, target);
 
   // Map tab labels to option values for responses and requestBody
   const getOptionValue = (label, index) => {
@@ -442,11 +594,29 @@ const OneOf = ({
       // For responses and requestBody, map labels to OPTION 1, OPTION 2, etc.
       return `OPTION ${index + 1}`;
     }
-    return (label ? label : `${i18n[lang]['tab.option']} ${index + 1}`).toUpperCase();
+    return (
+      label ? label : `${i18n[lang]['tab.option']} ${index + 1}`
+    ).toUpperCase();
   };
 
-  const defaultValue = getOptionValue(arr[0].label, 0);
+  const defaultValue =
+    validItems.length > 0
+      ? getOptionValue(validItems[0].item.label, validItems[0].originalIndex)
+      : '';
   const [selected, setSelected] = useState(defaultValue);
+
+  useEffect(() => {
+    if (defaultValue && selected !== defaultValue) {
+      setSelected(defaultValue);
+    }
+    if (onValueChange && defaultValue) {
+      onValueChange(defaultValue);
+    }
+  }, [defaultValue]);
+
+  if (validItems.length === 0) {
+    return null;
+  }
 
   const setSelectedOption = value => {
     setSelected(value);
@@ -468,39 +638,47 @@ const OneOf = ({
             className={styles.description}
             dangerouslySetInnerHTML={{
               __html: translatedDescription
-                ? textFilter(translatedDescription, target)
+                ? textFilter(translatedDescription, target, lang)
                 : `<i>${i18n[lang]['to.be.added.soon']}</i>`,
             }}
           ></div>
         </div>
       )}
-      <div
-        style={{
-          margin:
-            name && name !== 'responses' && name !== 'requestBody'
-              ? '0 0 0 2rem'
-              : '0',
-        }}
-      >
-        <div className={styles.tabs} style={{ marginTop: '1rem' }}>
-          {arr.map((item, index) => {
-            const optionValue = getOptionValue(item.label, index);
-            return (
-              <Tab
-                key={index}
-                name={`${name}-${r}`}
-                id={index + 1}
-                content={item}
-                lang={lang}
-                target={target}
-                selected={selected}
-                setSelected={setSelectedOption}
-                optionValue={optionValue}
-              />
-            );
-          })}
+      {validItems.length === 1 ? (
+        <SingleOption
+          content={validItems[0].item}
+          lang={lang}
+          target={target}
+        />
+      ) : (
+        <div
+          style={{
+            margin:
+              name && name !== 'responses' && name !== 'requestBody'
+                ? '0 0 0 2rem'
+                : '0',
+          }}
+        >
+          <div className={styles.tabs} style={{ marginTop: '1rem' }}>
+            {validItems.map(({ item, originalIndex }) => {
+              const optionValue = getOptionValue(item.label, originalIndex);
+              return (
+                <Tab
+                  key={originalIndex}
+                  name={`${name}-${r}`}
+                  id={originalIndex + 1}
+                  content={item}
+                  lang={lang}
+                  target={target}
+                  selected={selected}
+                  setSelected={setSelectedOption}
+                  optionValue={optionValue}
+                />
+              );
+            })}
+          </div>
         </div>
-      </div>
+      )}
     </>
   );
 };
@@ -522,7 +700,7 @@ const Items = ({ name, description, obj, required, lang, target }: any) => {
               className={styles.description}
               dangerouslySetInnerHTML={{
                 __html: description
-                  ? textFilter(description, target)
+                  ? textFilter(description, target, lang)
                   : `<i>${i18n[lang]['to.be.added.soon']}</i>`,
               }}
             ></div>
@@ -596,6 +774,21 @@ const Items = ({ name, description, obj, required, lang, target }: any) => {
             target={target}
           />
         )}
+        {obj.items?.$ref && (
+          <RecursiveRef
+            name={`[]${name}`}
+            refPath={obj.items.$ref}
+            description={textFilter(
+              obj.items['x-i18n']?.[lang]?.description
+                ? obj.items['x-i18n'][lang].description
+                : obj.items.description,
+              target,
+              lang
+            )}
+            required={required}
+            lang={lang}
+          />
+        )}
       </div>
     </>
   );
@@ -626,7 +819,7 @@ const Properties = ({
               className={styles.description}
               dangerouslySetInnerHTML={{
                 __html: description
-                  ? textFilter(description, target)
+                  ? textFilter(description, target, lang)
                   : `<i>${i18n[lang]['to.be.added.soon']}</i>`,
               }}
             ></div>
@@ -655,7 +848,7 @@ const Properties = ({
                   <Properties
                     key={index}
                     name={propName}
-                    description={textFilter(desc, target)}
+                    description={textFilter(desc, target, lang)}
                     properties={prop.properties}
                     requiredFields={prop.required}
                     required={requireds.includes(propName)}
@@ -668,7 +861,7 @@ const Properties = ({
                   <Items
                     key={index}
                     name={propName}
-                    description={textFilter(desc, target)}
+                    description={textFilter(desc, target, lang)}
                     obj={prop}
                     required={requireds.includes(propName)}
                     lang={lang}
@@ -680,7 +873,7 @@ const Properties = ({
                   <AnyOf
                     key={index}
                     name={propName}
-                    description={textFilter(desc, target)}
+                    description={textFilter(desc, target, lang)}
                     arr={prop.anyOf}
                     required={requireds.includes(propName)}
                     lang={lang}
@@ -692,11 +885,22 @@ const Properties = ({
                   <OneOf
                     key={index}
                     name={propName}
-                    description={textFilter(desc, target)}
+                    description={textFilter(desc, target, lang)}
                     arr={prop.oneOf}
                     required={requireds.includes(propName)}
                     lang={lang}
                     target={target}
+                  />
+                );
+              } else if (prop?.$ref) {
+                return (
+                  <RecursiveRef
+                    key={index}
+                    name={propName}
+                    refPath={prop.$ref}
+                    description={textFilter(desc, target, lang)}
+                    required={requireds.includes(propName)}
+                    lang={lang}
                   />
                 );
               } else {
@@ -717,15 +921,37 @@ const Properties = ({
   );
 };
 
+const normalizeExampleLabel = (value = '') =>
+  value.toString().trim().toLowerCase();
+
+// Resolve which example tab matches the schema option the reader picked:
+// OPTION N maps back to the Nth anyOf/oneOf entry's label. (Ported from
+// zdoc RestSpecs.)
+const getSelectedResponseLabel = (schema, selectedResponse) => {
+  const options = schema?.anyOf || schema?.oneOf || [];
+  const optionNumber = selectedResponse?.match(/^OPTION\s+(\d+)$/i)?.[1];
+  const selectedIndex = optionNumber ? Number(optionNumber) - 1 : -1;
+  const selectedOption = selectedIndex >= 0 ? options[selectedIndex] : null;
+
+  return (
+    selectedOption?.['x-tab-label'] || selectedOption?.label || selectedResponse
+  );
+};
+
 const ExampleResponses = ({
   examples,
+  schema,
   lang,
   target,
   selectedResponse,
 }: any) => {
   const r = getRandomString(5);
+  const selectedResponseLabel = getSelectedResponseLabel(
+    schema,
+    selectedResponse
+  );
 
-  const validKeys = Object.keys(examples).filter(key => {
+  const baseValidKeys = Object.keys(examples).filter(key => {
     var condition = true;
 
     if (Object.keys(examples[key]).includes('x-include-target')) {
@@ -744,22 +970,50 @@ const ExampleResponses = ({
 
     return condition;
   });
+  const matchingLabelKeys = baseValidKeys.filter(
+    key =>
+      !Object.keys(examples[key]).includes('x-target-response') &&
+      normalizeExampleLabel(getExampleLabel(examples[key], key)) ===
+        normalizeExampleLabel(selectedResponseLabel)
+  );
+  const validKeys =
+    matchingLabelKeys.length > 0 ? matchingLabelKeys : baseValidKeys;
 
-  const defaultValue = examples[validKeys[0]]?.summary?.toUpperCase();
+  const defaultValue =
+    validKeys.length > 0
+      ? getExampleLabel(examples[validKeys[0]], validKeys[0]).toUpperCase()
+      : '';
   const availableLabels = validKeys.map(key =>
-    examples[key].summary.toUpperCase()
+    getExampleLabel(examples[key], key).toUpperCase()
   );
   const [selected, setSelected] = useState(defaultValue);
 
   // No example matches the current target/lang/response selection.
   // Render nothing instead of dereferencing `undefined`, which would
-  // crash the whole static export (see Import (v2)/Create).
+  // crash the whole static export (see Import (v2)/Create). Keep this
+  // after useState: validKeys follows the selected response option, so an
+  // earlier return would change the hook count between renders.
   if (validKeys.length === 0) {
     return null;
   }
 
   if (!availableLabels.includes(selected)) {
     setSelected(availableLabels[0]);
+  }
+
+  if (validKeys.length === 1) {
+    const key = validKeys[0];
+    // Same casing as the tab labels shown when there are several examples.
+    const label = capitalizeDisplayLabel(getExampleLabel(examples[key], key));
+    return (
+      <div className={styles.singleExample}>
+        <CodeBlock
+          title={label}
+          className="language-json"
+          children={JSON.stringify(examples[key].value, null, 4)}
+        />
+      </div>
+    );
   }
 
   return (
@@ -772,7 +1026,7 @@ const ExampleResponses = ({
             id={parseInt(key)}
             content={{
               type: 'code',
-              label: examples[key].summary,
+              label: getExampleLabel(examples[key], key),
               value: examples[key].value,
             }}
             lang={lang}
@@ -847,16 +1101,21 @@ const ExampleRequests = ({
       return condition;
     });
 
-    const defaultValue = examples[validKeys[0]]?.summary?.toUpperCase();
+    const defaultValue =
+      validKeys.length > 0
+        ? getExampleLabel(examples[validKeys[0]], validKeys[0]).toUpperCase()
+        : '';
     const availableLabels = validKeys.map(key =>
-      examples[key].summary.toUpperCase()
+      getExampleLabel(examples[key], key).toUpperCase()
     );
     const [selected, setSelected] = useState(defaultValue);
 
     // No request example matches the current target/lang/request
     // selection. Fall back to the bare curl command (same as the
     // no-requestBody branch above) instead of dereferencing
-    // `undefined`, which would crash the whole static export.
+    // `undefined`, which would crash the whole static export. Keep this
+    // after useState: validKeys follows the selected request option, so
+    // an earlier return would change the hook count between renders.
     if (validKeys.length === 0) {
       return <CodeBlock className="language-bash" children={req} />;
     }
@@ -865,18 +1124,27 @@ const ExampleRequests = ({
       setSelected(availableLabels[0]);
     }
 
-    return (
-      <div className={styles.tabs} style={{ marginTop: '1rem' }}>
-        {validKeys.length === 1 && (
+    if (validKeys.length === 1) {
+      const key = validKeys[0];
+      // Same casing as the tab labels shown when there are several examples.
+      const label = capitalizeDisplayLabel(getExampleLabel(examples[key], key));
+      return (
+        <div className={styles.singleExample}>
           <CodeBlock
+            title={label}
             className="language-bash"
             children={`${req} \\\n-d '${JSON.stringify(
-              examples[validKeys[0]].value,
+              examples[key].value,
               null,
               4
             )}'`}
           />
-        )}
+        </div>
+      );
+    }
+
+    return (
+      <div className={styles.tabs} style={{ marginTop: '1rem' }}>
         {validKeys.length > 1 &&
           validKeys.map((key, index) => {
             return (
@@ -886,7 +1154,7 @@ const ExampleRequests = ({
                 id={parseInt(key)}
                 content={{
                   type: 'reqs',
-                  label: examples[key].summary,
+                  label: getExampleLabel(examples[key], key),
                   value: `${req} \\\n-d '${JSON.stringify(
                     examples[key].value,
                     null,
@@ -928,7 +1196,11 @@ export const RestSpecs = props => {
       )
     : [];
 
-  const short = textFilter(description, target);
+  const short = textFilter(
+    getLocalizedDescription(props.specs, lang),
+    target,
+    lang
+  );
   const headerParams = validParams
     ? validParams.filter(param => param.in === 'header')
     : [];
@@ -956,12 +1228,38 @@ export const RestSpecs = props => {
     })
     .filter(param => param !== '')
     .join('&');
-  const responseExample =
-    responses?.['200']?.content['application/json']?.examples;
+
+  const responseEntries = getResponseEntries(responses);
+  const responseStatusKey = responseEntries
+    .map(({ status }) => status)
+    .join(',');
+  const defaultResponseStatus = getDefaultResponseStatus(responses);
+  const [selectedResponseStatus, setSelectedResponseStatus] = useState(
+    defaultResponseStatus
+  );
+  const selectedResponseEntry =
+    responseEntries.find(({ status }) => status === selectedResponseStatus) ||
+    responseEntries[0];
+  const selectedHttpResponse = selectedResponseEntry?.response;
+  const responseMediaType = selectedHttpResponse?.content?.['application/json'];
+  const responseSchema = responseMediaType?.schema;
+  const responseExample = responseMediaType?.examples;
+  const responseDescription =
+    selectedHttpResponse?.['x-i18n']?.[lang]?.description ??
+    selectedHttpResponse?.description;
 
   const [showTryIt, setShowTryIt] = useState(false);
   const [selectedRequest, setSelectedRequest] = useState('OPTION 1');
   const [selectedResponse, setSelectedResponse] = useState('OPTION 1');
+
+  useEffect(() => {
+    if (
+      defaultResponseStatus &&
+      !responseEntries.some(({ status }) => status === selectedResponseStatus)
+    ) {
+      setSelectedResponseStatus(defaultResponseStatus);
+    }
+  }, [defaultResponseStatus, selectedResponseStatus, responseStatusKey]);
 
   const handleMultipleRequests = value => {
     setSelectedRequest(value.toUpperCase());
@@ -1226,7 +1524,7 @@ export const RestSpecs = props => {
           </>
         )}
       </div>
-      {responses && (
+      {responseEntries.length > 0 && (
         <div
           style={{
             display: 'grid',
@@ -1244,104 +1542,118 @@ export const RestSpecs = props => {
               }}
             >
               <span>{i18n[lang]['section.responses']}</span>
-              {Object.keys(responses).includes('200') && (
-                <span
-                  style={{
-                    color: 'rgb(74, 83, 104)',
-                    fontSize: '0.8rem',
-                    fontFamily: 'Geist Mono, monospace',
-                  }}
-                >
-                  200{' '}
-                  {Object.keys(responses['200'].content).includes(
-                    'application/json'
-                  ) && ' - application/json'}
+              {selectedResponseEntry && (
+                <span className={styles.sectionMeta}>
+                  {selectedResponseEntry.status}
+                  {selectedResponseEntry.label &&
+                    ` ${selectedResponseEntry.label}`}
+                  {responseMediaType && ' - application/json'}
                 </span>
               )}
             </div>
             <div style={{ margin: '1rem' }} />
-            {responses['200']?.content['application/json']?.schema?.anyOf && (
+            {responseEntries.length > 1 && (
+              <div
+                className={styles.responseStatuses}
+                role="group"
+                aria-label={i18n[lang]['section.responses']}
+              >
+                {responseEntries.map(({ status, label }) => (
+                  <button
+                    key={status}
+                    type="button"
+                    className={
+                      status === selectedResponseEntry?.status
+                        ? styles.responseStatusActive
+                        : styles.responseStatus
+                    }
+                    onClick={() => setSelectedResponseStatus(status)}
+                  >
+                    <span>{status}</span>
+                    {label && (
+                      <span className={styles.responseStatusLabel}>
+                        {label}
+                      </span>
+                    )}
+                  </button>
+                ))}
+              </div>
+            )}
+            {responseDescription && (
+              <div
+                className={styles.responseDescription}
+                dangerouslySetInnerHTML={{
+                  __html: textFilter(responseDescription, target, lang),
+                }}
+              />
+            )}
+            {responseSchema?.anyOf && (
               <AnyOf
                 name="responses"
-                arr={responses['200'].content['application/json'].schema.anyOf}
+                arr={responseSchema.anyOf}
                 lang={lang}
                 target={target}
                 onValueChange={handleMultipleResponses}
-                x_i18n={
-                  responses['200'].content['application/json'].schema['x-i18n']
-                }
+                x_i18n={responseSchema['x-i18n']}
               />
             )}
-            {responses['200']?.content['application/json']?.schema?.oneOf && (
+            {responseSchema?.oneOf && (
               <OneOf
                 name="responses"
-                arr={responses['200'].content['application/json'].schema.oneOf}
+                arr={responseSchema.oneOf}
                 lang={lang}
                 target={target}
                 onValueChange={handleMultipleResponses}
-                x_i18n={
-                  responses['200'].content['application/json'].schema['x-i18n']
-                }
+                x_i18n={responseSchema['x-i18n']}
               />
             )}
-            {responses['200']?.content['application/json']?.schema?.type ===
-              'object' && (
+            {responseSchema?.type === 'object' && (
               <Properties
-                properties={
-                  responses['200'].content['application/json'].schema.properties
-                }
-                requiredFields={
-                  responses['200'].content['application/json'].schema.required
-                }
+                properties={responseSchema.properties}
+                requiredFields={responseSchema.required}
                 lang={lang}
                 target={target}
               />
             )}
-            {responses['200']?.content['application/json']?.schema?.type ===
-              'array' && (
+            {responseSchema?.type === 'array' && (
               <Items
                 name="responses[]"
-                description={
-                  responses['200'].content['application/json'].schema
-                    .description
-                }
-                obj={responses['200'].content['application/json'].schema.items}
-                required={
-                  responses['200'].content['application/json'].schema.items
-                    .required
-                }
+                description={responseSchema.description}
+                obj={responseSchema.items}
+                required={responseSchema.items?.required}
                 lang={lang}
                 target={target}
               />
             )}
-            {responses['200']?.content['application/json']?.schema?.type !==
-              'object' &&
-              responses['200']?.content['application/json']?.schema?.type !==
-                'array' &&
-              !Object.keys(
-                responses['200'].content['application/json'].schema
-              ).includes('anyOf') &&
-              !Object.keys(
-                responses['200'].content['application/json'].schema
-              ).includes('oneOf') && (
+            {responseSchema &&
+              responseSchema.type !== 'object' &&
+              responseSchema.type !== 'array' &&
+              !responseSchema.anyOf &&
+              !responseSchema.oneOf && (
                 <Primitive
                   name="responses"
-                  obj={responses['200'].content['application/json'].schema}
+                  obj={responseSchema}
                   lang={lang}
                   target={target}
                 />
               )}
+            {!selectedHttpResponse?.content && (
+              <p className={styles.emptyResponse}>
+                {i18n[lang]['response.no.content']}
+              </p>
+            )}
           </section>
-          <section className={styles.exampleContainer}>
-            {responseExample && (
+          {responseExample && (
+            <section className={styles.exampleContainer}>
               <ExampleResponses
                 examples={responseExample}
+                schema={responseSchema}
                 lang={lang}
                 target={target}
                 selectedResponse={selectedResponse}
               />
-            )}
-          </section>
+            </section>
+          )}
         </div>
       )}
     </div>

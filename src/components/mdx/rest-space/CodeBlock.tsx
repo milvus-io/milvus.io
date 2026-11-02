@@ -7,6 +7,7 @@ type Props = {
   children: string;
   language?: string;
   className?: string;
+  title?: string;
 };
 
 const HIGHLIGHT_COMMENT = {
@@ -79,7 +80,7 @@ const removeCodeHighlightComments = (code: string) => {
 };
 
 export const CodeBlock: FC<Props> = props => {
-  const { children, className, language = 'javascript' } = props;
+  const { children, className, language = 'javascript', title } = props;
   const [isCopied, setIsCopied] = useState(false);
 
   const handleCopyClick = async () => {
@@ -99,6 +100,11 @@ export const CodeBlock: FC<Props> = props => {
 
   return (
     <div className="relative bg-[#fafafa] rounded-[0.5rem] pr-[36px] shadow-sm group">
+      {title && (
+        <div className="px-[16px] pt-[10px] text-[12px] font-[500] text-gray-600 font-['Geist Mono']">
+          {title}
+        </div>
+      )}
       <Highlight theme={themes.oneLight} code={children} language={language}>
         {({
           className: highlightClassName,

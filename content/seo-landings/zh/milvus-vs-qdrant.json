@@ -510,15 +510,6 @@
       "href": "https://zilliz.com/customers/read-ai"
     }
   ],
-  "aiq": [
-    "how-does-a-vector-database-handle-scaling-up-to-millions-or-billions-of-vectors-and-what-architectural-features-enable-this-scalability",
-    "how-do-distributed-vector-databases-handle-sharding-and-replication",
-    "how-do-you-choose-the-right-index-type-for-your-workload",
-    "what-is-diskann",
-    "what-is-hybrid-search-and-when-should-i-use-it",
-    "what-is-the-role-of-multitenancy-in-scalability-considerations-for-vector-databases-and-how-might-resource-isolation-be-handled-when-multiple-applications-share-the-same-infrastructure",
-    "what-tools-help-benchmark-vector-search-performance"
-  ],
   "related": [
     "distributed-vector-database",
     "open-source-vector-database",

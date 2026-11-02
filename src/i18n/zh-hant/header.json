@@ -37,8 +37,7 @@
   "footer": {
     "resource": {
       "managed": "託管 Milvus",
-      "contact": "預約示範",
-      "faq": "AI 快速參考"
+      "contact": "預約示範"
     },
     "tools": {
       "sizing": "Milvus 容量計算工具",

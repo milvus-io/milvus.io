@@ -37,8 +37,7 @@
   "footer": {
     "resource": {
       "managed": "托管 Milvus",
-      "contact": "预约演示",
-      "faq": "AI 快速参考"
+      "contact": "预约演示"
     },
     "tools": {
       "sizing": "Milvus 容量计算工具",

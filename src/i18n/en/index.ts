@@ -10,7 +10,6 @@ import community from './community.json';
 import notFound from './404.json';
 import blog from './blog.json';
 import contact from './contact.json';
-import faq from './faq.json';
 import llm from './llm.json';
 import learnMilvus from './learnMilvus.json';
 
@@ -27,7 +26,6 @@ export {
   notFound,
   blog,
   contact,
-  faq,
   llm,
   learnMilvus,
 };

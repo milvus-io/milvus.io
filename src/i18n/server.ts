@@ -117,7 +117,6 @@ export const namespaces = [
   'notFound',
   'blog',
   'contact',
-  'faq',
   'llm',
   'learnMilvus',
 ];

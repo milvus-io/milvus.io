@@ -15,12 +15,17 @@ on:
       - 'src/pages/solutions/**'
       - 'src/pages/compare/**'
       - 'src/server/seo-landing-catalog.js'
+      - 'src/middleware.ts'
       - 'sitemap.config.js'
       - 'conf/conf.d/client.conf'
       - 'tests/seo-landings.test.cjs'
+      - 'tests/reference-retirement.test.cjs'
       - 'tests/landing-tracking.test.cjs'
       - 'tests/landing-locale.test.cjs'
       - 'scripts/smoke-seo-landings.js'
+      - 'scripts/smoke-reference-retirement.js'
+      - 'scripts/generate-llms-txt.js'
+      - 'package.json'
       - '.github/workflows/seo-landing-check.yml'
 
 permissions:
@@ -36,7 +41,7 @@ jobs:
           node-version: '22'
       - run: npm install -g pnpm@10.33.0
       - run: pnpm install --frozen-lockfile --ignore-scripts
-      - run: node --test tests/seo-landings.test.cjs tests/landing-tracking.test.cjs tests/landing-locale.test.cjs tests/ai-reference-catalog.test.cjs
+      - run: node --test tests/seo-landings.test.cjs tests/landing-tracking.test.cjs tests/landing-locale.test.cjs tests/reference-retirement.test.cjs
       # This ignored file is normally populated by next.config.js from the CMS.
       # Type-checking needs its shape, without calling a private service.
       - run: node -e "require('fs').writeFileSync('global-stats.json', JSON.stringify({milvusStars:0,pipInstall:0}))"

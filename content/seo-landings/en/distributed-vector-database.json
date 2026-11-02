@@ -467,16 +467,6 @@
       "Four, set per search or query: Strong reads the latest data; Bounded (the default) tolerates a short staleness window; Session guarantees read-your-own-writes within one client; Eventually trades freshness for the fastest reads."
     ]
   ],
-  "aiq": [
-    "how-milvus-separates-ingestion-storage-and-search",
-    "how-does-a-vector-database-handle-scaling-up-to-millions-or-billions-of-vectors-and-what-architectural-features-enable-this-scalability",
-    "how-do-distributed-vector-databases-handle-sharding-and-replication",
-    "what-is-ivf-rabitq",
-    "what-is-diskann",
-    "how-mmap-differs-from-diskann",
-    "what-is-vector-quantization-in-embeddings",
-    "milvus-capacity-planning"
-  ],
   "related": [
     "open-source-vector-database",
     "search-on-the-lake",

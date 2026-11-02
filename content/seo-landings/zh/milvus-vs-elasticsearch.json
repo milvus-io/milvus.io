@@ -527,16 +527,6 @@
     ]
   ],
   "stories": [],
-  "aiq": [
-    "what-tools-help-benchmark-vector-search-performance",
-    "what-is-fulltext-search",
-    "what-is-hybrid-search-and-when-should-i-use-it",
-    "how-sparse-inverted-indexes-work",
-    "hnsw-sq-pq-prq-tradeoffs",
-    "what-is-ivf-rabitq",
-    "what-is-diskann",
-    "milvus-cdc-and-migration"
-  ],
   "related": [
     "hybrid-search",
     "open-source-vector-database",

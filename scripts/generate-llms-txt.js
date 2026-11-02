@@ -182,11 +182,6 @@ const CURATED = {
           'Release announcements, engineering deep dives, and benchmarks. Article URLs are `/blog/<slug>` with no `.md` suffix.',
         ],
         [
-          'AI Quick Reference',
-          `${ORIGIN}/ai-quick-reference`,
-          'Core concepts for vector search, indexing, RAG, data preparation, and production operations, with implementation guides and sources.',
-        ],
-        [
           'Learn AI and Vector DB',
           `${ORIGIN}/learn-ai-and-vectordb`,
           'Long-form explainers on vector databases and AI infrastructure.',
@@ -449,7 +444,7 @@ Documentation URLs take exactly one of these four forms:
 - \`<lang>\` is one of: ${TRANSLATED_LANGS.join(', ')}. Omit the segment for English.
 - API reference URLs are \`${ORIGIN}/api-reference/<sdk>/<version>/<page>.md\` and
   are versioned separately from the docs; see the API Reference section.
-- Blog, AI Quick Reference, and Learn pages do not use a \`.md\` suffix.
+- Blog and Learn pages do not use a \`.md\` suffix.
 
 **Unknown paths return a hard 404 — they do not redirect and they do not fall
 back to a search page.** A URL that looks right but was never published is a

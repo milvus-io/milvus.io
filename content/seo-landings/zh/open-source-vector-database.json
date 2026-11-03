@@ -304,16 +304,6 @@
     }
   ],
   "layout": "pillar",
-  "aiq": [
-    "managed-vector-database-byoc-vs-self-hosted",
-    "how-milvus-separates-ingestion-storage-and-search",
-    "how-do-you-choose-the-right-index-type-for-your-workload",
-    "what-is-hnsw",
-    "what-is-diskann",
-    "what-is-attu",
-    "choose-ai-framework-for-milvus",
-    "what-are-the-tradeoffs-of-using-a-cloudbased-vector-store-service-in-a-rag-system-evaluation-in-terms-of-latency-variance-network-costs-etc-versus-a-local-inmemory-store"
-  ],
   "related": [
     "distributed-vector-database",
     "milvus-vs-qdrant",

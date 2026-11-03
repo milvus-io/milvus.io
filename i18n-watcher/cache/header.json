@@ -37,8 +37,7 @@
   "footer": {
     "resource": {
       "managed": "Managed Milvus",
-      "contact": "Book a Demo",
-      "faq": "AI Quick Reference "
+      "contact": "Book a Demo"
     },
     "tools": {
       "sizing": "Milvus Sizing Tool",

@@ -290,16 +290,6 @@
     "Retain previously reviewed executable example changes and sample prerequisites."
   ],
   "layout": "pillar",
-  "aiq": [
-    "what-is-rag-retrievalaugmented-generation-in-nlp",
-    "what-is-the-optimal-chunk-size-for-rag-applications",
-    "what-factors-should-be-considered-when-selecting-an-embedding-model-for-a-rag-pipeline-such-as-the-models-domain-training-data-embedding-dimensionality-and-semantic-accuracy",
-    "what-is-vector-reranking-and-when-should-you-apply-it",
-    "reranking-model-catalog",
-    "how-can-we-measure-the-accuracy-of-the-retrieval-component-in-a-rag-system-for-example-using-metrics-like-precisionk-and-recallk-on-the-documents-retrieved",
-    "how-does-milvus-enable-graph-rag-for-multihop-agent-reasoning",
-    "llamaindex-with-milvus"
-  ],
   "related": [
     "hybrid-search",
     "database-for-ai-agents",

@@ -1,0 +1,29 @@
+# Growth measurement v2: GTM and release acceptance
+
+This change supplies website events and cross-domain attribution. It does not publish GTM, GA definitions, or production code.
+
+## Payload and consent
+
+`first_touch_version=2` certifies one atomic first observation: page, site, referrer hostname, timestamp, and `first_` campaign/click-ID allowlist. Direct first visits keep missing campaign fields missing. A retained v1 bundle remains legacy even though `attribution_version=2`. The scope remains browser session, not lifetime first acquisition. A new site's local session entry does not inherit the upstream site's session entry.
+
+Each Cloud signup/login activation gets a fresh `handoff_id` only when the site's CMP explicitly grants analytics. The event and href use that same UUID; re-click creates a new ID, revocation removes it. Scanning, hovering, copied links and unknown consent do not manufacture IDs. Consequently right-click-copy/navigation without an observed activation remains unmatched, rather than fabricating a GA click. Functional destination parameters are preserved but never sent in GA event fields. Website cookies/IDs are not a server identity guarantee.
+
+Zilliz reads the existing vanilla-cookieconsent v2 `window.cc.validConsent()` and `allowedCategory('analytics')`; Milvus reads its existing react-cookie-consent `CookieConsent=true/false`. Validate the production GTM CMP category name is `analytics`; if the CMP is absent/not ready, status remains `unknown`. Do not publish a workaround that treats unknown as granted.
+
+## GTM changes to prepare in a separate reviewed workspace
+
+1. Select the authoritative property/stream: English Zilliz 446564557, Milvus 328650859. Cloud 259046762 is separate. Preserve native `user_pseudo_id` and `ga_session_id`; never set a user ID from cookies, email, or browser maximum account ID.
+2. Forward these events with an explicit allowlist: `cta_zilliz_signup_click`, `cta_link_click`, `cta_docs_click`, `form_start`, `form_submit_attempt`, `form_error`, `form_success`. Preserve other existing landing events as needed. `cta_action=cloud_signup` denotes signup; `cta_destination` is the clean absolute URL.
+3. Forward only `site`, `content_id`, `content_type`, `content_topic`, `content_language`, `content_revision`, `landing_page`, `landing_topic`, `cta_location`, `cta_destination`, `cta_action`, `entry_button`, `link_url`, `handoff_id`, `analytics_consent`, `form_id`, `error_type`. Do not forward whole query strings, first click-ID fields, user_data, form inputs, OAuth tokens, or the whole dataLayer object. Optional handoff/user_data fields are explicitly cleared to avoid sticky DLV reuse. Register low-cardinality content/CTA fields as GA custom dimensions; keep UUID in raw BigQuery event params, not a high-cardinality UI dimension.
+4. Keep `measurement_page_view` as a custom metadata event with that exact name. Preserve the existing native GA `page_view` collection and do not map the metadata event to `page_view`. Warehouse enrichment only uses a unique metadata event in the same native session, same entry page, within five seconds of the native entry event. Metadata never adds an extra page view or session denominator. Verify one metadata event per route plus the existing native page_view, including Next route changes, query-only changes, back/forward and locales. GA native sessions define cohorts; the browser-session helper is not native GA sessionization.
+5. Apply the existing CMP consent settings to GA tags; never bypass analytics consent with handoff collection. Existing Google Ads enhanced-conversion `lead_form_submit` is an Ads-only event and must not be forwarded wholesale into GA. `form_success` means the form provider/API accepted the lead; it is not Cloud account registration.
+
+## Acceptance and known coverage boundaries
+
+- On a fresh browser enter A with campaign A, visit B with campaign B, then go through Zilliz/Cloud/OAuth. Server signup snapshot must retain A's full first bundle and B's separate current campaign. Direct/legacy first touches must not gain B's campaign.
+- Accept, reject and leave consent undecided; verify only accepted actual clicks have a UUID and denied/unknown events have none. Re-click and middle-click each create a distinct ID. A native CTA event and navigation must agree after MutationObserver settles.
+- A page/SPA route produces one custom measurement_page_view metadata event alongside the existing native GA page_view after GTM rollout; metadata is excluded from pageview/session denominators. One click produces one CTA, including SEO landing buttons. Inspect GA DebugView and raw events, not only dataLayer. Query/credentials must not appear in page or destination fields.
+- Validate form typing produces one start, failed validation/request a non-PII error, and repeated accepted callbacks one success. Cross-origin HubSpot iframe keystrokes/validation cannot be observed by a parent DOM listener; validate that production renders the form inline or add an official HubSpot in-frame integration before claiming full start/error coverage. Submit/accepted callbacks remain separate, and no fabricated start is used to fill iframe gaps.
+- Check same-browser account A/logout/B in Cloud and exact UUID-to-signup identity. Denial, missing IDs and multi-user matches remain Unknown; never retroactively assign earlier browser history to B.
+- `content_id` is same-site canonical path; type/topic use route group unless explicit `data-content-*` metadata is provided. `content_revision=unknown` is intentional when the CMS/build provides no revision metadata; this cannot support revision-level optimization until the content producer sets `data-content-revision`.
+- After website/Cloud/GTM rollout, inspect all three authoritative exports and reconcile registrations against backend snapshots. A successful local browser test does not establish production collection.

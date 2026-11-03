@@ -1,10 +1,11 @@
+import { createFormMeasurement } from '@/utils/growth-form';
 import { LocalizedAnchor } from '@/components/localizedLinks';
 import Layout from '@/components/layout/commonLayout';
 import pageClasses from '@/styles/responsive.module.css';
 import Head from 'next/head';
 import { Trans, useTranslation } from 'react-i18next';
 import { HubspotProvider, useHubspotForm } from 'next-hubspot';
-import { useMemo } from 'react';
+import { useMemo, useRef } from 'react';
 import classes from '@/styles/responsive.module.css';
 import { CLOUD_SIGNUP_LINK } from '@/consts';
 import { LanguageEnum } from '@/types/localization';
@@ -25,10 +26,13 @@ function ContactContent(props: Props) {
   const { locale = LanguageEnum.ENGLISH } = props;
   const { t } = useTranslation('contact', { lng: locale });
 
+  const measurement = useRef(createFormMeasurement('502c706c-5251-4d2f-8209-aad5da707115'));
   const { isFormCreated, isError, error } = useHubspotForm({
     portalId: '24054828',
     formId: '502c706c-5251-4d2f-8209-aad5da707115',
     target: '#hubspot-form',
+    onFormSubmit: () => measurement.current.attempt(),
+    onFormSubmitted: () => measurement.current.success(),
   });
 
   const formContentHtml = useMemo(() => {
@@ -85,7 +89,7 @@ function ContactContent(props: Props) {
             />
           </p>
           <div className="rounded-[16px] border border-solid border-[#ECECEE] bg-white p-[40px] max-w-[680px] min-h-[340px] mx-auto">
-            <div id="hubspot-form">{formContentHtml}</div>
+            <div id="hubspot-form" onInputCapture={() => measurement.current.start()} onInvalidCapture={() => measurement.current.error('validation')}>{formContentHtml}</div>
           </div>
         </div>
       </section>

@@ -11,6 +11,7 @@ function compile(file) {
 }
 
 const attributionSource = compile('src/utils/cloud-attribution.ts');
+const measurementSource = compile('src/utils/growth-measurement.ts');
 const trackingSource = compile('src/utils/track-cloud-links.ts');
 const contextSource = compile('src/utils/acquisition-context.ts');
 const scope = { exports: {}, URL, URLSearchParams };
@@ -47,9 +48,10 @@ test('versioned API routes use stable attribution labels without changing other 
 test('API banner handoff normalizes all four path fields and survives repeated decoration', async ({ page }) => {
   const label = 'api-reference/restful/v2.5.x/v2/Partition-v2/Has.md';
   await page.setContent('<a id="banner">Cloud</a><a id="marketing" href="https://zilliz.com/pricing">Pricing</a>');
-  await page.evaluate(({ attributionSource, trackingSource, contextSource }) => {
+  await page.evaluate(({ attributionSource, measurementSource, trackingSource, contextSource }) => {
     const attribution = new Function('exports', attributionSource + '; return exports;')({});
-    const tracking = new Function('exports', 'require', trackingSource + '; return exports;')({}, () => attribution);
+    const measurement = new Function('exports', measurementSource + '; return exports;')({});
+    const tracking = new Function('exports', 'require', trackingSource + '; return exports;')({}, name => name === './growth-measurement' ? measurement : attribution);
     const context = new Function('exports', 'require', contextSource + '; return exports;')({}, () => attribution);
     const path = '/api-reference/restful/v2.5.x/v2/Partition%20(v2)/Has.md';
     const label = attribution.getMilvusEntryPage(path);
@@ -59,7 +61,7 @@ test('API banner handoff normalizes all four path fields and survives repeated d
     const cleanup = tracking.trackCloudLinks(document.body, label, {}, links, entry);
     cleanup();
     window.cleanup = tracking.trackCloudLinks(document.body, label, {}, links, entry);
-  }, { attributionSource, trackingSource, contextSource });
+  }, { attributionSource, measurementSource, trackingSource, contextSource });
   const url = new URL(await page.locator('#banner').getAttribute('href'));
   expect(Object.fromEntries(url.searchParams)).toMatchObject({
     utm_source: 'milvusio', utm_medium: 'referral', utm_campaign: 'milvus_top_banner',
@@ -143,14 +145,15 @@ test('only exact Cloud registration/login destinations receive attribution', () 
 test('actual DOM links, dynamic HTML, route changes and locale changes use the same attribution', async ({ page }) => {
   await page.setContent(`<a id="nav" href="${nav}" target="_blank" rel="noopener noreferrer"><span>Start</span></a>
     <a id="other" href="https://example.com/">Other</a><pre><a id="example" href="${nav}">Code example</a></pre>`);
-  await page.evaluate(({ attributionSource, trackingSource }) => {
+  await page.evaluate(({ attributionSource, measurementSource, trackingSource }) => {
     const attribution = new Function('exports', attributionSource + '; return exports;')({});
-    const tracking = new Function('exports', 'require', trackingSource + '; return exports;')({}, () => attribution);
+    const measurement = new Function('exports', measurementSource + '; return exports;')({});
+    const tracking = new Function('exports', 'require', trackingSource + '; return exports;')({}, name => name === './growth-measurement' ? measurement : attribution);
     window.attribution = attribution;
     window.tracking = tracking;
     window.links = new WeakMap();
     window.cleanup = tracking.trackCloudLinks(document.body, 'homepage', { utm_source: 'adwords', gclid: 'first' }, window.links);
-  }, { attributionSource, trackingSource });
+  }, { attributionSource, measurementSource, trackingSource });
   const values = selector => page.locator(selector).evaluate(a => Object.fromEntries(new URL(a.href).searchParams));
   expect(await values('#nav')).toMatchObject({ utm_source: 'adwords', gclid: 'first', entry_page: 'homepage', entry_button: 'milvus_nav_right' });
   await expect(page.locator('#nav')).toHaveAttribute('target', '_blank');
@@ -180,9 +183,10 @@ test('actual DOM links, dynamic HTML, route changes and locale changes use the s
 
 test('capture handles a just-inserted link before MutationObserver runs', async ({ page }) => {
   await page.setContent('<main></main>');
-  const href = await page.evaluate(({ attributionSource, trackingSource }) => {
+  const href = await page.evaluate(({ attributionSource, measurementSource, trackingSource }) => {
     const attribution = new Function('exports', attributionSource + '; return exports;')({});
-    const tracking = new Function('exports', 'require', trackingSource + '; return exports;')({}, () => attribution);
+    const measurement = new Function('exports', measurementSource + '; return exports;')({});
+    const tracking = new Function('exports', 'require', trackingSource + '; return exports;')({}, name => name === './growth-measurement' ? measurement : attribution);
     const cleanup = tracking.trackCloudLinks(document.body, 'homepage', { gclid: 'click' }, new WeakMap());
     const a = document.createElement('a');
     a.href = 'https://cloud.zilliz.com/signup';
@@ -192,7 +196,7 @@ test('capture handles a just-inserted link before MutationObserver runs', async 
     const result = a.href;
     cleanup();
     return result;
-  }, { attributionSource, trackingSource });
+  }, { attributionSource, measurementSource, trackingSource });
   expect(new URL(href).searchParams.get('gclid')).toBe('click');
 });
 
@@ -201,11 +205,12 @@ test('Cloud referrer policy survives DOM rewrites without changing other links o
     <a id="other" href="https://example.com/" rel="noreferrer" referrerpolicy="no-referrer">Other</a>
     <a id="download" href="${nav}" rel="noreferrer" download>Download</a>
     <pre><a id="code" href="${nav}" rel="noreferrer">Example</a></pre>`);
-  await page.evaluate(({ attributionSource, trackingSource }) => {
+  await page.evaluate(({ attributionSource, measurementSource, trackingSource }) => {
     const attribution = new Function('exports', attributionSource + '; return exports;')({});
-    const tracking = new Function('exports', 'require', trackingSource + '; return exports;')({}, () => attribution);
+    const measurement = new Function('exports', measurementSource + '; return exports;')({});
+    const tracking = new Function('exports', 'require', trackingSource + '; return exports;')({}, name => name === './growth-measurement' ? measurement : attribution);
     tracking.trackCloudLinks(document.body, 'homepage', {}, new WeakMap());
-  }, { attributionSource, trackingSource });
+  }, { attributionSource, measurementSource, trackingSource });
   await expect(page.locator('#cloud')).toHaveAttribute('rel', 'nofollow noopener');
   await page.locator('#cloud').evaluate(a => {
     a.rel = 'sponsored noreferrer';
@@ -236,11 +241,12 @@ test('real Cloud navigation sends only the Milvus origin and isolates new tabs',
     });
   }
   await page.goto('https://milvus.io/docs/quickstart.md?gclid=test-click&private_field=local-only');
-  await page.evaluate(({ attributionSource, trackingSource }) => {
+  await page.evaluate(({ attributionSource, measurementSource, trackingSource }) => {
     const attribution = new Function('exports', attributionSource + '; return exports;')({});
-    const tracking = new Function('exports', 'require', trackingSource + '; return exports;')({}, () => attribution);
+    const measurement = new Function('exports', measurementSource + '; return exports;')({});
+    const tracking = new Function('exports', 'require', trackingSource + '; return exports;')({}, name => name === './growth-measurement' ? measurement : attribution);
     tracking.trackCloudLinks(document.body, 'docs/quickstart.md', { gclid: 'test-click' }, new WeakMap());
-  }, { attributionSource, trackingSource });
+  }, { attributionSource, measurementSource, trackingSource });
   for (const id of ['en', 'cn']) {
     const popupPromise = context.waitForEvent('page');
     await page.locator('#' + id).click();
@@ -262,16 +268,17 @@ test('new context survives marketing handoff and does not create observer or CTA
   await page.setContent(`<header><a id="signup" href="https://cloud.zilliz.com/signup">Cloud</a></header>
     <a id="marketing" href="https://zilliz.com/pricing?utm_source=old&utm_campaign=old">Pricing</a>
     <a id="landing" href="https://cloud.zilliz.com/signup" data-track="cta_final_click">Final</a>`);
-  await page.evaluate(({ attributionSource, trackingSource }) => {
+  await page.evaluate(({ attributionSource, measurementSource, trackingSource }) => {
     const attribution = new Function('exports', attributionSource + '; return exports;')({});
-    const tracking = new Function('exports', 'require', trackingSource + '; return exports;')({}, () => attribution);
+    const measurement = new Function('exports', measurementSource + '; return exports;')({});
+    const tracking = new Function('exports', 'require', trackingSource + '; return exports;')({}, name => name === './growth-measurement' ? measurement : attribution);
     window.dataLayer = [];
     document.body.addEventListener('click', e => e.preventDefault());
     window.cleanup = tracking.trackCloudLinks(document.body, 'docs/quickstart.md', {gclid: 'new'}, new WeakMap(), {
       attribution_version: '1', first_entry_site: 'milvus.io', first_landing_page: '/docs/overview.md',
       first_touch_at: '2026-01-01T00:00:00Z', first_touch_scope: 'browser_session',
     });
-  }, {attributionSource, trackingSource});
+  }, {attributionSource, measurementSource, trackingSource});
   const query = await page.locator('#marketing').evaluate(a => Object.fromEntries(new URL(a.href).searchParams));
   expect(query).toMatchObject({gclid:'new', attribution_version:'1', first_landing_page:'/docs/overview.md', entry_page:'docs/quickstart.md'});
   expect(query).not.toHaveProperty('utm_campaign');
@@ -283,6 +290,6 @@ test('new context survives marketing handoff and does not create observer or CTA
   expect(new URL(await page.locator('#signup').getAttribute('href')).searchParams.get('handoff_at')).toBe(new URL(href).searchParams.get('handoff_at'));
   await page.locator('#signup').click();
   await page.locator('#landing').click();
-  expect(await page.evaluate(() => window.dataLayer)).toMatchObject([{event:'cta_zilliz_signup_click', cta_location:'header', cta_destination:'cloud_signup'}]);
-  expect(await page.evaluate(() => window.dataLayer.length)).toBe(1);
+  expect(await page.evaluate(() => window.dataLayer)).toMatchObject([{event:'cta_zilliz_signup_click', cta_location:'header', cta_action:'cloud_signup'}, {event:'cta_zilliz_signup_click', cta_action:'cloud_signup'}]);
+  expect(await page.evaluate(() => window.dataLayer.length)).toBe(2);
 });

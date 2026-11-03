@@ -1,3 +1,4 @@
+import { contentDimensions, pushGrowthEvent } from '@/utils/growth-measurement';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
@@ -135,9 +136,8 @@ export default function LandingPage({ page: p, twinPath, related, lang }: Props)
     return 'external';
   };
   const emit = (event: string, location: string, target: string, entryButton = '', url = '') => {
-    const w = window as Window & { dataLayer?: Record<string, unknown>[] };
-    (w.dataLayer = w.dataLayer || []).push({ event, landing_page: p.path, landing_topic: p.slug,
-      cta_location: location, cta_destination: target, entry_button: entryButton,
+    pushGrowthEvent(event, { ...contentDimensions('milvus.io', p.path), landing_topic: p.slug,
+      cta_location: location, cta_action: target, cta_destination: url.split(/[?#]/)[0], entry_button: entryButton,
       link_url: url.split(/[?#]/)[0] });
   };
   const cta = (c: Cta, secondary = false, event?: string, location = 'hero') => {
@@ -163,6 +163,8 @@ export default function LandingPage({ page: p, twinPath, related, lang }: Props)
     const target = (e.target as Element)?.closest?.<HTMLElement>('[data-track]');
     if (!target) return;
     const url = target.getAttribute('href') || '';
+    // Global Cloud activations are emitted once by the shared capture handler.
+    if (parseCloudEntryUrl(url)?.hostname === 'cloud.zilliz.com') return;
     emit(target.dataset.track, target.dataset.ctaLocation || '', url ? destination(url) : '',
       target.dataset.entryButton || '', url);
   };

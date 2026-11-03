@@ -1,3 +1,4 @@
+import { activateHandoff, analyticsConsent, contentDimensions, pushGrowthEvent } from './growth-measurement';
 import {
   ACQUISITION_KEYS,
   AcquisitionParams,
@@ -26,7 +27,6 @@ export function trackCloudLinks(
   links: TrackedCloudLinks,
   context: Record<string, string> = {}
 ): () => void {
-  const handoffAt = new Date().toISOString();
   const decorate = (anchor: HTMLAnchorElement) => {
     if (anchor.hasAttribute('download') || anchor.closest('pre, code')) return;
     const current = anchor.getAttribute('href');
@@ -68,7 +68,9 @@ export function trackCloudLinks(
     }
     if (marketing || entry.hostname === 'cloud.zilliz.com') {
       Object.entries(context).forEach(([key, value]) => entry.searchParams.set(key, value));
-      entry.searchParams.set('handoff_at', handoffAt);
+      entry.searchParams.delete('handoff_id');
+      entry.searchParams.delete('handoff_at');
+      entry.searchParams.set('analytics_consent', analyticsConsent());
       decorated = entry.toString();
     }
     if (decorated !== current) anchor.setAttribute('href', decorated);
@@ -93,29 +95,26 @@ export function trackCloudLinks(
     }
   };
 
-  const scan = (element: Element) => {
-    if (element instanceof HTMLAnchorElement) decorate(element);
-    element.querySelectorAll<HTMLAnchorElement>('a[href]').forEach(decorate);
+  const scan = (element: Element, refresh = false) => {
+    const visit = (anchor: HTMLAnchorElement) => {
+      if (refresh || links.get(anchor)?.decorated !== anchor.getAttribute('href')) decorate(anchor);
+    };
+    if (element instanceof HTMLAnchorElement) visit(element);
+    element.querySelectorAll<HTMLAnchorElement>('a[href]').forEach(visit);
   };
 
   // Keep right-click/copy-link behavior correct, including asynchronously loaded HTML.
-  scan(root);
-  const onClick = (event: MouseEvent) => {
-    const target = event.target;
-    if (!(target instanceof Element)) return;
-    const anchor = target.closest<HTMLAnchorElement>('a[href]');
-    if (!anchor || anchor.closest('[data-track]') || !parseCloudEntryUrl(anchor.href)) return;
-    const location = anchor.closest('header') ? 'header' : anchor.closest('footer') ? 'footer' : 'content';
-    const button = new URL(anchor.href).searchParams.get('entry_button') || `milvus_${location}_cloud`;
-    const w = window as Window & { dataLayer?: Record<string, unknown>[] };
-    const signup = new URL(anchor.href).pathname.replace(/\/$/, '') === '/signup';
-    (w.dataLayer = w.dataLayer || []).push({ event: signup ? 'cta_zilliz_signup_click' : 'cta_link_click', landing_page: '/' + page.replace(/^homepage$/, ''), landing_topic: 'site', cta_location: location, cta_destination: signup ? 'cloud_signup' : 'cloud_login', entry_button: button, link_url: new URL(anchor.href).pathname });
-  };
-  root.addEventListener('click', onClick);
+  scan(root, true);
   const observer = new MutationObserver(records => {
     for (const record of records) {
       if (record.type === 'attributes' && record.target instanceof HTMLAnchorElement) {
-        decorate(record.target);
+        const state = links.get(record.target);
+        const ownedWrite = state && (
+          (record.attributeName === 'href' && state.decorated === record.target.getAttribute('href')) ||
+          (record.attributeName === 'rel' && state.decoratedRel === record.target.getAttribute('rel')) ||
+          (record.attributeName === 'referrerpolicy' && record.target.referrerPolicy === 'strict-origin-when-cross-origin')
+        );
+        if (!ownedWrite) decorate(record.target);
       }
       for (const node of record.addedNodes) {
         if (node instanceof Element) scan(node);
@@ -130,18 +129,45 @@ export function trackCloudLinks(
   });
 
   // Catch a dynamically inserted link clicked before its observer callback runs.
-  const onNavigate = (event: Event) => {
+  const onNavigate = (event: MouseEvent) => {
+    if (event.defaultPrevented || (event.type === 'auxclick' ? event.button !== 1 : event.button !== 0)) return;
     const node = event.target;
     const element = node instanceof Element ? node : (node as Node)?.parentElement;
     const anchor = element?.closest('a[href]');
-    if (anchor instanceof HTMLAnchorElement) decorate(anchor);
+    if (!(anchor instanceof HTMLAnchorElement)) return;
+    decorate(anchor);
+    const cloud = parseCloudEntryUrl(anchor.href);
+    if (!cloud) {
+      const marketing = parseZillizEntryUrl(anchor.href);
+      if (marketing && !anchor.closest('[data-track]')) pushGrowthEvent('cta_link_click', {
+        ...contentDimensions('milvus.io', '/' + page.replace(/^homepage$/, '')),
+        cta_action: 'zilliz_visit', cta_destination: marketing.origin + marketing.pathname,
+        cta_location: anchor.dataset.ctaLocation || (anchor.closest('header') ? 'header' : anchor.closest('footer') ? 'footer' : 'content'),
+        entry_button: marketing.searchParams.get('entry_button') || 'milvus_to_zilliz',
+        link_url: marketing.origin + marketing.pathname,
+      });
+      return;
+    }
+    if (cloud.hostname !== 'cloud.zilliz.com' || !links.has(anchor)) return;
+    const activation = activateHandoff(cloud);
+    const decorated = cloud.toString();
+    links.set(anchor, { ...links.get(anchor)!, decorated });
+    anchor.setAttribute('href', decorated);
+    const location = anchor.dataset.ctaLocation || (anchor.closest('header') ? 'header' : anchor.closest('footer') ? 'footer' : 'content');
+    const signup = cloud.pathname.replace(/\/$/, '') === '/signup';
+    pushGrowthEvent(signup ? 'cta_zilliz_signup_click' : 'cta_link_click', {
+      ...contentDimensions('milvus.io', '/' + page.replace(/^homepage$/, '')), ...activation,
+      cta_location: location, cta_action: signup ? 'cloud_signup' : 'cloud_login',
+      cta_destination: cloud.origin + cloud.pathname,
+      entry_button: cloud.searchParams.get('entry_button') || `milvus_${location}_cloud`,
+      link_url: cloud.origin + cloud.pathname,
+    });
   };
   root.addEventListener('click', onNavigate, true);
   root.addEventListener('auxclick', onNavigate, true);
 
   return () => {
     observer.disconnect();
-    root.removeEventListener('click', onClick);
     root.removeEventListener('click', onNavigate, true);
     root.removeEventListener('auxclick', onNavigate, true);
   };

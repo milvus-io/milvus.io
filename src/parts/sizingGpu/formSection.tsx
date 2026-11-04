@@ -288,6 +288,15 @@ export default function GpuFormSection(props: GpuFormSectionProps) {
                   placeholder={`[${INTERMEDIATE_GRAPH_DEGREE_RANGE_CONFIG.min}, ${INTERMEDIATE_GRAPH_DEGREE_RANGE_CONFIG.max}]`}
                 />
               </div>
+              <div className="mt-[16px] flex items-center justify-between">
+                <p className="text-[12px] font-[500] leading-[18px]">
+                  {t('gpu.form.cacheDatasetOnDevice')}
+                </p>
+                <SizingSwitch
+                  checked={form.cacheDatasetOnDevice ?? true}
+                  onCheckedChange={value => updateForm('cacheDatasetOnDevice', value)}
+                />
+              </div>
             </>
           )}
         </div>

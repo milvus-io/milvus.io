@@ -19,12 +19,14 @@
     "visited": "Visited",
     "totalLatency": "Total latency",
     "pressRun": "Press ▶ Run Search to start.",
-    "searchComplete": "Search complete."
+    "searchComplete": "Search complete.",
+    "faqTitle": "자주 묻는 질문",
+    "relatedTitle": "계속 탐색해 보세요"
   },
   "home": {
     "title": "Learn Milvus",
     "metaTitle": "Learn Milvus - Interactive Vector Database Visualizations",
-    "metaDesc": "Interactive visualizations that turn abstract vector database concepts into something you can see and touch.",
+    "metaDesc": "벡터 데이터베이스 개념에 대한 대화형 시각화: L2, 코사인 및 내적 유사도 측정 기준과 IVF, HNSW, DiskANN 벡터 인덱스.",
     "subtitle": "Interactive visualizations that turn abstract vector database concepts into something you can <strong>see</strong> and <strong>touch</strong>.",
     "cards": {
       "metric": {
@@ -50,8 +52,8 @@
     }
   },
   "metric": {
-    "title": "Metric Playground",
-    "metaTitle": "Metric Playground - Learn Milvus",
+    "title": "벡터 유사도 측정 기준: L2, 코사인 및 내적",
+    "metaTitle": "L2 대 코사인 대 IP: 벡터 유사도 측정 기준 시각화 | Milvus",
     "subtitle": "Drag the <queryPoint>query point</queryPoint> and switch metrics to see how the nearest neighbors change.",
     "topKTitle": "Top-{{k}} Nearest Neighbors",
     "higherCloser": "(higher = closer)",
@@ -80,11 +82,26 @@
     "twoRules": "Two practical rules",
     "matchMetric": "<strong>Match the metric to the model.</strong> Embedding models are <em>trained</em> with a specific metric in mind. Using a different one at search time will silently wreck your recall. Check the model card before picking.",
     "stayConsistent": "<strong>Stay consistent.</strong> All vectors in a collection must use the same metric. You cannot mix them within a single index, and you cannot meaningfully compare scores across different metrics.",
-    "tryThis": "<strong>Try this:</strong> drag the query point near the origin and switch between Cosine and L2. Watch how Cosine cares only about which \"direction\" the query is pointing — points on the opposite side of the origin can be \"close\" under L2 but \"far\" under Cosine. That visual is the entire concept."
+    "tryThis": "<strong>Try this:</strong> drag the query point near the origin and switch between Cosine and L2. Watch how Cosine cares only about which \"direction\" the query is pointing — points on the opposite side of the origin can be \"close\" under L2 but \"far\" under Cosine. That visual is the entire concept.",
+    "metaDesc": "쿼리 포인트를 드래그하여 L2, 코사인, 내적에 따라 어떤 이웃이 “가장 가까운” 것으로 분류되는지 확인해 보세요. 여러분의 임베딩 모델에 가장 적합한 유사도 측정 기준을 알아보세요.",
+    "seo": {
+      "chooseTitle": "Milvus에서 메트릭 유형 설정하기",
+      "chooseP1": "Milvus에서는 인덱스를 생성할 때 <code>metric_type</code> (밀집 벡터의 경우 <code>L2</code>, <code>IP</code> 또는 <code>COSINE</code> ) <code>을</code> 통해 인덱스별로 메트릭이 설정됩니다. 이후 해당 컬렉션에 대한 모든 검색은 방금 위에서 직접 적용해 본 것과 동일한 함수를 사용합니다. 가장 확실한 규칙은 단 하나입니다. <strong>임베딩 모델이 훈련될 때 사용된 메트릭을 사용해야 하며</strong>, 이 메트릭은 거의 모든 모델 카드에 명시되어 있습니다.",
+      "chooseP2": "두 가지 유용한 요령. 대부분의 최신 텍스트 임베딩 API(OpenAI, Cohere, Voyage 및 대부분의 SentenceTransformer)는 <strong>코사인 유사도를</strong> 위해 설계된 벡터를 생성합니다. 그리고 벡터가 단위 길이로 정규화되어 있다면, 코사인 유사도와 내적은 동일한 순위를 반환합니다. 따라서 정규화된 벡터에 대한 <code>내적(IP)은</code> <code>코사인 유사도</code>( <code>COSINE)</code>를 대체하는 일반적이고 약간 더 효율적인 대안으로 널리 사용됩니다.",
+      "docsCta": "더 자세히 알아보기: Milvus가 지원하는 모든 지표 목록(이진 벡터용 해밍(Hamming) 및 자카드(Jaccard) 지표, 전체 텍스트 검색용 BM25 지표 등)을 확인하려면 <docs>‘유사도 지표(Similarity Metrics)’ 문서를</docs> 참조하세요.",
+      "faq1q": "OpenAI나 다른 텍스트 임베딩의 경우 어떤 유사도 측정 기준을 사용해야 할까요?",
+      "faq1a": "코사인 유사도(Milvus의 metric_type COSINE)를 사용하세요. OpenAI의 text-embedding-3 계열을 포함해 거의 모든 최신 텍스트 임베딩 모델은 코사인 유사도를 기준으로 훈련됩니다. OpenAI 임베딩은 단위 길이로 정규화되어 있으므로, 내적(IP)을 사용해도 동일한 순위가 산출되며 훌륭한 대안이 됩니다.",
+      "faq2q": "코사인 유사도와 내적의 차이점은 무엇인가요?",
+      "faq2a": "코사인 유사도는 두 벡터 사이의 각도만을 측정하며, 벡터의 길이는 고려하지 않습니다. 내적(점곱)은 방향의 일치와 크기를 모두 반영하므로, 같은 방향을 가리키는 더 긴 벡터일수록 더 높은 점수를 받습니다. 단위 정규화된 벡터의 경우, 이 두 측정 방식은 수학적으로 동등합니다.",
+      "faq3q": "Milvus에서 인덱스를 생성한 후 메트릭 유형을 변경할 수 있나요?",
+      "faq3a": "아닙니다. 메트릭은 인덱스 생성 시점에 인덱스에 고정되어 있습니다. 메트릭을 변경하려면 인덱스를 삭제한 후 새로운 metric_type으로 다시 생성해야 합니다. 또한 서로 다른 메트릭의 점수는 서로 비교할 수 없으므로, 결과를 후처리할 때 이를 혼합하지 마십시오.",
+      "faq4q": "측정 기준의 선택이 재현율이나 검색 속도에 영향을 미치나요?",
+      "faq4a": "속도는 본질적으로 동일합니다. L2, IP, 코사인 연산 모두 벡터를 한 번 스캔하는 데 걸리는 시간만 소요됩니다. 중요한 점은 리콜입니다. 임베딩 모델이 훈련된 것과 다른 메트릭을 사용하여 검색하면 결과의 품질이 눈에 띄지 않게 저하되며, 종종 그 정도가 매우 심각해집니다."
+    }
   },
   "ivf": {
-    "title": "FLAT vs IVF",
-    "metaTitle": "FLAT vs IVF - Learn Milvus",
+    "title": "FLAT 대 IVF: 역파일 인덱스의 작동 원리",
+    "metaTitle": "IVF 지수 해설: FLAT 대 IVF 대화형 시각화 | Milvus",
     "subtitle": "Same data, same query — but a different search strategy. Drag the <queryPoint>query point</queryPoint>, adjust <code>nprobe</code>, and press <strong>Run Search</strong> to see how IVF skips most of the data.",
     "nprobeHint": "Search {{nprobe}} of {{k}} clusters",
     "flatTitle": "FLAT — Brute Force",
@@ -98,11 +115,32 @@
     "step2": "<strong>Step 1 — evaluate centroids:</strong> IVF first computes the distance from the query to every centroid. That's only {{k}} comparisons, regardless of dataset size.",
     "step3": "<strong>Step 2 — pick the closest <code>nprobe</code> clusters:</strong> these light up. All other clusters are skipped entirely.",
     "step4": "<strong>Step 3 — scan points inside the chosen clusters:</strong> only ~{{scanned}} of the {{total}} points.",
-    "takeaway": "<strong>The tradeoff:</strong> larger <code>nprobe</code> → more clusters scanned → higher recall but slower. Smaller <code>nprobe</code> → faster but you may miss true neighbors that live in unscanned clusters. Try setting <code>nprobe = 1</code> and dragging the query near a cluster boundary to see recall drop."
+    "takeaway": "<strong>The tradeoff:</strong> larger <code>nprobe</code> → more clusters scanned → higher recall but slower. Smaller <code>nprobe</code> → faster but you may miss true neighbors that live in unscanned clusters. Try setting <code>nprobe = 1</code> and dragging the query near a cluster boundary to see recall drop.",
+    "metaDesc": "동일한 쿼리에 대해 무차별 대입 방식의 FLAT과 클러스터 기반 IVF가 어떻게 경쟁하는지 확인해 보세요. 실시간으로 nprobe를 조정하고, Milvus에서 nlist와 nprobe가 리콜률과 처리 속도를 어떻게 절충하는지 알아보세요.",
+    "seo": {
+      "whatIsTitle": "IVF 지수란 무엇인가요?",
+      "whatIsP1": "<strong>IVF(Inverted File)</strong> 는 클러스터링 기반의 근사 최인접 이웃 인덱스입니다. 구축 시, k-means 알고리즘은 모든 벡터를 <code>nlist개의</code> 클러스터로 분할하며, 각 클러스터는 중심점(centroid)으로 표현됩니다. 쿼리 시, 검색 알고리즘은 먼저 쿼리를 중심점들과만 비교하여 가장 가까운 <code>nprobe개의</code> 클러스터를 선정한 뒤, 해당 클러스터 내의 벡터들만 스캔하고 나머지는 모두 건너뜁니다.",
+      "whatIsP2": "Milvus는 정확도를 위해 메모리 사용량을 희생하는 여러 가지 IVF 변형을 제공합니다. <strong>IVF_FLAT은</strong> 원시 벡터를 저장하며(가장 정확함), <strong>IVF_SQ8은</strong> 각 차원을 1바이트로 압축하며(메모리 사용량이 약 4배 감소, 리콜 비용이 적음), <strong>IVF_PQ는</strong> 곱셈 양자화를 적용하여 훨씬 더 높은 압축률을 제공하지만 리콜 비용은 더 큽니다.",
+      "paramsTitle": "nlist 및 nprobe 조정",
+      "param1": "<strong><code>nlist</code> (빌드 시):</strong> k-means 클러스터의 개수. 벡터 개수가 N개인 경우, 일반적으로 <code>4 × sqrt(N)</code> 을 시작값으로 삼는다. 클러스터 수가 많을수록 각 클러스터의 크기는 작아지므로 스캔 속도는 빨라지지만, 중심점 탐색에 드는 비용이 증가하고 경계 효과가 커진다.",
+      "param2": "<strong><code>nprobe</code> (쿼리 시간):</strong> 쿼리당 스캔할 클러스터 수입니다. 이는 리콜 및 지연 시간을 조절하는 주요 매개변수이며, 바로 위의 슬라이더가 제어하는 항목입니다. <code>nlist / 16</code> 정도에서 시작하여 리콜이 목표치에 도달할 때까지 값을 늘려가세요.",
+      "param3": "<strong>변형 선택:</strong> IVF_FLAT으로 시작합니다. 메모리가 부족해지면 IVF_SQ8로 전환하고, 데이터셋이 SQ8을 처리하기에 너무 클 때만 IVF_PQ로 전환하십시오. 또한 각 단계로 하향 조정할 때마다 자체 데이터에 대한 리콜을 확인하십시오.",
+      "whenTitle": "IVF 대 HNSW 대 DiskANN",
+      "whenP1": "IVF는 구축 속도가 빠르고, 벡터에 비해 메모리 오버헤드가 적으며, 이해하기 쉽습니다. 하지만 동일한 리콜 목표값에서 HNSW는 일반적으로 메모리 내에서 쿼리에 더 빠르게 응답합니다. 인덱스를 자주 재구축해야 하는 경우(빠른 구축이 중요한 경우), 메모리 제약이 있는 경우(IVF_SQ8/IVF_PQ), 또는 예측 가능하고 조정 가능한 스캔 동작을 원하는 경우에는 IVF를 선택하십시오. 메모리 내 쿼리 지연 시간을 최소화하려면 HNSW를, 벡터가 RAM에 전혀 들어가지 않는 경우에는 DiskANN을 선택하십시오.",
+      "docsCta": "더 자세히 알아보기: 인덱스 매개변수에 대해서는 <docs>IVF_FLAT 문서를</docs> 참조하거나, 전체 결정 가이드를 보려면 <docsExplained>‘인덱스 설명’을</docsExplained> 확인하세요.",
+      "faq1q": "IVF_FLAT, IVF_SQ8, IVF_PQ의 차이점은 무엇인가요?",
+      "faq1a": "세 클러스터 모두 벡터를 동일한 방식으로 클러스터링하지만, 클러스터 내부에서 벡터를 저장하는 방식은 서로 다릅니다. IVF_FLAT은 원시 부동소수점 벡터를 유지합니다(최고의 재현율). IVF_SQ8은 각 차원을 8비트로 양자화하여, 리콜 손실을 약간 감수하는 대신 메모리 사용량을 약 4배 줄입니다. IVF_PQ는 벡터를 짧은 곱 양자화 코드로 대체하여 가장 높은 압축률을 달성하지만, 리콜 손실도 가장 큽니다.",
+      "faq2q": "nlist와 nprobe는 어떻게 선택해야 할까요?",
+      "faq2a": "일반적인 경험칙은 N개의 벡터에 대해 nlist = 4 × sqrt(N)으로 설정하고, 쿼리 실행 시점에 nprobe 값을 조정하는 것입니다. nprobe 값이 클수록 더 많은 클러스터를 스캔하게 되며, 이로 인해 리콜률은 높아지지만 지연 시간도 증가합니다. nlist/16 정도에서 시작하여, 제외된 쿼리 집합에 대한 리콜률이 목표치에 도달할 때까지 nprobe 값을 점차 늘려가십시오.",
+      "faq3q": "왜 IVF는 일부 진정한 가장 가까운 이웃을 놓치는가?",
+      "faq3a": "클러스터 경계 때문입니다. 쿼리가 클러스터 가장자리 근처에 위치할 경우, 쿼리의 실제 인접 노드 중 일부는 스캔된 nprobe 개 클러스터에 포함되지 않은 인접 클러스터에 속해 있을 수 있습니다. nprobe = 1인 상태에서 쿼리 지점을 경계 근처로 끌어다 놓으면 시각화 화면에서 이 현상을 확인할 수 있습니다.",
+      "faq4q": "체외수정(IVF)을 해야 할까요, 아니면 자연수태(HNSW)를 해야 할까요?",
+      "faq4a": "같은 리콜 조건에서 HNSW는 일반적으로 메모리 내 검색 속도가 더 빠르지만, 메모리를 더 많이 사용하고 빌드 속도가 더 느립니다. IVF는 빌드 속도가 빠르며, 메모리가 부족한 상황에서 양자화(SQ8/PQ)와 잘 어울립니다. 데이터셋이 RAM 용량을 완전히 초과하는 경우에는 대신 DiskANN을 고려해 보십시오."
+    }
   },
   "hnsw": {
-    "title": "HNSW Explorer",
-    "metaTitle": "HNSW Explorer - Learn Milvus",
+    "title": "HNSW Explorer: 시각화된 계층적 탐색 가능 소세계",
+    "metaTitle": "HNSW 알고리즘 설명: 대화형 시각화 | Milvus",
     "subtitle": "Watch a search travel through the layered graph — from the sparse top layer (highways) down to the dense bottom layer (local roads). Drag the <queryPoint>query point</queryPoint> on Layer 0 and tune <code>M</code> / <code>ef</code> to see how the graph changes.",
     "mHint": "Max neighbors per node",
     "efHint": "Layer-0 candidate pool",
@@ -119,11 +157,32 @@
     "step3": "<strong>Search starts at the top:</strong> from a fixed entry point, greedily walk to the neighbor closest to the query, repeat until no improvement.",
     "step4": "<strong>Drop down a layer and repeat:</strong> the position from the previous layer becomes the start of the next layer's walk. Each drop refines the result with finer-grained edges.",
     "step5": "<strong>Layer 0 with <code>ef</code>:</strong> at the bottom layer, instead of stopping at the first local minimum, HNSW maintains a pool of <code>ef</code> best candidates and expands their neighborhoods. Larger <code>ef</code> → more accurate but slower.",
-    "takeaway": "<strong>Why it's fast:</strong> the top layers act like an index over the index — you cover huge distances in just a few hops, then zoom in. For N points, search visits roughly <code>O(log N)</code> nodes instead of <code>N</code>."
+    "takeaway": "<strong>Why it's fast:</strong> the top layers act like an index over the index — you cover huge distances in just a few hops, then zoom in. For N points, search visits roughly <code>O(log N)</code> nodes instead of <code>N</code>.",
+    "metaDesc": "HNSW를 레이어별로 단계별로 살펴보세요. M과 ef 값을 조정하여 계층적 그래프가 메모리와 속도를 어떻게 절충하는지 확인하고, Milvus에서 이 값들을 설정하는 방법을 알아보세요.",
+    "seo": {
+      "whatIsTitle": "HNSW란 무엇인가요?",
+      "whatIsP1": "<strong>HNSW(Hierarchical Navigable Small World)</strong> 는 그래프 기반의 근사 최인접 이웃 알고리즘입니다. 이 알고리즘은 벡터들을 탐색 가능한 스몰 월드 그래프의 스택 형태로 구성합니다. 즉, 거친 라우팅을 위한 장거리 에지가 있는 희소 상층부와, 최종적인 세밀한 탐색을 위한 짧은 에지가 있는 고밀도 하층부로 이루어져 있습니다. 검색 과정에서는 각 층에서 쿼리 방향으로 탐욕적으로 이동한 다음 아래 층으로 내려가며, 전체 N개의 노드를 모두 스캔하는 대신 대략 <code>O(log N)</code> 개의 노드만 방문하게 됩니다.",
+      "whatIsP2": "HNSW는 가장 널리 사용되는 인메모리 벡터 인덱스이며, Milvus의 기본 그래프 인덱스입니다. 또한 Milvus는 저장된 벡터를 양자화하여 리콜 성능을 약간 희생하는 대가로 메모리 사용량을 줄이는 <strong>HNSW_SQ</strong> 및 <strong>HNSW_PQ</strong> 변형도 제공합니다.",
+      "paramsTitle": "Milvus의 HNSW 매개변수",
+      "param1": "<strong><code>M</code> (생성 시간):</strong> 노드당 최대 변의 수로, 위의 슬라이더와 동일한 조절 항목입니다. 일반적인 값은 8~64입니다. M 값을 높이면 리콜률과 그래프 연결성이 향상되지만, 메모리 사용량이 선형적으로 증가하고 생성 속도가 느려집니다.",
+      "param2": "<strong><code>efConstruction</code> (생성 시간):</strong> 노드를 삽입할 때 사용되는 후보 풀의 크기입니다. 값이 클수록 인덱스 생성 속도는 느려지지만, 더 높은 품질의 그래프(더 높은 리콜률 달성 가능)를 생성할 수 있습니다. 일반적인 값은 100~500입니다.",
+      "param3": "<strong><code>ef</code> / <code>ef_search</code> (쿼리 시간):</strong> Layer-0 탐색 과정에서 유지되는 후보 풀 — 검색 시 리콜 및 지연 시간을 조절하는 주요 매개변수입니다. 이 값은 최소한 top-K 이상이어야 합니다. 리콜이 더 이상 증가하지 않을 때까지 이 값을 늘리십시오. 지연 시간은 이 값에 따라 대략 선형적으로 증가합니다.",
+      "whenTitle": "HNSW 대 IVF 대 DiskANN",
+      "whenP1": "HNSW는 일반적으로 인메모리 검색에서 높은 리콜률을 유지하면서도 최상의 쿼리 지연 시간을 제공합니다. 따라서 데이터셋(그래프 오버헤드 포함)이 RAM에 들어갈 때 HNSW가 기본 선택지로 사용됩니다. 이 방식의 단점은 메모리 사용량과 인덱스 생성 시간입니다. 그래프는 벡터당 상당한 오버헤드를 발생시키며, 삽입 속도는 IVF의 k-means 할당 방식보다 느립니다. 빠른 인덱스 생성이나 강력한 양자화가 필요한 경우에는 IVF를 선택하고, 데이터셋이 RAM에 들어가지 않을 정도로 크지만 여전히 높은 리콜이 필요한 경우에는 DiskANN을 선택하십시오.",
+      "docsCta": "더 자세히 알아보기: 정확한 인덱스 매개변수에 대해서는 <docs>HNSW 문서를</docs> 참조하거나, 전체 결정 가이드를 보려면 <docsExplained>‘인덱스 설명’을</docsExplained> 확인하세요.",
+      "faq1q": "HNSW의 M 매개변수는 무엇을 제어하나요?",
+      "faq1a": "M은 각 노드가 레이어당 유지하는 에지의 수를 제한합니다. M 값이 클수록 그래프의 연결성이 향상되어(리콜률이 높아지고 라우팅이 더 견고해짐) 하지만, 메모리 사용량은 M에 비례하여 선형적으로 증가하며 인덱스 생성 속도가 느려집니다. 8에서 64 사이의 값이면 대부분의 워크로드를 처리할 수 있으며, 16~32가 일반적으로 최적의 범위입니다.",
+      "faq2q": "ef와 efConstruction의 차이점은 무엇인가요?",
+      "faq2a": "두 값 모두 후보 풀의 크기를 나타내며, 서로 다른 시점에 적용됩니다. efConstruction은 인덱스를 구축할 때 사용되며, 삽입된 각 노드가 인접 노드를 얼마나 철저하게 검색할지 결정함으로써 그래프의 품질을 제어합니다. ef(ef_search)는 쿼리 시점에 사용되며, Layer-0 검색의 범위를 제어하여 모든 쿼리에서 지연 시간과 리콜률 간의 균형을 조절합니다.",
+      "faq3q": "HNSW 인덱스에는 얼마나 많은 메모리가 필요합니까?",
+      "faq3a": "대략 원시 벡터와 그래프를 합친 크기입니다. float32 데이터의 경우 벡터당 약 d × 4바이트가 소요되며, 여기에 노드당 M × 2 × 8바이트 규모의 에지 데이터가 추가됩니다. 메모리 제약이 있는 배포 환경의 경우, Milvus는 저장된 벡터를 양자화하는 HNSW_SQ 및 HNSW_PQ, 또는 전체 벡터를 SSD로 이동시키는 DiskANN을 제공합니다.",
+      "faq4q": "어떤 경우에 IVF 대신 HNSW를 사용해야 할까요?",
+      "faq4a": "높은 리콜률에서 쿼리 지연 시간을 최소화하는 것이 우선순위이고 인덱스가 메모리에 모두 들어갈 수 있는 경우에는 HNSW를 사용하십시오. 대개 HNSW가 더 우수한 성능을 보입니다. 인덱스를 자주 재구축해야 하는 경우(구축 속도가 훨씬 빠름)나, 제한된 메모리 용량을 맞추기 위해 SQ8/PQ 양자화와 결합하여 사용하는 경우에는 IVF를 선호하십시오."
+    }
   },
   "diskann": {
-    "title": "DiskANN Explorer",
-    "metaTitle": "DiskANN Explorer - Learn Milvus",
+    "title": "DiskANN Explorer: SSD를 활용한 10억 규모 벡터 검색",
+    "metaTitle": "DiskANN 해설: 디스크 내 벡터 인덱스 시각화 | Milvus",
     "subtitle": "DiskANN keeps a tiny <strong>PQ-compressed</strong> copy of every vector in RAM and the <strong>full vectors + graph</strong> on SSD. Search walks the graph with cheap RAM compares, then re-ranks the top candidates with a handful of expensive disk reads.",
     "memoryWallTitle": "Why DiskANN exists: the memory wall",
     "memoryNote": "A single commodity SSD holds the disk side easily. The RAM side fits in any laptop. Without the PQ trick, you'd need a server with hundreds of GB of RAM to even load the dataset.",
@@ -154,7 +213,28 @@
     "whyScales": "<strong>Why it scales:</strong> RAM only holds compressed codes. A 1B-vector dataset with 32-byte PQ needs ~32 GB RAM — fits on a single workstation.",
     "whySlower": "<strong>Why it's slower than HNSW:</strong> SSD random reads are ~100× slower than RAM. Even with only ~10 reads, query latency is dominated by disk.",
     "whyBeats": "<strong>Why it still beats IVF_PQ for recall:</strong> the re-rank step recovers quantization errors that pure PQ-based methods can't fix.",
-    "takeaway": "<strong>The mental model:</strong> PQ is the cheap \"is this neighborhood promising?\" test. Disk reads are the expensive \"let me actually verify\" check. DiskANN gets most of its work done with the cheap test."
+    "takeaway": "<strong>The mental model:</strong> PQ is the cheap \"is this neighborhood promising?\" test. Disk reads are the expensive \"let me actually verify\" check. DiskANN gets most of its work done with the cheap test.",
+    "metaDesc": "DiskANN이 RAM에 PQ 코드를, SSD에 전체 벡터를 저장한 상태에서 Vamana 그래프를 탐색하는 과정을 확인해 보세요. 10억 규모 벡터 검색에서 디스크 기반 인덱스가 HNSW보다 우수한 성능을 보이는 경우가 언제인지 알아보세요.",
+    "seo": {
+      "whatIsTitle": "DiskANN이란 무엇인가요?",
+      "whatIsP1": "<strong>DiskANN은</strong> RAM에 모두 들어가지 않는 데이터셋을 위해 설계된 그래프 기반의 근사 최인접 이웃 인덱스입니다. 이 인덱스는 효율적인 디스크 액세스를 위해 레이아웃이 구성된 단일 레이어 <strong>Vamana 그래프를</strong> 구축하고, 메모리 내의 모든 벡터에 대해 매우 작은 제품 양자화(PQ) 코드를 유지하며, 정밀도 그대로의 벡터와 그래프 에지는 SSD에 저장합니다. 검색 시에는 비용이 적게 드는 RAM 내 PQ 비교를 통해 그래프를 탐색하며, 소수의 최종 후보를 재순위 지정할 때만 디스크에 접근합니다.",
+      "whatIsP2": "Milvus에서 DiskANN은 디스크 기반 인덱스 옵션을 지원합니다. 이를 통해 수십 기가바이트(수백 기가바이트가 아닌)의 RAM을 갖춘 시스템에서도 수십억 규모 컬렉션을 검색할 수 있으며, 디스크 재순위 지정 단계를 통해 리콜률을 인메모리 그래프 인덱스 수준에 가깝게 유지합니다.",
+      "paramsTitle": "각 노브가 제어하는 기능",
+      "param1": "<strong><code>R</code> (그래프 차수, 빌드 시간):</strong> Vamana 그래프에서 노드당 허용되는 최대 변의 수입니다. R 값이 높을수록 연결성과 재현율이 향상되지만, 디스크에 저장되는 그래프의 크기가 커지고 빌드 속도가 느려지는 단점이 있습니다.",
+      "param2": "<strong><code>L</code> / <code>search_list</code> (쿼리 시간):</strong> 빔 검색 중에 유지되는 후보 풀 — 리콜/지연 시간의 주요 조절 변수로, HNSW의 ef와 동일합니다. 이 값은 최소한 상위 K개 이상이어야 합니다.",
+      "param3": "<strong>예산 재조정:</strong> 정확한 점수 산출을 위해 SSD에서 전체 벡터를 불러오는 결선 진출자 수. 각각은 무작위 디스크 읽기 작업이므로, 바로 이곳에서 쿼리 지연 시간이 발생하며, 또한 PQ 근사 오류가 수정되는 곳이기도 합니다.",
+      "whenTitle": "DiskANN 대 HNSW 대 IVF",
+      "whenP1": "데이터셋(또는 메모리 사용량)이 RAM 용량을 초과할 경우 DiskANN을 선택하세요. SSD 읽기 작업으로 인해 밀리초 수준의 지연 시간이 발생하지만, 훨씬 적은 메모리만으로도 높은 리콜률을 제공하는 쿼리를 처리할 수 있습니다. 모든 데이터가 메모리에 여유 있게 들어갈 경우, HNSW가 더 빠르게 응답합니다. 디스크를 사용하지 않으면서도 빠른 인덱스 구축이나 적당한 메모리 절감이 필요한 경우, IVF 변형들이 그 중간 역할을 합니다.",
+      "docsCta": "더 자세히 알아보기: 설정 요구 사항에 대해서는 <docs>DiskANN 문서를</docs> 참조하거나, 전체 결정 가이드를 보려면 <docsExplained>‘인덱스 설명’을</docsExplained> 확인하세요.",
+      "faq1q": "어떤 경우에 HNSW 대신 DiskANN을 사용해야 하나요?",
+      "faq1a": "벡터가 더 이상 RAM에 들어가지 않을 때, 혹은 이를 저장하는 데 드는 RAM 비용이 감당하기 어려울 정도로 비쌀 때. HNSW의 경우 10억 개의 768차원 부동소수점 벡터를 처리하려면 약 3TB의 메모리가 필요하지만, DiskANN을 사용하면 수십 GB의 RAM과 SSD만으로도 충분합니다. 데이터셋이 메모리에 여유 있게 들어갈 경우, HNSW가 여전히 지연 시간이 더 짧은 선택지입니다.",
+      "faq2q": "DiskANN을 사용하려면 어떤 하드웨어가 필요한가요?",
+      "faq2a": "쿼리 지연 시간은 소수의 무작위 디스크 읽기 작업(각각 약 100 µs)에 의해 주로 결정되므로, 고속 NVMe SSD가 핵심 요구 사항입니다. RAM 요구량은 그리 많지 않으며, 대략 PQ 코드(예: 벡터당 32~64바이트)와 작업용 버퍼 정도면 충분합니다.",
+      "faq3q": "DiskANN은 HNSW와 같은 메모리 내 인덱스보다 속도가 더 느린가요?",
+      "faq3a": "쿼리당으로 보면 그렇습니다. 일반적으로 메모리 내 HNSW의 경우 1밀리초 미만의 처리 시간을 보이는 반면, 디스크 기반 HNSW는 1밀리초 미만의 처리 시간을 보이는 것에 비해 일반적으로 한 자릿수 밀리초 대의 처리 시간을 보입니다. 이는 디스크를 통한 재순위가 RAM 액세스보다 약 100배 더 느리기 때문입니다. 대신 비용 측면에서 타협이 필요합니다. DiskANN은 리콜률을 90~95% 이상으로 유지하면서도, 동일한 데이터셋을 처리하는 데 필요한 RAM 용량을 한 자릿수 수준으로 줄일 수 있습니다.",
+      "faq4q": "DiskANN은 PQ 압축을 사용함에도 불구하고 어떻게 높은 재현율을 유지할 수 있나요?",
+      "faq4a": "PQ 코드는 그래프 탐색 경로를 안내하는 용도로만 사용되며, 최종 점수를 산출하는 데는 사용되지 않습니다. 결과를 반환하기 전에 DiskANN은 SSD에서 상위 후보들의 전체 정밀도 벡터를 읽어와 이를 정확하게 재정렬함으로써, IVF_PQ와 같은 순수 PQ 기반 인덱스로는 해결할 수 없는 양자화 오류를 보정합니다."
+    }
   },
   "tradeoff": {
     "title": "Tradeoff Dashboard",

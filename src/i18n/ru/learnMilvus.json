@@ -19,12 +19,14 @@
     "visited": "Visited",
     "totalLatency": "Total latency",
     "pressRun": "Press ▶ Run Search to start.",
-    "searchComplete": "Search complete."
+    "searchComplete": "Search complete.",
+    "faqTitle": "Часто задаваемые вопросы",
+    "relatedTitle": "Продолжайте исследовать"
   },
   "home": {
     "title": "Learn Milvus",
     "metaTitle": "Learn Milvus - Interactive Vector Database Visualizations",
-    "metaDesc": "Interactive visualizations that turn abstract vector database concepts into something you can see and touch.",
+    "metaDesc": "Интерактивные визуализации концепций векторных баз данных: метрики сходства L2, косинусная и метрика внутреннего произведения, а также векторные индексы IVF, HNSW и DiskANN.",
     "subtitle": "Interactive visualizations that turn abstract vector database concepts into something you can <strong>see</strong> and <strong>touch</strong>.",
     "cards": {
       "metric": {
@@ -50,8 +52,8 @@
     }
   },
   "metric": {
-    "title": "Metric Playground",
-    "metaTitle": "Metric Playground - Learn Milvus",
+    "title": "Метрики векторного сходства: L2, косинус и внутреннее произведение",
+    "metaTitle": "L2, Cosine и IP: визуализация метрик векторного сходства | Milvus",
     "subtitle": "Drag the <queryPoint>query point</queryPoint> and switch metrics to see how the nearest neighbors change.",
     "topKTitle": "Top-{{k}} Nearest Neighbors",
     "higherCloser": "(higher = closer)",
@@ -80,11 +82,26 @@
     "twoRules": "Two practical rules",
     "matchMetric": "<strong>Match the metric to the model.</strong> Embedding models are <em>trained</em> with a specific metric in mind. Using a different one at search time will silently wreck your recall. Check the model card before picking.",
     "stayConsistent": "<strong>Stay consistent.</strong> All vectors in a collection must use the same metric. You cannot mix them within a single index, and you cannot meaningfully compare scores across different metrics.",
-    "tryThis": "<strong>Try this:</strong> drag the query point near the origin and switch between Cosine and L2. Watch how Cosine cares only about which \"direction\" the query is pointing — points on the opposite side of the origin can be \"close\" under L2 but \"far\" under Cosine. That visual is the entire concept."
+    "tryThis": "<strong>Try this:</strong> drag the query point near the origin and switch between Cosine and L2. Watch how Cosine cares only about which \"direction\" the query is pointing — points on the opposite side of the origin can be \"close\" under L2 but \"far\" under Cosine. That visual is the entire concept.",
+    "metaDesc": "Перетащите точку запроса и понаблюдайте, как показатели L2, косинус и внутреннее произведение влияют на то, какие соседние точки считаются «ближайшими». Узнайте, какая метрика сходства подходит для вашей модели вложения.",
+    "seo": {
+      "chooseTitle": "Настройка типа метрики в Milvus",
+      "chooseP1": "В Milvus метрика задается для каждого индекса с помощью <code>параметра `metric_type`</code> — <code>L2</code>, <code>IP</code> или <code>COSINE</code> для плотных векторов — при создании индекса. При каждом последующем поиске по этой коллекции используется та же функция, с которой вы только что работали выше. Самое надежное правило: <strong>используйте ту метрику, на которой была обучена ваша модель встраивания</strong>; она указана практически в каждой карточке модели.",
+      "chooseP2": "Два полезных совета. Большинство современных API для встраивания текста (OpenAI, Cohere, Voyage и большинство sentence-transformers) генерируют векторы, предназначенные для <strong>расчета косинусного сходства</strong>. А если ваши векторы нормированы до единичной длины, косинус и скалярное произведение возвращают одинаковые ранжирования — поэтому <code>скалярное произведение</code> по нормированным векторам является распространённой и немного более экономичной альтернативой <code>косинусному сходству</code>.",
+      "docsCta": "Узнайте больше: ознакомьтесь с <docs>документацией по метрикам схожести</docs>, где приведен полный список метрик, поддерживаемых Milvus, включая метрики Хэмминга и Жаккара для бинарных векторов и BM25 для полнотекстового поиска.",
+      "faq1q": "Какую метрику сходства следует использовать для OpenAI или других текстовых вложений?",
+      "faq1a": "Используйте косинусное сходство (metric_type COSINE в Milvus). Практически все современные модели вложений текста — включая семейство text-embedding-3 от OpenAI — обучены на косинусном сходстве. Поскольку вложения OpenAI нормированы до единичной длины, внутреннее произведение (IP) дает идентичные ранжирования и является хорошей альтернативой.",
+      "faq2q": "В чём заключается разница между косинусным сходством и внутренним произведением?",
+      "faq2a": "Косинусная схожесть учитывает только угол между двумя векторами, не принимая во внимание их длины. Внутреннее произведение (скалярное произведение) учитывает как направление, так и величину, поэтому более длинный вектор, направленный в ту же сторону, получает более высокий балл. Для векторов, нормированных до единицы, эти два показателя математически эквивалентны.",
+      "faq3q": "Можно ли изменить тип метрики после создания индекса в Milvus?",
+      "faq3a": "Нет. Показатель заложено в индекс на этапе его создания. Чтобы сменить показатель, необходимо удалить индекс и пересоздать его с новым metric_type. Результаты, полученные по разным показателям, также несопоставимы друг с другом, поэтому не следует смешивать их при последующей обработке результатов.",
+      "faq4q": "Влияет ли выбор метрики на коэффициент охвата или на скорость поиска?",
+      "faq4a": "Скорость работы практически одинакова — алгоритмы L2, IP и косинус требуют всего одного прохода по вектору. Главное — это рекалл: поиск с использованием метрики, отличной от той, на которой обучалась модель вложения, незаметно ухудшает качество результатов, причём зачастую значительно."
+    }
   },
   "ivf": {
-    "title": "FLAT vs IVF",
-    "metaTitle": "FLAT vs IVF - Learn Milvus",
+    "title": "FLAT против IVF: как работает индекс перевернутых файлов",
+    "metaTitle": "Объяснение индекса IVF: FLAT и интерактивная визуализация IVF | Milvus",
     "subtitle": "Same data, same query — but a different search strategy. Drag the <queryPoint>query point</queryPoint>, adjust <code>nprobe</code>, and press <strong>Run Search</strong> to see how IVF skips most of the data.",
     "nprobeHint": "Search {{nprobe}} of {{k}} clusters",
     "flatTitle": "FLAT — Brute Force",
@@ -98,11 +115,32 @@
     "step2": "<strong>Step 1 — evaluate centroids:</strong> IVF first computes the distance from the query to every centroid. That's only {{k}} comparisons, regardless of dataset size.",
     "step3": "<strong>Step 2 — pick the closest <code>nprobe</code> clusters:</strong> these light up. All other clusters are skipped entirely.",
     "step4": "<strong>Step 3 — scan points inside the chosen clusters:</strong> only ~{{scanned}} of the {{total}} points.",
-    "takeaway": "<strong>The tradeoff:</strong> larger <code>nprobe</code> → more clusters scanned → higher recall but slower. Smaller <code>nprobe</code> → faster but you may miss true neighbors that live in unscanned clusters. Try setting <code>nprobe = 1</code> and dragging the query near a cluster boundary to see recall drop."
+    "takeaway": "<strong>The tradeoff:</strong> larger <code>nprobe</code> → more clusters scanned → higher recall but slower. Smaller <code>nprobe</code> → faster but you may miss true neighbors that live in unscanned clusters. Try setting <code>nprobe = 1</code> and dragging the query near a cluster boundary to see recall drop.",
+    "metaDesc": "Посмотрите, как методы «перебора» (FLAT) и кластерного IVF соревнуются при обработке одного и того же запроса. Настройте nprobe в режиме реального времени и узнайте, как nlist и nprobe в Milvus балансируют полноту поиска и скорость обработки.",
+    "seo": {
+      "whatIsTitle": "Что такое индекс ЭКО?",
+      "whatIsP1": "<strong>IVF (Inverted File)</strong> — это индекс ближайших соседей, основанный на кластеризации. При построении алгоритм k-means разбивает все векторы на <code>nlist</code> кластеров, каждый из которых представлен своим центроидом. При выполнении запроса поиск сначала сравнивает запрос только с центроидами, выбирает <code>nprobe</code> ближайших кластеров и сканирует только векторы, находящиеся внутри них, пропуская всё остальное.",
+      "whatIsP2": "Milvus предоставляет несколько вариантов IVF, в которых точность достигается за счет экономии памяти: <strong>IVF_FLAT</strong> хранит исходные векторы (наибольшая точность), <strong>IVF_SQ8</strong> сжимает каждое измерение до одного байта (экономия памяти примерно в 4 раза, небольшая цена восстановления), а <strong>IVF_PQ</strong> применяет квантование произведения для значительно более высокой степени сжатия при более высокой цене восстановления.",
+      "paramsTitle": "Настройка nlist и nprobe",
+      "param1": "<strong><code>nlist</code> (во время компиляции):</strong> количество кластеров, формируемых методом k-средних. Обычно в качестве исходного значения используется <code>4 × √N</code> для N векторов. Чем больше кластеров, тем меньше размер каждого из них — это ускоряет сканирование, но расчет центроидов становится более затратным, а граничные эффекты усиливаются.",
+      "param2": "<strong><code>nprobe</code> (время запроса):</strong> количество кластеров, которые необходимо просканировать за один запрос. Это основной регулятор, влияющий на полноту обнаружения и задержку — именно им и управляет ползунок выше. Начните с значения, равного примерно <code>nlist / 16</code>, и увеличивайте его, пока полнота обнаружения не достигнет заданного уровня.",
+      "param3": "<strong>Выбор варианта:</strong> начните с IVF_FLAT. Перейдите к IVF_SQ8, если памяти не хватает, и к IVF_PQ — только в том случае, если набор данных слишком велик для SQ8. После каждого перехода на более низкий уровень проверяйте показатель восстановления на своих данных.",
+      "whenTitle": "IVF против HNSW против DiskANN",
+      "whenP1": "IVF быстро строится, требует небольших дополнительных затрат памяти помимо векторов и прост для анализа — однако при одинаковом целевом показателе полноты HNSW обычно быстрее обрабатывает запросы в памяти. Выбирайте IVF, если вы часто перестраиваете индексы (важна скорость построения), если память ограничена (IVF_SQ8/IVF_PQ) или если вам требуется предсказуемое и настраиваемое поведение сканирования. Выбирайте HNSW для минимальной задержки запросов в памяти, а DiskANN — когда векторы уже не помещаются в ОЗУ.",
+      "docsCta": "Узнайте больше: ознакомьтесь с <docs>документацией</docs> по <docs>IVF_FLAT</docs>, посвященной параметрам индекса, или прочитайте <docsExplained>статью «Index Explained»</docsExplained>, где приведено полное руководство по принятию решений.",
+      "faq1q": "В чём заключается разница между IVF_FLAT, IVF_SQ8 и IVF_PQ?",
+      "faq1a": "Все три метода квантуют векторы одинаково; они различаются способом хранения векторов внутри кластеров. IVF_FLAT сохраняет исходные векторы с плавающей запятой (наилучшая воспроизводимость). IVF_SQ8 квантует каждое измерение до 8 бит, сокращая объем памяти примерно в 4 раза с небольшой потерей воспроизводимости. IVF_PQ заменяет векторы короткими кодами, полученными методом произведения-квантования, что обеспечивает максимальное сжатие и наибольшую потерю воспроизводимости.",
+      "faq2q": "Как правильно выбрать значения nlist и nprobe?",
+      "faq2a": "Обычно руководствуются следующим эмпирическим правилом: nlist = 4 × √N для N векторов, после чего настраивают nprobe во время выполнения запроса. Чем больше nprobe, тем больше кластеров сканируется: выше показатель полноты, выше задержка. Начните с значения примерно равного nlist/16 и увеличивайте его, пока показатель полноты на тестовом наборе запросов не достигнет заданного значения.",
+      "faq3q": "Почему метод IVF не учитывает некоторых истинных ближайших соседей?",
+      "faq3a": "Из-за границ кластеров. Если точка запроса находится рядом с краем кластера, некоторые из её истинных соседей могут оказаться в соседнем кластере, который не входил в число nprobe просканированных кластеров. Это можно увидеть на визуализации, перетащив точку запроса к границе при nprobe = 1.",
+      "faq4q": "Что лучше выбрать: ЭКО или HNSW?",
+      "faq4a": "При этом же сравнении HNSW, как правило, быстрее при поиске в памяти, но потребляет больше памяти и собирается медленнее. IVF собирается быстро и хорошо сочетается с квантованием (SQ8/PQ) в условиях ограниченного объема памяти. Для наборов данных, размер которых полностью превышает объем оперативной памяти, рекомендуется вместо этого использовать DiskANN."
+    }
   },
   "hnsw": {
-    "title": "HNSW Explorer",
-    "metaTitle": "HNSW Explorer - Learn Milvus",
+    "title": "HNSW Explorer: иерархический «малый мир» с возможностью навигации, визуализированный",
+    "metaTitle": "Объяснение алгоритма HNSW: интерактивная визуализация | Milvus",
     "subtitle": "Watch a search travel through the layered graph — from the sparse top layer (highways) down to the dense bottom layer (local roads). Drag the <queryPoint>query point</queryPoint> on Layer 0 and tune <code>M</code> / <code>ef</code> to see how the graph changes.",
     "mHint": "Max neighbors per node",
     "efHint": "Layer-0 candidate pool",
@@ -119,11 +157,32 @@
     "step3": "<strong>Search starts at the top:</strong> from a fixed entry point, greedily walk to the neighbor closest to the query, repeat until no improvement.",
     "step4": "<strong>Drop down a layer and repeat:</strong> the position from the previous layer becomes the start of the next layer's walk. Each drop refines the result with finer-grained edges.",
     "step5": "<strong>Layer 0 with <code>ef</code>:</strong> at the bottom layer, instead of stopping at the first local minimum, HNSW maintains a pool of <code>ef</code> best candidates and expands their neighborhoods. Larger <code>ef</code> → more accurate but slower.",
-    "takeaway": "<strong>Why it's fast:</strong> the top layers act like an index over the index — you cover huge distances in just a few hops, then zoom in. For N points, search visits roughly <code>O(log N)</code> nodes instead of <code>N</code>."
+    "takeaway": "<strong>Why it's fast:</strong> the top layers act like an index over the index — you cover huge distances in just a few hops, then zoom in. For N points, search visits roughly <code>O(log N)</code> nodes instead of <code>N</code>.",
+    "metaDesc": "Пошагово изучите HNSW, проходя по каждому слою. Отрегулируйте параметры M и ef, чтобы увидеть, как иерархический граф оптимизирует соотношение памяти и скорости, и узнайте, как настроить эти параметры в Milvus.",
+    "seo": {
+      "whatIsTitle": "Что такое HNSW?",
+      "whatIsP1": "<strong>HNSW (Hierarchical Navigable Small World)</strong> — это основанный на графах алгоритм приближённого поиска ближайших соседей. Он организует векторы в стопку навигационных графов типа «малого мира»: разреженные верхние слои с ребрами большого радиуса действия для грубой маршрутизации и плотный нижний слой с короткими ребрами для окончательного тонкого прохождения. В процессе поиска алгоритм жадно перемещается к запросу на каждом слое, а затем переходит на следующий — посещая примерно <code>O(log N)</code> узлов вместо сканирования всех N.",
+      "whatIsP2": "HNSW — это наиболее широко используемый векторный индекс, работающий в памяти, а также индекс графов по умолчанию в Milvus. Milvus также предлагает варианты <strong>HNSW_SQ</strong> и <strong>HNSW_PQ</strong>, которые квантуют хранящиеся векторы с целью сокращения объёма памяти за счёт небольшого снижения показателя восстановления.",
+      "paramsTitle": "Параметры HNSW в Milvus",
+      "param1": "<strong><code>M</code> (время построения):</strong> максимальное количество ребер на узел; этот параметр соответствует ползунку, показанному выше. Типичные значения: 8–64. Увеличение значения M повышает полноту поиска и связность графа, но приводит к линейному росту объёма памяти и замедлению построения.",
+      "param2": "<strong><code>efConstruction</code> (время построения):</strong> размер пула кандидатов, используемый при вставке узлов. Более высокие значения позволяют построить граф более высокого качества (достигается более высокий показатель полноты) за счёт более медленного построения индекса. Типичные значения: 100–500.",
+      "param3": "<strong><code>ef</code> / <code>ef_search</code> (во время запроса):</strong> набор кандидатов, сохраняемый во время прохода по уровню 0 — основной регулятор показателей полноты и задержки при поиске. Его значение должно быть не меньше вашего top-K. Увеличивайте его до тех пор, пока показатель полноты не перестанет расти; при этом задержка растёт примерно линейно с увеличением этого значения.",
+      "whenTitle": "HNSW, IVF и DiskANN",
+      "whenP1": "HNSW, как правило, обеспечивает наилучшую задержку запросов при высокой полноте поиска в рамках поиска в памяти — именно поэтому он является выбором по умолчанию, когда набор данных (с учетом накладных расходов графа) помещается в ОЗУ. Его недостатками являются затраты памяти и время построения: граф добавляет заметные накладные расходы на каждый вектор, а вставка данных происходит медленнее, чем при использовании алгоритма k-средних в IVF. Выбирайте IVF, если вам требуется быстрое построение индекса или агрессивная квантизация, а DiskANN — когда набор данных слишком велик для ОЗУ, но вам по-прежнему нужен высокий коэффициент полноты.",
+      "docsCta": "Узнайте больше: ознакомьтесь с <docs>документацией HNSW</docs>, чтобы узнать точные параметры индекса, или прочитайте <docsExplained>статью «Index Explained»</docsExplained>, где приведено полное руководство по выбору.",
+      "faq1q": "Что регулирует параметр M в системе HNSW?",
+      "faq1a": "M ограничивает количество ребер, которые каждый узел хранит на каждом слое. Увеличение значения M улучшает связность графа — повышается коэффициент восстановления и повышается надежность маршрутизации — однако объем памяти растёт линейно с увеличением M, а построение индекса замедляется. Значения в диапазоне от 8 до 64 подходят для большинства рабочих нагрузок; оптимальным диапазоном обычно считается 16–32.",
+      "faq2q": "В чём заключается разница между ef и efConstruction?",
+      "faq2a": "Оба параметра определяют размер пула кандидатов и применяются в разное время. Параметр efConstruction используется при построении индекса: он определяет, насколько тщательно каждый вставляемый узел ищет соседей, тем самым контролируя качество графа. Параметр ef (ef_search) используется при выполнении запроса: он регулирует широту поиска на уровне Layer-0, обеспечивая компромисс между задержкой и полнотой поиска при каждом запросе.",
+      "faq3q": "Сколько памяти требуется для индекса HNSW?",
+      "faq3a": "Примерно исходные векторы плюс граф: около d × 4 байт на вектор для данных типа float32, плюс порядка M × 2 × 8 байт ребер на каждый узел. Для развертываний с ограниченным объёмом памяти Milvus предлагает алгоритмы HNSW_SQ и HNSW_PQ, которые квантуют хранящиеся векторы, либо алгоритм DiskANN, который перемещает полные векторы на SSD.",
+      "faq4q": "В каких случаях следует прибегать к методу HNSW вместо ЭКО?",
+      "faq4a": "Используйте HNSW, когда приоритетом является задержка запроса при высоком коэффициенте полноты, а индекс помещается в памяти — обычно он выигрывает в этой гонке. Отдавайте предпочтение IVF, если вы часто перестраиваете индексы (создание происходит намного быстрее) или в сочетании с квантованием SQ8/PQ для экономии памяти."
+    }
   },
   "diskann": {
-    "title": "DiskANN Explorer",
-    "metaTitle": "DiskANN Explorer - Learn Milvus",
+    "title": "DiskANN Explorer: поиск по векторным данным в масштабе миллиардов с SSD",
+    "metaTitle": "Объяснение принципа работы DiskANN: визуализация векторного индекса на диске | Milvus",
     "subtitle": "DiskANN keeps a tiny <strong>PQ-compressed</strong> copy of every vector in RAM and the <strong>full vectors + graph</strong> on SSD. Search walks the graph with cheap RAM compares, then re-ranks the top candidates with a handful of expensive disk reads.",
     "memoryWallTitle": "Why DiskANN exists: the memory wall",
     "memoryNote": "A single commodity SSD holds the disk side easily. The RAM side fits in any laptop. Without the PQ trick, you'd need a server with hundreds of GB of RAM to even load the dataset.",
@@ -154,7 +213,28 @@
     "whyScales": "<strong>Why it scales:</strong> RAM only holds compressed codes. A 1B-vector dataset with 32-byte PQ needs ~32 GB RAM — fits on a single workstation.",
     "whySlower": "<strong>Why it's slower than HNSW:</strong> SSD random reads are ~100× slower than RAM. Even with only ~10 reads, query latency is dominated by disk.",
     "whyBeats": "<strong>Why it still beats IVF_PQ for recall:</strong> the re-rank step recovers quantization errors that pure PQ-based methods can't fix.",
-    "takeaway": "<strong>The mental model:</strong> PQ is the cheap \"is this neighborhood promising?\" test. Disk reads are the expensive \"let me actually verify\" check. DiskANN gets most of its work done with the cheap test."
+    "takeaway": "<strong>The mental model:</strong> PQ is the cheap \"is this neighborhood promising?\" test. Disk reads are the expensive \"let me actually verify\" check. DiskANN gets most of its work done with the cheap test.",
+    "metaDesc": "Посмотрите, как DiskANN проходит по графу Ваманы с кодами PQ в оперативной памяти и полными векторами на SSD. Узнайте, в каких случаях индекс на диске превосходит HNSW при поиске векторов в масштабе миллиардов.",
+    "seo": {
+      "whatIsTitle": "Что такое DiskANN?",
+      "whatIsP1": "<strong>DiskANN</strong> — это основанный на графе индекс приближённых ближайших соседей, разработанный для наборов данных, которые не помещаются в оперативной памяти. Он строит одноуровневый <strong>граф Вамана</strong>, организованный для эффективного доступа к диску, хранит в памяти миниатюрный код с продуктовой квантизацией (PQ) для каждого вектора, а векторы полной точности и ребра графа — на SSD. Поиск осуществляется путем обхода графа с использованием малозатратных сравнений PQ в оперативной памяти, а к диску обращаются только для переранжирования небольшого числа финалистов.",
+      "whatIsP2": "В Milvus технология DiskANN лежит в основе опции индексирования на диске: коллекции объемом в миллиарды записей становятся доступными для поиска на машинах с десятками — а не сотнями — гигабайт оперативной памяти, а этап переранжирования на диске позволяет сохранить точность поиска на уровне, близком к показателям графовых индексов, хранящихся в памяти.",
+      "paramsTitle": "За что отвечают эти регуляторы",
+      "param1": "<strong><code>R</code> (степень графа, время сборки):</strong> максимальное количество ребер на один узел в графе Vamana. Более высокое значение R обеспечивает лучшую связность и полноту поиска, но приводит к увеличению размера графа на диске и замедлению сборки.",
+      "param2": "<strong><code>L</code> / <code>search_list</code> (время запроса):</strong> набор кандидатов, поддерживаемый в процессе поиска пучком — основной регулятор баланса между полнотой и задержкой, эквивалентный параметру ef в алгоритме HNSW. Его значение должно быть не меньше вашего top-K.",
+      "param3": "<strong>Переранжирование бюджета:</strong> количество финалистов, полные векторы которых загружаются с SSD для точного подсчёта оценки. Каждая такая операция представляет собой случайное чтение с диска, поэтому именно здесь возникает задержка запроса — а также именно здесь исправляются ошибки аппроксимации PQ.",
+      "whenTitle": "DiskANN против HNSW против IVF",
+      "whenP1": "Выбирайте DiskANN, когда объем набора данных (или потребление памяти) превышает объем ОЗУ: этот алгоритм обрабатывает запросы с высоким коэффициентом охвата, используя лишь небольшую часть памяти, при этом за счет задержки на уровне миллисекунд, определяемой в основном операциями чтения с SSD. Если всё без проблем помещается в памяти, HNSW отвечает быстрее. Если вам требуется быстрое построение индексов или умеренная экономия памяти без использования диска, варианты IVF занимают промежуточное положение.",
+      "docsCta": "Узнайте больше: ознакомьтесь с <docs>документацией по DiskANN</docs>, чтобы узнать о требованиях к настройке, или прочитайте <docsExplained>раздел «Объяснение индекса»</docsExplained>, где приведено полное руководство по принятию решений.",
+      "faq1q": "В каких случаях следует использовать DiskANN вместо HNSW?",
+      "faq1a": "Когда ваши векторы больше не помещаются в оперативной памяти — или объем оперативной памяти, необходимый для их хранения, обходится дороже, чем вы готовы заплатить. Для обработки миллиарда векторов с плавающей запятой и 768 измерениями в HNSW требуется около 3 ТБ памяти, а в DiskANN — всего несколько десятков ГБ оперативной памяти плюс SSD. Если набор данных без проблем помещается в памяти, HNSW остается вариантом с меньшей задержкой.",
+      "faq2q": "Какое оборудование требуется для работы DiskANN?",
+      "faq2a": "Ключевым требованием является наличие быстрого SSD-накопителя NVMe, поскольку на задержку запроса в основном влияет небольшое количество операций произвольного чтения с диска (каждая длится ~100 мкс). Требования к объёму оперативной памяти умеренные: примерно объём кодов PQ (например, 32–64 байта на вектор) плюс рабочие буферы.",
+      "faq3q": "Является ли DiskANN более медленным, чем индексы в памяти, такие как HNSW?",
+      "faq3a": "Если говорить о каждом отдельном запросе, то да — как правило, время составляет несколько миллисекунд, в то время как для HNSW, работающего в памяти, оно составляет менее миллисекунды, поскольку каждое переранжирование с использованием диска происходит примерно в 100 раз медленнее, чем доступ к ОЗУ. Компромисс заключается в стоимости: DiskANN обрабатывает тот же набор данных, используя на порядок меньше оперативной памяти, при этом сохраняя коэффициент полноты выше 90–95 %.",
+      "faq4q": "Как DiskANN обеспечивает высокий уровень воспроизведения данных несмотря на сжатие PQ?",
+      "faq4a": "Коды PQ используются исключительно для управления обходом графа, а не для вычисления окончательных оценок. Перед возвратом результатов DiskANN считывает векторы с полной точностью из SSD для лучших кандидатов и заново ранжирует их с высокой точностью, исправляя ошибку квантования, которую не могут устранить индексы, основанные исключительно на PQ, такие как IVF_PQ."
+    }
   },
   "tradeoff": {
     "title": "Tradeoff Dashboard",

@@ -110,5 +110,40 @@
   },
   "woodpeckerTip": "<0>Woodpecker</0> adalah sistem write-ahead log (WAL) asli cloud sejak Milvus 2.6.0. Sistem ini dirancang untuk menggantikan Kafka dan Pulsar sebagai MQ di Milvus untuk menyederhanakan operasi, memaksimalkan throughput, dan menskalakan dengan mudah. Untuk saat ini, MQ ini berjalan tertanam dalam node streaming.",
   "previousVersion": "Versi terdahulu dari alat pengukur ukuran ada <0>di sini</0>.",
-  "titleV250": "Alat Pengukur Ukuran Milvus untuk Milvus v2.5.x"
+  "titleV250": "Alat Pengukur Ukuran Milvus untuk Milvus v2.5.x",
+  "tabs": {
+    "cpu": "Penentuan Ukuran CPU",
+    "gpu": "Penentuan Ukuran GPU",
+    "new": "BARU",
+    "cpuHint": "Perkiraan CPU yang ada: pemuatan memori, konfigurasi node, ketergantungan, dan perintah instalasi.",
+    "gpuHint": "Perkiraan VRAM untuk GPU_BRUTE_FORCE, GPU_IVF_FLAT, GPU_IVF_PQ, dan GPU_CAGRA, termasuk derivasi lengkapnya."
+  },
+  "gpu": {
+    "form": {
+      "million": "Juta",
+      "averageLengthTip": "Hanya memori host — tidak dihitung sebagai bagian dari VRAM",
+      "indexDoc": "Bagaimana cara memilih indeks GPU?",
+      "trainFraction": "kmeans_trainset_fraksi",
+      "pqDim": "pq_dim (m)",
+      "pqDimTip": "0 = cuVS Otomatis → {{nilai}}",
+      "pqBits": "nbits",
+      "graphDegree": "derajat_grafik",
+      "intermediateDegree": "derajat_grafik_menengah",
+      "modeManualTip": "Perkiraan GPU tidak berganti mode secara otomatis — pilih mode yang akan Anda terapkan.",
+      "cacheDatasetOnDevice": "cache_dataset_di_perangkat"
+    },
+    "result": {
+      "gpuMemory": "Memori GPU",
+      "vram": "VRAM",
+      "vramWithValue": "VRAM: {{vram}}"
+    },
+    "errors": {
+      "invalidNumber": "Jumlah vektor harus lebih besar dari 0, dimensinya minimal 2, dan ukuran segmennya positif.",
+      "nlistOutOfRange": "nlist harus bernilai antara 1 dan 65536.",
+      "trainFractionOutOfRange": "kmeans_trainset_fraction harus berada dalam rentang (0, 1].",
+      "pqDimOutOfRange": "Nilai pq_dim yang telah ditentukan harus berada dalam rentang [1, d].",
+      "pqCodeNotByteAligned": "pq_dim × nbits harus merupakan kelipatan 8.",
+      "intermediateDegreeTooSmall": "intermediate_graph_degree harus lebih besar dari atau sama dengan graph_degree."
+    }
+  }
 }

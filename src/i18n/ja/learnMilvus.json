@@ -19,12 +19,14 @@
     "visited": "Visited",
     "totalLatency": "Total latency",
     "pressRun": "Press ▶ Run Search to start.",
-    "searchComplete": "Search complete."
+    "searchComplete": "Search complete.",
+    "faqTitle": "よくある質問",
+    "relatedTitle": "探検を続けよう"
   },
   "home": {
     "title": "Learn Milvus",
     "metaTitle": "Learn Milvus - Interactive Vector Database Visualizations",
-    "metaDesc": "Interactive visualizations that turn abstract vector database concepts into something you can see and touch.",
+    "metaDesc": "ベクトルデータベースの概念に関するインタラクティブな可視化：L2、コサイン、内積の類似度指標に加え、IVF、HNSW、DiskANNといったベクトルインデックス。",
     "subtitle": "Interactive visualizations that turn abstract vector database concepts into something you can <strong>see</strong> and <strong>touch</strong>.",
     "cards": {
       "metric": {
@@ -50,8 +52,8 @@
     }
   },
   "metric": {
-    "title": "Metric Playground",
-    "metaTitle": "Metric Playground - Learn Milvus",
+    "title": "ベクトルの類似度指標：L2、コサイン、内積",
+    "metaTitle": "L2 vs コサイン vs IP：ベクトル類似度指標の可視化 | Milvus",
     "subtitle": "Drag the <queryPoint>query point</queryPoint> and switch metrics to see how the nearest neighbors change.",
     "topKTitle": "Top-{{k}} Nearest Neighbors",
     "higherCloser": "(higher = closer)",
@@ -80,11 +82,26 @@
     "twoRules": "Two practical rules",
     "matchMetric": "<strong>Match the metric to the model.</strong> Embedding models are <em>trained</em> with a specific metric in mind. Using a different one at search time will silently wreck your recall. Check the model card before picking.",
     "stayConsistent": "<strong>Stay consistent.</strong> All vectors in a collection must use the same metric. You cannot mix them within a single index, and you cannot meaningfully compare scores across different metrics.",
-    "tryThis": "<strong>Try this:</strong> drag the query point near the origin and switch between Cosine and L2. Watch how Cosine cares only about which \"direction\" the query is pointing — points on the opposite side of the origin can be \"close\" under L2 but \"far\" under Cosine. That visual is the entire concept."
+    "tryThis": "<strong>Try this:</strong> drag the query point near the origin and switch between Cosine and L2. Watch how Cosine cares only about which \"direction\" the query is pointing — points on the opposite side of the origin can be \"close\" under L2 but \"far\" under Cosine. That visual is the entire concept.",
+    "metaDesc": "クエリポイントをドラッグして、L2、コサイン、内積の各指標によって「最も近い」隣接ノードがどのように変化するかを確認してください。自分の埋め込みモデルに最適な類似度指標を見つけましょう。",
+    "seo": {
+      "chooseTitle": "Milvusでのメトリックタイプの設定",
+      "chooseP1": "Milvus では、インデックスを作成する際に、<code>metric_type</code>（密ベクトルの場合は<code>L2</code>、<code>IP</code>、または<code>COSINE</code>）を通じてインデックスごとにメトリックが設定されます。その後、そのコレクションに対するすべての検索では、先ほど試したのと同じ関数が使用されます。 最も信頼できる唯一のルールは、<strong>エンベディングモデルのトレーニングに使用されたメトリックを使用することです</strong>。このメトリックは、ほぼすべてのモデルカードに記載されています。",
+      "chooseP2": "2つの便利なショートカット。 最近のテキスト埋め込みAPI（OpenAI、Cohere、Voyage、およびほとんどのSentenceTransformer）の多くは、<strong>コサイン類似度</strong>を想定したベクトルを生成します。また、ベクトルが単位長に正規化されている場合、コサイン類似度と内積は同一の順位を返すため、正規化されたベクトルに対する<code>内積（IP）は</code>、<code>コサイン類似度（COSINE）</code>の代わりとしてよく使われ、計算コストもわずかに低い代替手段となっています。",
+      "docsCta": "さらに詳しく知りたい方は、Milvusがサポートするメトリクスの完全な一覧については、「<docs>類似度メトリクス」のドキュメント</docs>をご覧ください。これには、バイナリベクトル用のハミング距離やジャッカード係数、全文検索用のBM25などが含まれています。",
+      "faq1q": "OpenAIやその他のテキスト埋め込みには、どの類似度測定基準を使用すべきでしょうか？",
+      "faq1a": "コサイン類似度（Milvusではmetric_type COSINE）を使用してください。OpenAIのtext-embedding-3ファミリーを含め、現代のテキスト埋め込みモデルのほぼすべては、コサイン類似度に基づいて学習されています。OpenAIの埋め込みは単位長に正規化されているため、内積（IP）を使用しても同じ順位付け結果が得られ、優れた代替手段となります。",
+      "faq2q": "コサイン類似度と内積の違いは何ですか？",
+      "faq2a": "コサイン類似度は、2つのベクトルの長さを無視して、それらの間の角度のみを測定します。内積（ドット積）は、方向の一致と大きさの両方を評価するため、同じ方向を指すより長いベクトルほど高いスコアになります。単位正規化されたベクトルについては、この2つは数学的に同等です。",
+      "faq3q": "Milvusでインデックスを構築した後、メトリックのタイプを変更することはできますか？",
+      "faq3a": "いいえ。メトリクスはインデックスの構築時に組み込まれています。メトリクスを切り替えるには、インデックスを削除し、新しい metric_type を使用して再構築する必要があります。また、異なるメトリクスによるスコアは互いに比較できないため、結果の後処理を行う際は、それらを混在させないでください。",
+      "faq4q": "メトリクスの選択は、リコール率や検索速度に影響を与えますか？",
+      "faq4a": "処理速度は基本的に同じです。L2、IP、コサインのいずれも、ベクトルを1回スキャンするだけで計算できます。重要なのはリコールです。埋め込みモデルの学習に使用されたものとは異なるメトリックで検索を行うと、結果の品質が知らぬ間に低下し、多くの場合、その低下は著しいものとなります。"
+    }
   },
   "ivf": {
-    "title": "FLAT vs IVF",
-    "metaTitle": "FLAT vs IVF - Learn Milvus",
+    "title": "FLAT 対 IVF：反転ファイルインデックスの仕組み",
+    "metaTitle": "IVFインデックスの解説：FLATとIVFのインタラクティブな可視化 | Milvus",
     "subtitle": "Same data, same query — but a different search strategy. Drag the <queryPoint>query point</queryPoint>, adjust <code>nprobe</code>, and press <strong>Run Search</strong> to see how IVF skips most of the data.",
     "nprobeHint": "Search {{nprobe}} of {{k}} clusters",
     "flatTitle": "FLAT — Brute Force",
@@ -98,11 +115,32 @@
     "step2": "<strong>Step 1 — evaluate centroids:</strong> IVF first computes the distance from the query to every centroid. That's only {{k}} comparisons, regardless of dataset size.",
     "step3": "<strong>Step 2 — pick the closest <code>nprobe</code> clusters:</strong> these light up. All other clusters are skipped entirely.",
     "step4": "<strong>Step 3 — scan points inside the chosen clusters:</strong> only ~{{scanned}} of the {{total}} points.",
-    "takeaway": "<strong>The tradeoff:</strong> larger <code>nprobe</code> → more clusters scanned → higher recall but slower. Smaller <code>nprobe</code> → faster but you may miss true neighbors that live in unscanned clusters. Try setting <code>nprobe = 1</code> and dragging the query near a cluster boundary to see recall drop."
+    "takeaway": "<strong>The tradeoff:</strong> larger <code>nprobe</code> → more clusters scanned → higher recall but slower. Smaller <code>nprobe</code> → faster but you may miss true neighbors that live in unscanned clusters. Try setting <code>nprobe = 1</code> and dragging the query near a cluster boundary to see recall drop.",
+    "metaDesc": "同じクエリに対して、ブルートフォース方式のFLATとクラスタベースのIVFが競い合う様子をご覧ください。nprobeをリアルタイムで調整し、Milvusにおいてnlistとnprobeがリコール率と処理速度をどのようにトレードオフしているかを学びましょう。",
+    "seo": {
+      "whatIsTitle": "IVF指数とは何ですか？",
+      "whatIsP1": "<strong>IVF（Inverted File）</strong>は、クラスタリングに基づく近似最近傍インデックスです。構築時、k-means アルゴリズムによってすべてのベクトルが<code>nlist</code>個のクラスタに分割され、各クラスタはその中心点によって表されます。 クエリ実行時には、まずクエリと中心点のみを比較し、最も近い<code>nprobe 個の</code>クラスターを選定した上で、それらのクラスター内のベクトルのみをスキャンし、それ以外のものはすべてスキップします。",
+      "whatIsP2": "Milvusは、精度とメモリ使用量のバランスを調整した複数のIVFバリエーションを提供しています。<strong>IVF_FLATは</strong>生ベクトルを保存し（最も精度が高い）、<strong>IVF_SQ8は</strong>各次元を1バイトに圧縮し（メモリ使用量を約4分の1に削減、リコールコストは小さい）、<strong>IVF_PQは</strong>積量子化を適用して、リコールコストは大きくなるものの、はるかに高い圧縮率を実現します。",
+      "paramsTitle": "nlist および nprobe の調整",
+      "param1": "<strong><code>nlist</code>（ビルド時）：</strong>k-meansクラスタリングのクラスタ数。一般的な初期値は、ベクトルの数がN個の場合<code>、4 × √N</code>です<code>。</code>クラスタ数が多いほど、各クラスタの規模は小さくなります。これによりスキャンは高速化されますが、重心探索の計算コストが増加し、境界効果が強まります。",
+      "param2": "<strong><code>nprobe</code>（クエリ実行時）：</strong>1回のクエリにつきスキャンするクラスタの数。これがリコール率とレイテンシを調整する主なパラメータであり、まさに上記のスライダーで制御されるものです。<code>nlist / 16</code>程度から始め、リコール率が目標値に達するまで徐々に増やしてください。",
+      "param3": "<strong>バリエーションの選択：</strong>最初はIVF_FLATから始めます。メモリが不足してきたらIVF_SQ8に移行し、データセットがSQ8では処理できないほど大きい場合にのみIVF_PQに移行してください。また、各ステップダウン後に、自身のデータでリコール率を確認してください。",
+      "whenTitle": "IVF 対 HNSW 対 DiskANN",
+      "whenP1": "IVFは構築が高速で、ベクトルに加えてメモリオーバーヘッドも小さく、理解しやすいという利点がありますが、同じリコール目標値の場合、HNSWの方が通常、メモリ内でのクエリ処理が高速です。 インデックスの再構築を頻繁に行う場合（構築速度が重要）、メモリに制約がある場合（IVF_SQ8/IVF_PQ）、または予測可能で調整可能なスキャン挙動を求める場合は、IVFを選択してください。メモリ内クエリのレイテンシを最小限に抑えたい場合はHNSWを、ベクトルがRAMに全く収まらなくなった場合はDiskANNを選択してください。",
+      "docsCta": "さらに詳しく知りたい場合は、インデックスパラメータについては<docs>IVF_FLATのドキュメント</docs>を参照するか、決定の指針については「<docsExplained>Index Explained</docsExplained>」をご覧ください。",
+      "faq1q": "IVF_FLAT、IVF_SQ8、IVF_PQの違いは何ですか？",
+      "faq1a": "3つすべてのクラスターは同じ方法でベクトルを処理しますが、クラスター内部でのベクトルの保存方法に違いがあります。IVF_FLATは生の浮動小数点ベクトルを保持します（リコール率が最高）。 IVF_SQ8は各次元を8ビットに量子化し、リコールの損失をわずかに伴いながらメモリ使用量を約4分の1に削減します。IVF_PQはベクトルを短い積量子化コードに置き換え、最高の圧縮率を実現する一方で、リコールの損失も最大となります。",
+      "faq2q": "nlist と nprobe はどのように選べばよいでしょうか？",
+      "faq2a": "一般的な経験則として、N個のベクトルがある場合、nlist = 4 × sqrt(N) と設定し、クエリ実行時にnprobeを調整します。nprobeの値が大きいほど、より多くのクラスターがスキャンされます。これにより、リコール率は向上しますが、レイテンシも高くなります。nlist/16程度から始め、保留されたクエリセットでのリコール率が目標値に達するまでnprobeの値を徐々に増やしていきます。",
+      "faq3q": "なぜ体外受精では、真の最近傍の一部が見落とされてしまうのでしょうか？",
+      "faq3a": "これはクラスタの境界によるものです。クエリがクラスタの境界付近に位置する場合、その真の近傍ノードの一部は、スキャン対象となった nprobe 個のクラスタに含まれていない隣接するクラスタにある可能性があります。nprobe = 1 の設定で、クエリポイントを境界付近までドラッグすると、可視化画面でこの現象を確認できます。",
+      "faq4q": "体外受精（IVF）とHNSW、どちらを選べばいいでしょうか？",
+      "faq4a": "同じリコール率の場合、HNSWは通常、インメモリ検索では高速ですが、メモリ消費量が多く、構築に時間がかかります。一方、IVFは構築が迅速で、メモリが限られている場合には量子化（SQ8/PQ）との相性が良いです。データセットがRAMの容量を完全に超える場合は、代わりにDiskANNを検討してください。"
+    }
   },
   "hnsw": {
-    "title": "HNSW Explorer",
-    "metaTitle": "HNSW Explorer - Learn Milvus",
+    "title": "HNSW Explorer：階層的ナビゲーション可能なスモールワールドの可視化",
+    "metaTitle": "HNSWアルゴリズムの解説：インタラクティブな可視化 | Milvus",
     "subtitle": "Watch a search travel through the layered graph — from the sparse top layer (highways) down to the dense bottom layer (local roads). Drag the <queryPoint>query point</queryPoint> on Layer 0 and tune <code>M</code> / <code>ef</code> to see how the graph changes.",
     "mHint": "Max neighbors per node",
     "efHint": "Layer-0 candidate pool",
@@ -119,11 +157,32 @@
     "step3": "<strong>Search starts at the top:</strong> from a fixed entry point, greedily walk to the neighbor closest to the query, repeat until no improvement.",
     "step4": "<strong>Drop down a layer and repeat:</strong> the position from the previous layer becomes the start of the next layer's walk. Each drop refines the result with finer-grained edges.",
     "step5": "<strong>Layer 0 with <code>ef</code>:</strong> at the bottom layer, instead of stopping at the first local minimum, HNSW maintains a pool of <code>ef</code> best candidates and expands their neighborhoods. Larger <code>ef</code> → more accurate but slower.",
-    "takeaway": "<strong>Why it's fast:</strong> the top layers act like an index over the index — you cover huge distances in just a few hops, then zoom in. For N points, search visits roughly <code>O(log N)</code> nodes instead of <code>N</code>."
+    "takeaway": "<strong>Why it's fast:</strong> the top layers act like an index over the index — you cover huge distances in just a few hops, then zoom in. For N points, search visits roughly <code>O(log N)</code> nodes instead of <code>N</code>.",
+    "metaDesc": "HNSWの検索を層ごとに順を追って確認しましょう。Mとefを調整して、階層グラフがメモリと処理速度をどのようにトレードオフしているかを確認し、Milvusでの設定方法を学びましょう。",
+    "seo": {
+      "whatIsTitle": "HNSWとは何ですか？",
+      "whatIsP1": "<strong>HNSW（Hierarchical Navigable Small World）</strong>は、グラフに基づく近似最近傍探索アルゴリズムである。このアルゴリズムは、ベクトルを「ナビゲータブル・スモールワールド」グラフのスタックとして構成する。上層は疎なグラフで長距離エッジを持ち、粗いルーティングに用いられ、下層は密なグラフで短距離エッジを持ち、最終的なきめ細かな探索に用いられる。 探索は各層でクエリに向かって貪欲にホップし、その後下層へと移動します。これにより、N個すべてのノードをスキャンする代わりに、おおよそ<code>O(log N)</code>個のノードを訪問することになります。",
+      "whatIsP2": "HNSWは、最も広く利用されているインメモリベクトルインデックスであり、Milvusのデフォルトのグラフインデックスです。Milvusでは、保存されたベクトルを量子化することで、リコールの精度をわずかに犠牲にする代わりにメモリ使用量を削減する、<strong>HNSW_SQおよびHNSW_PQという</strong>バリエーションも提供しています。",
+      "paramsTitle": "MilvusにおけるHNSWパラメータ",
+      "param1": "<strong><code>M</code>（構築時間）：</strong>ノードあたりの辺の最大数。上記のスライダーと同じ調整項目です。一般的な値は 8～64 です。M を大きくすると、リコール率とグラフの連結性が向上しますが、メモリ使用量は線形に増加し、構築時間が長くなります。",
+      "param2": "<strong><code>efConstruction</code>（構築時間）：</strong>ノードの挿入時に使用される候補プールのサイズ。この値を大きくすると、インデックスの構築に時間がかかる代わりに、より高品質なグラフ（より高いリコール率）が構築されます。一般的な値は 100～500 です。",
+      "param3": "<strong><code>ef</code>/<code>ef_search</code>（クエリ実行時）：</strong>レイヤー0の探索中に保持される候補プール。検索時のリコール率とレイテンシを調整する主なパラメータです。この値は、少なくともトップK以上である必要があります。リコール率が頭打ちになるまでこの値を増やしてください。レイテンシはこの値にほぼ比例して増加します。",
+      "whenTitle": "HNSW 対 IVF 対 DiskANN",
+      "whenP1": "HNSWは通常、インメモリ検索において高いリコール率で最良のクエリレイテンシを実現します。そのため、データセット（およびグラフのオーバーヘッド）がRAMに収まる場合、HNSWがデフォルトの選択肢となります。 その代償となるのはメモリと構築時間です。グラフはベクトルごとに顕著なオーバーヘッドを発生させ、挿入処理はIVFのk-means割り当てよりも遅くなります。高速なインデックス構築や積極的な量子化が必要な場合はIVFを、データセットがRAMに収まらないが依然として高いリコール率が必要な場合はDiskANNを選択してください。",
+      "docsCta": "さらに詳しく知りたい場合は、<docs>HNSWのドキュメントで</docs>具体的なインデックスパラメータを確認するか、「<docsExplained>インデックスの解説</docsExplained>」で決定の指針を詳しくご覧ください。",
+      "faq1q": "HNSWにおけるMパラメータは何を制御するのでしょうか？",
+      "faq1a": "M は、各ノードがレイヤーごとに保持するエッジの数を制限します。M を大きくすると、グラフの接続性が向上し（リコール率が高まり、ルーティングの堅牢性が増します）、一方でメモリ使用量は M に比例して増加し、インデックスの構築速度が低下します。8 から 64 の範囲の値であれば、ほとんどのワークロードに対応できますが、16～32 が一般的な最適値です。",
+      "faq2q": "「ef」と「efConstruction」の違いは何ですか？",
+      "faq2a": "どちらも候補プールのサイズであり、異なるタイミングで適用されます。efConstructionはインデックスの構築時に使用され、挿入される各ノードが近隣ノードをどの程度徹底的に検索するかを決定するため、グラフの品質を制御します。ef（ef_search）はクエリ実行時に使用され、レイヤー0の検索範囲の広さを制御し、各クエリにおいてレイテンシとリコール率のトレードオフを行います。",
+      "faq3q": "HNSWインデックスにはどれくらいのメモリが必要ですか？",
+      "faq3a": "おおよそ、生のベクトルとグラフの合計です。float32データの場合、ベクトル1つあたり約d × 4バイトに加え、ノード1つあたりM × 2 × 8バイト程度のエッジデータが必要です。 メモリに制約のある環境では、Milvusは保存されたベクトルを量子化するHNSW_SQおよびHNSW_PQ、あるいはベクトル全体をSSDに移動するDiskANNを提供しています。",
+      "faq4q": "IVFの代わりにHNSWをいつ使用すべきですか？",
+      "faq4a": "リコール率を高く保ちつつクエリのレイテンシを抑えることが優先され、かつインデックスがメモリに収まる場合は、HNSWを使用してください。通常、HNSWの方がパフォーマンス面で優れています。インデックスを頻繁に再構築する場合（構築がはるかに高速）や、限られたメモリ容量に対応するためにSQ8/PQ量子化と組み合わせる場合は、IVFを優先してください。"
+    }
   },
   "diskann": {
-    "title": "DiskANN Explorer",
-    "metaTitle": "DiskANN Explorer - Learn Milvus",
+    "title": "DiskANN Explorer：SSDによる10億規模のベクトル検索",
+    "metaTitle": "DiskANNの解説：ディスク上のベクトルインデックスの可視化 | Milvus",
     "subtitle": "DiskANN keeps a tiny <strong>PQ-compressed</strong> copy of every vector in RAM and the <strong>full vectors + graph</strong> on SSD. Search walks the graph with cheap RAM compares, then re-ranks the top candidates with a handful of expensive disk reads.",
     "memoryWallTitle": "Why DiskANN exists: the memory wall",
     "memoryNote": "A single commodity SSD holds the disk side easily. The RAM side fits in any laptop. Without the PQ trick, you'd need a server with hundreds of GB of RAM to even load the dataset.",
@@ -154,7 +213,28 @@
     "whyScales": "<strong>Why it scales:</strong> RAM only holds compressed codes. A 1B-vector dataset with 32-byte PQ needs ~32 GB RAM — fits on a single workstation.",
     "whySlower": "<strong>Why it's slower than HNSW:</strong> SSD random reads are ~100× slower than RAM. Even with only ~10 reads, query latency is dominated by disk.",
     "whyBeats": "<strong>Why it still beats IVF_PQ for recall:</strong> the re-rank step recovers quantization errors that pure PQ-based methods can't fix.",
-    "takeaway": "<strong>The mental model:</strong> PQ is the cheap \"is this neighborhood promising?\" test. Disk reads are the expensive \"let me actually verify\" check. DiskANN gets most of its work done with the cheap test."
+    "takeaway": "<strong>The mental model:</strong> PQ is the cheap \"is this neighborhood promising?\" test. Disk reads are the expensive \"let me actually verify\" check. DiskANN gets most of its work done with the cheap test.",
+    "metaDesc": "DiskANNが、PQコードをRAMに、ベクトルデータをSSDに格納した状態で、Vamanaグラフを走査する様子をご覧ください。数十億規模のベクトル検索において、ディスク上のインデックスがHNSWを上回るケースについて学びましょう。",
+    "seo": {
+      "whatIsTitle": "DiskANNとは何ですか？",
+      "whatIsP1": "<strong>DiskANNは</strong>、RAMに収まらないデータセット向けに設計された、グラフベースの近似最近傍インデックスです。このシステムは、効率的なディスクアクセスを実現するように配置された単層<strong>のVamanaグラフを</strong>構築し、メモリ内の各ベクトルに対してごくわずかな積量子化（PQ）コードを保持するとともに、全精度のベクトルとグラフのエッジをSSDに格納します。 検索処理では、メモリ内での低コストなPQ比較を用いてグラフを探索し、ディスクにアクセスするのは、最終候補の少数を再ランク付けする場合に限られます。",
+      "whatIsP2": "Milvusでは、DiskANNがディスク上インデックス機能を支えています。これにより、数十ギガバイト（数百ギガバイトではなく）のRAMを搭載したマシンでも、数十億規模のコレクションを検索可能にし、ディスク上の再ランク付けステップによって、リコール率をインメモリのグラフインデックスと同等の水準に維持しています。",
+      "paramsTitle": "各ノブで制御できるもの",
+      "param1": "<strong><code>R</code>（グラフの次数、構築時間）：</strong>Vamanaグラフにおけるノードあたりの辺の最大数。Rの値が大きいほど、接続性とリコール率は向上しますが、その代償としてディスク上のグラフサイズが大きくなり、構築時間が長くなります。",
+      "param2": "<strong><code>L</code>/<code>search_list</code>(クエリ時間):</strong>ビーム検索中に維持される候補プール。リコールとレイテンシを調整する主要なパラメータであり、HNSWのefに相当する。この値は、少なくともトップK以上でなければならない。",
+      "param3": "<strong>予算の再ランク付け：</strong>正確なスコアリングのために、SSDからベクトル全体が読み込まれるファイナリストの数がこれです。それぞれがランダムなディスク読み取りとなるため、ここにクエリのレイテンシが発生します。また、PQ近似の誤差が修正されるのもここです。",
+      "whenTitle": "DiskANN 対 HNSW 対 IVF",
+      "whenP1": "データセット（またはメモリ使用量）がRAMの容量を超えた場合は、DiskANNを選択してください。DiskANNは、SSDの読み取りが主な要因となるミリ秒単位のレイテンシを許容する代わりに、わずかなメモリ使用量で高リコール率のクエリを処理します。 すべてがメモリに余裕を持って収まる場合は、HNSWの方が高速に回答します。ディスクを使用せずに高速なインデックス構築や適度なメモリ節約が必要な場合は、IVFのバリエーションが中間の選択肢となります。",
+      "docsCta": "さらに詳しく知りたい場合は、セットアップ要件<docs>についてはDiskANNのドキュメントを</docs>参照するか、決定の指針については「<docsExplained>インデックスの解説</docsExplained>」をご覧ください。",
+      "faq1q": "HNSWの代わりにDiskANNを使うべきなのはどのような場合ですか？",
+      "faq1a": "ベクトルがRAMに収まらなくなった場合、あるいはそれらを格納するためのRAMのコストが予算を上回ってしまう場合。 HNSWでは、10億個の768次元浮動小数点ベクトルを処理するために約3 TBのメモリが必要ですが、DiskANNを使用すれば、数十GBのRAMとSSDだけで済みます。データセットがメモリに余裕を持って収まる場合、HNSWは依然として低レイテンシの選択肢となります。",
+      "faq2q": "DiskANNにはどのようなハードウェアが必要ですか？",
+      "faq2a": "クエリのレイテンシは、ごく少数のランダムディスク読み取り（各約100 µs）によって主に決定されるため、高速なNVMe SSDが必須要件となります。RAMの要件はそれほど厳しくなく、おおむねPQコード（例：ベクトルあたり32～64バイト）と作業用バッファの分程度です。",
+      "faq3q": "DiskANNは、HNSWのようなインメモリインデックスよりも処理速度が遅いのでしょうか？",
+      "faq3a": "クエリごとに言えば、その通りです。通常、ディスクによる再ランク付けはRAMアクセスに比べて約100倍遅いため、インメモリHNSWのサブミリ秒単位に対して、ディスクHNSWは1桁台前半のミリ秒単位となります。 その代償となるのがコストです。DiskANNは、リコール率を90～95％以上に維持しつつ、同じデータセットを1桁少ないRAM容量で処理します。",
+      "faq4q": "DiskANNは、PQ圧縮を行っても、なぜ高いリコール率を維持できるのでしょうか？",
+      "faq4a": "PQコードは、グラフの探索経路を決定するためにのみ使用され、最終的なスコアを算出するためのものではありません。結果を返す前に、DiskANNはSSDから上位候補のフルプレシジョンベクトルを読み取り、それらを正確に再ランク付けすることで、IVF_PQのような純粋なPQベースのインデックスでは修正できない量子化誤差を補正します。"
+    }
   },
   "tradeoff": {
     "title": "Tradeoff Dashboard",

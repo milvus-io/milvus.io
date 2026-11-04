@@ -110,5 +110,40 @@
   },
   "woodpeckerTip": "<0>Woodpecker</0> ist seit Milvus 2.6.0 ein Cloud-natives Write-Ahead-Log-System (WAL). Es wurde entwickelt, um Kafka und Pulsar als MQ in Milvus zu ersetzen, um den Betrieb zu vereinfachen, den Durchsatz zu maximieren und mühelos zu skalieren. Zurzeit läuft es eingebettet in den Streaming-Knoten.",
   "previousVersion": "Die vorherige Version des Größenbestimmungstools finden Sie <0>hier</0>.",
-  "titleV250": "Milvus Sizing Tool für Milvus v2.5.x"
+  "titleV250": "Milvus Sizing Tool für Milvus v2.5.x",
+  "tabs": {
+    "cpu": "Dimensionierung der CPU",
+    "gpu": "Auslegung der GPU",
+    "new": "NEU",
+    "cpuHint": "Die aktuelle CPU-Schätzung: Speicherbelegung, Knotenkonfiguration, Abhängigkeiten und Installationsbefehle.",
+    "gpuHint": "VRAM-Schätzung für GPU_BRUTE_FORCE, GPU_IVF_FLAT, GPU_IVF_PQ und GPU_CAGRA, einschließlich der vollständigen Herleitung."
+  },
+  "gpu": {
+    "form": {
+      "million": "Million",
+      "averageLengthTip": "Nur Host-Speicher – wird nicht zum VRAM gezählt",
+      "indexDoc": "Wie wählt man einen GPU-Index aus?",
+      "trainFraction": "kmeans_trainset_fraction",
+      "pqDim": "pq_dim (m)",
+      "pqDimTip": "0 = cuVS Auto → {{value}}",
+      "pqBits": "nbits",
+      "graphDegree": "graph_degree",
+      "intermediateDegree": "Zwischen-Graph-Grad",
+      "modeManualTip": "Die GPU-Schätzung wechselt nicht automatisch den Modus – wählen Sie den Modus aus, den Sie einsetzen möchten.",
+      "cacheDatasetOnDevice": "cache_dataset_on_device"
+    },
+    "result": {
+      "gpuMemory": "GPU-Speicher",
+      "vram": "VRAM",
+      "vramWithValue": "VRAM: {{vram}}"
+    },
+    "errors": {
+      "invalidNumber": "Die Vektoranzahl muss größer als 0 sein, die Dimension mindestens 2 und die Segmentgröße positiv.",
+      "nlistOutOfRange": "nlist muss zwischen 1 und 65536 liegen.",
+      "trainFractionOutOfRange": "kmeans_trainset_fraction muss im Intervall (0, 1] liegen.",
+      "pqDimOutOfRange": "Die berechnete pq_dim muss im Intervall [1, d] liegen.",
+      "pqCodeNotByteAligned": "pq_dim × nbits muss ein Vielfaches von 8 sein.",
+      "intermediateDegreeTooSmall": "intermediate_graph_degree muss größer oder gleich graph_degree sein."
+    }
+  }
 }

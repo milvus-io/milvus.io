@@ -110,5 +110,40 @@
   },
   "woodpeckerTip": "<0>O Woodpecker</0> é um sistema de registo de escrita antecipada (WAL) nativo da nuvem desde o Milvus 2.6.0. Ele foi projetado para substituir o Kafka e o Pulsar como MQ no Milvus para simplificar as operações, maximizar a taxa de transferência e escalar sem esforço. Por enquanto, ele está sendo executado incorporado nos nós de streaming.",
   "previousVersion": "A versão anterior da ferramenta de dimensionamento está <0>aqui</0>.",
-  "titleV250": "Milvus Sizing Tool para Milvus v2.5.x"
+  "titleV250": "Milvus Sizing Tool para Milvus v2.5.x",
+  "tabs": {
+    "cpu": "Dimensionamento da CPU",
+    "gpu": "Dimensionamento da GPU",
+    "new": "NOVO",
+    "cpuHint": "A estimativa atual da CPU: memória utilizada, configuração do nó, dependências e comandos de instalação.",
+    "gpuHint": "Estimativa da VRAM para GPU_BRUTE_FORCE, GPU_IVF_FLAT, GPU_IVF_PQ e GPU_CAGRA, incluindo a derivação completa."
+  },
+  "gpu": {
+    "form": {
+      "million": "Milhão",
+      "averageLengthTip": "Apenas memória do anfitrião — não é contabilizada na VRAM",
+      "indexDoc": "Como escolher um índice de GPU?",
+      "trainFraction": "kmeans_trainset_fraction",
+      "pqDim": "pq_dim (m)",
+      "pqDimTip": "0 = cuVS Auto → {{valor}}",
+      "pqBits": "nbits",
+      "graphDegree": "grau do grafo",
+      "intermediateDegree": "grau_intermédio_do_grafo",
+      "modeManualTip": "A estimativa da GPU não muda de modo automaticamente — escolha a que pretende implementar.",
+      "cacheDatasetOnDevice": "conjunto de dados em cache no dispositivo"
+    },
+    "result": {
+      "gpuMemory": "Memória da GPU",
+      "vram": "VRAM",
+      "vramWithValue": "VRAM: {{vram}}"
+    },
+    "errors": {
+      "invalidNumber": "O número de vetores deve ser superior a 0, a dimensão deve ser, pelo menos, 2 e o tamanho do segmento deve ser positivo.",
+      "nlistOutOfRange": "O valor de nlist deve estar compreendido entre 1 e 65536.",
+      "trainFractionOutOfRange": "O valor de `kmeans_trainset_fraction` deve estar no intervalo (0, 1].",
+      "pqDimOutOfRange": "O valor de pq_dim deve estar compreendido no intervalo [1, d].",
+      "pqCodeNotByteAligned": "pq_dim × nbits deve ser um múltiplo de 8.",
+      "intermediateDegreeTooSmall": "intermediate_graph_degree deve ser maior ou igual a graph_degree."
+    }
+  }
 }

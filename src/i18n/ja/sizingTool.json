@@ -110,5 +110,40 @@
   },
   "woodpeckerTip": "<0>Woodpeckerは</0>、Milvus 2.6.0から採用されたクラウドネイティブのWAL（ライト・アヘッド・ログ）システムです。MilvusのMQとしてKafkaとPulsarを置き換えるように設計されており、オペレーションを簡素化し、スループットを最大化し、楽にスケールすることができる。現在のところ、ストリーミング・ノードに組み込まれて稼働している。",
   "previousVersion": "旧バージョンのサイズ調整ツールは<0>こちら</0>。",
-  "titleV250": "Milvus v2.5.x用Milvusサイジングツール"
+  "titleV250": "Milvus v2.5.x用Milvusサイジングツール",
+  "tabs": {
+    "cpu": "CPUの選定",
+    "gpu": "GPUの選定",
+    "new": "新着",
+    "cpuHint": "既存のCPU推定：メモリ使用量、ノード構成、依存関係、およびインストールコマンド。",
+    "gpuHint": "GPU_BRUTE_FORCE、GPU_IVF_FLAT、GPU_IVF_PQ、およびGPU_CAGRA における VRAM の推定値について、その導出過程をすべて含めて解説する。"
+  },
+  "gpu": {
+    "form": {
+      "million": "ミリオン",
+      "averageLengthTip": "ホストメモリのみ — VRAMには含まれません",
+      "indexDoc": "GPUインデックスの選び方は？",
+      "trainFraction": "kmeans_trainset_fraction",
+      "pqDim": "pq_dim (m)",
+      "pqDimTip": "0 = cuVS 自動 → {{value}}",
+      "pqBits": "nビット",
+      "graphDegree": "graph_degree",
+      "intermediateDegree": "中間グラフの次数",
+      "modeManualTip": "GPUの推定値は自動的にモードを切り替わりません。デプロイする予定のモードを選択してください。",
+      "cacheDatasetOnDevice": "デバイス上のデータセットのキャッシュ"
+    },
+    "result": {
+      "gpuMemory": "GPUメモリ",
+      "vram": "VRAM",
+      "vramWithValue": "VRAM: {{vram}}"
+    },
+    "errors": {
+      "invalidNumber": "ベクトルの要素数は0より大きく、次元は2以上、セグメントサイズは正でなければなりません。",
+      "nlistOutOfRange": "nlist の値は 1 から 65536 の間でなければなりません。",
+      "trainFractionOutOfRange": "kmeans_trainset_fraction は (0, 1] の範囲内である必要があります。",
+      "pqDimOutOfRange": "pq_dim の値は [1, d] の範囲内である必要があります。",
+      "pqCodeNotByteAligned": "pq_dim × nbits は 8 の倍数でなければなりません。",
+      "intermediateDegreeTooSmall": "intermediate_graph_degree は、graph_degree 以上でなければなりません。"
+    }
+  }
 }

@@ -19,12 +19,14 @@
     "visited": "Visited",
     "totalLatency": "Total latency",
     "pressRun": "Press ▶ Run Search to start.",
-    "searchComplete": "Search complete."
+    "searchComplete": "Search complete.",
+    "faqTitle": "الأسئلة الشائعة",
+    "relatedTitle": "استمر في الاستكشاف"
   },
   "home": {
     "title": "Learn Milvus",
     "metaTitle": "Learn Milvus - Interactive Vector Database Visualizations",
-    "metaDesc": "Interactive visualizations that turn abstract vector database concepts into something you can see and touch.",
+    "metaDesc": "تصورات تفاعلية لمفاهيم قواعد البيانات المتجهة: مقاييس التشابه L2، وجيب التمام، والضرب الداخلي، بالإضافة إلى فهارس المتجهات IVF وHNSW وDiskANN.",
     "subtitle": "Interactive visualizations that turn abstract vector database concepts into something you can <strong>see</strong> and <strong>touch</strong>.",
     "cards": {
       "metric": {
@@ -50,8 +52,8 @@
     }
   },
   "metric": {
-    "title": "Metric Playground",
-    "metaTitle": "Metric Playground - Learn Milvus",
+    "title": "مقاييس تشابه المتجهات: L2، جيب التمام، والحاصل الداخلي",
+    "metaTitle": "L2 مقابل جيب التمام مقابل IP: تصوير مقاييس تشابه المتجهات | Milvus",
     "subtitle": "Drag the <queryPoint>query point</queryPoint> and switch metrics to see how the nearest neighbors change.",
     "topKTitle": "Top-{{k}} Nearest Neighbors",
     "higherCloser": "(higher = closer)",
@@ -80,11 +82,26 @@
     "twoRules": "Two practical rules",
     "matchMetric": "<strong>Match the metric to the model.</strong> Embedding models are <em>trained</em> with a specific metric in mind. Using a different one at search time will silently wreck your recall. Check the model card before picking.",
     "stayConsistent": "<strong>Stay consistent.</strong> All vectors in a collection must use the same metric. You cannot mix them within a single index, and you cannot meaningfully compare scores across different metrics.",
-    "tryThis": "<strong>Try this:</strong> drag the query point near the origin and switch between Cosine and L2. Watch how Cosine cares only about which \"direction\" the query is pointing — points on the opposite side of the origin can be \"close\" under L2 but \"far\" under Cosine. That visual is the entire concept."
+    "tryThis": "<strong>Try this:</strong> drag the query point near the origin and switch between Cosine and L2. Watch how Cosine cares only about which \"direction\" the query is pointing — points on the opposite side of the origin can be \"close\" under L2 but \"far\" under Cosine. That visual is the entire concept.",
+    "metaDesc": "اسحب نقطة استعلام وشاهد كيف تؤدي قيم L2 وجيب التمام والحاصل الداخلي إلى تغيير «الأقرب» من بين النقاط المجاورة. تعرف على مقياس التشابه الأنسب لنموذج التضمين الخاص بك.",
+    "seo": {
+      "chooseTitle": "تحديد نوع المقياس في Milvus",
+      "chooseP1": "في Milvus، يتم تعيين المقياس لكل فهرس عبر <code>metric_type</code> — <code>L2</code> أو <code>IP</code> أو <code>COSINE</code> للمتجهات الكثيفة — عند إنشاء الفهرس. ومن ثم، يستخدم كل بحث يتم إجراؤه على تلك المجموعة نفس الدالة التي جربتها للتو أعلاه. القاعدة الأكثر موثوقية على الإطلاق: <strong>استخدم المقياس الذي تم تدريب نموذج التضمين الخاص بك عليه</strong>، وهو مذكور في كل بطاقة نموذج تقريبًا.",
+      "chooseP2": "اختصاران مفيدان. تنتج معظم واجهات برمجة التطبيقات الحديثة لتضمين النصوص (OpenAI وCohere وVoyage ومعظم محولات الجمل) متجهات مخصصة <strong>لتشابه جيب التمام</strong>. وإذا تمت تطبيع متجهاتك إلى طول الوحدة، فإن جيب التمام والحاصل الداخلي يعطيان ترتيبين متطابقين — لذا فإن <code>الحاصل الداخلي</code> على المتجهات المطوّعة هو بديل شائع وأرخص قليلاً عن <code>جيب التمام</code>.",
+      "docsCta": "لمزيد من التفاصيل: اقرأ <docs>وثائق «مقاييس التشابه»</docs> للاطلاع على القائمة الكاملة للمقاييس التي يدعمها Milvus، بما في ذلك مقاييس هامينغ وجاكارد للمتجهات الثنائية، ومقياس BM25 للبحث عن النص الكامل.",
+      "faq1q": "ما هو مقياس التشابه الذي ينبغي أن أستخدمه مع OpenAI أو غيرها من نماذج تضمين النصوص؟",
+      "faq1a": "استخدم تشابه جيب التمام (metric_type COSINE في Milvus). يتم تدريب جميع نماذج تضمين النصوص الحديثة تقريبًا — بما في ذلك عائلة text-embedding-3 من OpenAI — على تشابه جيب التمام. ونظرًا لأن تضمينات OpenAI يتم تطبيعها إلى طول وحدة، فإن حاصل الضرب الداخلي (IP) يعطي ترتيبات متطابقة ويُعد بديلاً جيدًا.",
+      "faq2q": "ما الفرق بين تشابه جيب التمام والحاصل الداخلي؟",
+      "faq2a": "يقيس تشابه جيب التمام الزاوية بين متجهين فقط، متجاهلاً طولهما. أما الحاصل الداخلي (الضرب النقطي) فيأخذ في الاعتبار كل من الاتساق والمقدار، لذا فإن المتجه الأطول الذي يشير إلى نفس الاتجاه يحصل على درجة أعلى. وبالنسبة للمتجهات المعيارية، فإن هذين المقياسين متكافئان رياضيًا.",
+      "faq3q": "هل يمكنني تغيير نوع المقياس بعد إنشاء فهرس في Milvus؟",
+      "faq3a": "لا. يتم تضمين المقياس في الفهرس أثناء عملية الإنشاء. لتغيير المقياس، عليك حذف الفهرس وإعادة إنشائه باستخدام نوع مقياس جديد (metric_type). كما أن النتائج المستمدة من المقاييس المختلفة غير قابلة للمقارنة فيما بينها، لذا تجنب خلطها عند معالجة النتائج لاحقًا.",
+      "faq4q": "هل يؤثر اختيار المقياس على معدل الاسترجاع أو سرعة البحث؟",
+      "faq4a": "السرعة متطابقة بشكل أساسي — فكل من L2 و IP و cosine لا تتطلب سوى مرور واحد على المتجه. أما «الاسترجاع» فهو العامل الحاسم: فالبحث باستخدام مقياس يختلف عن ذلك الذي تم تدريب نموذج التضمين عليه يؤدي إلى تدهور جودة النتائج بشكل خفي، وغالبًا ما يكون ذلك بشكل كبير."
+    }
   },
   "ivf": {
-    "title": "FLAT vs IVF",
-    "metaTitle": "FLAT vs IVF - Learn Milvus",
+    "title": "FLAT مقابل IVF: كيف يعمل فهرس الملفات المقلوب",
+    "metaTitle": "شرح مؤشر IVF: FLAT مقابل التصور التفاعلي لـ IVF | Milvus",
     "subtitle": "Same data, same query — but a different search strategy. Drag the <queryPoint>query point</queryPoint>, adjust <code>nprobe</code>, and press <strong>Run Search</strong> to see how IVF skips most of the data.",
     "nprobeHint": "Search {{nprobe}} of {{k}} clusters",
     "flatTitle": "FLAT — Brute Force",
@@ -98,11 +115,32 @@
     "step2": "<strong>Step 1 — evaluate centroids:</strong> IVF first computes the distance from the query to every centroid. That's only {{k}} comparisons, regardless of dataset size.",
     "step3": "<strong>Step 2 — pick the closest <code>nprobe</code> clusters:</strong> these light up. All other clusters are skipped entirely.",
     "step4": "<strong>Step 3 — scan points inside the chosen clusters:</strong> only ~{{scanned}} of the {{total}} points.",
-    "takeaway": "<strong>The tradeoff:</strong> larger <code>nprobe</code> → more clusters scanned → higher recall but slower. Smaller <code>nprobe</code> → faster but you may miss true neighbors that live in unscanned clusters. Try setting <code>nprobe = 1</code> and dragging the query near a cluster boundary to see recall drop."
+    "takeaway": "<strong>The tradeoff:</strong> larger <code>nprobe</code> → more clusters scanned → higher recall but slower. Smaller <code>nprobe</code> → faster but you may miss true neighbors that live in unscanned clusters. Try setting <code>nprobe = 1</code> and dragging the query near a cluster boundary to see recall drop.",
+    "metaDesc": "شاهد مقارنة بين طريقة FLAT القائمة على القوة الغاشمة وطريقة IVF القائمة على المجموعات في نفس الاستعلام. قم بضبط nprobe في الوقت الفعلي وتعرف على كيفية تبادل nlist وnprobe بين معدل الاسترجاع والسرعة في Milvus.",
+    "seo": {
+      "whatIsTitle": "ما هو مؤشر التلقيح الصناعي؟",
+      "whatIsP1": "<strong>IVF (Inverted File)</strong> هو فهرس تقريبي لأقرب الجيران يعتمد على التجميع. في مرحلة الإنشاء، تقوم طريقة k-means بتقسيم جميع المتجهات إلى <code>nlist</code> مجموعة، يمثل كل منها مركزها. وعند إجراء الاستعلام، يقارن البحث أولاً الاستعلام بمراكز الكتل فقط، ثم يختار أقرب <code>nprobe</code> من المجموعات، ويقوم بمسح المتجهات الموجودة داخلها فقط — متخطياً كل ما عداها.",
+      "whatIsP2": "تقدم Milvus عدة متغيرات لـ IVF تضحي بالذاكرة مقابل الدقة: حيث يقوم <strong>IVF_FLAT</strong> بتخزين المتجهات الأولية (الأكثر دقة)، بينما يقوم <strong>IVF_SQ8</strong> بضغط كل بُعد إلى بايت واحد (استهلاك ذاكرة أقل بنحو 4 أضعاف، مع تكلفة استرجاع صغيرة)، ويقوم <strong>IVF_PQ</strong> بتطبيق تكمية المنتج لتحقيق ضغط أعلى بكثير مع تكلفة استرجاع أكبر.",
+      "paramsTitle": "ضبط nlist و nprobe",
+      "param1": "<strong><code>nlist</code> (في وقت التحضير):</strong> عدد مجموعات k-means. ومن النقاط الانطلاق الشائعة القيمة <code>4 × √N</code> عندما يكون عدد المتجهات <code>N</code>. وزيادة عدد المجموعات يعني أن كل مجموعة تكون أصغر حجمًا — مما يؤدي إلى عمليات مسح أسرع، لكن عملية مسح المراكز تكلف أكثر وتزداد تأثيرات الحدود.",
+      "param2": "<strong><code>nprobe</code> (وقت الاستعلام):</strong> عدد المجموعات التي يجب فحصها لكل استعلام. هذا هو العامل الرئيسي للتوازن بين معدل الاسترجاع وزمن الاستجابة — وهو بالضبط ما يتحكم فيه شريط التمرير أعلاه. ابدأ بقيمة تقارب <code>nlist / 16</code> وزدها تدريجيًا حتى يصل معدل الاسترجاع إلى الهدف المطلوب.",
+      "param3": "<strong>اختيار المتغيرات:</strong> ابدأ بـ IVF_FLAT. انتقل إلى IVF_SQ8 عندما تكون الذاكرة محدودة، وإلى IVF_PQ فقط عندما تكون مجموعة البيانات أكبر من أن تستوعبها SQ8 — وتحقق من معدل الاسترجاع على بياناتك الخاصة بعد كل خطوة من خطوات التخفيض.",
+      "whenTitle": "IVF مقابل HNSW مقابل DiskANN",
+      "whenP1": "يتم إنشاء IVF بسرعة، ولا يتطلب سوى حمل إضافي بسيط على الذاكرة بالإضافة إلى المتجهات، كما أنه سهل الفهم — ولكن عند نفس هدف الاسترجاع، عادةً ما يستجيب HNSW للاستعلامات بشكل أسرع في الذاكرة. اختر IVF عندما تقوم بإعادة بناء الفهارس بشكل متكرر (حيث تكون سرعة البناء مهمة)، أو عندما تكون الذاكرة محدودة (IVF_SQ8/IVF_PQ)، أو عندما تريد سلوك مسح يمكن التنبؤ به وقابل للضبط. اختر HNSW للحصول على أقل زمن استجابة للاستعلامات داخل الذاكرة، واختر DiskANN عندما لا تتسع ذاكرة الوصول العشوائي (RAM) لاستيعاب المتجهات على الإطلاق.",
+      "docsCta": "لمزيد من التفاصيل: اقرأ <docs>وثائق IVF_FLAT</docs> للتعرف على معلمات الفهرس، أو راجع <docsExplained>«شرح الفهرس»</docsExplained> للحصول على دليل اتخاذ القرار الكامل.",
+      "faq1q": "ما الفرق بين IVF_FLAT و IVF_SQ8 و IVF_PQ؟",
+      "faq1a": "تقوم المجموعات الثلاث بتكمية المتجهات بنفس الطريقة؛ لكنها تختلف في طريقة تخزين المتجهات داخل المجموعات. تحتفظ IVF_FLAT بالمتجهات العائمة الأولية (أفضل استرجاع). أما IVF_SQ8 فيقوم بتكمية كل بُعد إلى 8 بتات، مما يقلل من استخدام الذاكرة بنحو 4 أضعاف مع خسارة طفيفة في معدل الاسترجاع. ويستبدل IVF_PQ المتجهات برموز قصيرة ناتجة عن تكمية المنتج، مما يوفر أعلى معدل ضغط وأكبر خسارة في معدل الاسترجاع.",
+      "faq2q": "كيف يمكنني اختيار قيمتي nlist و nprobe؟",
+      "faq2a": "من القواعد العامة المتبعة أن تكون nlist = 4 × الجذر التربيعي لـ N، حيث N يمثل عدد المتجهات، ثم يتم ضبط nprobe عند إجراء الاستعلام. كلما زاد nprobe، زاد عدد المجموعات التي يتم مسحها: مما يؤدي إلى ارتفاع معدل الاسترجاع وزيادة زمن الاستجابة. ابدأ بقيمة تقارب nlist/16 وزدها تدريجيًا حتى يصل معدل الاسترجاع على مجموعة الاستعلامات المحتجزة إلى الهدف المحدد.",
+      "faq3q": "لماذا يفوت خوارزمية IVF بعض الجيران الأقرب الحقيقيين؟",
+      "faq3a": "بسبب حدود المجموعات. إذا وقعت نقطة الاستعلام بالقرب من حافة إحدى المجموعات، فقد يكون بعض جيرانها الحقيقيين موجودين في مجموعة مجاورة لم تكن من بين المجموعات التي تم مسحها باستخدام nprobe. يمكنك ملاحظة ذلك في الرسم التوضيحي عن طريق سحب نقطة الاستعلام بالقرب من أحد الحدود مع nprobe = 1.",
+      "faq4q": "هل يجب أن أستخدم تقنية التلقيح الصناعي (IVF) أم تقنية HNSW؟",
+      "faq4a": "وفي السياق نفسه، عادةً ما تكون HNSW أسرع في البحث داخل الذاكرة، لكنها تستهلك مساحة أكبر من الذاكرة وتستغرق وقتًا أطول في الإنشاء. أما IVF فتتميز بسرعة الإنشاء وتتوافق جيدًا مع التكمية (SQ8/PQ) عندما تكون سعة الذاكرة محدودة. وبالنسبة لمجموعات البيانات التي تتجاوز سعة ذاكرة الوصول العشوائي (RAM) بالكامل، يُنصح باستخدام DiskANN بدلاً من ذلك."
+    }
   },
   "hnsw": {
-    "title": "HNSW Explorer",
-    "metaTitle": "HNSW Explorer - Learn Milvus",
+    "title": "HNSW Explorer: عالم صغير قابل للتنقل هرميًا، مع عرض مرئي",
+    "metaTitle": "شرح خوارزمية HNSW: تصور تفاعلي | Milvus",
     "subtitle": "Watch a search travel through the layered graph — from the sparse top layer (highways) down to the dense bottom layer (local roads). Drag the <queryPoint>query point</queryPoint> on Layer 0 and tune <code>M</code> / <code>ef</code> to see how the graph changes.",
     "mHint": "Max neighbors per node",
     "efHint": "Layer-0 candidate pool",
@@ -119,11 +157,32 @@
     "step3": "<strong>Search starts at the top:</strong> from a fixed entry point, greedily walk to the neighbor closest to the query, repeat until no improvement.",
     "step4": "<strong>Drop down a layer and repeat:</strong> the position from the previous layer becomes the start of the next layer's walk. Each drop refines the result with finer-grained edges.",
     "step5": "<strong>Layer 0 with <code>ef</code>:</strong> at the bottom layer, instead of stopping at the first local minimum, HNSW maintains a pool of <code>ef</code> best candidates and expands their neighborhoods. Larger <code>ef</code> → more accurate but slower.",
-    "takeaway": "<strong>Why it's fast:</strong> the top layers act like an index over the index — you cover huge distances in just a few hops, then zoom in. For N points, search visits roughly <code>O(log N)</code> nodes instead of <code>N</code>."
+    "takeaway": "<strong>Why it's fast:</strong> the top layers act like an index over the index — you cover huge distances in just a few hops, then zoom in. For N points, search visits roughly <code>O(log N)</code> nodes instead of <code>N</code>.",
+    "metaDesc": "تصفح طبقة بحث HNSW طبقةً تلو الأخرى. اضبط القيمتين M و ef لترى كيف يوازن الرسم البياني الهرمي بين استهلاك الذاكرة والسرعة، وتعرف على كيفية ضبطهما في Milvus.",
+    "seo": {
+      "whatIsTitle": "ما هو HNSW؟",
+      "whatIsP1": "<strong>HNSW (العالم الصغير القابل للتنقل الهرمي)</strong> هي خوارزمية تقريبية للبحث عن أقرب جار تستند إلى الرسوم البيانية. وهي تنظم المتجهات في مكدس من الرسوم البيانية للعالم الصغير القابل للتنقل: طبقات علوية متفرقة ذات حواف طويلة المدى للتوجيه التقريبي، وطبقة سفلية كثيفة ذات حواف قصيرة للمسار النهائي الدقيق. تقفز عملية البحث بشراهة نحو الاستعلام في كل طبقة، ثم تنزل إلى الأسفل — لتزور ما يقارب <code>O(log N)</code> من العقد بدلاً من مسح جميع العقد N.",
+      "whatIsP2": "يُعد HNSW أكثر فهارس المتجهات المستخدمة في الذاكرة انتشارًا، كما أنه الفهرس الافتراضي للرسوم البيانية في Milvus. ويقدم Milvus أيضًا متغيرات <strong>HNSW_SQ</strong> <strong>وHNSW_PQ</strong> التي تقوم بتكمية المتجهات المخزنة لتقليل استهلاك الذاكرة بتكلفة بسيطة على معدل الاسترجاع.",
+      "paramsTitle": "معلمات HNSW في Milvus",
+      "param1": "<strong><code>M</code> (وقت البناء):</strong> الحد الأقصى لعدد الحواف لكل عقدة، وهو نفس زر الضبط الذي يتوافق مع شريط التمرير أعلاه. تتراوح القيم النموذجية بين 8 و64. تؤدي زيادة قيمة M إلى تحسين معدل الاسترجاع وترابط الرسم البياني، لكنها تزيد من استهلاك الذاكرة بشكل خطي وتبطئ عملية البناء.",
+      "param2": "<strong><code>efConstruction</code> (وقت الإنشاء):</strong> حجم مجموعة المرشحين المستخدمة أثناء إدراج العقد. تؤدي القيم الأعلى إلى إنشاء رسم بياني ذي جودة أفضل (معدل استرجاع أعلى يمكن تحقيقه) على حساب بطء عملية إنشاء الفهرس. تتراوح القيم النموذجية بين 100 و500.",
+      "param3": "<strong><code>ef</code> / <code>ef_search</code> (وقت الاستعلام):</strong> مجموعة المرشحين التي يتم الاحتفاظ بها أثناء عملية «Layer-0 walk» — وهي العامل الرئيسي للتوازن بين الاسترجاع والزمن الاستجابة في وقت البحث. يجب ألا تقل عن «top-K». قم بزيادتها حتى يستقر معدل الاسترجاع؛ حيث يزداد الزمن الاستجابة بشكل خطي تقريبًا مع زيادة هذه القيمة.",
+      "whenTitle": "HNSW مقابل IVF مقابل DiskANN",
+      "whenP1": "عادةً ما توفر HNSW أفضل زمن استجابة للاستعلامات مع معدل استرجاع عالٍ في البحث داخل الذاكرة — ولهذا السبب تُعد الخيار الافتراضي عندما تتسع مجموعة البيانات (بالإضافة إلى الحمل الإضافي للرسم البياني) في ذاكرة الوصول العشوائي (RAM). وتتمثل تكاليفها في استهلاك الذاكرة ووقت الإنشاء: حيث يضيف الرسم البياني عبئًا ملحوظًا لكل متجه، كما أن عمليات الإدراج تكون أبطأ من عملية التخصيص باستخدام طريقة k-means في IVF. اختر IVF عندما تحتاج إلى إنشاء فهارس سريعة أو تكمية مكثفة، واختر DiskANN عندما تكون مجموعة البيانات أكبر من سعة ذاكرة الوصول العشوائي (RAM) ولكنك لا تزال بحاجة إلى معدل استرجاع عالٍ.",
+      "docsCta": "لمزيد من التفاصيل: اقرأ <docs>وثائق HNSW</docs> للاطلاع على معلمات الفهرس الدقيقة، أو راجع <docsExplained>«شرح الفهرس»</docsExplained> للحصول على دليل اتخاذ القرار الكامل.",
+      "faq1q": "ما الذي يتحكم فيه المعامل M في نموذج HNSW؟",
+      "faq1a": "يحدد M عدد الحواف التي تحتفظ بها كل عقدة في كل طبقة. كلما زاد M، زادت درجة ترابط الرسم البياني — مما يؤدي إلى ارتفاع معدل الاسترجاع وزيادة متانة التوجيه — لكن استهلاك الذاكرة يزداد بشكل خطي مع زيادة M، كما يتباطأ إنشاء الفهرس. تغطي القيم التي تتراوح بين 8 و64 معظم أحمال العمل؛ وتُعد القيم التي تتراوح بين 16 و32 النقطة المثلى الشائعة.",
+      "faq2q": "ما الفرق بين ef و efConstruction؟",
+      "faq2a": "كلاهما يمثلان حجمي مجموعتي المرشحين، ويتم تطبيقهما في أوقات مختلفة. تُستخدم efConstruction أثناء إنشاء الفهرس: فهي تحدد مدى دقة بحث كل عقدة مُدرجة عن الجيران، وبالتالي تتحكم في جودة الرسم البياني. أما ef (ef_search) فتُستخدم عند إجراء الاستعلام: فهي تتحكم في مدى اتساع نطاق البحث في الطبقة 0، حيث تُوازن بين زمن الاستجابة ومعدل الاسترجاع في كل استعلام.",
+      "faq3q": "ما مقدار الذاكرة التي يحتاجها فهرس HNSW؟",
+      "faq3a": "تقريبًا المتجهات الأولية بالإضافة إلى الرسم البياني: حوالي d × 4 بايت لكل متجه لبيانات float32، بالإضافة إلى ما يقارب M × 2 × 8 بايت من الحواف لكل عقدة. بالنسبة لعمليات النشر ذات الذاكرة المحدودة، يقدم Milvus خيارَي HNSW_SQ و HNSW_PQ، اللذين يقومان بتكمية المتجهات المخزنة، أو خيار DiskANN، الذي ينقل المتجهات الكاملة إلى محرك أقراص SSD.",
+      "faq4q": "متى ينبغي عليّ استخدام تقنية HNSW بدلاً من تقنية التلقيح الصناعي (IVF)؟",
+      "faq4a": "استخدم HNSW عندما تكون أولوية الاستجابة السريعة للاستعلامات مع معدل استرجاع عالٍ هي الهدف، ويكون الفهرس متسعًا في الذاكرة — فعادةً ما يكون هو الخيار الأفضل في هذه الحالة. وافضل استخدام IVF عندما تقوم بإعادة بناء الفهارس بشكل متكرر (حيث تكون عمليات البناء أسرع بكثير)، أو عند دمجه مع تكمية SQ8/PQ لتلبية متطلبات الذاكرة المحدودة."
+    }
   },
   "diskann": {
-    "title": "DiskANN Explorer",
-    "metaTitle": "DiskANN Explorer - Learn Milvus",
+    "title": "DiskANN Explorer: البحث المتجهي على نطاق المليارات من محركات الأقراص SSD",
+    "metaTitle": "شرح DiskANN: تصور الفهرس المتجهي على القرص | Milvus",
     "subtitle": "DiskANN keeps a tiny <strong>PQ-compressed</strong> copy of every vector in RAM and the <strong>full vectors + graph</strong> on SSD. Search walks the graph with cheap RAM compares, then re-ranks the top candidates with a handful of expensive disk reads.",
     "memoryWallTitle": "Why DiskANN exists: the memory wall",
     "memoryNote": "A single commodity SSD holds the disk side easily. The RAM side fits in any laptop. Without the PQ trick, you'd need a server with hundreds of GB of RAM to even load the dataset.",
@@ -154,7 +213,28 @@
     "whyScales": "<strong>Why it scales:</strong> RAM only holds compressed codes. A 1B-vector dataset with 32-byte PQ needs ~32 GB RAM — fits on a single workstation.",
     "whySlower": "<strong>Why it's slower than HNSW:</strong> SSD random reads are ~100× slower than RAM. Even with only ~10 reads, query latency is dominated by disk.",
     "whyBeats": "<strong>Why it still beats IVF_PQ for recall:</strong> the re-rank step recovers quantization errors that pure PQ-based methods can't fix.",
-    "takeaway": "<strong>The mental model:</strong> PQ is the cheap \"is this neighborhood promising?\" test. Disk reads are the expensive \"let me actually verify\" check. DiskANN gets most of its work done with the cheap test."
+    "takeaway": "<strong>The mental model:</strong> PQ is the cheap \"is this neighborhood promising?\" test. Disk reads are the expensive \"let me actually verify\" check. DiskANN gets most of its work done with the cheap test.",
+    "metaDesc": "شاهد كيف يقوم DiskANN بتتبع رسم بياني لـ Vamana باستخدام أكواد PQ المخزنة في ذاكرة الوصول العشوائي (RAM) والمتجهات الكاملة المخزنة على محرك الأقراص SSD. تعرف على الحالات التي يتفوق فيها الفهرس المخزن على القرص على خوارزمية HNSW في عمليات البحث عن المتجهات التي تصل إلى مليارات.",
+    "seo": {
+      "whatIsTitle": "ما هو DiskANN؟",
+      "whatIsP1": "<strong>DiskANN</strong> هو فهرس تقريبي لأقرب الجيران قائم على الرسوم البيانية، مصمم لمجموعات البيانات التي لا تتسع في ذاكرة الوصول العشوائي (RAM). وهو يبني <strong>رسمًا بيانيًّا</strong> من طبقة واحدة <strong>من نوع «فامانا» (Vamana)</strong> مصممًا للوصول الفعال إلى القرص، ويحتفظ برمز صغير مُكمَّل بالكمية (PQ) لكل متجه في الذاكرة، ويخزن المتجهات ذات الدقة الكاملة وحواف الرسم البياني على محرك أقراص SSD. تتنقل عمليات البحث عبر الرسم البياني باستخدام مقارنات PQ منخفضة التكلفة داخل ذاكرة الوصول العشوائي (RAM)، ولا تلجأ إلى القرص إلا لإعادة ترتيب عدد قليل من المرشحين النهائيين.",
+      "whatIsP2": "في Milvus، تعمل تقنية DiskANN على تشغيل خيار الفهرسة على القرص: حيث تصبح المجموعات التي يبلغ حجمها مليارات العناصر قابلة للبحث على أجهزة ذات ذاكرة وصول عشوائي (RAM) تبلغ سعتها عشرات — وليس مئات — الجيجابايت، في حين أن خطوة إعادة الترتيب على القرص تحافظ على معدل الاسترجاع قريبًا من مؤشرات الرسوم البيانية الموجودة في الذاكرة.",
+      "paramsTitle": "ما الذي تتحكم فيه هذه المقابض",
+      "param1": "<strong><code>R</code> (درجة الرسم البياني، وقت الإنشاء):</strong> الحد الأقصى لعدد الحواف لكل عقدة في الرسم البياني Vamana. كلما زاد قيمة R، تحسنت الترابطية ومعدل الاسترجاع، على حساب زيادة حجم الرسم البياني على القرص وإبطاء عملية الإنشاء.",
+      "param2": "<strong><code>L</code> / <code>search_list</code> (وقت الاستعلام):</strong> مجموعة المرشحين التي يتم الاحتفاظ بها أثناء عملية البحث الشعاعي — وهي العامل الرئيسي للتوازن بين الاسترجاع والكمون، وتُعد مكافئة لمعامل ef في خوارزمية HNSW. ويجب ألا تقل قيمتها عن أعلى K.",
+      "param3": "<strong>إعادة ترتيب الميزانية:</strong> عدد المتأهلين للتصفيات النهائية الذين يتم استرجاع متجهاتهم الكاملة من SSD لإجراء التقييم الدقيق. وتُعد كل عملية قراءة من القرص عملية عشوائية، لذا فإن هذا هو المكان الذي يحدث فيه تأخير الاستعلام — وهو أيضًا المكان الذي يتم فيه تصحيح أخطاء التقريب في PQ.",
+      "whenTitle": "DiskANN مقابل HNSW مقابل IVF",
+      "whenP1": "اختر DiskANN عندما تتجاوز مجموعة البيانات (أو حجم الذاكرة المطلوب) سعة ذاكرة الوصول العشوائي (RAM): فهو يعالج الاستعلامات عالية الاسترجاع باستخدام جزء ضئيل من الذاكرة، مقابل زمن انتقال يبلغ ميلي ثانية، ويهيمن عليه قراءة الأقراص الصلبة SSD. إذا كانت جميع البيانات تتسع بسهولة في الذاكرة، فإن HNSW يقدم إجابات أسرع. أما إذا كنت بحاجة إلى إنشاء فهارس سريع أو توفير معتدل في استهلاك الذاكرة دون اللجوء إلى القرص، فإن متغيرات IVF تمثل حلاً وسطًا بين الخيارين.",
+      "docsCta": "لمزيد من التفاصيل: اقرأ <docs>وثائق DiskANN</docs> للتعرف على متطلبات الإعداد، أو راجع <docsExplained>«شرح الفهرس»</docsExplained> للحصول على دليل اتخاذ القرار الكامل.",
+      "faq1q": "متى ينبغي عليّ استخدام DiskANN بدلاً من HNSW؟",
+      "faq1a": "عندما لا تتسع ذاكرة الوصول العشوائي (RAM) لمتجهاتك — أو عندما تكون تكلفة الذاكرة اللازمة لتخزينها أعلى مما ترغب في دفعه. تحتاج مليار متجه عائم ذي 768 بُعدًا إلى حوالي 3 تيرابايت من الذاكرة في حالة استخدام HNSW، بينما لا تحتاج سوى إلى عشرات الجيجابايت من ذاكرة الوصول العشوائي (RAM) بالإضافة إلى محرك أقراص SSD مع DiskANN. إذا كانت مجموعة البيانات تتسع في الذاكرة بسهولة، فإن HNSW تظل الخيار الأقل زمن انتقالًا.",
+      "faq2q": "ما هي الأجهزة التي يحتاجها برنامج DiskANN؟",
+      "faq2a": "يُعد وجود محرك أقراص SSD سريع يعمل بتقنية NVMe متطلبًا أساسيًّا، نظرًا لأن زمن استجابة الاستعلام يتأثر بشكل رئيسي بعدد قليل من عمليات القراءة العشوائية للقرص (تستغرق كل منها حوالي 100 ميكروثانية). أما احتياجات ذاكرة الوصول العشوائي (RAM) فهي متواضعة: تقريبًا حجم رموز PQ (على سبيل المثال، 32–64 بايت لكل متجه) بالإضافة إلى مخازن التخزين المؤقتة.",
+      "faq3q": "هل يعد DiskANN أبطأ من الفهارس الموجودة في الذاكرة مثل HNSW؟",
+      "faq3a": "بالنسبة لكل استعلام، نعم — عادةً ما تكون المدة في حدود أجزاء قليلة من الميلي ثانية، مقارنةً بمدة أقل من الميلي ثانية في حالة HNSW داخل الذاكرة، لأن كل عملية إعادة ترتيب على القرص تكون أبطأ بحوالي 100 ضعف من الوصول إلى ذاكرة الوصول العشوائي (RAM). لكن المقابل هو التكلفة: يعالج DiskANN نفس مجموعة البيانات باستخدام ذاكرة وصول عشوائي (RAM) أقل بمقدار عشرة أضعاف، مع الحفاظ على معدل الاسترجاع فوق 90–95%.",
+      "faq4q": "كيف يحافظ DiskANN على معدل الاسترجاع مرتفعًا على الرغم من ضغط PQ؟",
+      "faq4a": "تُستخدم رموز PQ فقط لتوجيه مسار التنقل عبر الرسم البياني، وليس لإنتاج النتائج النهائية. وقبل إرجاع النتائج، يقوم DiskANN بقراءة المتجهات ذات الدقة الكاملة لأفضل المرشحين من SSD وإعادة ترتيبها بدقة، مصححًا بذلك خطأ التكمية الذي لا تستطيع الفهارس القائمة على PQ بحتة — مثل IVF_PQ — إصلاحه."
+    }
   },
   "tradeoff": {
     "title": "Tradeoff Dashboard",

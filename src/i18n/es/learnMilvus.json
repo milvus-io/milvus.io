@@ -19,12 +19,14 @@
     "visited": "Visited",
     "totalLatency": "Total latency",
     "pressRun": "Press ▶ Run Search to start.",
-    "searchComplete": "Search complete."
+    "searchComplete": "Search complete.",
+    "faqTitle": "Preguntas frecuentes",
+    "relatedTitle": "Sigue explorando"
   },
   "home": {
     "title": "Learn Milvus",
     "metaTitle": "Learn Milvus - Interactive Vector Database Visualizations",
-    "metaDesc": "Interactive visualizations that turn abstract vector database concepts into something you can see and touch.",
+    "metaDesc": "Visualizaciones interactivas de conceptos relacionados con bases de datos vectoriales: métricas de similitud L2, coseno y producto interno, además de los índices vectoriales IVF, HNSW y DiskANN.",
     "subtitle": "Interactive visualizations that turn abstract vector database concepts into something you can <strong>see</strong> and <strong>touch</strong>.",
     "cards": {
       "metric": {
@@ -50,8 +52,8 @@
     }
   },
   "metric": {
-    "title": "Metric Playground",
-    "metaTitle": "Metric Playground - Learn Milvus",
+    "title": "Métricas de similitud vectorial: L2, coseno y producto escalar",
+    "metaTitle": "L2, coseno e IP: visualización de métricas de similitud vectorial | Milvus",
     "subtitle": "Drag the <queryPoint>query point</queryPoint> and switch metrics to see how the nearest neighbors change.",
     "topKTitle": "Top-{{k}} Nearest Neighbors",
     "higherCloser": "(higher = closer)",
@@ -80,11 +82,26 @@
     "twoRules": "Two practical rules",
     "matchMetric": "<strong>Match the metric to the model.</strong> Embedding models are <em>trained</em> with a specific metric in mind. Using a different one at search time will silently wreck your recall. Check the model card before picking.",
     "stayConsistent": "<strong>Stay consistent.</strong> All vectors in a collection must use the same metric. You cannot mix them within a single index, and you cannot meaningfully compare scores across different metrics.",
-    "tryThis": "<strong>Try this:</strong> drag the query point near the origin and switch between Cosine and L2. Watch how Cosine cares only about which \"direction\" the query is pointing — points on the opposite side of the origin can be \"close\" under L2 but \"far\" under Cosine. That visual is the entire concept."
+    "tryThis": "<strong>Try this:</strong> drag the query point near the origin and switch between Cosine and L2. Watch how Cosine cares only about which \"direction\" the query is pointing — points on the opposite side of the origin can be \"close\" under L2 but \"far\" under Cosine. That visual is the entire concept.",
+    "metaDesc": "Arrastra un punto de consulta y observa cómo cambian los valores de L2, el coseno y el producto escalar a la hora de determinar cuáles son los vecinos «más cercanos». Descubre qué métrica de similitud se adapta mejor a tu modelo de incrustación.",
+    "seo": {
+      "chooseTitle": "Configuración del tipo de métrica en Milvus",
+      "chooseP1": "En Milvus, la métrica se configura por índice mediante <code>«metric_type»</code> <code>—L2</code>, <code>IP</code> o <code>COSINE</code> para vectores densos— al crear el índice. A partir de ahí, cada búsqueda en esa colección utiliza la misma función con la que acabas de experimentar anteriormente. La regla más fiable es esta: <strong>utiliza la métrica con la que se entrenó tu modelo de incrustación</strong>, que aparece indicada en prácticamente todas las fichas de modelo.",
+      "chooseP2": "Dos atajos útiles. La mayoría de las API modernas de incrustación de texto (OpenAI, Cohere, Voyage y la mayoría de los transformadores de frases) generan vectores pensados para <strong>la similitud coseno</strong>. Y si los vectores se normalizan a longitud unitaria, el coseno y el producto escalar devuelven clasificaciones idénticas, por lo que <code>el producto escalar</code> sobre vectores normalizados es un sustituto habitual y ligeramente más económico del <code>coseno</code>.",
+      "docsCta": "Más información: consulta la <docs>documentación sobre métricas de similitud</docs> para ver la lista completa de métricas compatibles con Milvus, incluidas Hamming y Jaccard para vectores binarios y BM25 para la búsqueda de texto completo.",
+      "faq1q": "¿Qué métrica de similitud debería utilizar para OpenAI u otras representaciones de texto?",
+      "faq1a": "Utiliza la similitud coseno (metric_type COSINE en Milvus). Casi todos los modelos modernos de incrustación de texto —incluida la familia «text-embedding-3» de OpenAI— se entrenan para la similitud coseno. Dado que las incrustaciones de OpenAI se normalizan a longitud unitaria, el producto escalar (IP) ofrece clasificaciones idénticas y constituye una buena alternativa.",
+      "faq2q": "¿Cuál es la diferencia entre la similitud coseno y el producto escalar?",
+      "faq2a": "La similitud coseno solo mide el ángulo entre dos vectores, sin tener en cuenta sus longitudes. El producto escalar (producto punto) tiene en cuenta tanto la alineación como la magnitud, por lo que un vector más largo que apunte en la misma dirección obtiene una puntuación más alta. En el caso de vectores normalizados a la unidad, ambos son matemáticamente equivalentes.",
+      "faq3q": "¿Puedo cambiar el tipo de métrica después de crear un índice en Milvus?",
+      "faq3a": "No. La métrica se integra en el índice en el momento de su creación. Para cambiar de métrica, hay que eliminar el índice y volver a crearlo con un nuevo «metric_type». Además, las puntuaciones de las distintas métricas no son comparables entre sí, por lo que no debes mezclarlas al procesar los resultados.",
+      "faq4q": "¿Influye la elección de la métrica en la tasa de recuperación o en la velocidad de búsqueda?",
+      "faq4a": "La velocidad es prácticamente idéntica: L2, IP y el coseno requieren todos una sola pasada por el vector. La clave está en la recuperación: buscar con una métrica diferente a aquella para la que se entrenó el modelo de incrustación degrada silenciosamente la calidad de los resultados, a menudo de forma drástica."
+    }
   },
   "ivf": {
-    "title": "FLAT vs IVF",
-    "metaTitle": "FLAT vs IVF - Learn Milvus",
+    "title": "FLAT frente a IVF: cómo funciona el índice de archivos invertido",
+    "metaTitle": "Explicación del índice IVF: visualización plana frente a visualización interactiva del IVF | Milvus",
     "subtitle": "Same data, same query — but a different search strategy. Drag the <queryPoint>query point</queryPoint>, adjust <code>nprobe</code>, and press <strong>Run Search</strong> to see how IVF skips most of the data.",
     "nprobeHint": "Search {{nprobe}} of {{k}} clusters",
     "flatTitle": "FLAT — Brute Force",
@@ -98,11 +115,32 @@
     "step2": "<strong>Step 1 — evaluate centroids:</strong> IVF first computes the distance from the query to every centroid. That's only {{k}} comparisons, regardless of dataset size.",
     "step3": "<strong>Step 2 — pick the closest <code>nprobe</code> clusters:</strong> these light up. All other clusters are skipped entirely.",
     "step4": "<strong>Step 3 — scan points inside the chosen clusters:</strong> only ~{{scanned}} of the {{total}} points.",
-    "takeaway": "<strong>The tradeoff:</strong> larger <code>nprobe</code> → more clusters scanned → higher recall but slower. Smaller <code>nprobe</code> → faster but you may miss true neighbors that live in unscanned clusters. Try setting <code>nprobe = 1</code> and dragging the query near a cluster boundary to see recall drop."
+    "takeaway": "<strong>The tradeoff:</strong> larger <code>nprobe</code> → more clusters scanned → higher recall but slower. Smaller <code>nprobe</code> → faster but you may miss true neighbors that live in unscanned clusters. Try setting <code>nprobe = 1</code> and dragging the query near a cluster boundary to see recall drop.",
+    "metaDesc": "Observa cómo compiten entre sí el método FLAT de fuerza bruta y el método IVF basado en clústeres con la misma consulta. Ajusta nprobe en tiempo real y descubre cómo nlist y nprobe equilibran la recuperación con la velocidad en Milvus.",
+    "seo": {
+      "whatIsTitle": "¿Qué es el índice de FIV?",
+      "whatIsP1": "<strong>IVF (Inverted File)</strong> es un índice de vecinos más cercanos aproximado basado en la agrupación en clústeres. En el momento de la creación, el algoritmo k-means divide todos los vectores en <code>nlist</code> clústeres, cada uno de los cuales está representado por su centroide. En el momento de la consulta, la búsqueda compara primero la consulta únicamente con los centroides, selecciona los <code>n probe</code> clústeres más cercanos y examina solo los vectores que se encuentran dentro de ellos, omitiendo todo lo demás.",
+      "whatIsP2": "Milvus ofrece varias variantes de IVF que sacrifican memoria a cambio de precisión: <strong>IVF_FLAT</strong> almacena vectores sin procesar (la opción más precisa), <strong>IVF_SQ8</strong> comprime cada dimensión a un byte (aproximadamente 4 veces menos memoria, con un pequeño coste de recuperación) e <strong>IVF_PQ</strong> aplica cuantización de producto para lograr una compresión mucho mayor, aunque con un coste de recuperación más elevado.",
+      "paramsTitle": "Ajuste de nlist y nprobe",
+      "param1": "<strong><code>nlist</code> (en tiempo de compilación):</strong> el número de clústeres de k-means. Un punto de partida habitual es <code>4 × √N</code> para N vectores. Cuantos más clústeres haya, más pequeños serán cada uno de ellos, lo que se traduce en escaneos más rápidos; sin embargo, el barrido de centroides requiere más recursos y aumentan los efectos de frontera.",
+      "param2": "<strong><code>nprobe</code> (tiempo de consulta):</strong> número de clústeres que se deben analizar por consulta. Este es el principal control de recuperación/latencia; es precisamente lo que regula el control deslizante de arriba. Empieza con un valor aproximado de <code>nlist / 16</code> y ve aumentándolo hasta que la recuperación alcance el objetivo deseado.",
+      "param3": "<strong>Elección de variantes:</strong> empieza con IVF_FLAT. Pasa a IVF_SQ8 cuando la memoria sea escasa, y a IVF_PQ solo cuando el conjunto de datos sea demasiado grande para SQ8; comprueba la recuperación en tus propios datos tras cada cambio a una variante inferior.",
+      "whenTitle": "FIV frente a HNSW frente a DiskANN",
+      "whenP1": "IVF se genera rápidamente, supone una pequeña sobrecarga de memoria además de los vectores y es fácil de entender; sin embargo, con el mismo objetivo de recuperación, HNSW suele responder a las consultas más rápido en memoria. Elige IVF cuando reconstruyas índices con frecuencia (la rapidez de creación es importante), cuando la memoria sea limitada (IVF_SQ8/IVF_PQ) o cuando desees un comportamiento de exploración predecible y ajustable. Elige HNSW para obtener la menor latencia en las consultas en memoria, y DiskANN cuando los vectores ya no quepan en absoluto en la RAM.",
+      "docsCta": "Más información: consulta la <docs>documentación de IVF_FLAT</docs> para conocer los parámetros de índice, o consulta <docsExplained>«Index Explained»</docsExplained> para obtener una guía completa sobre cómo tomar decisiones.",
+      "faq1q": "¿Cuál es la diferencia entre IVF_FLAT, IVF_SQ8 e IVF_PQ?",
+      "faq1a": "Los tres agrupan los vectores de la misma manera; se diferencian en cómo se almacenan los vectores dentro de los grupos. IVF_FLAT conserva los vectores de tipo «float» sin procesar (mejor recuperación). IVF_SQ8 cuantifica cada dimensión a 8 bits, reduciendo el consumo de memoria aproximadamente cuatro veces con una pequeña pérdida de recuperación. IVF_PQ sustituye los vectores por códigos cortos de cuantificación por producto, lo que proporciona la mayor compresión y la mayor pérdida de recuperación.",
+      "faq2q": "¿Cómo debo elegir nlist y nprobe?",
+      "faq2a": "Una regla general es nlist = 4 × √N para N vectores; a continuación, ajusta nprobe en el momento de la consulta. Un valor mayor de nprobe explora más clústeres: mayor recuperación, mayor latencia. Empieza con un valor aproximado de nlist/16 y ve aumentándolo hasta que la recuperación en un conjunto de consultas de validación alcance tu objetivo.",
+      "faq3q": "¿Por qué el método IVF pasa por alto algunos vecinos más cercanos reales?",
+      "faq3a": "Debido a los límites de los clústeres. Si la consulta se sitúa cerca del borde de un clúster, es posible que algunos de sus verdaderos vecinos se encuentren en un clúster adyacente que no figuraba entre los nprobe clústeres analizados. Esto se puede observar en la visualización arrastrando el punto de consulta cerca de un límite con nprobe = 1.",
+      "faq4q": "¿Debería recurrir a la FIV o a la HNSW?",
+      "faq4a": "En este mismo contexto, HNSW suele ser más rápido para la búsqueda en memoria, pero consume más memoria y tarda más en generarse. IVF se genera rápidamente y se adapta bien a la cuantificación (SQ8/PQ) cuando la memoria es limitada. Para conjuntos de datos que superen por completo la capacidad de la RAM, se recomienda considerar DiskANN como alternativa."
+    }
   },
   "hnsw": {
-    "title": "HNSW Explorer",
-    "metaTitle": "HNSW Explorer - Learn Milvus",
+    "title": "HNSW Explorer: «Mundo pequeño» jerárquico y navegable, visualizado",
+    "metaTitle": "Explicación del algoritmo HNSW: visualización interactiva | Milvus",
     "subtitle": "Watch a search travel through the layered graph — from the sparse top layer (highways) down to the dense bottom layer (local roads). Drag the <queryPoint>query point</queryPoint> on Layer 0 and tune <code>M</code> / <code>ef</code> to see how the graph changes.",
     "mHint": "Max neighbors per node",
     "efHint": "Layer-0 candidate pool",
@@ -119,11 +157,32 @@
     "step3": "<strong>Search starts at the top:</strong> from a fixed entry point, greedily walk to the neighbor closest to the query, repeat until no improvement.",
     "step4": "<strong>Drop down a layer and repeat:</strong> the position from the previous layer becomes the start of the next layer's walk. Each drop refines the result with finer-grained edges.",
     "step5": "<strong>Layer 0 with <code>ef</code>:</strong> at the bottom layer, instead of stopping at the first local minimum, HNSW maintains a pool of <code>ef</code> best candidates and expands their neighborhoods. Larger <code>ef</code> → more accurate but slower.",
-    "takeaway": "<strong>Why it's fast:</strong> the top layers act like an index over the index — you cover huge distances in just a few hops, then zoom in. For N points, search visits roughly <code>O(log N)</code> nodes instead of <code>N</code>."
+    "takeaway": "<strong>Why it's fast:</strong> the top layers act like an index over the index — you cover huge distances in just a few hops, then zoom in. For N points, search visits roughly <code>O(log N)</code> nodes instead of <code>N</code>.",
+    "metaDesc": "Analiza un HNSW capa por capa. Ajusta los parámetros M y ef para ver cómo el grafo jerárquico sacrifica memoria a cambio de velocidad, y aprende a configurarlos en Milvus.",
+    "seo": {
+      "whatIsTitle": "¿Qué es HNSW?",
+      "whatIsP1": "<strong>HNSW (Hierarchical Navigable Small World)</strong> es un algoritmo aproximado de vecino más cercano basado en grafos. Organiza los vectores en una pila de grafos de «mundo pequeño» navegables: capas superiores dispersas con aristas de largo alcance para el enrutamiento aproximado, y una capa inferior densa con aristas cortas para el recorrido final de alta precisión. La búsqueda avanza de forma codiciosa hacia la consulta en cada capa y, a continuación, desciende, visitando aproximadamente <code>O(log N)</code> nodos en lugar de escanear los N.",
+      "whatIsP2": "HNSW es el índice vectorial en memoria más utilizado y el índice de grafos predeterminado en Milvus. Milvus también ofrece las variantes <strong>HNSW_SQ</strong> y <strong>HNSW_PQ</strong>, que cuantifican los vectores almacenados para reducir el consumo de memoria a costa de una ligera pérdida de recuperación.",
+      "paramsTitle": "Parámetros HNSW en Milvus",
+      "param1": "<strong><code>M</code> (tiempo de construcción):</strong> el número máximo de aristas por nodo; se trata del mismo control que el deslizador anterior. Los valores habituales oscilan entre 8 y 64. Un valor mayor de M mejora la recuperación y la conectividad del grafo, pero aumenta el consumo de memoria de forma lineal y ralentiza la construcción.",
+      "param2": "<strong><code>efConstruction</code> (tiempo de construcción):</strong> el tamaño del conjunto de candidatos que se utiliza al insertar nodos. Cuanto mayor sea el valor, mejor será la calidad del grafo (mayor recuperación alcanzable), aunque a costa de una construcción más lenta del índice. Los valores habituales oscilan entre 100 y 500.",
+      "param3": "<strong><code>ef</code> / <code>ef_search</code> (tiempo de consulta):</strong> el conjunto de candidatos que se mantiene durante el recorrido de la Capa 0; es el principal controlador de recuperación y latencia en el momento de la búsqueda. Debe ser, como mínimo, tu top-K. Aumenta este valor hasta que la recuperación se estabilice; la latencia crece de forma aproximadamente lineal con él.",
+      "whenTitle": "HNSW frente a IVF frente a DiskANN",
+      "whenP1": "HNSW suele ofrecer la mejor latencia de consulta con un alto nivel de recuperación en búsquedas en memoria; por eso es la opción predeterminada cuando el conjunto de datos (más la sobrecarga del grafo) cabe en la RAM. Sus inconvenientes son el consumo de memoria y el tiempo de creación: el grafo añade una sobrecarga apreciable por vector, y las inserciones son más lentas que la asignación k-means de IVF. Elige IVF cuando necesites creaciones de índices rápidas o una cuantificación agresiva, y DiskANN cuando el conjunto de datos sea demasiado grande para la RAM pero sigas necesitando un alto nivel de recuperación.",
+      "docsCta": "Más información: consulta la <docs>documentación de HNSW</docs> para conocer los parámetros exactos del índice, o consulta <docsExplained>«Index Explained»</docsExplained> para obtener una guía completa sobre cómo tomar decisiones.",
+      "faq1q": "¿Qué controla el parámetro M en el control HNSW?",
+      "faq1a": "M limita el número de aristas que cada nodo conserva por capa. Un valor mayor de M mejora la conectividad del grafo —mayor recuperación y enrutamiento más robusto—, pero la memoria crece linealmente con M y la creación de índices se ralentiza. Los valores entre 8 y 64 cubren la mayoría de las cargas de trabajo; el rango de 16 a 32 suele ser el más adecuado.",
+      "faq2q": "¿Cuál es la diferencia entre ef y efConstruction?",
+      "faq2a": "Ambos son parámetros que definen el tamaño del conjunto de candidatos y se aplican en momentos distintos. efConstruction se utiliza durante la creación del índice: determina el nivel de exhaustividad con el que cada nodo insertado busca vecinos, por lo que controla la calidad del grafo. ef (ef_search) se utiliza en el momento de la consulta: controla el alcance de la búsqueda en la Capa 0, sacrificando latencia a cambio de recuperación en cada consulta.",
+      "faq3q": "¿Cuánta memoria necesita un índice HNSW?",
+      "faq3a": "Aproximadamente los vectores sin procesar más el grafo: unos d × 4 bytes por vector para datos de tipo float32, más del orden de M × 2 × 8 bytes de aristas por nodo. Para implementaciones con limitaciones de memoria, Milvus ofrece HNSW_SQ y HNSW_PQ, que cuantifican los vectores almacenados, o DiskANN, que traslada vectores completos a un SSD.",
+      "faq4q": "¿Cuándo debería recurrir a la HNSW en lugar de la FIV?",
+      "faq4a": "Utiliza HNSW cuando la prioridad sea la latencia de las consultas con un alto nivel de recuperación y el índice quepa en la memoria; normalmente es la mejor opción en ese caso. Opta por IVF cuando reconstruyas índices con frecuencia (la creación es mucho más rápida) o cuando lo combines con la cuantificación SQ8/PQ para ajustarte a un presupuesto de memoria limitado."
+    }
   },
   "diskann": {
-    "title": "DiskANN Explorer",
-    "metaTitle": "DiskANN Explorer - Learn Milvus",
+    "title": "DiskANN Explorer: búsqueda vectorial a escala de miles de millones desde un SSD",
+    "metaTitle": "Explicación de DiskANN: visualización del índice vectorial en disco | Milvus",
     "subtitle": "DiskANN keeps a tiny <strong>PQ-compressed</strong> copy of every vector in RAM and the <strong>full vectors + graph</strong> on SSD. Search walks the graph with cheap RAM compares, then re-ranks the top candidates with a handful of expensive disk reads.",
     "memoryWallTitle": "Why DiskANN exists: the memory wall",
     "memoryNote": "A single commodity SSD holds the disk side easily. The RAM side fits in any laptop. Without the PQ trick, you'd need a server with hundreds of GB of RAM to even load the dataset.",
@@ -154,7 +213,28 @@
     "whyScales": "<strong>Why it scales:</strong> RAM only holds compressed codes. A 1B-vector dataset with 32-byte PQ needs ~32 GB RAM — fits on a single workstation.",
     "whySlower": "<strong>Why it's slower than HNSW:</strong> SSD random reads are ~100× slower than RAM. Even with only ~10 reads, query latency is dominated by disk.",
     "whyBeats": "<strong>Why it still beats IVF_PQ for recall:</strong> the re-rank step recovers quantization errors that pure PQ-based methods can't fix.",
-    "takeaway": "<strong>The mental model:</strong> PQ is the cheap \"is this neighborhood promising?\" test. Disk reads are the expensive \"let me actually verify\" check. DiskANN gets most of its work done with the cheap test."
+    "takeaway": "<strong>The mental model:</strong> PQ is the cheap \"is this neighborhood promising?\" test. Disk reads are the expensive \"let me actually verify\" check. DiskANN gets most of its work done with the cheap test.",
+    "metaDesc": "Observa cómo DiskANN recorre un grafo de Vamana con códigos PQ en la RAM y vectores completos en el SSD. Descubre cuándo un índice en disco supera a HNSW en búsquedas vectoriales a escala de miles de millones.",
+    "seo": {
+      "whatIsTitle": "¿Qué es DiskANN?",
+      "whatIsP1": "<strong>DiskANN</strong> es un índice aproximado de vecinos más cercanos basado en grafos, diseñado para conjuntos de datos que no caben en la memoria RAM. Construye un <strong>grafo Vamana</strong> de una sola capa organizado para un acceso eficiente al disco, mantiene en memoria un código minúsculo cuantificado por producto (PQ) para cada vector y almacena los vectores de precisión completa y las aristas del grafo en un SSD. Las búsquedas navegan por el grafo utilizando comparaciones PQ económicas en la memoria RAM y solo recurren al disco para reordenar un puñado de finalistas.",
+      "whatIsP2": "En Milvus, DiskANN es la base de la opción de indexación en disco: las colecciones de miles de millones de elementos se pueden consultar en equipos con decenas —y no cientos— de gigabytes de RAM, mientras que la etapa de reordenación en disco mantiene la recuperación cercana a la de los índices de grafos en memoria.",
+      "paramsTitle": "Qué controlan los mandos",
+      "param1": "<strong><code>R</code> (grado del grafo, tiempo de compilación):</strong> el número máximo de aristas por nodo en el grafo de Vamana. Un valor mayor de R proporciona una mejor conectividad y recuperación, a costa de un grafo más grande en el disco y de una compilación más lenta.",
+      "param2": "<strong><code>L</code> / <code>search_list</code> (tiempo de consulta):</strong> el conjunto de candidatos que se mantiene durante la búsqueda por haz — el principal control de recuperación/latencia, equivalente al parámetro «ef» de HNSW. Debe ser, como mínimo, tu «top-K».",
+      "param3": "<strong>Reordenación del presupuesto:</strong> número de finalistas cuyos vectores completos se recuperan del SSD para obtener una puntuación exacta. Cada uno de ellos supone una lectura aleatoria del disco, por lo que es aquí donde se produce la latencia de la consulta, y también donde se corrigen los errores de aproximación de PQ.",
+      "whenTitle": "DiskANN frente a HNSW frente a IVF",
+      "whenP1": "Elige DiskANN cuando el conjunto de datos (o el consumo de memoria) supere la capacidad de la RAM: atiende consultas de alta recuperación con una fracción de la memoria, a cambio de una latencia del orden de los milisegundos, determinada principalmente por las lecturas del SSD. Si todo cabe cómodamente en la memoria, HNSW responde más rápido. Si necesitas crear índices rápidamente o un ahorro moderado de memoria sin recurrir al disco, las variantes de IVF se sitúan en un término medio.",
+      "docsCta": "Más información: consulta la <docs>documentación de DiskANN</docs> para conocer los requisitos de configuración, o consulta <docsExplained>«Index Explained»</docsExplained> para obtener una guía completa de decisión.",
+      "faq1q": "¿Cuándo debería utilizar DiskANN en lugar de HNSW?",
+      "faq1a": "Cuando tus vectores ya no caben en la RAM, o la RAM necesaria para almacenarlos cuesta más de lo que estás dispuesto a pagar. Mil millones de vectores de tipo float de 768 dimensiones necesitan unos 3 TB de memoria para HNSW, pero solo unas decenas de GB de RAM más un SSD con DiskANN. Si el conjunto de datos cabe cómodamente en la memoria, HNSW sigue siendo la opción con menor latencia.",
+      "faq2q": "¿Qué hardware necesita DiskANN?",
+      "faq2a": "Un SSD NVMe rápido es el requisito fundamental, ya que la latencia de las consultas viene determinada principalmente por unas pocas lecturas aleatorias del disco (cada una de ~100 µs). Las necesidades de RAM son modestas: aproximadamente los códigos PQ (por ejemplo, entre 32 y 64 bytes por vector) más los búferes de trabajo.",
+      "faq3q": "¿Es DiskANN más lento que los índices en memoria como HNSW?",
+      "faq3a": "Por consulta, sí: normalmente unos pocos milisegundos, frente a menos de un milisegundo en el caso de HNSW en memoria, ya que cada reordenación en disco es aproximadamente 100 veces más lenta que un acceso a la RAM. La contrapartida es el coste: DiskANN procesa el mismo conjunto de datos con un orden de magnitud menos de RAM, al tiempo que mantiene la recuperación por encima del 90-95 %.",
+      "faq4q": "¿Cómo consigue DiskANN mantener un alto nivel de recuperación a pesar de la compresión PQ?",
+      "faq4a": "Los códigos PQ solo se utilizan para dirigir el recorrido por el grafo, no para generar puntuaciones finales. Antes de devolver los resultados, DiskANN lee los vectores de precisión completa de los principales candidatos procedentes de SSD y los vuelve a clasificar con exactitud, corrigiendo el error de cuantificación que los índices basados exclusivamente en PQ, como IVF_PQ, no pueden solucionar."
+    }
   },
   "tradeoff": {
     "title": "Tradeoff Dashboard",

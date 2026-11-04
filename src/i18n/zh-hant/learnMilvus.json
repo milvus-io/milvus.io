@@ -19,12 +19,14 @@
     "visited": "Visited",
     "totalLatency": "Total latency",
     "pressRun": "Press ▶ Run Search to start.",
-    "searchComplete": "Search complete."
+    "searchComplete": "Search complete.",
+    "faqTitle": "常見問題",
+    "relatedTitle": "繼續探索"
   },
   "home": {
     "title": "Learn Milvus",
     "metaTitle": "Learn Milvus - Interactive Vector Database Visualizations",
-    "metaDesc": "Interactive visualizations that turn abstract vector database concepts into something you can see and touch.",
+    "metaDesc": "向量資料庫概念的互動式視覺化：L2、餘弦及內積相似度指標，以及 IVF、HNSW 和 DiskANN 向量索引。",
     "subtitle": "Interactive visualizations that turn abstract vector database concepts into something you can <strong>see</strong> and <strong>touch</strong>.",
     "cards": {
       "metric": {
@@ -50,8 +52,8 @@
     }
   },
   "metric": {
-    "title": "Metric Playground",
-    "metaTitle": "Metric Playground - Learn Milvus",
+    "title": "向量相似度度量：L2、餘弦相似度與內積",
+    "metaTitle": "L2 對比 餘弦對比 IP：向量相似度指標的可視化 | Milvus",
     "subtitle": "Drag the <queryPoint>query point</queryPoint> and switch metrics to see how the nearest neighbors change.",
     "topKTitle": "Top-{{k}} Nearest Neighbors",
     "higherCloser": "(higher = closer)",
@@ -80,11 +82,26 @@
     "twoRules": "Two practical rules",
     "matchMetric": "<strong>Match the metric to the model.</strong> Embedding models are <em>trained</em> with a specific metric in mind. Using a different one at search time will silently wreck your recall. Check the model card before picking.",
     "stayConsistent": "<strong>Stay consistent.</strong> All vectors in a collection must use the same metric. You cannot mix them within a single index, and you cannot meaningfully compare scores across different metrics.",
-    "tryThis": "<strong>Try this:</strong> drag the query point near the origin and switch between Cosine and L2. Watch how Cosine cares only about which \"direction\" the query is pointing — points on the opposite side of the origin can be \"close\" under L2 but \"far\" under Cosine. That visual is the entire concept."
+    "tryThis": "<strong>Try this:</strong> drag the query point near the origin and switch between Cosine and L2. Watch how Cosine cares only about which \"direction\" the query is pointing — points on the opposite side of the origin can be \"close\" under L2 but \"far\" under Cosine. That visual is the entire concept.",
+    "metaDesc": "拖曳查詢點，觀察 L2、餘弦值和內積如何改變「最近鄰」的判定標準。了解哪種相似度度量最適合您的嵌入模型。",
+    "seo": {
+      "chooseTitle": "在 Milvus 中設定指標類型",
+      "chooseP1": "在 Milvus 中，指標是透過<code>metric_type</code>（針對密集向量為<code>L2</code>、<code>IP</code> 或<code>COSINE</code>）在建立索引時針對每個索引設定的。之後針對該集合進行的每次搜尋，都會使用您剛才在上面操作過的相同函式。 最可靠的單一準則：<strong>請使用嵌入模型訓練時所採用的度量，</strong>該<strong>度量</strong>幾乎會列在每張模型卡上。",
+      "chooseP2": "兩個實用的捷徑。 大多數現代文本嵌入 API（OpenAI、Cohere、Voyage 以及多數句型轉換器）所產生的向量，都是為了<strong>計算餘弦相似度</strong>而設計的。如果將向量歸一化為單位長度，餘弦相似度和內積所產生的排序結果將完全相同——因此，對歸一化向量<code>進行內積運算</code>，是<code>餘弦相似度（COSINE）</code>的一種常見且運算成本稍低的替代方法。",
+      "docsCta": "深入了解：請參閱「<docs>相似度指標」文件，以查看</docs>Milvus 支援的完整指標清單，其中包括適用於二進位向量的漢明指標與雅卡德指標，以及適用於全文檢索的 BM25 指標。",
+      "faq1q": "對於 OpenAI 或其他文字嵌入模型，我應該使用哪種相似度度量？",
+      "faq1a": "使用餘弦相似度（在 Milvus 中為 metric_type COSINE）。幾乎所有現代的文字嵌入模型——包括 OpenAI 的 text-embedding-3 系列——都是針對餘弦相似度進行訓練的。由於 OpenAI 的嵌入向量已正規化為單位長度，因此內積（IP）能產生相同的排序結果，是相當合適的替代方案。",
+      "faq2q": "餘弦相似度與內積之間有何區別？",
+      "faq2a": "餘弦相似度僅衡量兩個向量之間的夾角，而忽略其長度。內積（點積）則同時考量向量方向的一致性與長度，因此指向相同方向且較長的向量會獲得較高的分數。對於單位歸一化的向量而言，這兩者在數學上等價。",
+      "faq3q": "在 Milvus 中建立索引後，我還能變更指標類型嗎？",
+      "faq3a": "不。該指標是在建立索引時就已內建於索引中的。若要切換指標，請先刪除該索引，再使用新的 metric_type 重新建立索引。此外，不同指標的評分彼此之間無法相互比較，因此在後處理結果時，請勿將它們混用。",
+      "faq4q": "指標的選擇會影響檢索率或搜尋速度嗎？",
+      "faq4a": "運算速度基本上相同——L2、IP 和餘弦函數都只需對向量進行一次遍歷。關鍵在於回憶（Recall）：若使用與嵌入模型訓練時不同的度量標準進行搜尋，會悄無聲息地降低結果品質，且降幅往往相當顯著。"
+    }
   },
   "ivf": {
-    "title": "FLAT vs IVF",
-    "metaTitle": "FLAT vs IVF - Learn Milvus",
+    "title": "FLAT 與 IVF：倒置檔案索引的運作原理",
+    "metaTitle": "IVF 指數解析：FLAT 與 IVF 互動式視覺化 | Milvus",
     "subtitle": "Same data, same query — but a different search strategy. Drag the <queryPoint>query point</queryPoint>, adjust <code>nprobe</code>, and press <strong>Run Search</strong> to see how IVF skips most of the data.",
     "nprobeHint": "Search {{nprobe}} of {{k}} clusters",
     "flatTitle": "FLAT — Brute Force",
@@ -98,11 +115,32 @@
     "step2": "<strong>Step 1 — evaluate centroids:</strong> IVF first computes the distance from the query to every centroid. That's only {{k}} comparisons, regardless of dataset size.",
     "step3": "<strong>Step 2 — pick the closest <code>nprobe</code> clusters:</strong> these light up. All other clusters are skipped entirely.",
     "step4": "<strong>Step 3 — scan points inside the chosen clusters:</strong> only ~{{scanned}} of the {{total}} points.",
-    "takeaway": "<strong>The tradeoff:</strong> larger <code>nprobe</code> → more clusters scanned → higher recall but slower. Smaller <code>nprobe</code> → faster but you may miss true neighbors that live in unscanned clusters. Try setting <code>nprobe = 1</code> and dragging the query near a cluster boundary to see recall drop."
+    "takeaway": "<strong>The tradeoff:</strong> larger <code>nprobe</code> → more clusters scanned → higher recall but slower. Smaller <code>nprobe</code> → faster but you may miss true neighbors that live in unscanned clusters. Try setting <code>nprobe = 1</code> and dragging the query near a cluster boundary to see recall drop.",
+    "metaDesc": "觀看針對同一查詢，採用暴力搜尋（FLAT）與基於叢集的 IVF 演算法之間的競速對決。即時調整 nprobe 參數，並了解在 Milvus 中 nlist 與 nprobe 如何在召回率與速度之間取得平衡。",
+    "seo": {
+      "whatIsTitle": "什麼是試管嬰兒指數？",
+      "whatIsP1": "<strong>IVF（倒排檔）</strong>是一種基於聚類的近似最近鄰索引。在建置階段，k-means 會將所有向量劃分為<code>nlist</code>個聚類，每個聚類由其質心代表。 在查詢時，搜尋過程會先僅將查詢向量與各聚類中心進行比對，選出距離最近的<code>nprobe</code>個聚類，並僅掃描這些聚類內的向量——其餘部分則直接跳過。",
+      "whatIsP2": "Milvus 提供了數種 IVF 變體，這些變體皆是以記憶體為代價來換取準確度：<strong>IVF_FLAT</strong>儲存原始向量（準確度最高）；<strong>IVF_SQ8</strong>將每個維度壓縮至 1 位元組（記憶體用量減少約 4 倍，回憶成本較低）；而<strong>IVF_PQ</strong>則採用乘積量化，可實現更高的壓縮率，但回憶成本較高。",
+      "paramsTitle": "調整 nlist 和 nprobe",
+      "param1": "<strong><code>nlist</code>（建模時）：</strong>k-means 聚類的數量。當向量數為 N 時，常見的起始值為<code>4 × √N。</code>聚類數量越多，每個聚類的規模就越小——掃描速度雖會加快，但質心掃描的計算成本會增加，且邊界效應也會加劇。",
+      "param2": "<strong><code>nprobe</code>（查詢時間）：</strong>每次查詢要掃描的叢集數量。這是控制召回率與延遲的主要參數——也就是上方滑桿所控制的內容。建議從<code>nlist / 16</code>左右開始，並逐步增加，直到召回率達到您的目標為止。",
+      "param3": "<strong>變體選擇：</strong>先從 IVF_FLAT 開始。當記憶體不足時，切換至 IVF_SQ8；僅當資料集過大以致 SQ8 無法處理時，才切換至 IVF_PQ — 並在每次降級後，使用您自己的資料驗證召回率。",
+      "whenTitle": "IVF 對比 HNSW 對比 DiskANN",
+      "whenP1": "IVF 建構速度快、在向量基礎上僅有微量的記憶體開銷，且易於理解——但在相同的召回率目標下，HNSW 通常能在記憶體中更快地回應查詢。 當您需要頻繁重建索引（快速建置至關重要）、記憶體受限（IVF_SQ8/IVF_PQ），或希望獲得可預測且可調校的掃描行為時，請選擇 IVF。若要實現最低的記憶體內查詢延遲，請選擇 HNSW；當向量完全無法容納於 RAM 時，則請選擇 DiskANN。",
+      "docsCta": "深入了解：請參閱<docs>IVF_FLAT 文件以了解</docs>索引參數，或參閱《<docsExplained>索引詳解</docsExplained>》以獲取完整的決策指南。",
+      "faq1q": "IVF_FLAT、IVF_SQ8 和 IVF_PQ 之間有什麼區別？",
+      "faq1a": "這三個叢集向量均採用相同的叢集方式；它們的差異在於叢集內部向量的儲存方式。IVF_FLAT 保留原始浮點向量（回憶率最佳）。 IVF_SQ8 將每個維度量化為 8 位元，可將記憶體使用量減少約 4 倍，但會造成輕微的回憶率損失。IVF_PQ 則以短的乘積量化碼取代向量，可達到最高的壓縮率，但也會造成最大的回憶率損失。",
+      "faq2q": "我該如何選擇 nlist 和 nprobe？",
+      "faq2a": "一個常見的經驗法則為：當向量數為 N 時，nlist = 4 × √N，接著在查詢時調整 nprobe。較大的 nprobe 會掃描更多叢集：召回率越高，延遲也越高。建議從 nlist/16 左右開始，並逐步增加，直到保留查詢集的召回率達到您的目標為止。",
+      "faq3q": "為什麼 IVF 會漏掉某些真正的最近鄰？",
+      "faq3a": "這是因為叢集邊界所致。如果查詢點位於某個叢集的邊緣附近，其部分真正的鄰居可能會位於相鄰的叢集中，而該叢集並未包含在已掃描的 nprobe 個叢集中。您可以在視覺化圖中，將查詢點拖曳至邊界附近（當 nprobe = 1 時），便能觀察到此現象。",
+      "faq4q": "我應該選擇試管嬰兒（IVF）還是自然受孕（HNSW）呢？",
+      "faq4a": "同樣地，在回憶測試中，HNSW 通常在記憶體內搜尋方面較快，但會佔用更多記憶體，且建模速度較慢。IVF 建模速度快，當記憶體資源有限時，與量化演算法（SQ8/PQ）搭配使用效果良好。若資料集完全超出 RAM 容量，則應考慮改用 DiskANN。"
+    }
   },
   "hnsw": {
-    "title": "HNSW Explorer",
-    "metaTitle": "HNSW Explorer - Learn Milvus",
+    "title": "HNSW Explorer：可導航的分層小世界，視覺化呈現",
+    "metaTitle": "HNSW 演算法解析：互動式視覺化 | Milvus",
     "subtitle": "Watch a search travel through the layered graph — from the sparse top layer (highways) down to the dense bottom layer (local roads). Drag the <queryPoint>query point</queryPoint> on Layer 0 and tune <code>M</code> / <code>ef</code> to see how the graph changes.",
     "mHint": "Max neighbors per node",
     "efHint": "Layer-0 candidate pool",
@@ -119,11 +157,32 @@
     "step3": "<strong>Search starts at the top:</strong> from a fixed entry point, greedily walk to the neighbor closest to the query, repeat until no improvement.",
     "step4": "<strong>Drop down a layer and repeat:</strong> the position from the previous layer becomes the start of the next layer's walk. Each drop refines the result with finer-grained edges.",
     "step5": "<strong>Layer 0 with <code>ef</code>:</strong> at the bottom layer, instead of stopping at the first local minimum, HNSW maintains a pool of <code>ef</code> best candidates and expands their neighborhoods. Larger <code>ef</code> → more accurate but slower.",
-    "takeaway": "<strong>Why it's fast:</strong> the top layers act like an index over the index — you cover huge distances in just a few hops, then zoom in. For N points, search visits roughly <code>O(log N)</code> nodes instead of <code>N</code>."
+    "takeaway": "<strong>Why it's fast:</strong> the top layers act like an index over the index — you cover huge distances in just a few hops, then zoom in. For N points, search visits roughly <code>O(log N)</code> nodes instead of <code>N</code>.",
+    "metaDesc": "逐步探索 HNSW 的各層搜尋機制。透過調整 M 和 ef 參數，觀察分層圖如何在記憶體使用與運算速度之間取得平衡，並學習如何在 Milvus 中設定這些參數。",
+    "seo": {
+      "whatIsTitle": "什麼是 HNSW？",
+      "whatIsP1": "<strong>HNSW（階層式可導航小世界）</strong>是一種基於圖的近似最近鄰演算法。它將向量組織成一疊可導航的小世界圖：上層為具有長程邊的稀疏圖，用於粗略路由；底層則為具有短邊的密集圖，用於最終的細粒度遍歷。 搜尋過程會以貪婪演算法在每一層朝查詢點跳躍，然後向下移動——如此一來，僅需造訪約<code>O(log N)</code>個節點，而非掃描所有 N 個節點。",
+      "whatIsP2": "HNSW 是最廣泛使用的內存向量索引，也是 Milvus 中的預設圖索引。Milvus 還提供了<strong>HNSW_SQ</strong>和<strong>HNSW_PQ</strong>變體，這些變體會對儲存的向量進行量化，以減少記憶體佔用，但會以犧牲部分召回率為代價。",
+      "paramsTitle": "Milvus 中的 HNSW 參數",
+      "param1": "<strong><code>M</code>（建構時間）：</strong>每個節點的最大邊數，與上方的滑桿為同一控制項。典型值為 8–64。較高的 M 值可提升召回率與圖的連通性，但會使記憶體使用量呈線性增長，並減慢建構速度。",
+      "param2": "<strong><code>efConstruction</code>（建構時間）：</strong>插入節點時所使用的候選節點池大小。較高的數值雖會使索引建構速度變慢，但能建構出品質更佳的圖（可達成的召回率更高）。常見數值範圍為 100–500。",
+      "param3": "<strong><code>ef</code>/<code>ef_search</code>（查詢階段）：</strong>在 Layer-0 遍歷過程中保留的候選集——這是搜尋階段的主要召回率／延遲控制參數。其數值必須至少等於您的 top-K。請逐步增加此數值，直到召回率趨於平穩為止；延遲會隨此數值的增加而大致呈線性增長。",
+      "whenTitle": "HNSW 對比 IVF 對比 DiskANN",
+      "whenP1": "在記憶體內搜尋中，HNSW 通常能在高召回率下提供最佳的查詢延遲——這正是當資料集（加上圖結構的開銷）能完全容納於 RAM 時，它成為預設選擇的原因。 其代價在於記憶體消耗與建構時間：圖結構會為每個向量增加明顯的開銷，且插入操作的速度比 IVF 的 k-means 指派機制更慢。若您需要快速的索引建構或強烈的量化效果，請選擇 IVF；若資料集過大而無法容納於 RAM 中，但仍需維持高召回率，則請選擇 DiskANN。",
+      "docsCta": "深入了解：請參閱<docs>HNSW 文件以</docs>了解確切的索引參數，或參閱《<docsExplained>索引詳解</docsExplained>》以獲取完整的決策指南。",
+      "faq1q": "HNSW 中的 M 參數控制什麼？",
+      "faq1a": "M 限制了每個節點在每一層中保留的邊數。較大的 M 值能使圖的連通性更佳——回憶率更高且路由更穩健——但記憶體使用量會隨 M 值呈線性增長，且索引建置速度會變慢。8 到 64 之間的數值可涵蓋大多數工作負載；16 至 32 通常是最佳範圍。",
+      "faq2q": "ef 與 efConstruction 之間有什麼區別？",
+      "faq2a": "兩者皆為候選節點池的大小，但在不同時機應用。efConstruction 用於建立索引時：它決定每個插入的節點搜尋鄰居的徹底程度，因此能控制圖的品質。ef（ef_search）則用於查詢時：它控制 Layer-0 搜尋的範圍，在每次查詢時以延遲為代價來換取召回率。",
+      "faq3q": "HNSW 索引需要多少記憶體？",
+      "faq3a": "大致上包含原始向量加上圖結構：對於 float32 資料，每個向量約佔 d × 4 位元組，加上每個節點約 M × 2 × 8 位元組的邊資料。 針對記憶體受限的部署情境，Milvus 提供 HNSW_SQ 和 HNSW_PQ，這兩者會對儲存的向量進行量化；此外還有 DiskANN，該技術會將完整的向量移至 SSD。",
+      "faq4q": "何時應選擇 HNSW 而非 IVF？",
+      "faq4a": "當優先考量在高召回率下降低查詢延遲，且索引能完全載入記憶體時，請使用 HNSW —— 它通常能勝出。若需頻繁重建索引（建置速度快得多），或需搭配 SQ8/PQ 量化以符合嚴格的記憶體預算時，則建議選用 IVF。"
+    }
   },
   "diskann": {
-    "title": "DiskANN Explorer",
-    "metaTitle": "DiskANN Explorer - Learn Milvus",
+    "title": "DiskANN Explorer：透過 SSD 實現十億級向量搜尋",
+    "metaTitle": "DiskANN 詳解：磁碟上向量索引的可視化 | Milvus",
     "subtitle": "DiskANN keeps a tiny <strong>PQ-compressed</strong> copy of every vector in RAM and the <strong>full vectors + graph</strong> on SSD. Search walks the graph with cheap RAM compares, then re-ranks the top candidates with a handful of expensive disk reads.",
     "memoryWallTitle": "Why DiskANN exists: the memory wall",
     "memoryNote": "A single commodity SSD holds the disk side easily. The RAM side fits in any laptop. Without the PQ trick, you'd need a server with hundreds of GB of RAM to even load the dataset.",
@@ -154,7 +213,28 @@
     "whyScales": "<strong>Why it scales:</strong> RAM only holds compressed codes. A 1B-vector dataset with 32-byte PQ needs ~32 GB RAM — fits on a single workstation.",
     "whySlower": "<strong>Why it's slower than HNSW:</strong> SSD random reads are ~100× slower than RAM. Even with only ~10 reads, query latency is dominated by disk.",
     "whyBeats": "<strong>Why it still beats IVF_PQ for recall:</strong> the re-rank step recovers quantization errors that pure PQ-based methods can't fix.",
-    "takeaway": "<strong>The mental model:</strong> PQ is the cheap \"is this neighborhood promising?\" test. Disk reads are the expensive \"let me actually verify\" check. DiskANN gets most of its work done with the cheap test."
+    "takeaway": "<strong>The mental model:</strong> PQ is the cheap \"is this neighborhood promising?\" test. Disk reads are the expensive \"let me actually verify\" check. DiskANN gets most of its work done with the cheap test.",
+    "metaDesc": "觀看 DiskANN 如何在 RAM 中載入 PQ 碼，並在 SSD 上載入完整向量，來遍歷 Vamana 圖。了解在十億級向量搜尋中，何時磁碟索引的表現會優於 HNSW。",
+    "seo": {
+      "whatIsTitle": "什麼是 DiskANN？",
+      "whatIsP1": "<strong>DiskANN</strong>是一種基於圖的近似最近鄰索引，專為無法容納於 RAM 中的資料集所設計。它建構了一個單層<strong>Vamana 圖，其佈局</strong>旨在實現高效的磁碟存取；在記憶體中為每個向量保留極小的產品量化 (PQ) 碼；並將全精度向量與圖邊儲存在 SSD 上。 搜尋過程透過低成本的記憶體內 PQ 比對在圖上進行導航，僅在對少數幾項入圍候選結果進行重新排序時才會觸及磁碟。",
+      "whatIsP2": "在 Milvus 中，DiskANN 為「磁碟索引」選項提供技術支援：即使在僅配備數十（而非數百）吉字節記憶體的機器上，也能對規模達十億級的資料集進行搜尋；同時，磁碟重新排序步驟能使檢索率維持在接近內存圖索引的水準。",
+      "paramsTitle": "這些旋鈕控制什麼",
+      "param1": "<strong><code>R</code>（圖的度數、建構時間）：</strong>Vamana 圖中每個節點的最大邊數。R 值越高，連通性與召回率越佳，但代價是磁碟上的圖檔案會變大，且建構速度會變慢。",
+      "param2": "<strong><code>L</code>/<code>search_list</code>（查詢時間）：</strong>在束搜索過程中維護的候選集合——這是控制召回率與延遲的主要參數，相當於 HNSW 中的 ef。其值必須至少等於您的 top-K。",
+      "param3": "<strong>預算重新排序：</strong>有多少名決選者能從 SSD 讀取完整的向量以進行精確評分。每次讀取都屬於隨機磁碟讀取，因此這正是查詢延遲的來源——同時也是 PQ 近似誤差被修正的地方。",
+      "whenTitle": "DiskANN 對比 HNSW 對比 IVF",
+      "whenP1": "當資料集（或記憶體需求）超出 RAM 容量時，請選擇 DiskANN：它僅需極少量的記憶體即可處理高召回率的查詢，代價是延遲時間以毫秒為單位，且主要取決於 SSD 讀取速度。 若所有資料都能輕鬆容納於記憶體中，HNSW 的回應速度會更快。若您需要快速建立索引，或在不涉及磁碟的情況下節省適度的記憶體，IVF 的各種變體則可作為折衷方案。",
+      "docsCta": "深入了解：請參閱<docs>DiskANN 文件</docs>以了解設定需求，或參閱《<docsExplained>索引詳解</docsExplained>》以獲取完整的決策指南。",
+      "faq1q": "什麼時候應該使用 DiskANN 而不是 HNSW？",
+      "faq1a": "當您的向量無法再容納於 RAM 中時——或者用來儲存這些向量的 RAM 成本超出您的預算時。 對於 HNSW 而言，10 億個 768 維浮點向量需要約 3 TB 的記憶體空間，但若使用 DiskANN，則僅需數十 GB 的 RAM 加上一個 SSD。若資料集能輕鬆容納於記憶體中，HNSW 仍是延遲較低的首選。",
+      "faq2q": "DiskANN 需要哪些硬體？",
+      "faq2a": "高速的 NVMe SSD 是關鍵需求，因為查詢延遲主要取決於少數幾次隨機磁碟讀取（每次約 100 µs）。記憶體需求則相對溫和：大致上只需容納 PQ 碼（例如每個向量 32–64 位元組）加上工作緩衝區即可。",
+      "faq3q": "DiskANN 的執行速度是否比 HNSW 等記憶體內索引更慢？",
+      "faq3a": "就單次查詢而言，是的——通常需要低個位數的毫秒，而內存型 HNSW 則在亞毫秒級，因為每次磁碟重新排序的速度約比 RAM 存取慢 100 倍。 其代價在於成本：DiskANN 在處理相同資料集時，所需 RAM 容量減少一個數量級，同時仍能將召回率維持在 90–95% 以上。",
+      "faq4q": "儘管採用 PQ 壓縮，DiskANN 是如何維持高回溯率的？",
+      "faq4a": "PQ 碼僅用於引導圖遍歷，而非用於產生最終分數。在返回結果之前，DiskANN 會從 SSD 讀取頂尖候選項的全精度向量，並對其進行精確重新排序，藉此修正像 IVF_PQ 這種純 PQ 型索引無法解決的量化誤差。"
+    }
   },
   "tradeoff": {
     "title": "Tradeoff Dashboard",

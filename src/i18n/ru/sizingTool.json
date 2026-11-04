@@ -110,5 +110,40 @@
   },
   "woodpeckerTip": "<0>Woodpecker</0> - это облачная нативная система журналов с опережающей записью (WAL), появившаяся в Milvus 2.6.0. Она призвана заменить Kafka и Pulsar в качестве MQ в Milvus, чтобы упростить операции, максимизировать пропускную способность и легко масштабироваться. На данный момент она работает встроенной в узлы потоковой передачи данных.",
   "previousVersion": "Предыдущая версия инструмента для определения размеров находится <0>здесь.</0>",
-  "titleV250": "Milvus Sizing Tool для Milvus v2.5.x"
+  "titleV250": "Milvus Sizing Tool для Milvus v2.5.x",
+  "tabs": {
+    "cpu": "Расчет мощности процессора",
+    "gpu": "Расчет размера графического процессора",
+    "new": "НОВОЕ",
+    "cpuHint": "Текущая оценка ресурсов ЦП: загрузка памяти, конфигурация узлов, зависимости и команды установки.",
+    "gpuHint": "Оценка объёма видеопамяти (VRAM) для алгоритмов GPU_BRUTE_FORCE, GPU_IVF_FLAT, GPU_IVF_PQ и GPU_CAGRA, включая полное доказательство."
+  },
+  "gpu": {
+    "form": {
+      "million": "Миллион",
+      "averageLengthTip": "Только оперативная память хоста — не учитывается в объеме видеопамяти (VRAM)",
+      "indexDoc": "Как выбрать индекс графического процессора?",
+      "trainFraction": "kmeans_trainset_fraction",
+      "pqDim": "pq_dim (м)",
+      "pqDimTip": "0 = cuVS Auto → {{value}}",
+      "pqBits": "nбит",
+      "graphDegree": "степень_связи",
+      "intermediateDegree": "степень_связанности_промежуточного_графа",
+      "modeManualTip": "Оценка на GPU не переключается в другой режим автоматически — выберите тот, который планируете развернуть.",
+      "cacheDatasetOnDevice": "cache_dataset_on_device"
+    },
+    "result": {
+      "gpuMemory": "Память графического процессора",
+      "vram": "VRAM",
+      "vramWithValue": "VRAM: {{vram}}"
+    },
+    "errors": {
+      "invalidNumber": "Число векторов должно быть больше 0, размерность — не менее 2, а размер сегмента — положительным.",
+      "nlistOutOfRange": "Значение nlist должно быть в диапазоне от 1 до 65536.",
+      "trainFractionOutOfRange": "Значение kmeans_trainset_fraction должно находиться в интервале (0, 1].",
+      "pqDimOutOfRange": "Значение pq_dim должно находиться в диапазоне [1, d].",
+      "pqCodeNotByteAligned": "pq_dim × nbits должно быть кратно 8.",
+      "intermediateDegreeTooSmall": "значение параметра `intermediate_graph_degree` должно быть больше или равно значению параметра `graph_degree`."
+    }
+  }
 }

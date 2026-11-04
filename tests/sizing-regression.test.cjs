@@ -470,10 +470,13 @@ test('Woodpecker streaming architecture and mainIndex segment sizeMetric are cor
   const operatorYml24 = operatorYmlGeneratorV24(dummyClusterWithStreamNode, (DependencyComponentEnum26.Woodpecker || DependencyComponentEnum.Woodpecker), ModeEnum.Cluster);
   assert.ok(operatorYml24.includes('msgStreamType: woodpecker'), 'v2.6+ Operator YAML must specify msgStreamType: woodpecker');
   assert.equal(/dependencies:[\s\S]*woodpecker:\s+embedded:\s*true/.test(operatorYml24), false, 'Operator dependencies must not contain invalid woodpecker.embedded CRD field');
-  assert.ok(operatorYml24.includes('sizeMetric: mainIndex'), 'v2.6+ Operator YAML must specify sizeMetric: mainIndex');
+  assert.equal(operatorYml24.includes('sizeMetric: mainIndex'), false, 'v2.6+ Operator YAML must not emit 3.0 sizeMetric: mainIndex');
+  assert.equal(operatorYml24.includes('type: woodpecker'), false, 'v2.6+ Operator YAML must not emit 3.0 streaming.type: woodpecker');
+  assert.ok(operatorYml24.includes('config: {}'), 'v2.6+ Operator YAML config remains {}');
 
   // 3. v2.6+ Helm YAML (sizingTool.ts)
   const helmYml24 = helmYmlGenerator(dummyClusterWithStreamNode, DependencyComponentEnum26.Woodpecker, ModeEnum.Cluster);
+  assert.ok(helmYml24.includes('pulsarv3:\n  enabled: false'), 'v2.6+ Helm YAML must disable pulsarv3 when woodpecker is enabled');
   assert.ok(helmYml24.includes('woodpecker:\n  enabled: true'), 'v2.6+ Helm YAML must specify woodpecker.enabled: true per milvus-helm chart');
   assert.equal(helmYml24.includes('type: woodpecker'), false, 'v2.6+ Helm YAML must not emit invalid streaming.type: woodpecker');
   assert.equal(helmYml24.includes('sizeMetric: mainIndex'), false, 'v2.6+ Helm YAML must not emit 3.0 sizeMetric: mainIndex');

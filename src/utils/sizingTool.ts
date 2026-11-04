@@ -1020,6 +1020,8 @@ kafka:
 
   const woodpeckerConfig = useWoodpecker
     ? `
+pulsarv3:
+  enabled: false
 woodpecker:
   enabled: true
     `
@@ -1261,14 +1263,7 @@ spec:
         limits:
           cpu: ${dataNode.cpu}
           memory: ${dataNode.memory}Gi
-  config: ${useWoodpecker ? `
-    streaming:
-      type: woodpecker
-      woodpecker:
-        embedded: true
-    dataCoord:
-      segment:
-        sizeMetric: mainIndex` : '{}'}
+  config: {}
   dependencies:
 ${useWoodpecker ? woodpeckerMsg : ''}
     etcd:

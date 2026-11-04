@@ -93,10 +93,6 @@ export const INDEX_TYPE_OPTIONS = [
     value: IndexTypeEnum.IVFSQ8,
   },
   {
-    label: 'SPARSE_INVERTED_INDEX',
-    value: IndexTypeEnum.SPARSE_INVERTED_INDEX,
-  },
-  {
     label: 'DISKANN',
     value: IndexTypeEnum.DISKANN,
   },

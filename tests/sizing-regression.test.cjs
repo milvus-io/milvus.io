@@ -25,9 +25,10 @@ Module._resolveFilename = function(request, parent, isMain, options) {
 const { operatorYmlGenerator, helmYmlGenerator: helmYmlGeneratorV250 } = require('../src/utils/sizingToolV250.ts');
 const { ModeEnum, DependencyComponentEnum, IndexTypeEnum } = require('../src/types/sizingV250.ts');
 const { INDEX_TYPE_OPTIONS } = require('../src/consts/sizingV250.ts');
-const { REFINE_OPTIONS } = require('../src/consts/sizing.ts');
+const { REFINE_OPTIONS, INDEX_TYPE_OPTIONS: INDEX_TYPE_OPTIONS_26 } = require('../src/consts/sizing.ts');
 const { RefineValueEnum, REFINE_VALUE_TO_N_MAP, VectorTypeEnum, IndexTypeEnum: IndexTypeEnum26, DependencyComponentEnum: DependencyComponentEnum26 } = require('../src/types/sizing.ts');
 const { GpuIndexTypeEnum } = require('../src/types/sizingGpu.ts');
+const { GRAPH_DEGREE_RANGE_CONFIG, INTERMEDIATE_GRAPH_DEGREE_RANGE_CONFIG, DEFAULT_GPU_INDEX_PARAMS } = require('../src/consts/sizingGpu.ts');
 const { fetchMilvusReleases } = require('../src/http/milvus.ts');
 const { unitBYTE2Any, rawDataSizeCalculator, memoryAndDiskCalculator, sindiSparseMemoryCalculator, SegmentSizeMetricEnum, helmYmlGenerator, operatorYmlGenerator: operatorYmlGeneratorV24 } = require('../src/utils/sizingTool.ts');
 const { gpuIndexMemoryCalculator, rmmPoolSizeCalculator, gpuOperatorYmlGenerator } = require('../src/utils/sizingToolGpu.ts');
@@ -86,10 +87,29 @@ test('RefineValueEnum and REFINE_OPTIONS use FP32 instead of SQ32 typo', () => {
   assert.equal(fp32Option.label, 'FP32', 'Label must be FP32');
 });
 
-test('INDEX_TYPE_OPTIONS displays IVF_SQ8 label with underscore', () => {
+test('INDEX_TYPE_OPTIONS displays IVF_SQ8 label with underscore and excludes SPARSE_INVERTED_INDEX to avoid UI dense calculation bug', () => {
   const ivfSq8Option = INDEX_TYPE_OPTIONS.find(opt => opt.value === IndexTypeEnum.IVFSQ8);
   assert.ok(ivfSq8Option, 'IVFSQ8 option must exist');
   assert.equal(ivfSq8Option.label, 'IVF_SQ8', 'Label must be IVF_SQ8 with underscore');
+
+  const sparseV25 = INDEX_TYPE_OPTIONS.find(opt => opt.value === IndexTypeEnum.SPARSE_INVERTED_INDEX);
+  assert.equal(sparseV25, undefined, 'v2.5 INDEX_TYPE_OPTIONS must not expose SPARSE_INVERTED_INDEX before sparse form controls exist');
+
+  const sparseV26 = INDEX_TYPE_OPTIONS_26.find(opt => opt.value === IndexTypeEnum26.SPARSE_INVERTED_INDEX);
+  assert.equal(sparseV26, undefined, 'v2.6 INDEX_TYPE_OPTIONS must not expose SPARSE_INVERTED_INDEX before sparse form controls exist');
+});
+
+test('DependencyComponentEnum in v2.5 does not include Woodpecker', () => {
+  assert.equal(DependencyComponentEnum.Woodpecker, undefined, 'v2.5 DependencyComponentEnum must only contain Pulsar and Kafka');
+});
+
+test('GPU CAGRA range configs and default params conform to upstream 64/128 defaults', () => {
+  assert.equal(GRAPH_DEGREE_RANGE_CONFIG.defaultValue, 64, 'graphDegree default must be 64');
+  assert.deepEqual(GRAPH_DEGREE_RANGE_CONFIG.range, [1, 8, 64, 256, 1024], 'graphDegree range must include 64 at 50% midpoint');
+  assert.equal(INTERMEDIATE_GRAPH_DEGREE_RANGE_CONFIG.defaultValue, 128, 'intermediateDegree default must be 128');
+  assert.deepEqual(INTERMEDIATE_GRAPH_DEGREE_RANGE_CONFIG.range, [1, 16, 128, 512, 2048], 'intermediateDegree range must include 128 at 50% midpoint');
+  assert.equal(DEFAULT_GPU_INDEX_PARAMS.graphDegree, 64, 'DEFAULT_GPU_INDEX_PARAMS.graphDegree must be 64');
+  assert.equal(DEFAULT_GPU_INDEX_PARAMS.intermediateDegree, 128, 'DEFAULT_GPU_INDEX_PARAMS.intermediateDegree must be 128');
 });
 
 test('fetchMilvusReleases handles prefix filtering and fallback tags', async () => {
@@ -453,9 +473,10 @@ test('Woodpecker streaming architecture and mainIndex segment sizeMetric are cor
   assert.ok(operatorYml24.includes('sizeMetric: mainIndex'), 'v2.6+ Operator YAML must specify sizeMetric: mainIndex');
 
   // 3. v2.6+ Helm YAML (sizingTool.ts)
-  const helmYml24 = helmYmlGenerator(dummyClusterWithStreamNode, (DependencyComponentEnum26.Woodpecker || DependencyComponentEnum.Woodpecker), ModeEnum.Cluster);
-  assert.ok(helmYml24.includes('type: woodpecker'), 'v2.6+ Helm YAML must specify streaming.type: woodpecker');
-  assert.ok(helmYml24.includes('sizeMetric: mainIndex'), 'v2.6+ Helm YAML must specify sizeMetric: mainIndex');
+  const helmYml24 = helmYmlGenerator(dummyClusterWithStreamNode, DependencyComponentEnum26.Woodpecker, ModeEnum.Cluster);
+  assert.ok(helmYml24.includes('woodpecker:\n  enabled: true'), 'v2.6+ Helm YAML must specify woodpecker.enabled: true per milvus-helm chart');
+  assert.equal(helmYml24.includes('type: woodpecker'), false, 'v2.6+ Helm YAML must not emit invalid streaming.type: woodpecker');
+  assert.equal(helmYml24.includes('sizeMetric: mainIndex'), false, 'v2.6+ Helm YAML must not emit 3.0 sizeMetric: mainIndex');
 });
 
 test('HNSW_SQ and HNSW_PQ do not suffer from refineType state leakage', () => {

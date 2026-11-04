@@ -1020,15 +1020,8 @@ kafka:
 
   const woodpeckerConfig = useWoodpecker
     ? `
-pulsarv3:
-  enabled: false
-streaming:
-  type: woodpecker
-  woodpecker:
-    embedded: true
-dataCoord:
-  segment:
-    sizeMetric: mainIndex
+woodpecker:
+  enabled: true
     `
     : undefined;
 

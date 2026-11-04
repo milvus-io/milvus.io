@@ -336,9 +336,8 @@ export const clusterNodeConfigCalculator = (params: {
  * assumes the input already passed validation.
  */
 /**
- * Calculate RMM (cuVS) Search Pool size in GB.
- * initMemSize = Math.max(2, Math.ceil(gpuIndexMemory * 0.5)) (GB)
- * maxMemSize = Math.max(4, Math.ceil(gpuIndexMemory * 1.5)) (GB)
+ * Calculate RMM (cuVS) Search Pool size in MB per Milvus 2.4.1+ cuVS workspace specs.
+ * Defaults: initMemSize = 2048 MB, maxMemSize = 4096 MB.
  */
 export const rmmPoolSizeCalculator = (_gpuIndexMemoryBytes?: number): IRmmPoolConfig => {
   // In Milvus 2.4.1+, RMM Pool is search workspace memory (MB). Recommended defaults are 2048 MB init, 4096 MB max.

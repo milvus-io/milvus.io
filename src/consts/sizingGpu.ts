@@ -62,7 +62,7 @@ export const PQ_DIM_RANGE_CONFIG = {
 export const GRAPH_DEGREE_RANGE_CONFIG = {
   min: 1,
   max: 1024,
-  defaultValue: 32,
+  defaultValue: 64,
   domain: [0, 25, 50, 75, 100],
   range: [1, 8, 32, 128, 1024],
 };
@@ -70,7 +70,7 @@ export const GRAPH_DEGREE_RANGE_CONFIG = {
 export const INTERMEDIATE_GRAPH_DEGREE_RANGE_CONFIG = {
   min: 1,
   max: 2048,
-  defaultValue: 64,
+  defaultValue: 128,
   domain: [0, 25, 50, 75, 100],
   range: [1, 16, 64, 256, 2048],
 };

@@ -324,19 +324,14 @@ test('GPU_CAGRA memory formula correctly calculates adjacency list and device da
 });
 
 test('rmmPoolSizeCalculator computes initMemSize and maxMemSize according to cuVS spec', () => {
-  // Test case 1: 1 GB GPU Index Memory
-  // init = Math.max(2, Math.ceil(1 * 0.5)) = 2 GB
-  // max = Math.max(4, Math.ceil(1 * 1.5)) = 4 GB
+  // In Milvus 2.4.1+, RMM Pool is search workspace memory buffer: 2048 MB init, 4096 MB max
   const pool1Gb = rmmPoolSizeCalculator(1 * 1024 * 1024 * 1024);
-  assert.equal(pool1Gb.initMemSize, 2, '1 GB index: initMemSize is clamped to 2 GB minimum');
-  assert.equal(pool1Gb.maxMemSize, 4, '1 GB index: maxMemSize is clamped to 4 GB minimum');
+  assert.equal(pool1Gb.initMemSize, 2048, 'RMM pool initMemSize is 2048 MB workspace buffer');
+  assert.equal(pool1Gb.maxMemSize, 4096, 'RMM pool maxMemSize is 4096 MB workspace buffer');
 
-  // Test case 2: 10 GB GPU Index Memory
-  // init = Math.max(2, Math.ceil(10 * 0.5)) = 5 GB
-  // max = Math.max(4, Math.ceil(10 * 1.5)) = 15 GB
   const pool10Gb = rmmPoolSizeCalculator(10 * 1024 * 1024 * 1024);
-  assert.equal(pool10Gb.initMemSize, 5, '10 GB index: initMemSize is 5 GB');
-  assert.equal(pool10Gb.maxMemSize, 15, '10 GB index: maxMemSize is 15 GB');
+  assert.equal(pool10Gb.initMemSize, 2048, 'RMM pool remains 2048 MB search workspace buffer');
+  assert.equal(pool10Gb.maxMemSize, 4096, 'RMM pool remains 4096 MB search workspace buffer');
 });
 
 test('gpuOperatorYmlGenerator exports Kubernetes YAML with nvidia.com/gpu limit in standalone and cluster mode', () => {
@@ -366,6 +361,7 @@ test('gpuOperatorYmlGenerator exports Kubernetes YAML with nvidia.com/gpu limit 
   });
   assert.ok(clusterYml.includes('spec:\n  mode: cluster'), 'Must specify mode: cluster');
   assert.ok(clusterYml.includes('nvidia.com/gpu: "1"'), 'Cluster must configure nvidia.com/gpu: "1"');
+  assert.ok(clusterYml.includes('streamingNode:'), 'Cluster YAML must specify streamingNode instead of streamNode');
 });
 
 test('SINDI sparse compression algorithm reduces memory footprint to ~2.8 bytes per non-zero element', () => {
@@ -441,27 +437,50 @@ test('Woodpecker streaming architecture and mainIndex segment sizeMetric are cor
     streamNode: { count: 1, cpu: 2, memory: 8 },
   };
 
-  // 1. Operator YAML (v2.5+ generator)
-  const operatorYml = operatorYmlGenerator(dummyClusterConfig, (DependencyComponentEnum26.Woodpecker || DependencyComponentEnum.Woodpecker), ModeEnum.Cluster);
-  assert.ok(operatorYml.includes('msgStreamType: woodpecker'), 'Operator YAML must specify msgStreamType: woodpecker');
-  assert.ok(/woodpecker:\s+embedded:\s*true/.test(operatorYml), 'Operator YAML must specify embedded woodpecker dependency');
-  assert.ok(operatorYml.includes('type: woodpecker'), 'Operator YAML must configure streaming.type: woodpecker');
-  assert.ok(operatorYml.includes('sizeMetric: mainIndex'), 'Operator YAML must configure dataCoord.segment.sizeMetric: mainIndex');
+  // 1. v2.5 Operator and Helm generators must NOT emit Woodpecker or mainIndex (pre-2.6)
+  const operatorYmlV25 = operatorYmlGenerator(dummyClusterConfig, DependencyComponentEnum.Pulsar, ModeEnum.Cluster);
+  assert.equal(operatorYmlV25.includes('type: woodpecker'), false, 'v2.5 Operator YAML must not emit woodpecker');
+  assert.equal(operatorYmlV25.includes('sizeMetric: mainIndex'), false, 'v2.5 Operator YAML must not emit mainIndex');
 
-  // 2. Helm YAML (v2.5+ generator)
-  const helmYml = helmYmlGeneratorV250(dummyClusterConfig, (DependencyComponentEnum26.Woodpecker || DependencyComponentEnum.Woodpecker), ModeEnum.Cluster);
-  assert.ok(/pulsarv3:\s+enabled:\s*false/.test(helmYml), 'Helm YAML must disable pulsar when Woodpecker is selected');
-  assert.ok(helmYml.includes('type: woodpecker'), 'Helm YAML must configure streaming.type: woodpecker');
-  assert.ok(/woodpecker:\s+embedded:\s*true/.test(helmYml), 'Helm YAML must configure woodpecker.embedded: true');
-  assert.ok(helmYml.includes('sizeMetric: mainIndex'), 'Helm YAML must configure dataCoord.segment.sizeMetric: mainIndex');
+  const helmYmlV25 = helmYmlGeneratorV250(dummyClusterConfig, DependencyComponentEnum.Pulsar, ModeEnum.Cluster);
+  assert.equal(helmYmlV25.includes('type: woodpecker'), false, 'v2.5 Helm YAML must not emit woodpecker');
+  assert.equal(helmYmlV25.includes('sizeMetric: mainIndex'), false, 'v2.5 Helm YAML must not emit mainIndex');
 
-  // 3. Operator YAML (v2.4 generator)
+  // 2. v2.6+ Operator YAML (sizingTool.ts) specifies msgStreamType: woodpecker without broken CRD embedded dependency
   const operatorYml24 = operatorYmlGeneratorV24(dummyClusterWithStreamNode, (DependencyComponentEnum26.Woodpecker || DependencyComponentEnum.Woodpecker), ModeEnum.Cluster);
-  assert.ok(operatorYml24.includes('msgStreamType: woodpecker'), 'v2.4 Operator YAML must specify msgStreamType: woodpecker');
-  assert.ok(operatorYml24.includes('sizeMetric: mainIndex'), 'v2.4 Operator YAML must specify sizeMetric: mainIndex');
+  assert.ok(operatorYml24.includes('msgStreamType: woodpecker'), 'v2.6+ Operator YAML must specify msgStreamType: woodpecker');
+  assert.equal(/dependencies:[\s\S]*woodpecker:\s+embedded:\s*true/.test(operatorYml24), false, 'Operator dependencies must not contain invalid woodpecker.embedded CRD field');
+  assert.ok(operatorYml24.includes('sizeMetric: mainIndex'), 'v2.6+ Operator YAML must specify sizeMetric: mainIndex');
 
-  // 4. Helm YAML (v2.4 generator)
+  // 3. v2.6+ Helm YAML (sizingTool.ts)
   const helmYml24 = helmYmlGenerator(dummyClusterWithStreamNode, (DependencyComponentEnum26.Woodpecker || DependencyComponentEnum.Woodpecker), ModeEnum.Cluster);
-  assert.ok(helmYml24.includes('type: woodpecker'), 'v2.4 Helm YAML must specify streaming.type: woodpecker');
-  assert.ok(helmYml24.includes('sizeMetric: mainIndex'), 'v2.4 Helm YAML must specify sizeMetric: mainIndex');
+  assert.ok(helmYml24.includes('type: woodpecker'), 'v2.6+ Helm YAML must specify streaming.type: woodpecker');
+  assert.ok(helmYml24.includes('sizeMetric: mainIndex'), 'v2.6+ Helm YAML must specify sizeMetric: mainIndex');
+});
+
+test('HNSW_SQ and HNSW_PQ do not suffer from refineType state leakage', () => {
+  const baseParams = {
+    rawDataSize: 100 * 1024 * 1024,
+    d: 128,
+    num: 1,
+    withScalar: false,
+    offLoading: false,
+    scalarAvg: 0,
+    segSize: 512,
+    mode: ModeEnum.Cluster,
+  };
+
+  // Calculate HNSW_SQ with refineType = None vs refineType = FP32
+  const sqNone = memoryAndDiskCalculator({
+    ...baseParams,
+    indexTypeParams: { indexType: IndexTypeEnum26.HNSW_SQ, m: 16 },
+    refineType: RefineValueEnum.None,
+  });
+  const sqFP32 = memoryAndDiskCalculator({
+    ...baseParams,
+    indexTypeParams: { indexType: IndexTypeEnum26.HNSW_SQ, m: 16 },
+    refineType: RefineValueEnum.FP32,
+  });
+
+  assert.equal(sqNone.memory, sqFP32.memory, 'HNSW_SQ memory must not be inflated by leftover refineType state');
 });

@@ -144,13 +144,13 @@ export const memoryAndDiskCalculator = (params: {
       break;
     case IndexTypeEnum.HNSW_SQ:
       result = {
-        memory: (0.25 + (N / 32) + (2 * m) / d) * vectorRawDataSize,
+        memory: (0.25 + (2 * m) / d) * vectorRawDataSize,
         disk: 0,
       };
       break;
     case IndexTypeEnum.HNSW_PQ:
       result = {
-        memory: (PQ_CODE_BUDGET_GB_RATIO + (N / 32) + (2 * m) / d) * vectorRawDataSize,
+        memory: (PQ_CODE_BUDGET_GB_RATIO + (2 * m) / d) * vectorRawDataSize,
         disk: 0,
       };
       break;
@@ -1225,8 +1225,6 @@ export const operatorYmlGenerator: (
 
   const woodpeckerMsg = `
     msgStreamType: woodpecker
-    woodpecker:
-      embedded: true
   `;
 
   const apacheConfig = pulsarConfig || kafkaConfig || '';

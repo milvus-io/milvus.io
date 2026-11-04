@@ -340,13 +340,11 @@ export const clusterNodeConfigCalculator = (params: {
  * initMemSize = Math.max(2, Math.ceil(gpuIndexMemory * 0.5)) (GB)
  * maxMemSize = Math.max(4, Math.ceil(gpuIndexMemory * 1.5)) (GB)
  */
-export const rmmPoolSizeCalculator = (gpuIndexMemoryBytes: number): IRmmPoolConfig => {
-  const gpuIndexMemoryGB = gpuIndexMemoryBytes / (1024 * 1024 * 1024);
-  const initMemSize = Math.max(2, Math.ceil(gpuIndexMemoryGB * 0.5));
-  const maxMemSize = Math.max(4, Math.ceil(gpuIndexMemoryGB * 1.5));
+export const rmmPoolSizeCalculator = (_gpuIndexMemoryBytes?: number): IRmmPoolConfig => {
+  // In Milvus 2.4.1+, RMM Pool is search workspace memory (MB). Recommended defaults are 2048 MB init, 4096 MB max.
   return {
-    initMemSize,
-    maxMemSize,
+    initMemSize: 2048,
+    maxMemSize: 4096,
   };
 };
 
@@ -416,7 +414,7 @@ spec:
           cpu: ${dataNode.cpu}
           memory: ${dataNode.memory}Gi
           nvidia.com/gpu: "1"
-    streamNode:
+    streamingNode:
       replicas: ${streamNode.count}
       resources:
         limits:

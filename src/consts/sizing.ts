@@ -4,6 +4,7 @@ import {
   DependencyComponentEnum,
   ModeEnum,
   RefineValueEnum,
+  VectorTypeEnum,
 } from '@/types/sizing';
 
 export const ONE_MILLION = Math.pow(10, 6);
@@ -106,6 +107,48 @@ export const INDEX_TYPE_OPTIONS = [
     value: IndexTypeEnum.AISAQ,
   },
 ];
+
+export const VECTOR_TYPE_OPTIONS = [
+  {
+    label: 'Float32 (FP32)',
+    value: VectorTypeEnum.FLOAT_VECTOR,
+  },
+  {
+    label: 'Float16 (FP16)',
+    value: VectorTypeEnum.FLOAT16_VECTOR,
+  },
+  {
+    label: 'BFloat16 (BF16)',
+    value: VectorTypeEnum.BFLOAT16_VECTOR,
+  },
+  {
+    label: 'Int8',
+    value: VectorTypeEnum.INT8_VECTOR,
+  },
+  {
+    label: 'Binary',
+    value: VectorTypeEnum.BINARY_VECTOR,
+  },
+  {
+    label: 'Sparse Float',
+    value: VectorTypeEnum.SPARSE_FLOAT_VECTOR,
+  },
+];
+
+export const SPARSE_INDEX_TYPE_OPTIONS = [
+  {
+    label: 'SPARSE_INVERTED_INDEX',
+    value: IndexTypeEnum.SPARSE_INVERTED_INDEX,
+  },
+];
+
+export const AVG_NNZ_RANGE_CONFIG = {
+  min: 1,
+  max: 10000,
+  defaultValue: 100,
+  domain: [0, 25, 50, 75, 100],
+  range: [1, 20, 100, 500, 10000],
+};
 
 export const DEPENDENCY_COMPONENTS = [
   {

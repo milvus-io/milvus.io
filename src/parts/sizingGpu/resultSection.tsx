@@ -12,7 +12,8 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui';
-import { ExternalLinkIcon } from '@/components/icons';
+import { ExternalLinkIcon, DownloadIcon, checkIconTpl, copyIconTpl } from '@/components/icons';
+import CustomButton from '@/components/customButton';
 import { DataCard } from '@/parts/sizingCommon';
 import commonClasses from '@/parts/sizingCommon/index.module.css';
 import classes from './index.module.css';
@@ -24,6 +25,7 @@ import {
   ModeEnum,
   NodesValueType,
 } from '@/types/sizingGpu';
+import { gpuOperatorYmlGenerator } from '@/utils/sizingToolGpu';
 
 const CLOUD_CALCULATOR_LINK = 'https://zilliz.com/pricing#calculator';
 
@@ -64,7 +66,43 @@ export default function GpuResultSection(props: GpuResultSectionProps) {
   const { t } = useTranslation('sizingTool');
 
   const [isMilvusOpen, setIsMilvusOpen] = useState(true);
+  const [hasCopied, setHasCopied] = useState(false);
 
+  const gpuOperatorYaml = useMemo(() => {
+    return gpuOperatorYmlGenerator({
+      mode: snapshot.params.mode,
+      standaloneNodeConfig: snapshot.result.standaloneNodeConfig,
+      clusterNodeConfig: snapshot.result.clusterNodeConfig,
+    });
+  }, [
+    snapshot.params.mode,
+    snapshot.result.standaloneNodeConfig,
+    snapshot.result.clusterNodeConfig,
+  ]);
+
+  const handleDownloadGpuOperatorYaml = () => {
+    const blob = new Blob([gpuOperatorYaml], { type: 'text/yaml' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'milvus-gpu-operator.yaml';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
+
+  const handleCopyGpuOperatorYaml = async () => {
+    try {
+      await navigator.clipboard.writeText(gpuOperatorYaml);
+      setHasCopied(true);
+      setTimeout(() => {
+        setHasCopied(false);
+      }, 2000);
+    } catch (err) {
+      console.error('Failed to copy GPU operator YAML:', err);
+    }
+  };
   const { result } = snapshot;
   const {
     rawDataSize,
@@ -330,6 +368,34 @@ export default function GpuResultSection(props: GpuResultSectionProps) {
               </div>
             </CollapsibleContent>
           </Collapsible>
+        </div>
+        <div className="p-[20px] border-t border-solid border-black4">
+          <div className="flex items-center justify-between gap-[16px] mb-[12px]">
+            <p className={commonClasses.font14Bold}>{t('install.title')}</p>
+            <span className="text-[12px] text-black2 font-[500]">
+              {t('install.operator')} (Kubernetes)
+            </span>
+          </div>
+          <div className="flex gap-[12px]">
+            <CustomButton
+              variant="outlined"
+              startIcon={<DownloadIcon />}
+              classes={{ root: commonClasses.installButton }}
+              onClick={handleDownloadGpuOperatorYaml}
+            >
+              {t('install.downloadOperator', 'Download Operator YAML')}
+            </CustomButton>
+            <CustomButton
+              variant="outlined"
+              startIcon={hasCopied ? checkIconTpl : copyIconTpl}
+              classes={{ root: commonClasses.installButton }}
+              onClick={handleCopyGpuOperatorYaml}
+            >
+              {hasCopied
+                ? t('button.copied', 'Copied')
+                : t('button.copy', 'Copy YAML')}
+            </CustomButton>
+          </div>
         </div>
       </div>
     </section>

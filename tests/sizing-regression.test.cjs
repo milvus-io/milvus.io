@@ -22,10 +22,10 @@ Module._resolveFilename = function(request, parent, isMain, options) {
   return origResolve.call(this, request, parent, isMain, options);
 };
 
-const { operatorYmlGenerator, helmYmlGenerator: helmYmlGeneratorV250 } = require('../src/utils/sizingToolV250.ts');
+const { operatorYmlGenerator, helmYmlGenerator: helmYmlGeneratorV250, memoryAndDiskCalculator: memoryAndDiskCalculatorV250 } = require('../src/utils/sizingToolV250.ts');
 const { ModeEnum, DependencyComponentEnum, IndexTypeEnum } = require('../src/types/sizingV250.ts');
-const { INDEX_TYPE_OPTIONS } = require('../src/consts/sizingV250.ts');
-const { REFINE_OPTIONS, INDEX_TYPE_OPTIONS: INDEX_TYPE_OPTIONS_26 } = require('../src/consts/sizing.ts');
+const { INDEX_TYPE_OPTIONS, VECTOR_TYPE_OPTIONS: VECTOR_TYPE_OPTIONS_V250, SPARSE_INDEX_TYPE_OPTIONS: SPARSE_INDEX_TYPE_OPTIONS_V250, AVG_NNZ_RANGE_CONFIG: AVG_NNZ_RANGE_CONFIG_V250 } = require('../src/consts/sizingV250.ts');
+const { REFINE_OPTIONS, INDEX_TYPE_OPTIONS: INDEX_TYPE_OPTIONS_26, VECTOR_TYPE_OPTIONS, SPARSE_INDEX_TYPE_OPTIONS, AVG_NNZ_RANGE_CONFIG } = require('../src/consts/sizing.ts');
 const { RefineValueEnum, REFINE_VALUE_TO_N_MAP, VectorTypeEnum, IndexTypeEnum: IndexTypeEnum26, DependencyComponentEnum: DependencyComponentEnum26 } = require('../src/types/sizing.ts');
 const { GpuIndexTypeEnum } = require('../src/types/sizingGpu.ts');
 const { GRAPH_DEGREE_RANGE_CONFIG, INTERMEDIATE_GRAPH_DEGREE_RANGE_CONFIG, DEFAULT_GPU_INDEX_PARAMS } = require('../src/consts/sizingGpu.ts');
@@ -507,4 +507,79 @@ test('HNSW_SQ and HNSW_PQ do not suffer from refineType state leakage', () => {
   });
 
   assert.equal(sqNone.memory, sqFP32.memory, 'HNSW_SQ memory must not be inflated by leftover refineType state');
+});
+
+test('VECTOR_TYPE_OPTIONS and sparse constants are exported with correct schema and defaults', () => {
+  assert.ok(Array.isArray(VECTOR_TYPE_OPTIONS), 'VECTOR_TYPE_OPTIONS must be an array');
+  assert.equal(VECTOR_TYPE_OPTIONS.length, 6, 'Must contain 6 vector types (FP32, FP16, BF16, Int8, Binary, Sparse)');
+  assert.ok(VECTOR_TYPE_OPTIONS.some(o => o.value === VectorTypeEnum.FLOAT16_VECTOR));
+  assert.ok(VECTOR_TYPE_OPTIONS.some(o => o.value === VectorTypeEnum.BFLOAT16_VECTOR));
+  assert.ok(VECTOR_TYPE_OPTIONS.some(o => o.value === VectorTypeEnum.INT8_VECTOR));
+  assert.ok(VECTOR_TYPE_OPTIONS.some(o => o.value === VectorTypeEnum.BINARY_VECTOR));
+  assert.ok(VECTOR_TYPE_OPTIONS.some(o => o.value === VectorTypeEnum.SPARSE_FLOAT_VECTOR));
+
+  assert.ok(Array.isArray(SPARSE_INDEX_TYPE_OPTIONS), 'SPARSE_INDEX_TYPE_OPTIONS must be an array');
+  assert.equal(SPARSE_INDEX_TYPE_OPTIONS[0].value, IndexTypeEnum26.SPARSE_INVERTED_INDEX);
+
+  assert.equal(AVG_NNZ_RANGE_CONFIG.defaultValue, 100);
+  assert.equal(AVG_NNZ_RANGE_CONFIG.min, 1);
+  assert.equal(AVG_NNZ_RANGE_CONFIG.max, 10000);
+
+  // Verify v250 consistency
+  assert.equal(VECTOR_TYPE_OPTIONS_V250.length, 6);
+  assert.equal(SPARSE_INDEX_TYPE_OPTIONS_V250[0].value, IndexTypeEnum.SPARSE_INVERTED_INDEX);
+  assert.equal(AVG_NNZ_RANGE_CONFIG_V250.defaultValue, 100);
+});
+
+test('memoryAndDiskCalculator accurately computes FP16, BF16, INT8, and BINARY vector memory', () => {
+  const baseParams = {
+    rawDataSize: 100 * 1024 * 1024,
+    d: 128,
+    num: 1,
+    withScalar: false,
+    offLoading: false,
+    scalarAvg: 0,
+    segSize: 512,
+    mode: ModeEnum.Cluster,
+    indexTypeParams: { indexType: IndexTypeEnum26.FLAT },
+  };
+
+  const fp32 = memoryAndDiskCalculator({ ...baseParams, vectorType: VectorTypeEnum.FLOAT_VECTOR });
+  const fp16 = memoryAndDiskCalculator({ ...baseParams, vectorType: VectorTypeEnum.FLOAT16_VECTOR });
+  const bf16 = memoryAndDiskCalculator({ ...baseParams, vectorType: VectorTypeEnum.BFLOAT16_VECTOR });
+  const int8 = memoryAndDiskCalculator({ ...baseParams, vectorType: VectorTypeEnum.INT8_VECTOR });
+  const bin = memoryAndDiskCalculator({ ...baseParams, vectorType: VectorTypeEnum.BINARY_VECTOR });
+
+  // In FLAT index without scalars, segment overhead is identical, vector memory scales directly with byte size
+  assert.equal(fp16.memory, bf16.memory, 'FP16 and BF16 must use identical memory (2 bytes per dimension)');
+  assert.ok(fp16.memory < fp32.memory, 'FP16 memory must be smaller than FP32');
+  assert.ok(int8.memory < fp16.memory, 'INT8 memory must be smaller than FP16');
+  assert.ok(bin.memory < int8.memory, 'Binary vector memory must be smallest (1 bit per dimension)');
+
+  // Check v250 calculator
+  const v250Fp32 = memoryAndDiskCalculatorV250({ ...baseParams, vectorType: VectorTypeEnum.FLOAT_VECTOR });
+  const v250Fp16 = memoryAndDiskCalculatorV250({ ...baseParams, vectorType: VectorTypeEnum.FLOAT16_VECTOR });
+  assert.ok(v250Fp16.memory < v250Fp32.memory, 'v250 FP16 memory must be smaller than FP32');
+});
+
+test('memoryAndDiskCalculator handles SPARSE_FLOAT_VECTOR with avgNnz across calculators', () => {
+  const sparseParams = {
+    rawDataSize: 100 * 1024 * 1024,
+    d: 0,
+    num: 1,
+    withScalar: false,
+    offLoading: false,
+    scalarAvg: 0,
+    segSize: 512,
+    mode: ModeEnum.Cluster,
+    indexTypeParams: { indexType: IndexTypeEnum26.SPARSE_INVERTED_INDEX },
+    vectorType: VectorTypeEnum.SPARSE_FLOAT_VECTOR,
+    avgNnz: 100,
+  };
+
+  const resV26 = memoryAndDiskCalculator(sparseParams);
+  const resV250 = memoryAndDiskCalculatorV250(sparseParams);
+
+  assert.ok(resV26.memory > 0, 'v2.6 sparse memory must be positive');
+  assert.ok(resV250.memory > 0, 'v2.5 sparse memory must be positive');
 });

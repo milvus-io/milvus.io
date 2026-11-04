@@ -9,6 +9,7 @@ import {
   PulsarDataType,
   KafkaDataType,
   NodesKeyType,
+  VectorTypeEnum,
 } from '@/types/sizingV250';
 
 // Re-export common utilities
@@ -52,6 +53,8 @@ export const memoryAndDiskCalculator = (params: {
   scalarAvg: number;
   segSize: number;
   mode: ModeEnum;
+  vectorType?: VectorTypeEnum;
+  avgNnz?: number;
 }) => {
   const {
     rawDataSize,
@@ -63,17 +66,39 @@ export const memoryAndDiskCalculator = (params: {
     indexTypeParams,
     segSize,
     mode,
+    vectorType,
+    avgNnz,
   } = params;
   const { indexType, widthRawData, maxDegree, m, flatNList, sq8NList } =
     indexTypeParams;
   const segmentSizeByte = unitAny2BYTE(segSize, 'MB');
-  const vectorRawDataSize = ((num * d * 32) / 8) * ONE_MILLION;
+  let vectorBytesPerItem: number;
+  switch (vectorType) {
+    case VectorTypeEnum.FLOAT16_VECTOR:
+    case VectorTypeEnum.BFLOAT16_VECTOR:
+      vectorBytesPerItem = (d * 16) / 8;
+      break;
+    case VectorTypeEnum.INT8_VECTOR:
+      vectorBytesPerItem = d;
+      break;
+    case VectorTypeEnum.BINARY_VECTOR:
+      vectorBytesPerItem = d / 8;
+      break;
+    case VectorTypeEnum.SPARSE_FLOAT_VECTOR:
+      vectorBytesPerItem = (avgNnz ?? d) * 8;
+      break;
+    case VectorTypeEnum.FLOAT_VECTOR:
+    default:
+      vectorBytesPerItem = (d * 32) / 8;
+      break;
+  }
+  const vectorRawDataSize = num * ONE_MILLION * vectorBytesPerItem;
 
   let result = {
     memory: 0,
     disk: 0,
   };
-  const rowSize = (d * 32) / 8;
+  const rowSize = vectorBytesPerItem;
 
   switch (indexType) {
     case IndexTypeEnum.FLAT:

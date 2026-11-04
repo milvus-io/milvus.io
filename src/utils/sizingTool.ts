@@ -89,10 +89,27 @@ export const memoryAndDiskCalculator = (params: {
     inlinePq,
   } = indexTypeParams;
   const segmentSizeByte = unitAny2BYTE(segSize, 'MB');
-  let vectorRawDataSize = ((num * d * 32) / 8) * ONE_MILLION;
-  if (vectorType === VectorTypeEnum.SPARSE_FLOAT_VECTOR) {
-    vectorRawDataSize = num * ONE_MILLION * (avgNnz ?? d) * (sindiCompression ? 2.8 : 8);
+  let vectorBytesPerItem: number;
+  switch (vectorType) {
+    case VectorTypeEnum.FLOAT16_VECTOR:
+    case VectorTypeEnum.BFLOAT16_VECTOR:
+      vectorBytesPerItem = (d * 16) / 8;
+      break;
+    case VectorTypeEnum.INT8_VECTOR:
+      vectorBytesPerItem = d;
+      break;
+    case VectorTypeEnum.BINARY_VECTOR:
+      vectorBytesPerItem = d / 8;
+      break;
+    case VectorTypeEnum.SPARSE_FLOAT_VECTOR:
+      vectorBytesPerItem = (avgNnz ?? d) * (sindiCompression ? 2.8 : 8);
+      break;
+    case VectorTypeEnum.FLOAT_VECTOR:
+    default:
+      vectorBytesPerItem = (d * 32) / 8;
+      break;
   }
+  const vectorRawDataSize = num * ONE_MILLION * vectorBytesPerItem;
   const N = REFINE_VALUE_TO_N_MAP[refineType];
   const PQ_CODE_BUDGET_GB_RATIO = 0.125;
   const AISAQ_MEMORY_BYTE = unitAny2BYTE(16, 'MB'); // 16 MB
@@ -101,7 +118,7 @@ export const memoryAndDiskCalculator = (params: {
     memory: 0,
     disk: 0,
   };
-  const rowSize = (d * 32) / 8;
+  const rowSize = vectorBytesPerItem;
 
   switch (indexType) {
     case IndexTypeEnum.FLAT:

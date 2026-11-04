@@ -31,7 +31,9 @@
     "segmentTooltip": "datacoord.segment.maxSize 是 Milvus 中一个重要的存储配置参数。它定义了单个段的大小，也就是 Milvus 中的物理存储单元。增加该值可以提高查询性能，但也会消耗更多资源。<0>查看更多。</0>",
     "refine": "细化",
     "refineType": "细化类型",
-    "inlinePq": "inline_pq"
+    "inlinePq": "inline_pq",
+    "vectorType": "向量数据类型",
+    "avgNnz": "平均非零维度 (avg_nnz)"
   },
   "overview": {
     "title": "资源需求",
@@ -106,7 +108,8 @@
     "adv2": "设置 Milvus 集群进行性能测试或基准测试？请参考 <0>VDB Bench</0> 获取详细指导。",
     "tip1": "如何使用 Docker Compose 运行 Milvus？",
     "tip2": "如何使用 Helm 图表运行 Milvus？",
-    "tip3": "如何使用 Milvus 操作员运行 Milvus？"
+    "tip3": "如何使用 Milvus 操作员运行 Milvus？",
+    "downloadOperator": "下载 Operator YAML"
   },
   "woodpeckerTip": "<0>啄木鸟</0>（<0>Woodpecker</0>）是 Milvus 2.6.0 推出的云原生写日志（WAL）系统。它旨在取代 Kafka 和 Pulsar 作为 Milvus 中的 MQ，以简化操作、最大化吞吐量并轻松扩展。目前，它嵌入在流节点中运行。",
   "previousVersion": "上一版本的尺寸工具在<0>这里</0>。",

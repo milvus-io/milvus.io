@@ -50,6 +50,9 @@ export default function FormSection(props: FormSectionProps) {
     M_RANGE_CONFIG,
     MAXIMUM_AVERAGE_LENGTH,
     REFINE_OPTIONS,
+    VECTOR_TYPE_OPTIONS,
+    SPARSE_INDEX_TYPE_OPTIONS,
+    AVG_NNZ_RANGE_CONFIG,
   } = config.consts;
 
   const {
@@ -57,6 +60,7 @@ export default function FormSection(props: FormSectionProps) {
     IndexTypeEnum,
     DependencyComponentEnum,
     RefineValueEnum,
+    VectorTypeEnum,
   } = config.types;
 
   const {
@@ -84,9 +88,16 @@ export default function FormSection(props: FormSectionProps) {
     config.supportsRabitq && REFINE_OPTIONS ? REFINE_OPTIONS[0].value : null
   );
 
+  const defaultVectorType =
+    VECTOR_TYPE_OPTIONS && VECTOR_TYPE_OPTIONS.length > 0
+      ? VECTOR_TYPE_OPTIONS[0].value
+      : (VectorTypeEnum?.FLOAT_VECTOR ?? 'FLOAT_VECTOR');
+
   const [form, setForm] = useState({
     vector: VECTOR_RANGE_CONFIG.defaultValue,
     dimension: DIMENSION_RANGE_CONFIG.defaultValue,
+    vectorType: defaultVectorType,
+    avgNnz: AVG_NNZ_RANGE_CONFIG?.defaultValue ?? 100,
     widthScalar: false,
     scalarData: {
       averageNum: 0,
@@ -139,6 +150,44 @@ export default function FormSection(props: FormSectionProps) {
       [key]: value,
     });
   };
+
+  const handleVectorTypeChange = (newType: string) => {
+    setForm(prev => ({
+      ...prev,
+      vectorType: newType,
+    }));
+    if (newType === VectorTypeEnum?.SPARSE_FLOAT_VECTOR) {
+      setIndexTypeParams(prev => ({
+        ...prev,
+        indexType: IndexTypeEnum.SPARSE_INVERTED_INDEX,
+      }));
+    } else if (indexTypeParams.indexType === IndexTypeEnum.SPARSE_INVERTED_INDEX) {
+      setIndexTypeParams(prev => ({
+        ...prev,
+        indexType: INDEX_TYPE_OPTIONS[0].value,
+      }));
+    }
+  };
+
+  const currentIndexTypeOptions = useMemo(() => {
+    if (form.vectorType === VectorTypeEnum?.SPARSE_FLOAT_VECTOR) {
+      return (
+        SPARSE_INDEX_TYPE_OPTIONS ?? [
+          {
+            label: 'SPARSE_INVERTED_INDEX',
+            value: IndexTypeEnum.SPARSE_INVERTED_INDEX,
+          },
+        ]
+      );
+    }
+    return INDEX_TYPE_OPTIONS;
+  }, [
+    form.vectorType,
+    SPARSE_INDEX_TYPE_OPTIONS,
+    INDEX_TYPE_OPTIONS,
+    VectorTypeEnum,
+    IndexTypeEnum,
+  ]);
 
   const handleAverageLengthChange = (e: any) => {
     let lengthString = e.target.value;
@@ -237,6 +286,8 @@ export default function FormSection(props: FormSectionProps) {
       d: form.dimension,
       withScalar: form.widthScalar,
       scalarAvg: form.scalarData.averageNum,
+      vectorType: form.vectorType,
+      avgNnz: form.avgNnz,
     });
     setRawDataSize(rawDataSize);
   }, [
@@ -244,6 +295,8 @@ export default function FormSection(props: FormSectionProps) {
     form.dimension,
     form.widthScalar,
     form.scalarData.averageNum,
+    form.vectorType,
+    form.avgNnz,
   ]);
 
   const disableStandalone = useMemo(() => {
@@ -281,6 +334,8 @@ export default function FormSection(props: FormSectionProps) {
       scalarAvg: form.scalarData.averageNum,
       segSize: Number(form.segmentSize),
       mode: currentMode,
+      vectorType: form.vectorType,
+      avgNnz: form.avgNnz,
     };
 
     // Add refineType for v3
@@ -323,6 +378,8 @@ export default function FormSection(props: FormSectionProps) {
       dependencyConfig: dependencyConfig,
       mode: currentMode,
       dependency: form.dependency,
+      vectorType: form.vectorType,
+      avgNnz: form.avgNnz,
       isOutOfCalculate: disableCalculationThreshold ? false : rawDataSize > $1B768D,
     });
   }, [form, indexTypeParams, refine]);
@@ -341,17 +398,61 @@ export default function FormSection(props: FormSectionProps) {
             unit="Million"
           />
         </div>
-        <div className="mb-[24px]">
-          <SizingRange
-            rangeConfig={DIMENSION_RANGE_CONFIG}
-            label={t('form.dim')}
-            onRangeChange={val => {
-              handleFormChange('dimension', val);
-            }}
-            value={form.dimension}
-            placeholder={`[${DIMENSION_RANGE_CONFIG.min}, ${DIMENSION_RANGE_CONFIG.max}]`}
-          />
-        </div>
+        {VECTOR_TYPE_OPTIONS && VECTOR_TYPE_OPTIONS.length > 0 && (
+          <div className="mb-[24px]">
+            <h4 className="flex items-center justify-between mb-[8px]">
+              <span className="font-[600] text-[14px] leading-[22px] text-black1">
+                {t('form.vectorType')}
+              </span>
+            </h4>
+            <Select
+              value={form.vectorType}
+              onValueChange={val => {
+                handleVectorTypeChange(val);
+              }}
+            >
+              <SelectTrigger className={classes.selectTrigger}>
+                {VECTOR_TYPE_OPTIONS.find((v: any) => v.value === form.vectorType)?.label || form.vectorType}
+              </SelectTrigger>
+              <SelectContent>
+                {VECTOR_TYPE_OPTIONS.map((v: any) => (
+                  <SelectItem
+                    key={v.value}
+                    value={v.value}
+                    className={classes.selectItem}
+                  >
+                    {v.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+        )}
+        {form.vectorType === VectorTypeEnum?.SPARSE_FLOAT_VECTOR ? (
+          <div className="mb-[24px]">
+            <SizingRange
+              rangeConfig={AVG_NNZ_RANGE_CONFIG ?? { min: 1, max: 10000, defaultValue: 100, domain: [0, 25, 50, 75, 100], range: [1, 20, 100, 500, 10000] }}
+              label={t('form.avgNnz')}
+              onRangeChange={val => {
+                handleFormChange('avgNnz', val);
+              }}
+              value={form.avgNnz}
+              placeholder={`[${AVG_NNZ_RANGE_CONFIG?.min ?? 1}, ${AVG_NNZ_RANGE_CONFIG?.max ?? 10000}]`}
+            />
+          </div>
+        ) : (
+          <div className="mb-[24px]">
+            <SizingRange
+              rangeConfig={DIMENSION_RANGE_CONFIG}
+              label={t('form.dim')}
+              onRangeChange={val => {
+                handleFormChange('dimension', val);
+              }}
+              value={form.dimension}
+              placeholder={`[${DIMENSION_RANGE_CONFIG.min}, ${DIMENSION_RANGE_CONFIG.max}]`}
+            />
+          </div>
+        )}
         <div className="mb-[24px]">
           <h4 className="flex items-center justify-between mb-[8px]">
             <span className="font-[600] text-[14px] leading-[22px] text-black1">
@@ -377,7 +478,7 @@ export default function FormSection(props: FormSectionProps) {
               {indexTypeParams.indexType}
             </SelectTrigger>
             <SelectContent>
-              {INDEX_TYPE_OPTIONS.map((v: any) => (
+              {currentIndexTypeOptions.map((v: any) => (
                 <SelectItem
                   key={v.value}
                   value={v.value}

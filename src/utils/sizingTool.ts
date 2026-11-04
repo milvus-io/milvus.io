@@ -27,14 +27,12 @@ export {
   createRawDataSizeCalculator,
   createDataSizeConstants,
 } from './sizingToolCommon';
-
 import {
   unitBYTE2Any,
   unitAny2BYTE,
   createRawDataSizeCalculator,
   createDataSizeConstants,
 } from './sizingToolCommon';
-
 // Create rawDataSizeCalculator with version-specific ONE_MILLION
 export const rawDataSizeCalculator = createRawDataSizeCalculator(ONE_MILLION);
 
@@ -110,10 +108,15 @@ export const memoryAndDiskCalculator = (params: {
       break;
   }
   const vectorRawDataSize = num * ONE_MILLION * vectorBytesPerItem;
+  const fp32RawDataSize = num * ONE_MILLION * d * 4;
+  const graphMemory = (2 * m / d) * fp32RawDataSize;
+  const sq8Memory = fp32RawDataSize / 4;
+  const vamanaGraphDisk = (maxDegree / d) * fp32RawDataSize;
   const N = REFINE_VALUE_TO_N_MAP[refineType];
   const PQ_CODE_BUDGET_GB_RATIO = 0.125;
+  const pqMemory = fp32RawDataSize * PQ_CODE_BUDGET_GB_RATIO;
+  const rabitqMemory = fp32RawDataSize * (1 / 32 + N / 32);
   const AISAQ_MEMORY_BYTE = unitAny2BYTE(16, 'MB'); // 16 MB
-
   let result = {
     memory: 0,
     disk: 0,
@@ -135,39 +138,39 @@ export const memoryAndDiskCalculator = (params: {
       break;
     case IndexTypeEnum.IVFSQ8:
       result = {
-        memory: vectorRawDataSize / 4 + sq8NList * rowSize,
+        memory: sq8Memory + sq8NList * rowSize,
         disk: 0,
       };
       break;
     case IndexTypeEnum.IVFRABITQ:
       result = {
-        memory: vectorRawDataSize * (1 / 32 + N / 32) + rabitqNList * rowSize,
+        memory: rabitqMemory + rabitqNList * rowSize,
         disk: 0,
       };
       break;
     case IndexTypeEnum.SCANN:
       result = {
         memory: widthRawData
-          ? (9 / 8) * vectorRawDataSize
-          : (1 / 8) * vectorRawDataSize,
+          ? vectorRawDataSize + (1 / 8) * fp32RawDataSize
+          : (1 / 8) * fp32RawDataSize,
         disk: 0,
       };
       break;
     case IndexTypeEnum.HNSW:
       result = {
-        memory: (1 + (2 * m) / d) * vectorRawDataSize,
+        memory: vectorRawDataSize + graphMemory,
         disk: 0,
       };
       break;
     case IndexTypeEnum.HNSW_SQ:
       result = {
-        memory: (0.25 + (2 * m) / d) * vectorRawDataSize,
+        memory: sq8Memory + graphMemory,
         disk: 0,
       };
       break;
     case IndexTypeEnum.HNSW_PQ:
       result = {
-        memory: (PQ_CODE_BUDGET_GB_RATIO + (2 * m) / d) * vectorRawDataSize,
+        memory: pqMemory + graphMemory,
         disk: 0,
       };
       break;
@@ -181,16 +184,17 @@ export const memoryAndDiskCalculator = (params: {
       break;
     case IndexTypeEnum.DISKANN:
       result = {
-        memory: vectorRawDataSize / 4,
-        disk: (1 + maxDegree / d) * vectorRawDataSize,
+        memory: sq8Memory,
+        disk: vectorRawDataSize + vamanaGraphDisk,
       };
       break;
     case IndexTypeEnum.AISAQ:
       result = {
         memory: AISAQ_MEMORY_BYTE,
         disk:
-          vectorRawDataSize *
-          (1 + inlinePq * PQ_CODE_BUDGET_GB_RATIO + maxDegree / d),
+          vectorRawDataSize +
+          (inlinePq * PQ_CODE_BUDGET_GB_RATIO) * fp32RawDataSize +
+          vamanaGraphDisk,
       };
       break;
     default:
@@ -529,10 +533,21 @@ export const dependencyCalculator = (params: {
   withScalar: boolean;
   scalarAvg: number;
   loadingMemory: number;
-  dependency: DependencyComponentEnum;
+  dependency?: DependencyComponentEnum;
+  vectorType?: VectorTypeEnum;
+  avgNnz?: number;
 }): DependencyConfigType => {
-  const { num, d, mode, scalarAvg, withScalar, loadingMemory, dependency } =
-    params;
+  const {
+    num,
+    d,
+    mode,
+    scalarAvg,
+    withScalar,
+    loadingMemory,
+    dependency,
+    vectorType,
+    avgNnz,
+  } = params;
   const MINIMUM_MINIO_PVC_SIZE = 30; //GB
   const MINIMUM_PULSAR_LEDGERS = 20; //GB
   const MAXIMUM_PULSAR_JOURNAL = 50; //GB
@@ -543,6 +558,8 @@ export const dependencyCalculator = (params: {
     d,
     withScalar,
     scalarAvg,
+    vectorType,
+    avgNnz,
   });
 
   const minioPvc = Math.max(

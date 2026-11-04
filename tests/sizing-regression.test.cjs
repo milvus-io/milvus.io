@@ -30,7 +30,7 @@ const { RefineValueEnum, REFINE_VALUE_TO_N_MAP, VectorTypeEnum, IndexTypeEnum: I
 const { GpuIndexTypeEnum } = require('../src/types/sizingGpu.ts');
 const { GRAPH_DEGREE_RANGE_CONFIG, INTERMEDIATE_GRAPH_DEGREE_RANGE_CONFIG, DEFAULT_GPU_INDEX_PARAMS } = require('../src/consts/sizingGpu.ts');
 const { fetchMilvusReleases } = require('../src/http/milvus.ts');
-const { unitBYTE2Any, rawDataSizeCalculator, memoryAndDiskCalculator, sindiSparseMemoryCalculator, SegmentSizeMetricEnum, helmYmlGenerator, operatorYmlGenerator: operatorYmlGeneratorV24 } = require('../src/utils/sizingTool.ts');
+const { unitBYTE2Any, rawDataSizeCalculator, memoryAndDiskCalculator, dependencyCalculator, sindiSparseMemoryCalculator, SegmentSizeMetricEnum, helmYmlGenerator, operatorYmlGenerator: operatorYmlGeneratorV24 } = require('../src/utils/sizingTool.ts');
 const { gpuIndexMemoryCalculator, rmmPoolSizeCalculator, gpuOperatorYmlGenerator } = require('../src/utils/sizingToolGpu.ts');
 
 const dummyClusterConfig = {
@@ -582,4 +582,37 @@ test('memoryAndDiskCalculator handles SPARSE_FLOAT_VECTOR with avgNnz across cal
 
   assert.ok(resV26.memory > 0, 'v2.6 sparse memory must be positive');
   assert.ok(resV250.memory > 0, 'v2.5 sparse memory must be positive');
+});
+test('dependencyCalculator scales PVC size with vectorType and avgNnz', () => {
+  const baseDepParams = {
+    num: 10,
+    d: 128,
+    mode: ModeEnum.Cluster,
+    withScalar: false,
+    scalarAvg: 0,
+    loadingMemory: 10 * 1024 * 1024 * 1024,
+    dependency: DependencyComponentEnum.Pulsar,
+  };
+
+  const depFp32 = dependencyCalculator(baseDepParams);
+  const depSparseLarge = dependencyCalculator({
+    ...baseDepParams,
+    vectorType: VectorTypeEnum.SPARSE_FLOAT_VECTOR,
+    avgNnz: 5000,
+  });
+  assert.ok(
+    depSparseLarge.minio.pvc > depFp32.minio.pvc,
+    'High avgNnz sparse vector must allocate significantly larger MinIO PVC'
+  );
+});
+
+test('gpuOperatorYmlGenerator emits gpu memory pool configuration in spec.config', () => {
+  const yml = gpuOperatorYmlGenerator({
+    mode: ModeEnum.Standalone,
+    standaloneNodeConfig: { cpu: 8, memory: 32, count: 1 },
+    clusterNodeConfig: {},
+    rmmPoolSize: { initMemSize: 2048, maxMemSize: 4096 },
+  });
+  assert.ok(yml.includes('initMemSize: 2048'), 'YAML must contain gpu initMemSize');
+  assert.ok(yml.includes('maxMemSize: 4096'), 'YAML must contain gpu maxMemSize');
 });

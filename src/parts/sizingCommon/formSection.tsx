@@ -161,11 +161,21 @@ export default function FormSection(props: FormSectionProps) {
         ...prev,
         indexType: IndexTypeEnum.SPARSE_INVERTED_INDEX,
       }));
-    } else if (indexTypeParams.indexType === IndexTypeEnum.SPARSE_INVERTED_INDEX) {
-      setIndexTypeParams(prev => ({
-        ...prev,
-        indexType: INDEX_TYPE_OPTIONS[0].value,
-      }));
+    } else {
+      let allowedValues: any[];
+      if (newType === VectorTypeEnum?.BINARY_VECTOR) {
+        allowedValues = [IndexTypeEnum.FLAT, IndexTypeEnum.IVF_FLAT];
+      } else if (newType === VectorTypeEnum?.INT8_VECTOR) {
+        allowedValues = [IndexTypeEnum.FLAT, IndexTypeEnum.HNSW];
+      } else {
+        allowedValues = INDEX_TYPE_OPTIONS.map((opt: any) => opt.value);
+      }
+      if (!allowedValues.includes(indexTypeParams.indexType)) {
+        setIndexTypeParams(prev => ({
+          ...prev,
+          indexType: allowedValues[0],
+        }));
+      }
     }
   };
 
@@ -178,6 +188,20 @@ export default function FormSection(props: FormSectionProps) {
             value: IndexTypeEnum.SPARSE_INVERTED_INDEX,
           },
         ]
+      );
+    }
+    if (form.vectorType === VectorTypeEnum?.BINARY_VECTOR) {
+      return INDEX_TYPE_OPTIONS.filter(
+        (opt: any) =>
+          opt.value === IndexTypeEnum.FLAT ||
+          opt.value === IndexTypeEnum.IVF_FLAT
+      );
+    }
+    if (form.vectorType === VectorTypeEnum?.INT8_VECTOR) {
+      return INDEX_TYPE_OPTIONS.filter(
+        (opt: any) =>
+          opt.value === IndexTypeEnum.FLAT ||
+          opt.value === IndexTypeEnum.HNSW
       );
     }
     return INDEX_TYPE_OPTIONS;
@@ -360,8 +384,9 @@ export default function FormSection(props: FormSectionProps) {
       scalarAvg: form.scalarData.averageNum,
       mode: currentMode,
       loadingMemory: memory,
+      vectorType: form.vectorType,
+      avgNnz: form.avgNnz,
     };
-
     // Add dependency for v3
     if (config.supportsWoodpecker) {
       dependencyParams.dependency = form.dependency;

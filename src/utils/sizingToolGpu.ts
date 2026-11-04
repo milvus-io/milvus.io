@@ -354,8 +354,11 @@ export const gpuOperatorYmlGenerator = (params: {
   clusterNodeConfig: Record<NodesKeyType, NodesValueType>;
   standaloneNodeConfig: NodesValueType;
   mode: ModeEnum;
+  rmmPoolSize?: { initMemSize: number; maxMemSize: number };
 }) => {
-  const { clusterNodeConfig, standaloneNodeConfig, mode } = params;
+  const { clusterNodeConfig, standaloneNodeConfig, mode, rmmPoolSize } = params;
+  const initMemSize = rmmPoolSize ? rmmPoolSize.initMemSize : 2048;
+  const maxMemSize = rmmPoolSize ? rmmPoolSize.maxMemSize : 4096;
   if (mode === ModeEnum.Standalone) {
     return `apiVersion: milvus.io/v1beta1
 kind: Milvus
@@ -372,7 +375,10 @@ spec:
           cpu: ${standaloneNodeConfig.cpu}
           memory: ${standaloneNodeConfig.memory}Gi
           nvidia.com/gpu: "1"
-  config: {}
+  config:
+    gpu:
+      initMemSize: ${initMemSize}
+      maxMemSize: ${maxMemSize}
   dependencies: {}
 `;
   }
@@ -419,7 +425,10 @@ spec:
         limits:
           cpu: ${streamNode.cpu}
           memory: ${streamNode.memory}Gi
-  config: {}
+  config:
+    gpu:
+      initMemSize: ${initMemSize}
+      maxMemSize: ${maxMemSize}
   dependencies: {}
 `;
 };

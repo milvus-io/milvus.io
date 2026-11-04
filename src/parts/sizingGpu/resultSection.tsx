@@ -12,7 +12,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui';
-import { ExternalLinkIcon, DownloadIcon, checkIconTpl, copyIconTpl } from '@/components/icons';
+import { ExternalLinkIcon, DownloadIcon, CheckIcon, CopyIcon } from '@/components/icons';
 import CustomButton from '@/components/customButton';
 import { DataCard } from '@/parts/sizingCommon';
 import commonClasses from '@/parts/sizingCommon/index.module.css';
@@ -73,11 +73,13 @@ export default function GpuResultSection(props: GpuResultSectionProps) {
       mode: snapshot.params.mode,
       standaloneNodeConfig: snapshot.result.standaloneNodeConfig,
       clusterNodeConfig: snapshot.result.clusterNodeConfig,
+      rmmPoolSize: snapshot.result.rmmPoolSize,
     });
   }, [
     snapshot.params.mode,
     snapshot.result.standaloneNodeConfig,
     snapshot.result.clusterNodeConfig,
+    snapshot.result.rmmPoolSize,
   ]);
 
   const handleDownloadGpuOperatorYaml = () => {
@@ -387,7 +389,7 @@ export default function GpuResultSection(props: GpuResultSectionProps) {
             </CustomButton>
             <CustomButton
               variant="outlined"
-              startIcon={hasCopied ? checkIconTpl : copyIconTpl}
+              startIcon={hasCopied ? <CheckIcon /> : <CopyIcon />}
               classes={{ root: commonClasses.installButton }}
               onClick={handleCopyGpuOperatorYaml}
             >

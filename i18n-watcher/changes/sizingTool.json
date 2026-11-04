@@ -1,0 +1,31 @@
+{
+  "added": {
+    "tabs.cpu": "CPU Sizing",
+    "tabs.gpu": "GPU Sizing",
+    "tabs.new": "NEW",
+    "tabs.cpuHint": "The existing CPU estimation: loading memory, node configuration, dependencies and install commands.",
+    "tabs.gpuHint": "VRAM estimation for GPU_BRUTE_FORCE, GPU_IVF_FLAT, GPU_IVF_PQ and GPU_CAGRA, including the full derivation.",
+    "gpu.form.million": "Million",
+    "gpu.form.averageLengthTip": "Host memory only — not counted into VRAM",
+    "gpu.form.indexDoc": "How to choose a GPU index?",
+    "gpu.form.trainFraction": "kmeans_trainset_fraction",
+    "gpu.form.pqDim": "pq_dim (m)",
+    "gpu.form.pqDimTip": "0 = cuVS Auto → {{value}}",
+    "gpu.form.pqBits": "nbits",
+    "gpu.form.graphDegree": "graph_degree",
+    "gpu.form.intermediateDegree": "intermediate_graph_degree",
+    "gpu.form.modeManualTip": "The GPU estimate does not switch mode automatically — pick the one you plan to deploy.",
+    "gpu.form.cacheDatasetOnDevice": "cache_dataset_on_device",
+    "gpu.result.gpuMemory": "GPU Memory",
+    "gpu.result.vram": "VRAM",
+    "gpu.result.vramWithValue": "VRAM: {{vram}}",
+    "gpu.errors.invalidNumber": "Vector count must be greater than 0, dimension at least 2, and segment size positive.",
+    "gpu.errors.nlistOutOfRange": "nlist must be between 1 and 65536.",
+    "gpu.errors.trainFractionOutOfRange": "kmeans_trainset_fraction must be within (0, 1].",
+    "gpu.errors.pqDimOutOfRange": "Resolved pq_dim must be within [1, d].",
+    "gpu.errors.pqCodeNotByteAligned": "pq_dim × nbits must be a multiple of 8.",
+    "gpu.errors.intermediateDegreeTooSmall": "intermediate_graph_degree must be greater than or equal to graph_degree."
+  },
+  "modified": {},
+  "deleted": {}
+}

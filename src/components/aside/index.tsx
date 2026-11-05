@@ -158,7 +158,7 @@ const Aside = (props: AsidePropsType) => {
             <a
               href={btn.link}
               target="_blank"
-              rel="noopener noreferrer"
+              rel="noopener"
               className={styles.link}
             >
               <span className={styles.iconWrapper}>

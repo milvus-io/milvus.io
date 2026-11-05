@@ -20,7 +20,7 @@ export const LogoSection = (props: { equipment?: 'desktop' | 'tablet' }) => {
       <LocalizedAnchor
         href={ZILLIZ_OFFICIAL_WEBSITE}
         target="_blank"
-        rel="noreferrer noopener"
+        rel="noopener"
       >
         <img src="/images/layout/zilliz-logo.svg" width={75} height={30} alt="Zilliz" />
       </LocalizedAnchor>

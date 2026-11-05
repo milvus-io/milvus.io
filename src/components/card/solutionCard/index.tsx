@@ -24,7 +24,7 @@ const SolutionCard: React.FC<{
 }) => {
   return (
     <div tabIndex={0} className={clsx(styles.solutionCard, className)}>
-      <div rel="noopener noreferrer" className={styles.linkWrapper}>
+      <div rel="noopener" className={styles.linkWrapper}>
         <div>
           {img ? <img src={img} alt={title} className={styles.img} loading="lazy" /> : null}
           <h3 className={styles.title}>{title}</h3>

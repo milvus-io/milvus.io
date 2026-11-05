@@ -69,7 +69,7 @@ export function UseCase(props: Props) {
                 href={SHARE_YOUR_STORY_URL}
                 className={styles.linkBtn}
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener"
               >
                 {t('shareSection.cta')}
                 <RightArrow />

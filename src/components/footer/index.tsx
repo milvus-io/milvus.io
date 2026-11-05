@@ -222,7 +222,7 @@ const Footer = (props: Props) => {
               <LocalizedAnchor
                 href={ZILLIZ_OFFICIAL_WEBSITE}
                 target="_blank"
-                rel="noreferrer noopener"
+                rel="noopener"
               >
                 <img
                   src="/images/layout/zilliz-logo.svg"
@@ -249,7 +249,7 @@ const Footer = (props: Props) => {
                   <LocalizedAnchor
                     href={ZILLIZ_OFFICIAL_WEBSITE}
                     target="_blank"
-                    rel="noreferrer noopener"
+                    rel="noopener"
                     className="text-black2 hover:underline"
                     key="zilliz-official-website"
                   ></LocalizedAnchor>,
@@ -274,7 +274,7 @@ const Footer = (props: Props) => {
                   key={item.name}
                   href={item.href}
                   target="_blank"
-                  rel="noopener noreferrer"
+                  rel="noopener"
                   title={item.name}
                 >
                   <img
@@ -312,7 +312,7 @@ const Footer = (props: Props) => {
                               className="inline-flex items-center gap-[4px] text-[14px] font-[400] leading-[21px] text-black1 hover:opacity-[0.7]"
                               href={child.to}
                               target="_blank"
-                              rel="noopener noreferrer"
+                              rel="noopener"
                             >
                               {child.name}
                               <span className="grow-0 shrink-0 basis-[14px] h-[14px]">

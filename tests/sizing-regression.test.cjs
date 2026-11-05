@@ -616,3 +616,129 @@ test('gpuOperatorYmlGenerator emits gpu memory pool configuration in spec.config
   assert.ok(yml.includes('initMemSize: 2048'), 'YAML must contain gpu initMemSize');
   assert.ok(yml.includes('maxMemSize: 4096'), 'YAML must contain gpu maxMemSize');
 });
+
+test('memoryAndDiskCalculator and dependencyCalculator support SINDI compression via indexTypeParams and top-level params', () => {
+  const baseSparseParams = {
+    rawDataSize: 100 * 1024 * 1024,
+    d: 768,
+    num: 10,
+    withScalar: false,
+    offLoading: false,
+    scalarAvg: 0,
+    segSize: 512,
+    mode: ModeEnum.Cluster,
+    vectorType: VectorTypeEnum.SPARSE_FLOAT_VECTOR,
+    avgNnz: 500,
+  };
+
+  const uncompressed = memoryAndDiskCalculator({
+    ...baseSparseParams,
+    indexTypeParams: {
+      indexType: IndexTypeEnum26.SPARSE_INVERTED_INDEX,
+      sindiCompression: false,
+    },
+  });
+  const sindiViaIndexParams = memoryAndDiskCalculator({
+    ...baseSparseParams,
+    indexTypeParams: {
+      indexType: IndexTypeEnum26.SPARSE_INVERTED_INDEX,
+      sindiCompression: true,
+    },
+  });
+  assert.ok(
+    sindiViaIndexParams.memory < uncompressed.memory,
+    'SINDI via indexTypeParams.sindiCompression must reduce sparse memory footprint'
+  );
+
+  const depUncompressed = dependencyCalculator({
+    num: 10,
+    d: 768,
+    mode: ModeEnum.Cluster,
+    withScalar: false,
+    scalarAvg: 0,
+    loadingMemory: uncompressed.memory,
+    dependency: DependencyComponentEnum.Pulsar,
+    vectorType: VectorTypeEnum.SPARSE_FLOAT_VECTOR,
+    avgNnz: 5000,
+    sindiCompression: false,
+  });
+  const depSindi = dependencyCalculator({
+    num: 10,
+    d: 768,
+    mode: ModeEnum.Cluster,
+    withScalar: false,
+    scalarAvg: 0,
+    loadingMemory: sindiViaIndexParams.memory,
+    dependency: DependencyComponentEnum.Pulsar,
+    vectorType: VectorTypeEnum.SPARSE_FLOAT_VECTOR,
+    avgNnz: 5000,
+    sindiCompression: true,
+  });
+  assert.ok(
+    depSindi.minio.pvc < depUncompressed.minio.pvc,
+    'SINDI compression must reduce MinIO PVC requirement for large sparse datasets'
+  );
+});
+
+test('memoryAndDiskCalculator handles FP16/BF16 with HNSW_SQ/HNSW_PQ and DISKANN with INT8/BINARY', () => {
+  const common = {
+    rawDataSize: 100 * 1024 * 1024,
+    d: 768,
+    num: 1,
+    withScalar: false,
+    offLoading: false,
+    scalarAvg: 0,
+    segSize: 512,
+    mode: ModeEnum.Cluster,
+    refineType: RefineValueEnum.None,
+  };
+
+  const hnswSqFp32 = memoryAndDiskCalculator({
+    ...common,
+    vectorType: VectorTypeEnum.FLOAT_VECTOR,
+    indexTypeParams: { indexType: IndexTypeEnum26.HNSW_SQ, m: 16 },
+  });
+  const hnswSqFp16 = memoryAndDiskCalculator({
+    ...common,
+    vectorType: VectorTypeEnum.FLOAT16_VECTOR,
+    indexTypeParams: { indexType: IndexTypeEnum26.HNSW_SQ, m: 16 },
+  });
+  const hnswPqBf16 = memoryAndDiskCalculator({
+    ...common,
+    vectorType: VectorTypeEnum.BFLOAT16_VECTOR,
+    indexTypeParams: { indexType: IndexTypeEnum26.HNSW_PQ, m: 16 },
+  });
+  assert.equal(
+    hnswSqFp16.memory,
+    hnswSqFp32.memory,
+    'HNSW_SQ memory uses 8-bit SQ codes + 32-bit graph edges without double-halving FP16'
+  );
+  assert.ok(
+    hnswPqBf16.memory < hnswSqFp16.memory,
+    'HNSW_PQ memory with BF16 must be smaller than HNSW_SQ'
+  );
+
+  const diskannFp32 = memoryAndDiskCalculator({
+    ...common,
+    vectorType: VectorTypeEnum.FLOAT_VECTOR,
+    indexTypeParams: { indexType: IndexTypeEnum26.DISKANN, maxDegree: 56 },
+  });
+  const diskannInt8 = memoryAndDiskCalculator({
+    ...common,
+    vectorType: VectorTypeEnum.INT8_VECTOR,
+    indexTypeParams: { indexType: IndexTypeEnum26.DISKANN, maxDegree: 56 },
+  });
+  const diskannBinary = memoryAndDiskCalculator({
+    ...common,
+    vectorType: VectorTypeEnum.BINARY_VECTOR,
+    indexTypeParams: { indexType: IndexTypeEnum26.DISKANN, maxDegree: 56 },
+  });
+  assert.ok(
+    diskannInt8.disk < diskannFp32.disk,
+    'DiskANN on INT8 vectors must require less local disk than FP32'
+  );
+  assert.ok(
+    diskannBinary.memory < diskannInt8.memory,
+    'DiskANN RAM cache on BINARY vectors must be bounded by binary vector size'
+  );
+});

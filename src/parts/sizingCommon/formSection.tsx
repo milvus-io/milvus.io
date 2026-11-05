@@ -122,6 +122,9 @@ export default function FormSection(props: FormSectionProps) {
     if (config.supportsRabitq) {
       base.rabitqNList = N_LIST_RANGE_CONFIG.defaultValue;
     }
+    if (config.supportsWoodpecker) {
+      base.sindiCompression = false;
+    }
     return base;
   }, [config.supportsRabitq]);
 
@@ -312,6 +315,7 @@ export default function FormSection(props: FormSectionProps) {
       scalarAvg: form.scalarData.averageNum,
       vectorType: form.vectorType,
       avgNnz: form.avgNnz,
+      sindiCompression: Boolean(indexTypeParams.sindiCompression),
     });
     setRawDataSize(rawDataSize);
   }, [
@@ -321,6 +325,7 @@ export default function FormSection(props: FormSectionProps) {
     form.scalarData.averageNum,
     form.vectorType,
     form.avgNnz,
+    indexTypeParams.sindiCompression,
   ]);
 
   const disableStandalone = useMemo(() => {
@@ -360,6 +365,7 @@ export default function FormSection(props: FormSectionProps) {
       mode: currentMode,
       vectorType: form.vectorType,
       avgNnz: form.avgNnz,
+      sindiCompression: Boolean(indexTypeParams.sindiCompression),
     };
 
     // Add refineType for v3
@@ -386,6 +392,7 @@ export default function FormSection(props: FormSectionProps) {
       loadingMemory: memory,
       vectorType: form.vectorType,
       avgNnz: form.avgNnz,
+      sindiCompression: Boolean(indexTypeParams.sindiCompression),
     };
     // Add dependency for v3
     if (config.supportsWoodpecker) {

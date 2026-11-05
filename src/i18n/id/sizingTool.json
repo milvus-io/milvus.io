@@ -33,7 +33,8 @@
     "refineType": "Perbaiki Jenis",
     "inlinePq": "inline_pq",
     "vectorType": "Tipe Data Vektor",
-    "avgNnz": "Rata-rata Dimensi Bukan Nol (avg_nnz)"
+    "avgNnz": "Rata-rata Dimensi Bukan Nol (avg_nnz)",
+    "sindi": "Kompresi SINDI (Milvus 3.0)"
   },
   "overview": {
     "title": "Kebutuhan Sumber Daya",

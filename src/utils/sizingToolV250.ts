@@ -149,15 +149,20 @@ export const memoryAndDiskCalculator = (params: {
         disk: 0,
       };
       break;
-    case IndexTypeEnum.SPARSE_INVERTED_INDEX:
+    case IndexTypeEnum.SPARSE_INVERTED_INDEX: {
+      const sparseRawSize =
+        vectorType === VectorTypeEnum.SPARSE_FLOAT_VECTOR
+          ? vectorRawDataSize
+          : num * ONE_MILLION * (avgNnz ?? d) * 8;
       result = {
-        memory: vectorRawDataSize * 1.2,
+        memory: sparseRawSize * 1.2,
         disk: 0,
       };
       break;
+    }
     case IndexTypeEnum.DISKANN:
       result = {
-        memory: sq8Memory,
+        memory: Math.min(sq8Memory, vectorRawDataSize),
         disk: vectorRawDataSize + vamanaGraphDisk,
       };
       break;

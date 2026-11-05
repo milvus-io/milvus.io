@@ -33,7 +33,8 @@
     "refineType": "絞り込みタイプ",
     "inlinePq": "inline_pq",
     "vectorType": "ベクトルデータ型",
-    "avgNnz": "平均非ゼロ次元数 (avg_nnz)"
+    "avgNnz": "平均非ゼロ次元数 (avg_nnz)",
+    "sindi": "SINDI 圧縮 (Milvus 3.0)"
   },
   "overview": {
     "title": "リソース要件",

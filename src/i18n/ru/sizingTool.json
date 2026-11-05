@@ -33,7 +33,8 @@
     "refineType": "Уточнить тип",
     "inlinePq": "inline_pq",
     "vectorType": "Тип векторных данных",
-    "avgNnz": "Среднее число ненулевых измерений (avg_nnz)"
+    "avgNnz": "Среднее число ненулевых измерений (avg_nnz)",
+    "sindi": "Сжатие SINDI (Milvus 3.0)"
   },
   "overview": {
     "title": "Требования к ресурсам",

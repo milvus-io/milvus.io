@@ -33,7 +33,8 @@
     "refineType": "Refinar tipo",
     "inlinePq": "inline_pq",
     "vectorType": "Tipo de datos vectoriales",
-    "avgNnz": "Dimensiones promedio no nulas (avg_nnz)"
+    "avgNnz": "Dimensiones promedio no nulas (avg_nnz)",
+    "sindi": "Compresión SINDI (Milvus 3.0)"
   },
   "overview": {
     "title": "Requisitos de Recursos",

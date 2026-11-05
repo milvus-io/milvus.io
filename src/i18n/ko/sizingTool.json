@@ -33,7 +33,8 @@
     "refineType": "유형 세분화",
     "inlinePq": "inline_pq",
     "vectorType": "벡터 데이터 타입",
-    "avgNnz": "평균 0이 아닌 차원 수 (avg_nnz)"
+    "avgNnz": "평균 0이 아닌 차원 수 (avg_nnz)",
+    "sindi": "SINDI 압축 (Milvus 3.0)"
   },
   "overview": {
     "title": "리소스 요구 사항",

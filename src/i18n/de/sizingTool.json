@@ -33,7 +33,8 @@
     "refineType": "Typ verfeinern",
     "inlinePq": "inline_pq",
     "vectorType": "Vektordatentyp",
-    "avgNnz": "Durchschnittliche Nicht-Null-Dimensionen (avg_nnz)"
+    "avgNnz": "Durchschnittliche Nicht-Null-Dimensionen (avg_nnz)",
+    "sindi": "SINDI-Komprimierung (Milvus 3.0)"
   },
   "overview": {
     "title": "Ressourcenanforderungen",

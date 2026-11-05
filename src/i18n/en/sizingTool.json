@@ -36,7 +36,8 @@
     "refine": "Refine",
     "refineType": "Refine Type",
     "vectorType": "Vector Data Type",
-    "avgNnz": "Average Non-zero Dimensions (avg_nnz)"
+    "avgNnz": "Average Non-zero Dimensions (avg_nnz)",
+    "sindi": "SINDI Compression (Milvus 3.0)"
   },
   "overview": {
     "title": "Resource Requirements",

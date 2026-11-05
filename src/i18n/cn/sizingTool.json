@@ -33,7 +33,8 @@
     "refineType": "细化类型",
     "inlinePq": "inline_pq",
     "vectorType": "向量数据类型",
-    "avgNnz": "平均非零维度 (avg_nnz)"
+    "avgNnz": "平均非零维度 (avg_nnz)",
+    "sindi": "SINDI 压缩 (Milvus 3.0)"
   },
   "overview": {
     "title": "资源需求",

@@ -85,7 +85,11 @@ export const memoryAndDiskCalculator = (params: {
     sq8NList,
     rabitqNList,
     inlinePq,
+    sindiCompression: indexSindiCompression,
   } = indexTypeParams;
+  const effectiveSindiCompression = Boolean(
+    sindiCompression ?? indexSindiCompression
+  );
   const segmentSizeByte = unitAny2BYTE(segSize, 'MB');
   let vectorBytesPerItem: number;
   switch (vectorType) {
@@ -100,7 +104,8 @@ export const memoryAndDiskCalculator = (params: {
       vectorBytesPerItem = d / 8;
       break;
     case VectorTypeEnum.SPARSE_FLOAT_VECTOR:
-      vectorBytesPerItem = (avgNnz ?? d) * (sindiCompression ? 2.8 : 8);
+      vectorBytesPerItem =
+        (avgNnz ?? d) * (effectiveSindiCompression ? 2.8 : 8);
       break;
     case VectorTypeEnum.FLOAT_VECTOR:
     default:
@@ -109,7 +114,10 @@ export const memoryAndDiskCalculator = (params: {
   }
   const vectorRawDataSize = num * ONE_MILLION * vectorBytesPerItem;
   const fp32RawDataSize = num * ONE_MILLION * d * 4;
-  const graphMemory = (2 * m / d) * fp32RawDataSize;
+  // HNSW/Vamana graph edges store 32-bit node IDs (4 bytes/edge), independent of vector element width.
+  // SQ8/PQ quantize each dimension to 8-bit/PQ code budgets (fp32/4 and fp32/8) even when input is FP16/BF16,
+  // while coarse centroids (rowSize) retain the input vector element width.
+  const graphMemory = ((2 * m) / d) * fp32RawDataSize;
   const sq8Memory = fp32RawDataSize / 4;
   const vamanaGraphDisk = (maxDegree / d) * fp32RawDataSize;
   const N = REFINE_VALUE_TO_N_MAP[refineType];
@@ -174,17 +182,23 @@ export const memoryAndDiskCalculator = (params: {
         disk: 0,
       };
       break;
-    case IndexTypeEnum.SPARSE_INVERTED_INDEX:
+    case IndexTypeEnum.SPARSE_INVERTED_INDEX: {
+      const sparseRawSize =
+        vectorType === VectorTypeEnum.SPARSE_FLOAT_VECTOR
+          ? vectorRawDataSize
+          : num * ONE_MILLION * (avgNnz ?? d) * 8;
       result = {
-        memory: sindiCompression
+        memory: effectiveSindiCompression
           ? num * ONE_MILLION * (avgNnz ?? d) * 2.8
-          : vectorRawDataSize * 1.2,
+          : sparseRawSize * 1.2,
         disk: 0,
       };
       break;
+    }
     case IndexTypeEnum.DISKANN:
+      // DiskANN caches PQ compressed codes in RAM (~1 byte/dim, bounded by raw vector size for sub-byte vectors).
       result = {
-        memory: sq8Memory,
+        memory: Math.min(sq8Memory, vectorRawDataSize),
         disk: vectorRawDataSize + vamanaGraphDisk,
       };
       break;
@@ -536,6 +550,7 @@ export const dependencyCalculator = (params: {
   dependency?: DependencyComponentEnum;
   vectorType?: VectorTypeEnum;
   avgNnz?: number;
+  sindiCompression?: boolean;
 }): DependencyConfigType => {
   const {
     num,
@@ -547,6 +562,7 @@ export const dependencyCalculator = (params: {
     dependency,
     vectorType,
     avgNnz,
+    sindiCompression,
   } = params;
   const MINIMUM_MINIO_PVC_SIZE = 30; //GB
   const MINIMUM_PULSAR_LEDGERS = 20; //GB
@@ -560,6 +576,7 @@ export const dependencyCalculator = (params: {
     scalarAvg,
     vectorType,
     avgNnz,
+    sindiCompression,
   });
 
   const minioPvc = Math.max(

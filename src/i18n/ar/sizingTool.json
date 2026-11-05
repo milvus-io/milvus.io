@@ -33,7 +33,8 @@
     "refineType": "تنقيح النوع",
     "inlinePq": "مضمنة_بقس",
     "vectorType": "نوع البيانات المتجهية",
-    "avgNnz": "متوسط الأبعاد غير الصفرية (avg_nnz)"
+    "avgNnz": "متوسط الأبعاد غير الصفرية (avg_nnz)",
+    "sindi": "ضغط SINDI (Milvus 3.0)"
   },
   "overview": {
     "title": "متطلبات الموارد",

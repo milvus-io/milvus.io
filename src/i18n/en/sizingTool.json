@@ -129,7 +129,8 @@
       "pqBits": "nbits",
       "graphDegree": "graph_degree",
       "intermediateDegree": "intermediate_graph_degree",
-      "modeManualTip": "The GPU estimate does not switch mode automatically — pick the one you plan to deploy."
+      "modeManualTip": "The GPU estimate does not switch mode automatically — pick the one you plan to deploy.",
+      "cacheDatasetOnDevice": "cache_dataset_on_device"
     },
     "result": {
       "gpuMemory": "GPU Memory",

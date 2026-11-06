@@ -41,7 +41,7 @@ const GitHubButton = ({
         href={href}
         className={styles.link}
         target={target}
-        rel="noopener noreferrer"
+        rel="noopener"
       >
         <span className={clsx(styles.iconWrapper)}>
           <Icon />

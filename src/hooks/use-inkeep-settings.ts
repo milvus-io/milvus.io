@@ -18,7 +18,7 @@ import {
 import { zodToJsonSchema } from 'zod-to-json-schema';
 import { CONTACT_SALES_URL } from '@/consts/externalLinks';
 import { useMemo } from 'react';
-import { MILVUS_SLACK_LINK } from '@/consts/links';
+import { getMilvusSlackLink } from '@/consts/links';
 
 type InkeepSharedSettings = {
   baseSettings: InkeepBaseSettings;
@@ -76,7 +76,7 @@ export const useInkeepSettings = ({
         name: 'Slack',
         action: {
           type: 'open_link',
-          url: MILVUS_SLACK_LINK,
+          url: getMilvusSlackLink(locale),
         },
         icon: {
           builtIn: 'FaSlack',

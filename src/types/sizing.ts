@@ -1,3 +1,12 @@
+export enum VectorTypeEnum {
+  FLOAT_VECTOR = 'FLOAT_VECTOR',
+  FLOAT16_VECTOR = 'FLOAT16_VECTOR',
+  BFLOAT16_VECTOR = 'BFLOAT16_VECTOR',
+  INT8_VECTOR = 'INT8_VECTOR',
+  BINARY_VECTOR = 'BINARY_VECTOR',
+  SPARSE_FLOAT_VECTOR = 'SPARSE_FLOAT_VECTOR',
+}
+
 export type DataSizeUnit = 'B' | 'KB' | 'MB' | 'GB' | 'TB';
 export enum SegmentSizeEnum {
   _512MB = '512',
@@ -5,13 +14,21 @@ export enum SegmentSizeEnum {
   _2048MB = '2048',
 }
 
+export enum SegmentSizeMetricEnum {
+  RAW = 'raw',
+  MAIN_INDEX = 'mainIndex',
+}
+
 export enum IndexTypeEnum {
   FLAT = 'FLAT',
   SCANN = 'SCANN',
   HNSW = 'HNSW',
+  HNSW_SQ = 'HNSW_SQ',
+  HNSW_PQ = 'HNSW_PQ',
   IVF_FLAT = 'IVF_FLAT',
   IVFSQ8 = 'IVF_SQ8',
   IVFRABITQ = 'IVF_RABITQ',
+  SPARSE_INVERTED_INDEX = 'SPARSE_INVERTED_INDEX',
   DISKANN = 'DISKANN',
   AISAQ = 'AISAQ',
 }
@@ -33,7 +50,7 @@ export enum RefineValueEnum {
   SQ8 = 'SQ8',
   FP16 = 'FP16',
   BF16 = 'BF16',
-  SQ32 = 'SQ32',
+  FP32 = 'FP32',
 }
 
 export const REFINE_VALUE_TO_N_MAP = {
@@ -41,7 +58,7 @@ export const REFINE_VALUE_TO_N_MAP = {
   [RefineValueEnum.SQ8]: 8,
   [RefineValueEnum.FP16]: 16,
   [RefineValueEnum.BF16]: 16,
-  [RefineValueEnum.SQ32]: 32,
+  [RefineValueEnum.FP32]: 32,
   [RefineValueEnum.None]: 0,
 } as const;
 

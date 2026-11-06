@@ -346,16 +346,6 @@
       "Zilliz Cloud external collections are in Public Preview and supported only in on-demand compute databases. See the linked Zilliz Cloud documentation for current limits."
     ]
   ],
-  "aiq": [
-    "when-to-use-milvus-external-collections",
-    "how-can-milvus-search-lance-data",
-    "how-can-milvus-search-iceberg-tables",
-    "lance-iceberg-parquet-for-vector-data-lakes",
-    "how-to-refresh-milvus-external-collections",
-    "how-spark-integrates-with-milvus",
-    "how-to-propagate-lake-deletions-to-vector-search",
-    "what-is-a-vector-data-lake"
-  ],
   "related": [
     "vector-database-for-rag",
     "hybrid-search",

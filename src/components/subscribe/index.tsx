@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import { createFormMeasurement } from '@/utils/growth-form';
+import React, { useState, useRef } from 'react';
 import { submitHubspotForm } from '@/http/submitEmail';
 import classes from './index.module.css';
 import CustomInput from '../customInput/customInput';
@@ -38,6 +39,8 @@ const SubscribeNewsletter: React.FC<Props> = props => {
     classes: customClasses = {},
   } = props;
   const { t } = useTranslation(['common', 'home'], { lng: locale });
+  const measurement = useRef(createFormMeasurement('milvus_newsletter'));
+  const submitting = useRef(false);
   const [value, setValue] = useState('');
   const [subscribeStatus, setSubscribeStatus] = useState<SubscribeEnum>(
     SubscribeEnum.INIT
@@ -52,28 +55,41 @@ const SubscribeNewsletter: React.FC<Props> = props => {
   };
 
   const handleSubmitInfo = async () => {
-    if (subscribeStatus === SubscribeEnum.SUCCESS) {
+    if (submitting.current || subscribeStatus === SubscribeEnum.SUCCESS || subscribeStatus === SubscribeEnum.LOADING) {
       return;
     }
     if (!REGEX.test(value)) {
+      measurement.current.error('validation');
       setErrMsg('Please enter a valid email');
       setSubscribeStatus(SubscribeEnum.FAIL);
 
       return;
     }
+    submitting.current = true;
+    measurement.current.attempt();
     setSubscribeStatus(SubscribeEnum.LOADING);
     try {
       await submitHubspotForm({
         email: value,
       });
-    } finally {
+      measurement.current.success();
       setSubscribeStatus(SubscribeEnum.SUCCESS);
-    }
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({ event: 'newsletter_submit_success', form_id: 'milvus_newsletter', page_path: window.location.pathname });
+    } catch {
+      measurement.current.error('request');
+      setSubscribeStatus(SubscribeEnum.FAIL);
+      setErrMsg(t('common:status.failed'));
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({ event: 'newsletter_submit_failed', form_id: 'milvus_newsletter', page_path: window.location.pathname, error_category: 'request_failed' });
+    } finally { submitting.current = false; }
   };
 
   const handleValueChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
+    if (subscribeStatus === SubscribeEnum.SUCCESS) measurement.current = createFormMeasurement('milvus_newsletter');
+    measurement.current.start();
     setSubscribeStatus(SubscribeEnum.INIT);
     setValue(e.target.value);
     setErrMsg('');

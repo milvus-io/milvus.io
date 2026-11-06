@@ -110,5 +110,40 @@
     "tip1": "How to run Milvus with Docker Compose?",
     "tip2": "How to run Milvus with Helm Chart?",
     "tip3": "How to run Milvus with Milvus Operator?"
+  },
+  "tabs": {
+    "cpu": "CPU Sizing",
+    "gpu": "GPU Sizing",
+    "new": "NEW",
+    "cpuHint": "The existing CPU estimation: loading memory, node configuration, dependencies and install commands.",
+    "gpuHint": "VRAM estimation for GPU_BRUTE_FORCE, GPU_IVF_FLAT, GPU_IVF_PQ and GPU_CAGRA, including the full derivation."
+  },
+  "gpu": {
+    "form": {
+      "million": "Million",
+      "averageLengthTip": "Host memory only — not counted into VRAM",
+      "indexDoc": "How to choose a GPU index?",
+      "trainFraction": "kmeans_trainset_fraction",
+      "pqDim": "pq_dim (m)",
+      "pqDimTip": "0 = cuVS Auto → {{value}}",
+      "pqBits": "nbits",
+      "graphDegree": "graph_degree",
+      "intermediateDegree": "intermediate_graph_degree",
+      "modeManualTip": "The GPU estimate does not switch mode automatically — pick the one you plan to deploy.",
+      "cacheDatasetOnDevice": "cache_dataset_on_device"
+    },
+    "result": {
+      "gpuMemory": "GPU Memory",
+      "vram": "VRAM",
+      "vramWithValue": "VRAM: {{vram}}"
+    },
+    "errors": {
+      "invalidNumber": "Vector count must be greater than 0, dimension at least 2, and segment size positive.",
+      "nlistOutOfRange": "nlist must be between 1 and 65536.",
+      "trainFractionOutOfRange": "kmeans_trainset_fraction must be within (0, 1].",
+      "pqDimOutOfRange": "Resolved pq_dim must be within [1, d].",
+      "pqCodeNotByteAligned": "pq_dim × nbits must be a multiple of 8.",
+      "intermediateDegreeTooSmall": "intermediate_graph_degree must be greater than or equal to graph_degree."
+    }
   }
 }

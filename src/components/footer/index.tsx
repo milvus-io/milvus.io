@@ -15,7 +15,7 @@ import {
   GITHUB_VTS_LINK,
   GITHUB_DEEP_SEARCHER_LINK,
   GITHUB_CLAUDE_CONTEXT_LINK,
-  MILVUS_SLACK_LINK,
+  getMilvusSlackLink,
 } from '@/consts/links';
 import { RightTopArrowIcon } from '@/components/icons';
 import { SocialMedias, SocialMediasCN } from '../socialMedias';
@@ -94,6 +94,7 @@ const Footer = (props: Props) => {
       id: 'tools',
       title: t(`common:v3trans.main.nav.tools`),
       children: [
+        { id: 'tool-learn-milvus', name: 'Learn Milvus', to: getLocalePath('/learn-milvus') },
         { id: 'tool-1', name: 'Attu', to: GITHUB_ATTU_LINK },
         { id: 'tool-2', name: 'Milvus CLI', to: GITHUB_MILVUS_CLI_LINK },
         {
@@ -136,7 +137,7 @@ const Footer = (props: Props) => {
         {
           id: 'community-2',
           name: t('header:community.slack'),
-          to: MILVUS_SLACK_LINK,
+          to: getMilvusSlackLink(locale),
           isExternal: true,
         },
         {
@@ -222,7 +223,7 @@ const Footer = (props: Props) => {
               <LocalizedAnchor
                 href={ZILLIZ_OFFICIAL_WEBSITE}
                 target="_blank"
-                rel="noreferrer noopener"
+                rel="noopener"
               >
                 <img
                   src="/images/layout/zilliz-logo.svg"
@@ -249,7 +250,7 @@ const Footer = (props: Props) => {
                   <LocalizedAnchor
                     href={ZILLIZ_OFFICIAL_WEBSITE}
                     target="_blank"
-                    rel="noreferrer noopener"
+                    rel="noopener"
                     className="text-black2 hover:underline"
                     key="zilliz-official-website"
                   ></LocalizedAnchor>,
@@ -274,7 +275,7 @@ const Footer = (props: Props) => {
                   key={item.name}
                   href={item.href}
                   target="_blank"
-                  rel="noopener noreferrer"
+                  rel="noopener"
                   title={item.name}
                 >
                   <img
@@ -312,7 +313,7 @@ const Footer = (props: Props) => {
                               className="inline-flex items-center gap-[4px] text-[14px] font-[400] leading-[21px] text-black1 hover:opacity-[0.7]"
                               href={child.to}
                               target="_blank"
-                              rel="noopener noreferrer"
+                              rel="noopener"
                             >
                               {child.name}
                               <span className="grow-0 shrink-0 basis-[14px] h-[14px]">

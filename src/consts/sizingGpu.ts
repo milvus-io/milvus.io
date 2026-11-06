@@ -88,6 +88,7 @@ export const DEFAULT_GPU_INDEX_PARAMS: IGpuIndexParams = {
   pqBits: PQ_BITS_DEFAULT_VALUE,
   graphDegree: GRAPH_DEGREE_RANGE_CONFIG.defaultValue,
   intermediateDegree: INTERMEDIATE_GRAPH_DEGREE_RANGE_CONFIG.defaultValue,
+  cacheDatasetOnDevice: true,
 };
 
 /** Index parameters that actually reach the memory formulas, per index type. */
@@ -98,7 +99,7 @@ export const GPU_INDEX_PARAM_KEYS: Record<
   [GpuIndexTypeEnum.GPU_BRUTE_FORCE]: [],
   [GpuIndexTypeEnum.GPU_IVF_FLAT]: ['nlist', 'trainFraction'],
   [GpuIndexTypeEnum.GPU_IVF_PQ]: ['nlist', 'pqDim', 'pqBits', 'trainFraction'],
-  [GpuIndexTypeEnum.GPU_CAGRA]: ['graphDegree', 'intermediateDegree'],
+  [GpuIndexTypeEnum.GPU_CAGRA]: ['graphDegree', 'intermediateDegree', 'cacheDatasetOnDevice'],
 };
 
 export const GPU_INDEX_TYPE_OPTIONS = [

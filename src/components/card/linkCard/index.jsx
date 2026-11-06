@@ -8,7 +8,7 @@ const LinkCard = ({ label, href, className = '' }) => {
       className={`${styles.linkCard} ${className}`}
       href={href}
       target="_blank"
-      rel="noreferrer"
+      rel="noopener"
     >
       <span className={styles.label}>{label}</span>
       <img src={LinkIcon} alt="link-icon" className={styles.icon} />

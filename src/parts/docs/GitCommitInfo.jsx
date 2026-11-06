@@ -6,11 +6,11 @@ export default function GitCommitInfo(props) {
 
   return (
     <div className={classes.commitInfoWrapper}>
-      <a target="_blank" rel="noreferrer" href={commitInfo.source}>
+      <a target="_blank" rel="noopener" href={commitInfo.source}>
         {mdId}
       </a>
       <span>{` ${commitTrans} ${commitInfo.date}: `}</span>
-      <a target="_blank" rel="noreferrer" href={commitInfo.commitUrl}>
+      <a target="_blank" rel="noopener" href={commitInfo.commitUrl}>
         {commitInfo.message}
       </a>
     </div>

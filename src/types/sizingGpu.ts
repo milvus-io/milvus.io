@@ -61,6 +61,8 @@ export interface IGpuIndexParams {
   graphDegree: number;
   /** CAGRA out-degree of the intermediate graph built during construction. */
   intermediateDegree: number;
+  /** CAGRA whether to cache full dataset vectors on device. */
+  cacheDatasetOnDevice?: boolean;
 }
 
 export interface IGpuSizingParams {
@@ -120,6 +122,11 @@ const NodesType = {
 
 export type NodesKeyType = keyof typeof NodesType;
 
+export interface IRmmPoolConfig {
+  initMemSize: number;
+  maxMemSize: number;
+}
+
 export interface IGpuCalculateResult {
   rawDataSize: number;
   vectorRawDataSize: number;
@@ -143,4 +150,5 @@ export interface IGpuCalculateResult {
   clusterNodeConfig: Record<NodesKeyType, NodesValueType>;
   standaloneNodeConfig: NodesValueType;
   mode: ModeEnum;
+  rmmPoolSize?: IRmmPoolConfig;
 }

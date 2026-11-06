@@ -34,6 +34,7 @@ export interface IGpuFormState {
   pqBits: number;
   graphDegree: number;
   intermediateDegree: number;
+  cacheDatasetOnDevice: boolean;
   segmentSize: SegmentSizeEnum;
   mode: ModeEnum;
 }
@@ -48,8 +49,9 @@ export const DEFAULT_GPU_FORM: IGpuFormState = {
   trainFraction: TRAIN_FRACTION_RANGE_CONFIG.defaultValue,
   pqDim: PQ_DIM_RANGE_CONFIG.defaultValue,
   pqBits: PQ_BITS_DEFAULT_VALUE,
-  graphDegree: GRAPH_DEGREE_RANGE_CONFIG.defaultValue,
-  intermediateDegree: INTERMEDIATE_GRAPH_DEGREE_RANGE_CONFIG.defaultValue,
+  graphDegree: 64,
+  intermediateDegree: 128,
+  cacheDatasetOnDevice: true,
   segmentSize: SegmentSizeEnum._1024MB,
   mode: ModeEnum.Standalone,
 };
@@ -80,6 +82,7 @@ export const toGpuSizingParams = (form: IGpuFormState): IGpuSizingParams => ({
     pqBits: form.pqBits,
     graphDegree: form.graphDegree,
     intermediateDegree: form.intermediateDegree,
+    cacheDatasetOnDevice: form.cacheDatasetOnDevice,
   },
 });
 

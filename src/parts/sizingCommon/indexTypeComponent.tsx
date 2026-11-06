@@ -358,7 +358,11 @@ export const IndexTypeComponent = (props: IndexTypeComponentProps) => {
     case IndexTypeEnum.SCANN:
       return <SCANNComponent {...props} />;
     case IndexTypeEnum.HNSW:
+    case IndexTypeEnum.HNSW_SQ:
+    case IndexTypeEnum.HNSW_PQ:
       return <HNSWComponent {...props} />;
+    case IndexTypeEnum.SPARSE_INVERTED_INDEX:
+      return null;
     case IndexTypeEnum.DISKANN:
       return <DISKANNComponent {...props} />;
     case IndexTypeEnum.IVF_FLAT:

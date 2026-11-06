@@ -246,19 +246,27 @@ export default function FormSection(props: FormSectionProps) {
     form.scalarData.averageNum,
   ]);
 
+  const disableStandalone = useMemo(() => {
+    const disableThreshold =
+      indexTypeParams.indexType === IndexTypeEnum.DISKANN
+        ? $500M768D
+        : $100M768D;
+    return rawDataSize > disableThreshold;
+  }, [rawDataSize, indexTypeParams.indexType]);
+
   useEffect(() => {
     let mode =
       rawDataSize > modeChangeThreshold
         ? ModeEnum.Cluster
         : ModeEnum.Standalone;
-    if (manuallySelectedMode === ModeEnum.Cluster) {
-      mode = ModeEnum.Cluster;
-    }
-    setForm({
-      ...form,
-      mode: manuallySelectedMode || mode,
-    });
-  }, [rawDataSize, modeChangeThreshold]);
+    const resolvedMode = disableStandalone
+      ? ModeEnum.Cluster
+      : (manuallySelectedMode ?? mode);
+    setForm(prev => ({
+      ...prev,
+      mode: resolvedMode,
+    }));
+  }, [rawDataSize, modeChangeThreshold, disableStandalone, manuallySelectedMode]);
 
   useEffect(() => {
     const currentMode = form.mode;
@@ -318,14 +326,6 @@ export default function FormSection(props: FormSectionProps) {
       isOutOfCalculate: disableCalculationThreshold ? false : rawDataSize > $1B768D,
     });
   }, [form, indexTypeParams, refine]);
-
-  const disableStandalone = useMemo(() => {
-    const disableThreshold =
-      indexTypeParams.indexType === IndexTypeEnum.DISKANN
-        ? $500M768D
-        : $100M768D;
-    return rawDataSize > disableThreshold;
-  }, [rawDataSize, indexTypeParams.indexType]);
 
   return (
     <section className={clsx(className, classes.formSection)}>

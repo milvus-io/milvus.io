@@ -32,7 +32,7 @@ export const getGithubStatics = async () => {
   }
 };
 
-export const fetchMilvusReleases = async () => {
+export const fetchMilvusReleases = async (versionPrefix?: string) => {
   const auth =
     process.env.REPO_STATICS_KEY || process.env.NEXT_PUBLIC_REPO_STATICS_KEY;
   const octokit = new Octokit({
@@ -44,12 +44,14 @@ export const fetchMilvusReleases = async () => {
       repo: REPOSITORY,
     });
     const validReleases = res.data.filter(
-      item => !item.tag_name.includes('client')
+      item =>
+        !item.tag_name.includes('client') &&
+        (!versionPrefix || item.tag_name.startsWith(versionPrefix))
     );
-    const latestTag = validReleases[0].tag_name;
-    return latestTag;
+    const latestTag = validReleases[0]?.tag_name;
+    return latestTag || (versionPrefix ? `${versionPrefix}0` : 'v2.6.26');
   } catch (error) {
     console.log(error);
-    return 'v2.5.14';
+    return versionPrefix?.startsWith('v2.5') ? 'v2.5.14' : 'v2.6.26';
   }
 };

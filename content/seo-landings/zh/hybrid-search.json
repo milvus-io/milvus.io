@@ -313,15 +313,6 @@
   ],
   "feature_blocks_h2": "混合检索策略为什么有效：证据",
   "layout": "pillar",
-  "aiq": [
-    "what-is-hybrid-search-and-when-should-i-use-it",
-    "what-is-fulltext-search",
-    "what-are-dense-and-sparse-embeddings",
-    "how-sparse-inverted-indexes-work",
-    "what-is-vector-reranking-and-when-should-you-apply-it",
-    "hybrid-multimodal-product-search",
-    "how-does-applying-boolean-filters-or-metadatabased-prefiltering-alongside-vector-similarity-search-influence-the-overall-query-performance"
-  ],
   "related": [
     "vector-database-for-rag",
     "milvus-vs-elasticsearch",

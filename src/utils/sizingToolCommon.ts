@@ -1,3 +1,6 @@
+import { VectorTypeEnum, SegmentSizeMetricEnum } from '@/types/sizing';
+export { VectorTypeEnum, SegmentSizeMetricEnum };
+
 /**
  * Common utility functions shared between sizing tool versions
  */
@@ -18,14 +21,19 @@ export const unitBYTE2Any = (size: number, unit?: DataSizeUnit) => {
   }
 
   let sizeStatus = 0;
-  let baseUnit = 'BYTE';
-  while (sizeStatus < units.length - 1 && size > 1024) {
+  while (sizeStatus < units.length - 1 && size >= 1024) {
     size = size / 1024;
     sizeStatus++;
   }
-  baseUnit = units[sizeStatus];
   const decimal = sizeStatus >= 4 ? 100 : 10;
   size = Math.round(size * decimal) / decimal;
+  if (size >= 1024 && sizeStatus < units.length - 1) {
+    size = size / 1024;
+    sizeStatus++;
+    const nextDecimal = sizeStatus >= 4 ? 100 : 10;
+    size = Math.round(size * nextDecimal) / nextDecimal;
+  }
+  const baseUnit = units[sizeStatus];
   return {
     size,
     unit: baseUnit,
@@ -110,10 +118,36 @@ export const createRawDataSizeCalculator = (ONE_MILLION: number) => {
     d: number;
     withScalar: boolean;
     scalarAvg: number;
+    vectorType?: VectorTypeEnum;
+    avgNnz?: number;
+    sindiCompression?: boolean;
   }) => {
-    const { num, d, withScalar, scalarAvg } = params;
+    const { num, d, withScalar, scalarAvg, vectorType, avgNnz, sindiCompression } = params;
 
-    const vectorRaw = (num * d * ONE_MILLION * 32) / 8; // bytes
+    let vectorBytesPerItem: number;
+    switch (vectorType) {
+      case VectorTypeEnum.FLOAT16_VECTOR:
+      case VectorTypeEnum.BFLOAT16_VECTOR:
+        vectorBytesPerItem = d * 2;
+        break;
+      case VectorTypeEnum.INT8_VECTOR:
+        vectorBytesPerItem = d * 1;
+        break;
+      case VectorTypeEnum.BINARY_VECTOR:
+        vectorBytesPerItem = d / 8;
+        break;
+      case VectorTypeEnum.SPARSE_FLOAT_VECTOR:
+        // Standard sparse vector: avgNnz * 8 bytes (dim int32 + val float32)
+        // Milvus 3.0 SINDI compressed: avgNnz * 2.8 bytes
+        vectorBytesPerItem = (avgNnz ?? d) * (sindiCompression ? 2.8 : 8);
+        break;
+      case VectorTypeEnum.FLOAT_VECTOR:
+      default:
+        vectorBytesPerItem = (d * 32) / 8;
+        break;
+    }
+
+    const vectorRaw = num * ONE_MILLION * vectorBytesPerItem; // bytes
     const scalarRaw = withScalar ? num * scalarAvg * ONE_MILLION : 0; // bytes
 
     return vectorRaw + scalarRaw;
@@ -176,4 +210,18 @@ export const createDataSizeConstants = (
     $500M768D,
     $1B768D,
   };
+};
+
+/**
+ * SINDI sparse vector memory calculator (Milvus 3.0):
+ * Returns estimated memory footprint in bytes.
+ * Memory_sindi = N * avg_nnz * 2.8 bytes (compressed inverted index & posting list)
+ */
+export const sindiSparseMemoryCalculator = (params: {
+  num: number;
+  avgNnz: number;
+  ONE_MILLION?: number;
+}) => {
+  const { num, avgNnz, ONE_MILLION = 1000000 } = params;
+  return num * ONE_MILLION * avgNnz * 2.8;
 };

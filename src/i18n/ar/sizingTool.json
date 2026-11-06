@@ -110,5 +110,40 @@
   },
   "woodpeckerTip": "<0>نقار الخشب</0> هو نظام سجل الكتابة الأمامية السحابية (WAL) منذ الإصدار Milvus 2.6.0. وهو مصمم ليحل محل Kafka وPulsar كـ MQ في Milvus لتبسيط العمليات وزيادة الإنتاجية والتوسع دون عناء. في الوقت الحالي يتم تشغيله مدمجًا في عقد التدفق.",
   "previousVersion": "الإصدار السابق من أداة التحجيم <0>هنا</0>.",
-  "titleV250": "أداة تحجيم Milvus ل Milvus v2.5.x"
+  "titleV250": "أداة تحجيم Milvus ل Milvus v2.5.x",
+  "tabs": {
+    "cpu": "تحديد حجم وحدة المعالجة المركزية (CPU)",
+    "gpu": "تحديد حجم وحدة معالجة الرسومات (GPU)",
+    "new": "جديد",
+    "cpuHint": "التقدير الحالي لاستخدام وحدة المعالجة المركزية (CPU): سعة الذاكرة، وتكوين العقد، والتبعيات، وأوامر التثبيت.",
+    "gpuHint": "تقدير سعة ذاكرة الفيديو (VRAM) لـ GPU_BRUTE_FORCE و GPU_IVF_FLAT و GPU_IVF_PQ و GPU_CAGRA، بما في ذلك الاستنتاج الكامل."
+  },
+  "gpu": {
+    "form": {
+      "million": "مليون",
+      "averageLengthTip": "ذاكرة المضيف فقط — لا تُحتسب ضمن ذاكرة الفيديو (VRAM)",
+      "indexDoc": "كيفية اختيار مؤشر GPU؟",
+      "trainFraction": "kmeans_trainset_fraction",
+      "pqDim": "pq_dim (م)",
+      "pqDimTip": "0 = cuVS تلقائي → {{value}}",
+      "pqBits": "nbits",
+      "graphDegree": "درجة الارتباط",
+      "intermediateDegree": "درجة الارتباط في الرسم البياني الوسيط",
+      "modeManualTip": "لا يتم تغيير وضع تقدير وحدة معالجة الرسومات (GPU) تلقائيًا — اختر الوضع الذي تنوي استخدامه.",
+      "cacheDatasetOnDevice": "تخزين مجموعة البيانات مؤقتًا على الجهاز"
+    },
+    "result": {
+      "gpuMemory": "ذاكرة وحدة معالجة الرسومات (GPU)",
+      "vram": "ذاكرة الفيديو (VRAM)",
+      "vramWithValue": "ذاكرة الفيديو (VRAM): {{vram}}"
+    },
+    "errors": {
+      "invalidNumber": "يجب أن يكون عدد المتجهات أكبر من 0، وأن يكون البعد 2 على الأقل، وأن يكون حجم المقطع موجبًا.",
+      "nlistOutOfRange": "يجب أن تكون قيمة nlist بين 1 و65536.",
+      "trainFractionOutOfRange": "يجب أن يكون kmeans_trainset_fraction ضمن النطاق (0, 1].",
+      "pqDimOutOfRange": "يجب أن تكون قيمة pq_dim المحددة ضمن النطاق [1، d].",
+      "pqCodeNotByteAligned": "يجب أن يكون pq_dim × nbits من مضاعفات العدد 8.",
+      "intermediateDegreeTooSmall": "يجب أن تكون قيمة intermediate_graph_degree أكبر من أو تساوي قيمة graph_degree."
+    }
+  }
 }

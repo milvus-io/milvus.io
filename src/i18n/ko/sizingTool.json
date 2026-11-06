@@ -110,5 +110,40 @@
   },
   "woodpeckerTip": "<0>딱따구리는</0> Milvus 2.6.0부터 클라우드 네이티브 WAL(미리 쓰기 로그) 시스템입니다. 운영을 간소화하고, 처리량을 극대화하며, 손쉽게 확장할 수 있도록 Milvus에서 Kafka와 Pulsar를 MQ로 대체하도록 설계되었습니다. 현재는 스트리밍 노드에 임베디드되어 실행되고 있습니다.",
   "previousVersion": "이전 버전의 크기 조정 도구는 <0>여기에서</0> 확인할 수 있습니다.",
-  "titleV250": "Milvus v2.5.x용 Milvus 사이징 도구"
+  "titleV250": "Milvus v2.5.x용 Milvus 사이징 도구",
+  "tabs": {
+    "cpu": "CPU 용량 산정",
+    "gpu": "GPU 용량 결정",
+    "new": "신규",
+    "cpuHint": "기존 CPU 추정 요소: 메모리 로딩, 노드 구성, 종속성 및 설치 명령어.",
+    "gpuHint": "GPU_BRUTE_FORCE, GPU_IVF_FLAT, GPU_IVF_PQ 및 GPU_CAGRA에 대한 VRAM 추정값과 그 도출 과정 전체."
+  },
+  "gpu": {
+    "form": {
+      "million": "백만",
+      "averageLengthTip": "호스트 메모리 전용 — VRAM에 포함되지 않음",
+      "indexDoc": "GPU 인덱스는 어떻게 선택해야 할까요?",
+      "trainFraction": "kmeans_훈련 데이터 비율",
+      "pqDim": "pq_dim (m)",
+      "pqDimTip": "0 = cuVS 자동 → {{value}}",
+      "pqBits": "n비트",
+      "graphDegree": "그래프 차수",
+      "intermediateDegree": "중간 그래프 차수",
+      "modeManualTip": "GPU 추정값은 자동으로 모드가 전환되지 않으므로, 배포할 모드를 직접 선택하십시오.",
+      "cacheDatasetOnDevice": "기기 내 데이터셋 캐싱"
+    },
+    "result": {
+      "gpuMemory": "GPU 메모리",
+      "vram": "VRAM",
+      "vramWithValue": "VRAM: {{vram}}"
+    },
+    "errors": {
+      "invalidNumber": "벡터의 개수는 0보다 커야 하며, 차원은 2 이상이어야 하고, 세그먼트 크기는 양수여야 합니다.",
+      "nlistOutOfRange": "nlist는 1에서 65536 사이의 값이어야 합니다.",
+      "trainFractionOutOfRange": "kmeans_trainset_fraction은 (0, 1] 범위 내에 있어야 합니다.",
+      "pqDimOutOfRange": "pq_dim의 값은 [1, d] 범위 내에 있어야 합니다.",
+      "pqCodeNotByteAligned": "pq_dim × nbits는 8의 배수여야 합니다.",
+      "intermediateDegreeTooSmall": "intermediate_graph_degree는 graph_degree보다 크거나 같아야 합니다."
+    }
+  }
 }

@@ -11,6 +11,8 @@ on:
       - tests/dependency-compatibility.test.cjs
       - tests/i18n-initialization.test.cjs
       - 'src/i18n/**'
+      - src/utils/inkeep.ts
+      - 'i18n-watcher/**'
       - .github/workflows/dependency-compatibility.yml
   workflow_dispatch:
 

@@ -121,7 +121,7 @@ export default function IVFLab() {
   );
 
   return (
-    <Layout>
+    <Layout disableSelfHreflang>
       <LearnMilvusSeo
         path="/learn-milvus/ivf"
         title={t('ivf.metaTitle')}

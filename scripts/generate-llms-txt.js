@@ -23,6 +23,11 @@
 
 const fs = require('fs');
 const path = require('path');
+const {
+  LEARN_MILVUS_LOCALES,
+  LEARN_MILVUS_TOPICS,
+  getLearnMilvusPath,
+} = require('../src/utils/learn-milvus-seo');
 
 const ROOT = process.cwd();
 const DOCS_DIR = path.join(ROOT, 'src/docs');
@@ -107,7 +112,7 @@ const CURATED = {
   extraSections: [
     {
       heading: 'Interactive Learning',
-      note: 'Browser-based visualizations of how the index and metric choices actually behave.',
+      note: 'Browser-based visualizations of how index and metric choices behave. Each page also contains server-rendered explanations; topic pages include parameter guidance and FAQs that can be read without running the animations. These are educational simulations, not production benchmarks.',
       links: [
         [
           'Learn Milvus',
@@ -445,6 +450,14 @@ Documentation URLs take exactly one of these four forms:
 - API reference URLs are \`${ORIGIN}/api-reference/<sdk>/<version>/<page>.md\` and
   are versioned separately from the docs; see the API Reference section.
 - Blog and Learn pages do not use a \`.md\` suffix.
+- Learn Milvus uses \`/learn-milvus\` for the English home and
+  \`/learn-milvus/<topic>\` for a topic. Translations put the language before
+  the collection: \`/<lang>/learn-milvus\` or \`/<lang>/learn-milvus/<topic>\`,
+  never \`/learn-milvus/<lang>\`. Supported languages: ${LEARN_MILVUS_LOCALES.filter(locale => locale !== 'en').join(', ')}.
+  Published topics: ${LEARN_MILVUS_TOPICS.filter(topic => topic !== 'home').join(', ')}.
+  Use the language matching the user's request when available. All 65 exact
+  learning URLs are listed in the Interactive Learning sections below; do not
+  append \`.md\`, invent a topic, or cite the unpublished Tradeoff dashboard.
 
 **Unknown paths return a hard 404 — they do not redirect and they do not fall
 back to a search page.** A URL that looks right but was never published is a
@@ -489,6 +502,21 @@ const renderApiReference = apiVersions => {
         description
       )
     );
+  }
+  lines.push('');
+  return lines.join('\n');
+};
+
+const renderLearningTranslations = () => {
+  const lines = ['## Interactive Learning — Other Languages', '',
+    'The same five learning pages are available in the following languages. Labels and descriptions below come from the page translations.', ''];
+  for (const locale of LEARN_MILVUS_LOCALES.filter(locale => locale !== 'en')) {
+    const resourceDir = locale === 'zh' ? 'cn' : locale;
+    const resources = readJson(path.join(ROOT, 'src/i18n', resourceDir, 'learnMilvus.json'));
+    for (const topic of LEARN_MILVUS_TOPICS) {
+      const { title, metaDesc } = resources[topic];
+      lines.push(link(`${title} (${locale})`, `${ORIGIN}${getLearnMilvusPath(locale, topic)}`, metaDesc));
+    }
   }
   lines.push('');
   return lines.join('\n');
@@ -545,6 +573,7 @@ const build = () => {
     ...out.lines,
     renderApiReference(apiVersions),
     ...extras,
+    renderLearningTranslations(),
   ];
 
   // Collapse the blank lines that heading/leaf blocks emit independently.
@@ -556,12 +585,16 @@ const build = () => {
   return { text, count: out.count, warnings: out.warnings, latest };
 };
 
-const { text, count, warnings, latest } = build();
-fs.writeFileSync(OUT_FILE, text, 'utf8');
+if (require.main === module) {
+  const { text, count, warnings, latest } = build();
+  fs.writeFileSync(OUT_FILE, text, 'utf8');
 
-for (const warning of warnings) console.warn(`[llms.txt] ${warning}`);
-console.log(
-  `[llms.txt] ${count} doc links from ${latest} -> public/llms.txt (${(
-    Buffer.byteLength(text) / 1024
-  ).toFixed(1)}KB)`
-);
+  for (const warning of warnings) console.warn(`[llms.txt] ${warning}`);
+  console.log(
+    `[llms.txt] ${count} doc links from ${latest} -> public/llms.txt (${(
+      Buffer.byteLength(text) / 1024
+    ).toFixed(1)}KB)`
+  );
+}
+
+module.exports = { renderLearningTranslations, renderUrlRules };

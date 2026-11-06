@@ -97,7 +97,7 @@ export default function DiskANNExplorer() {
   );
 
   return (
-    <Layout>
+    <Layout disableSelfHreflang>
       <LearnMilvusSeo
         path="/learn-milvus/diskann"
         title={t('diskann.metaTitle')}

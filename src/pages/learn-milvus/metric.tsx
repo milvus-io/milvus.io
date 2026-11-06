@@ -58,7 +58,7 @@ export default function MetricPlayground() {
   );
 
   return (
-    <Layout>
+    <Layout disableSelfHreflang>
       <LearnMilvusSeo
         path="/learn-milvus/metric"
         title={t('metric.metaTitle')}

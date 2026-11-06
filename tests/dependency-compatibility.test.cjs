@@ -4,6 +4,38 @@ const { createServer } = require('node:http');
 const { createRequire } = require('node:module');
 const { once } = require('node:events');
 const test = require('node:test');
+const fs = require('node:fs');
+const path = require('node:path');
+const ts = require('typescript');
+
+test('CommonJS translation scripts can call Chalk styling functions', () => {
+  const chalk = require('chalk');
+  assert.equal(typeof chalk.yellow, 'function');
+  assert.equal(typeof chalk.yellow('Scanning translations...'), 'string');
+  assert.equal(typeof chalk.green('Translation scan complete'), 'string');
+});
+
+test('Inkeep tool parameter schemas retain their required fields during JSON Schema conversion', () => {
+  const source = fs.readFileSync(path.join(__dirname, '../src/utils/inkeep.ts'), 'utf8');
+  const code = ts.transpileModule(source, {
+    compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2020 },
+  }).outputText;
+  const schemas = {};
+  new Function('exports', 'require', code)(schemas, require);
+  const { zodToJsonSchema } = require('zod-to-json-schema');
+  for (const [name, field] of [
+    ['provideAnswerConfidenceSchema', 'answerConfidence'],
+    ['detectedSalesSignal', 'type'],
+    ['detectedSupportSignal', 'type'],
+  ]) {
+    const json = zodToJsonSchema(schemas[name]);
+    assert.equal(json.type, 'object', name);
+    assert.equal(json.properties.explanation.type, 'string', name);
+    assert.ok(json.properties[field], name);
+    assert.ok(json.required.includes('explanation'), name);
+    assert.ok(json.required.includes(field), name);
+  }
+});
 
 test('Tailwind 3 and both PostCSS nesting plugins preserve complex selectors', async () => {
   const postcss = require('postcss');

@@ -134,7 +134,7 @@ if (isBrowser && !i18n.isInitialized) {
       escapeValue: false,
     },
     lowerCaseLng: true,
-    initImmediate: false,
+    initAsync: false,
     partialBundledLanguages: true,
     resources: {
       ...(initialResources

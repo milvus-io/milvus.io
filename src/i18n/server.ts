@@ -132,7 +132,7 @@ if (!i18n.isInitialized) {
       escapeValue: false,
     },
     lowerCaseLng: true,
-    initImmediate: false,
+    initAsync: false,
     resources,
   });
 }

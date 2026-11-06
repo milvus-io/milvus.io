@@ -76,7 +76,7 @@ export default function HNSWExplorer() {
   );
 
   return (
-    <Layout>
+    <Layout disableSelfHreflang>
       <LearnMilvusSeo
         path="/learn-milvus/hnsw"
         title={t('hnsw.metaTitle')}

@@ -1,8 +1,11 @@
 const fs = require('fs');
 const { join } = require('path');
 const { getLandingSitemapPaths } = require('./src/server/seo-landing-catalog');
+const { getLearnMilvusSitemapPaths } = require('./src/utils/learn-milvus-seo');
 const landingSitemapPaths = getLandingSitemapPaths();
 const landingSitemapByPath = new Map(landingSitemapPaths.map(page => [page.loc, page]));
+const learnMilvusSitemapPaths = getLearnMilvusSitemapPaths();
+const learnMilvusSitemapByPath = new Map(learnMilvusSitemapPaths.map(page => [page.loc, page]));
 
 // Doc detail pages are rendered on demand and recorded here during the build by
 // src/utils/doc-sitemap-segments.ts. Read them back so on-demand docs still
@@ -115,6 +118,8 @@ module.exports = {
     if (isExcludedFromSitemap(path)) return null;
     const landing = landingSitemapByPath.get(path);
     if (landing) return landing;
+    const learning = learnMilvusSitemapByPath.get(path);
+    if (learning) return learning;
     return {
       loc: path,
       changefreq: config.changefreq,
@@ -136,7 +141,7 @@ module.exports = {
         lastmod: new Date().toISOString(),
       }));
 
-    return [...docPaths, ...landingSitemapPaths];
+    return [...docPaths, ...landingSitemapPaths, ...learnMilvusSitemapPaths];
   },
   outDir: './public',
 };

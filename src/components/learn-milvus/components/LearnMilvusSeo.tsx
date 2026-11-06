@@ -3,6 +3,7 @@ import { ABSOLUTE_BASE_URL } from '@/consts';
 import { buildSchema } from '@/schema';
 import { useGlobalLocale } from '@/hooks/use-global-locale';
 import { useTranslation } from 'react-i18next';
+import { getLearnMilvusAlternates } from '@/utils/learn-milvus-seo';
 
 export interface FaqItem {
   question: string;
@@ -79,6 +80,10 @@ export default function LearnMilvusSeo(props: LearnMilvusSeoProps) {
 
   return (
     <Head>
+      {getLearnMilvusAlternates(path).map(({ hreflang, href }) => (
+        <link key={`learn-milvus-${hreflang}`} rel="alternate" hrefLang={hreflang} href={href} />
+      ))}
+      <link rel="describedby" href={`${ABSOLUTE_BASE_URL}/llms.txt`} type="text/plain" />
       <title>{title}</title>
       <meta name="description" content={description} />
       <meta property="og:title" content={title} />

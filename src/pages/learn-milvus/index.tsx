@@ -19,7 +19,7 @@ export default function LearnMilvusHome() {
   ];
 
   return (
-    <Layout>
+    <Layout disableSelfHreflang>
       <LearnMilvusSeo
         path="/learn-milvus"
         title={t('home.metaTitle')}

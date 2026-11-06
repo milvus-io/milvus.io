@@ -1,5 +1,7 @@
 import { useRef, useEffect, useCallback } from 'react';
 import * as d3 from 'd3';
+import { useTranslation } from 'react-i18next';
+import { useGlobalLocale } from '@/hooks/use-global-locale';
 import type { Point } from '../algorithms/metrics';
 import type { DiskANNGraph, DiskANNStep } from '../algorithms/diskann';
 
@@ -85,6 +87,8 @@ export default function DiskANNCanvas({
   stepIdx,
   topK,
 }: Props) {
+  const { locale } = useGlobalLocale();
+  const { t } = useTranslation('learnMilvus', { lng: locale });
   const svgRef = useRef<SVGSVGElement>(null);
   const draggingRef = useRef(false);
 
@@ -272,7 +276,7 @@ export default function DiskANNCanvas({
           .attr('fill', '#dc3545')
           .attr('font-size', 10)
           .attr('font-weight', 700)
-          .text('disk read');
+          .text(t('common.diskRead'));
       }
     }
 
@@ -288,6 +292,7 @@ export default function DiskANNCanvas({
       .style('cursor', onQueryChange ? 'grab' : 'default')
       .style('filter', 'drop-shadow(0 0 6px rgba(0,161,234,0.4))');
   }, [
+    t,
     graph,
     query,
     steps,

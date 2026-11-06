@@ -32,13 +32,16 @@ const TRANS_COMPONENTS = {
 export default function DeepDive(props: DeepDiveProps) {
   const { sections, docsCtaKey, docsHref, docsExplainedHref, faq, related } =
     props;
-  const { locale } = useGlobalLocale();
+  const { locale, getLocalePath } = useGlobalLocale();
   const { t } = useTranslation('learnMilvus', { lng: locale });
+
+  const localizeDocsPath = (path: string) =>
+    path.replace(/^\/docs(?=\/|$)/, getLocalePath('/docs'));
 
   const ctaComponents = {
     ...TRANS_COMPONENTS,
-    docs: <a key="docs" href={docsHref} />,
-    docsExplained: <a key="docsExplained" href={docsExplainedHref} />,
+    docs: <a key="docs" href={docsHref ? localizeDocsPath(docsHref) : undefined} />,
+    docsExplained: <a key="docsExplained" href={docsExplainedHref ? localizeDocsPath(docsExplainedHref) : undefined} />,
   };
 
   return (
@@ -89,7 +92,7 @@ export default function DeepDive(props: DeepDiveProps) {
             {related.map(key => (
               <Link
                 key={key}
-                href={`/learn-milvus/${key}`}
+                href={getLocalePath(`/learn-milvus/${key}`)}
                 className={styles.homeCard}
               >
                 <h3>{t(`home.cards.${key}.title`)}</h3>

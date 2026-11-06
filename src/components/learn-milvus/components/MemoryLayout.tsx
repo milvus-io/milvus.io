@@ -49,7 +49,7 @@ export default function MemoryLayout({ n, dim, pqBytes }: Props) {
       </div>
       <div className={styles.memoryRow}>
         <div className={styles.memoryRowHeader}>
-          <span className={`${styles.memoryTag} ${styles.memoryTagDisk}`}>DISK</span>
+          <span className={`${styles.memoryTag} ${styles.memoryTagDisk}`}>{t('memoryLayout.disk')}</span>
           <span className={styles.memoryRowTitle}>{t('memoryLayout.fullVectors', { bytes: fullVectorBytes })}</span>
           <span className={styles.memoryRowValue}>{format(diskBytes)}</span>
         </div>
@@ -58,9 +58,9 @@ export default function MemoryLayout({ n, dim, pqBytes }: Props) {
         </div>
       </div>
       <div className={styles.memorySummary}>
-        <span>{formatN(n)} vectors &times; {dim} dim</span>
+        <span>{t('memoryLayout.vectorsDimensions', { size: formatN(n), dim })}</span>
         <span className={styles.memoryRatio}>
-          DISK / RAM &asymp; <strong>{ratio.toFixed(0)}&times;</strong>
+          {t('memoryLayout.diskRamRatio')} &asymp; <strong>{ratio.toFixed(0)}&times;</strong>
         </span>
       </div>
     </div>

@@ -24,7 +24,7 @@ const PALETTE = [
 ];
 
 export default function MetricPlayground() {
-  const { locale } = useGlobalLocale();
+  const { locale, getLocalePath } = useGlobalLocale();
   const { t } = useTranslation('learnMilvus', { lng: locale });
 
   const [metric, setMetric] = useState<MetricType>('L2');
@@ -58,7 +58,7 @@ export default function MetricPlayground() {
   );
 
   return (
-    <Layout disableLangSelector>
+    <Layout>
       <LearnMilvusSeo
         path="/learn-milvus/metric"
         title={t('metric.metaTitle')}
@@ -67,9 +67,9 @@ export default function MetricPlayground() {
         ogImage="/images/learn-milvus/og-metric.png"
         faq={faq}
       />
-      <div className={styles.playground}>
+      <div className={styles.playground} dir={locale === 'ar' ? 'rtl' : undefined}>
         <header className={styles.playgroundHeader}>
-          <Link href="/learn-milvus" className={styles.backLink}>
+          <Link href={getLocalePath('/learn-milvus')} className={styles.backLink}>
             &larr; {t('common.back')}
           </Link>
           <h1>{t('metric.title')}</h1>

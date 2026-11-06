@@ -55,7 +55,7 @@ function makeStablePoints(): Point[] {
 }
 
 export default function IVFLab() {
-  const { locale } = useGlobalLocale();
+  const { locale, getLocalePath } = useGlobalLocale();
   const { t } = useTranslation('learnMilvus', { lng: locale });
 
   const points = useMemo(() => makeStablePoints(), []);
@@ -121,7 +121,7 @@ export default function IVFLab() {
   );
 
   return (
-    <Layout disableLangSelector>
+    <Layout>
       <LearnMilvusSeo
         path="/learn-milvus/ivf"
         title={t('ivf.metaTitle')}
@@ -130,9 +130,9 @@ export default function IVFLab() {
         ogImage="/images/learn-milvus/og-ivf.png"
         faq={faq}
       />
-      <div className={styles.ivfLab}>
+      <div className={styles.ivfLab} dir={locale === 'ar' ? 'rtl' : undefined}>
         <header className={styles.playgroundHeader}>
-          <Link href="/learn-milvus" className={styles.backLink}>&larr; {t('common.back')}</Link>
+          <Link href={getLocalePath('/learn-milvus')} className={styles.backLink}>&larr; {t('common.back')}</Link>
           <h1>{t('ivf.title')}</h1>
           <p>
             <Trans t={t} i18nKey="ivf.subtitle" components={{ queryPoint: <span key="qp" style={{ color: '#00a1ea', fontWeight: 700 }} />, code: <code key="code" className={styles.codeInline} />, strong: <strong key="strong" /> }} />
@@ -231,7 +231,7 @@ export default function IVFLab() {
                 </div>
               </div>
               <div className={styles.stat}>
-                <div className={styles.statLabel}>Recall@{TOP_K}</div>
+                <div className={styles.statLabel}>{t('common.recall')}@{TOP_K}</div>
                 <div
                   className={styles.statValue}
                   style={{ color: recall === 1 ? '#16a34a' : recall >= 0.6 ? '#d97706' : '#dc3545' }}

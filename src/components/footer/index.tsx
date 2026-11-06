@@ -94,6 +94,7 @@ const Footer = (props: Props) => {
       id: 'tools',
       title: t(`common:v3trans.main.nav.tools`),
       children: [
+        { id: 'tool-learn-milvus', name: 'Learn Milvus', to: getLocalePath('/learn-milvus') },
         { id: 'tool-1', name: 'Attu', to: GITHUB_ATTU_LINK },
         { id: 'tool-2', name: 'Milvus CLI', to: GITHUB_MILVUS_CLI_LINK },
         {

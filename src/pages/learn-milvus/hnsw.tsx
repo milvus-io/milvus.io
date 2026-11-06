@@ -17,7 +17,7 @@ const NUM_POINTS = 30;
 const TOP_K = 3;
 
 export default function HNSWExplorer() {
-  const { locale } = useGlobalLocale();
+  const { locale, getLocalePath } = useGlobalLocale();
   const { t } = useTranslation('learnMilvus', { lng: locale });
 
   const points = useMemo(() => seededPoints(11, NUM_POINTS, 220), []);
@@ -76,7 +76,7 @@ export default function HNSWExplorer() {
   );
 
   return (
-    <Layout disableLangSelector>
+    <Layout>
       <LearnMilvusSeo
         path="/learn-milvus/hnsw"
         title={t('hnsw.metaTitle')}
@@ -85,9 +85,9 @@ export default function HNSWExplorer() {
         ogImage="/images/learn-milvus/og-hnsw.png"
         faq={faq}
       />
-      <div className={styles.hnswExplorer}>
+      <div className={styles.hnswExplorer} dir={locale === 'ar' ? 'rtl' : undefined}>
         <header className={styles.playgroundHeader}>
-          <Link href="/learn-milvus" className={styles.backLink}>&larr; {t('common.back')}</Link>
+          <Link href={getLocalePath('/learn-milvus')} className={styles.backLink}>&larr; {t('common.back')}</Link>
           <h1>{t('hnsw.title')}</h1>
           <p>
             <Trans t={t} i18nKey="hnsw.subtitle" components={{ queryPoint: <span key="qp" style={{ color: '#00a1ea', fontWeight: 700 }} />, code: <code key="code" className={styles.codeInline} /> }} />
@@ -131,7 +131,7 @@ export default function HNSWExplorer() {
                 <div className={styles.statsMetaLabel}>{t('hnsw.layers')}</div>
                 <div className={styles.statsMetaValue}>{graph.numLayers}</div>
                 <div className={styles.statsMetaLabel}>{t('hnsw.entry')}</div>
-                <div className={styles.statsMetaValue}>node {graph.entryPoint}</div>
+                <div className={styles.statsMetaValue}>{t('hnsw.node', { node: graph.entryPoint })}</div>
                 <div className={styles.statsMetaLabel}>Top-{TOP_K}</div>
                 <div className={styles.statsMetaValue}>[{result.topK.join(', ')}]</div>
               </div>

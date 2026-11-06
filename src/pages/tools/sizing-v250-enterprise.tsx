@@ -148,7 +148,7 @@ export default function SizingToolV250Enterprise(props: Props) {
 }
 
 export const getStaticProps = async () => {
-  const latestTag = await fetchMilvusReleases();
+  const latestTag = await fetchMilvusReleases('v2.5.');
   return {
     props: {
       latestTag,

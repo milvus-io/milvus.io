@@ -47,10 +47,6 @@
 .page :global(.copy-btn:hover){border-color:#65f8c3;color:#65f8c3}.page :global(.copy-btn:focus-visible){outline:2px solid #65f8c3;outline-offset:2px}
 .page :global(.code-card pre){margin:0;padding:20px 22px;overflow-x:auto;color:#e6eef7;font-family:'Geist Mono',ui-monospace,monospace;font-size:13.5px;line-height:1.7}
 .page :global(.code-note){font-size:13px;color:var(--muted);margin:12px 0 0}
-.page :global(.aiq-list){list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(2,1fr);gap:0 36px}
-.page :global(.aiq-list li){border-bottom:1px solid var(--line)}
-.page :global(.aiq-list a){display:block;padding:15px 0;color:var(--ink);text-decoration:none;font-size:15px;line-height:1.5}
-.page :global(.aiq-list a:after){content:' →';color:var(--blue)}.page :global(.aiq-list a:hover){color:var(--link)}
 .page :global(.story-grid){display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;margin-top:30px}
 .page :global(.story-card){border:1px solid var(--line);border-radius:10px;padding:24px;text-decoration:none;color:var(--ink);background:#fff;display:flex;flex-direction:column}
 .page :global(.story-card:hover){border-color:#90b7cf}.page :global(.story-card h3){font-size:19px;margin:6px 0 8px}.page :global(.story-card p){font-size:14px;color:var(--text);flex:1;margin:0 0 14px}
@@ -60,7 +56,7 @@
 .page :global(.feature-block){background:#fff;border:1px solid var(--line);border-radius:10px;padding:28px}
 .page :global(.feature-block h3){font-size:21px;margin:0 0 10px}.page :global(.feature-block p){color:var(--text);margin:0;font-size:15px;line-height:1.7}
 .page :global(.inline-cta){margin-top:30px}
-@media(max-width:800px){.page :global(.aiq-list){grid-template-columns:1fr}.page :global(.stat-value){font-size:28px}.page :global(.prose p){font-size:16px}.page :global(.logo-row){gap:10px}}
+@media(max-width:800px){.page :global(.stat-value){font-size:28px}.page :global(.prose p){font-size:16px}.page :global(.logo-row){gap:10px}}
 /* mobile containment: wide tables and code scroll inside their cards, never widen the page */
 .page :global(.wrap>*), .page :global(.code-section), .page :global(.code-card), .page :global(.feature-block), .page :global(.faq-list){min-width:0;max-width:100%}
 .page :global(.code-card pre){max-width:100%}

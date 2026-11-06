@@ -55,7 +55,7 @@ const Share = props => {
           key={config.name}
           href={config.getUrl({ url, quote })}
           target="_blank"
-          rel="noopener noreferrer"
+          rel="noopener"
           aria-label={`Share on ${config.name}`}
         >
           <img src={config.icon} alt={config.name} className={styles.icon} />

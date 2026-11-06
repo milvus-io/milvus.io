@@ -107,7 +107,24 @@ export const memoryAndDiskCalculator = (params: {
         memory: (1 + (2 * m) / d) * vectorRawDataSize,
         disk: 0,
       };
-
+      break;
+    case IndexTypeEnum.HNSW_SQ:
+      result = {
+        memory: (0.25 + (2 * m) / d) * vectorRawDataSize,
+        disk: 0,
+      };
+      break;
+    case IndexTypeEnum.HNSW_PQ:
+      result = {
+        memory: (0.125 + (2 * m) / d) * vectorRawDataSize,
+        disk: 0,
+      };
+      break;
+    case IndexTypeEnum.SPARSE_INVERTED_INDEX:
+      result = {
+        memory: vectorRawDataSize * 1.2,
+        disk: 0,
+      };
       break;
     case IndexTypeEnum.DISKANN:
       result = {
@@ -833,7 +850,8 @@ export const operatorYmlGenerator: (
     mode === ModeEnum.Standalone
       ? ''
       : `
-    pulsarv3:
+    msgStreamType: pulsar
+    pulsar:
       inCluster:
         values:
           proxy:
@@ -908,8 +926,7 @@ export const operatorYmlGenerator: (
                 memory: ${kafkaData.zookeeper.memory}Gi
   `;
 
-  const apacheConfig =
-    apacheType === DependencyComponentEnum.Pulsar ? pulsarConfig : kafkaConfig;
+  const apacheConfig = apacheType === DependencyComponentEnum.Pulsar ? pulsarConfig : kafkaConfig;
 
   return `apiVersion: milvus.io/v1beta1
 kind: Milvus
@@ -918,6 +935,7 @@ metadata:
   labels:
     app: milvus
 spec:
+  mode: ${mode === ModeEnum.Cluster ? 'cluster' : 'standalone'}
   components:
     mixCoord:
       replicas: ${mixCoord.count}

@@ -231,11 +231,11 @@ export function IntroMilvus(props: Props) {
             </ul>
             <p className="">
               Join a local&nbsp;
-              <a href={MEETUP_URL} target="_blank" rel="noreferrer">
+              <a href={MEETUP_URL} target="_blank" rel="noopener">
                 Unstructured Data
               </a>
               &nbsp; meetup and our&nbsp;
-              <a href={DISCORD_INVITE_URL} target="_blank" rel="noreferrer">
+              <a href={DISCORD_INVITE_URL} target="_blank" rel="noopener">
                 Discord
               </a>
               .

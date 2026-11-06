@@ -110,5 +110,40 @@
   },
   "woodpeckerTip": "<0>啄木鸟</0>（<0>Woodpecker</0>）是 Milvus 2.6.0 推出的云原生写日志（WAL）系统。它旨在取代 Kafka 和 Pulsar 作为 Milvus 中的 MQ，以简化操作、最大化吞吐量并轻松扩展。目前，它嵌入在流节点中运行。",
   "previousVersion": "上一版本的尺寸工具在<0>这里</0>。",
-  "titleV250": "用于 Milvus 的 Milvus 尺寸工具 v2.5.x"
+  "titleV250": "用于 Milvus 的 Milvus 尺寸工具 v2.5.x",
+  "tabs": {
+    "cpu": "CPU 规格确定",
+    "gpu": "GPU 规格选择",
+    "new": "新",
+    "cpuHint": "现有的 CPU 估算：内存加载、节点配置、依赖关系和安装命令。",
+    "gpuHint": "针对 GPU_BRUTE_FORCE、GPU_IVF_FLAT、GPU_IVF_PQ 和 GPU_CAGRA 的 VRAM 估算，包括完整的推导过程。"
+  },
+  "gpu": {
+    "form": {
+      "million": "百万",
+      "averageLengthTip": "仅占用主机内存——不计入显存",
+      "indexDoc": "如何选择GPU索引？",
+      "trainFraction": "kmeans_trainset_fraction",
+      "pqDim": "pq_dim (米)",
+      "pqDimTip": "0 = cuVS 自动 → {{value}}",
+      "pqBits": "nbits",
+      "graphDegree": "graph_degree",
+      "intermediateDegree": "中间图的度数",
+      "modeManualTip": "GPU 估算不会自动切换模式——请选择您计划部署的那种。",
+      "cacheDatasetOnDevice": "在设备上缓存数据集"
+    },
+    "result": {
+      "gpuMemory": "GPU 内存",
+      "vram": "VRAM",
+      "vramWithValue": "VRAM：{{vram}}"
+    },
+    "errors": {
+      "invalidNumber": "向量个数必须大于0，维度至少为2，且分段大小为正数。",
+      "nlistOutOfRange": "nlist 的值必须在 1 到 65536 之间。",
+      "trainFractionOutOfRange": "kmeans_trainset_fraction 必须在 (0, 1] 范围内。",
+      "pqDimOutOfRange": "已解决：pq_dim 必须在 [1, d] 范围内。",
+      "pqCodeNotByteAligned": "pq_dim × nbits 必须是 8 的倍数。",
+      "intermediateDegreeTooSmall": "intermediate_graph_degree 必须大于或等于 graph_degree。"
+    }
+  }
 }

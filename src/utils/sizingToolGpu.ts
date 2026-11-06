@@ -22,11 +22,13 @@ import {
   GpuLifecycleStageEnum,
   GpuValidationErrorEnum,
   IGpuCalculateResult,
+  IRmmPoolConfig,
   IGpuIndexMemory,
   IGpuIndexParams,
   IGpuSizingParams,
   NodesKeyType,
   NodesValueType,
+  ModeEnum,
 } from '@/types/sizingGpu';
 
 // Re-export common utilities
@@ -85,7 +87,7 @@ export const resolveIndexParams = (params: {
 
   const resolved: IGpuIndexParams = { ...DEFAULT_GPU_INDEX_PARAMS };
   activeKeys.forEach(key => {
-    resolved[key] = indexParams[key];
+    (resolved as any)[key] = indexParams[key];
   });
 
   if (activeKeys.includes('pqDim') && resolved.pqDim === PQ_DIM_AUTO) {
@@ -214,7 +216,8 @@ export const gpuIndexMemoryCalculator = (params: {
     }
     case GpuIndexTypeEnum.GPU_CAGRA:
     default: {
-      const dataset = n * d * FLOAT_BYTES;
+      const cacheDataset = indexParams.cacheDatasetOnDevice ?? true;
+      const dataset = cacheDataset ? n * d * FLOAT_BYTES : 0;
       const graph = n * graphDegree * GRAPH_ID_BYTES;
       return { total: dataset + graph, dataset, graph };
     }
@@ -332,6 +335,95 @@ export const clusterNodeConfigCalculator = (params: {
  * Full GPU sizing estimate. Call `validateGpuSizingParams` first: this function
  * assumes the input already passed validation.
  */
+/**
+ * Calculate RMM (cuVS) Search Pool size in MB per Milvus 2.4.1+ cuVS workspace specs.
+ * Defaults: initMemSize = 2048 MB, maxMemSize = 4096 MB.
+ */
+export const rmmPoolSizeCalculator = (_gpuIndexMemoryBytes?: number): IRmmPoolConfig => {
+  // In Milvus 2.4.1+, RMM Pool is search workspace memory (MB). Recommended defaults are 2048 MB init, 4096 MB max.
+  return {
+    initMemSize: 2048,
+    maxMemSize: 4096,
+  };
+};
+
+/**
+ * Generate Kubernetes Operator YAML for Milvus with GPU resource limits.
+ */
+export const gpuOperatorYmlGenerator = (params: {
+  clusterNodeConfig: Record<NodesKeyType, NodesValueType>;
+  standaloneNodeConfig: NodesValueType;
+  mode: ModeEnum;
+}) => {
+  const { clusterNodeConfig, standaloneNodeConfig, mode } = params;
+  if (mode === ModeEnum.Standalone) {
+    return `apiVersion: milvus.io/v1beta1
+kind: Milvus
+metadata:
+  name: my-release
+  labels:
+    app: milvus
+spec:
+  mode: standalone
+  components:
+    standalone:
+      resources:
+        limits:
+          cpu: ${standaloneNodeConfig.cpu}
+          memory: ${standaloneNodeConfig.memory}Gi
+          nvidia.com/gpu: "1"
+  config: {}
+  dependencies: {}
+`;
+  }
+
+  const { queryNode, proxy, mixCoord, dataNode, streamNode } = clusterNodeConfig;
+
+  return `apiVersion: milvus.io/v1beta1
+kind: Milvus
+metadata:
+  name: my-release
+  labels:
+    app: milvus
+spec:
+  mode: cluster
+  components:
+    mixCoord:
+      resources:
+        limits:
+          cpu: ${mixCoord.cpu}
+          memory: ${mixCoord.memory}Gi
+    proxy:
+      replicas: ${proxy.count}
+      resources:
+        limits:
+          cpu: ${proxy.cpu}
+          memory: ${proxy.memory}Gi
+    queryNode:
+      replicas: ${queryNode.count}
+      resources:
+        limits:
+          cpu: ${queryNode.cpu}
+          memory: ${queryNode.memory}Gi
+          nvidia.com/gpu: "1"
+    dataNode:
+      replicas: ${dataNode.count}
+      resources:
+        limits:
+          cpu: ${dataNode.cpu}
+          memory: ${dataNode.memory}Gi
+          nvidia.com/gpu: "1"
+    streamingNode:
+      replicas: ${streamNode.count}
+      resources:
+        limits:
+          cpu: ${streamNode.cpu}
+          memory: ${streamNode.memory}Gi
+  config: {}
+  dependencies: {}
+`;
+};
+
 export const gpuSizingCalculator = (
   params: IGpuSizingParams
 ): IGpuCalculateResult => {
@@ -421,5 +513,6 @@ export const gpuSizingCalculator = (
     clusterNodeConfig,
     standaloneNodeConfig,
     mode,
+    rmmPoolSize: rmmPoolSizeCalculator(residentMemorySize),
   };
 };

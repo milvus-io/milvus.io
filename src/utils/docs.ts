@@ -17,9 +17,10 @@ const matter = require('gray-matter');
 export const BASE_DOC_DIR = join(process.cwd(), 'src/docs');
 export const DOCS_MINIMUM_VERSION = 'v2.4.x';
 export const CPP_DOCS_MINIMUM_VERSION = 'v2.6.x';
-// The C# SDK api-reference only ships v2.2.x, which is below the default
-// minimum (v2.4.x). Without its own floor it would be filtered out entirely
-// and the route 500s on the missing version dir.
+// The C# SDK api-reference ships v2.2.x (below the default minimum v2.4.x),
+// v2.6.x and v3.0.x. Keep the v2.2.x floor so the archived v2.2.x line stays
+// reachable; without its own floor it would be filtered out entirely and the
+// route 500s on the missing version dir.
 export const CSHARP_DOCS_MINIMUM_VERSION = 'v2.2.x';
 const IGNORE_VERSIONS = ['v2.3.0-beta'];
 export const IGNORE_FILES = [

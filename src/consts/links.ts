@@ -1,3 +1,5 @@
+import { LanguageEnum } from '@/types/localization';
+
 export const DISCORD_INVITE_URL = `https://milvus.io/discord`;
 export const MEETUP_URL = 'https://www.meetup.com/pro/unstructureddata';
 
@@ -5,6 +7,9 @@ export const MILVUS_CODELAB_LINK = 'https://codelabs.milvus.io';
 export const MILVUS_VIDEO_LINK =
   'https://www.youtube.com/c/MilvusVectorDatabase';
 export const MILVUS_SLACK_LINK = 'https://milvus.io/slack';
+export const MILVUS_SLACK_JP_LINK = 'https://milvus.io/slack-jp';
+export const getMilvusSlackLink = (locale?: string) =>
+  locale === LanguageEnum.JAPANESE ? MILVUS_SLACK_JP_LINK : MILVUS_SLACK_LINK;
 export const MILVUS_FORUM_LINK = 'https://discuss.milvus.io';
 export const MILVUS_TWITTER_LINK = 'https://twitter.com/milvusio';
 export const MILVUS_YOUTUBE_CHANNEL_LINK =

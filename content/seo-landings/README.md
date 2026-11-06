@@ -15,13 +15,13 @@ not a production route.
 - All 20 pages and four indexes are advertised by the sitemap. `reviewedOn` is
   the actual content review date; a build does not advance that date.
 - Header and footer link visibly to the solution and comparison indexes. Related
-  pages and concept references use actual canonical paths. This change does not
-  modify the curated AI Reference articles or the separate docs/blog submodules.
+  pages use actual canonical paths. The retired AI Reference collection and its
+  concept links have been removed; docs and blog content remain independent.
 - Metadata, copy and code are React-escaped. SVGs are local, independently styled,
   valid XML; there are no inline scripts in the imported diagrams.
 - Editorial `notes`, `research`, keyword plans and paid-campaign seed suggestions
   stay on the server; they are excluded from page props and browser bundles.
-- Reference drafts' noindex directive is replaced by index,follow on these routes.
+- Published landing pages use index,follow on these routes.
   Deploy-level preview indexing controls remain the environment's responsibility.
   Deployment alone is not evidence of search-engine indexing or ranking gains.
 
@@ -106,9 +106,11 @@ organic traffic and destination availability have been checked.
 ## Verification
 
 ```
-node --test tests/seo-landings.test.cjs tests/landing-tracking.test.cjs tests/landing-locale.test.cjs tests/ai-reference-catalog.test.cjs
+node --test tests/seo-landings.test.cjs tests/landing-tracking.test.cjs tests/landing-locale.test.cjs
+node --test tests/reference-retirement.test.cjs
 pnpm exec tsc --noEmit --incremental false
 LANDING_TEST_URL=http://127.0.0.1:8033 node scripts/smoke-seo-landings.js
+REFERENCE_TEST_URL=http://127.0.0.1:8033 node scripts/smoke-reference-retirement.js
 ```
 
 The HTTP smoke checks server-rendered metadata, all routes and local assets; it

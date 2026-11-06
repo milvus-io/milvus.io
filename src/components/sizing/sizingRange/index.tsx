@@ -97,7 +97,10 @@ export const SizingRange = (props: SizingRangePropsType) => {
     const newDomain = clampDomain(
       ratio * (SLIDER_MAX - SLIDER_MIN) + SLIDER_MIN
     );
-    const rangeValue = clampRange(Math.floor(toRangeValue(newDomain)));
+    const rawVal = toRangeValue(newDomain);
+    const roundedVal =
+      rawVal < 1 ? Math.round(rawVal * 1000) / 1000 : Math.floor(rawVal);
+    const rangeValue = clampRange(roundedVal);
     setInputValue(`${rangeValue}`);
     onRangeChange(rangeValue);
   };
@@ -124,7 +127,10 @@ export const SizingRange = (props: SizingRangePropsType) => {
   // thumb, so we keep wiring it.
   const handleSliderChange = (values: number[]) => {
     const newDomain = values[0];
-    const rangeValue = clampRange(Math.floor(toRangeValue(newDomain)));
+    const rawVal = toRangeValue(newDomain);
+    const roundedVal =
+      rawVal < 1 ? Math.round(rawVal * 1000) / 1000 : Math.floor(rawVal);
+    const rangeValue = clampRange(roundedVal);
     setInputValue(`${rangeValue}`);
     onRangeChange(rangeValue);
   };

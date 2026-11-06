@@ -467,16 +467,6 @@
       "四种，按 search 或 query 请求指定：Strong 读最新数据；Bounded（默认）允许短暂的陈旧窗口；Session 保证同一客户端读到自己的写入；Eventually 以新鲜度换最快的读。"
     ]
   ],
-  "aiq": [
-    "how-milvus-separates-ingestion-storage-and-search",
-    "how-does-a-vector-database-handle-scaling-up-to-millions-or-billions-of-vectors-and-what-architectural-features-enable-this-scalability",
-    "how-do-distributed-vector-databases-handle-sharding-and-replication",
-    "what-is-ivf-rabitq",
-    "what-is-diskann",
-    "how-mmap-differs-from-diskann",
-    "what-is-vector-quantization-in-embeddings",
-    "milvus-capacity-planning"
-  ],
   "related": [
     "open-source-vector-database",
     "search-on-the-lake",

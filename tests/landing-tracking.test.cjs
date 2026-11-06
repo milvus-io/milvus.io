@@ -3,6 +3,8 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const vm = require('node:vm');
 const ts = require('typescript');
+const path = require('node:path');
+const crypto = require('node:crypto');
 const { readPages, getLandingProps } = require('../src/server/seo-landing-catalog');
 
 function load(file, globals = {}, dependencies = {}) {
@@ -11,45 +13,112 @@ function load(file, globals = {}, dependencies = {}) {
       target: ts.ScriptTarget.ES2020, jsx: ts.JsxEmit.ReactJSX, esModuleInterop: true },
   }).outputText;
   const scope = { exports: {}, URL, URLSearchParams, ...globals,
-    require: name => Object.hasOwn(dependencies, name) ? dependencies[name] : require(name) };
+    require: name => {
+      if (Object.hasOwn(dependencies, name)) return dependencies[name];
+      if (name.startsWith('@/utils/') || name.startsWith('./')) {
+        const target = name.startsWith('@/') ? name.replace('@/', 'src/') : path.join(path.dirname(file), name);
+        return load(target + '.ts', globals, dependencies);
+      }
+      return require(name);
+    } };
   vm.runInNewContext(code, scope, { filename: file });
   return scope.exports;
 }
 
 const attribution = load('src/utils/cloud-attribution.ts');
+
+// The component renders React nodes; the shared capture tracker consumes DOM
+// anchors. Model only the DOM surface it uses, and execute both real handlers
+// in browser order. Attribution, consent, event payloads and UUIDs are real.
 function render(page, clipboard = async () => {}, overrides = {}) {
   const window = { dataLayer: [] };
-  const component = load('src/components/seo-landings/LandingPage.tsx', {
-    window, navigator: { clipboard: { writeText: clipboard } },
-  }, {
+  const elements = [];
+  const captures = [];
+  class Element {
+    constructor(type, props = {}, parent = null) {
+      this.type = type; this.parentElement = parent; this.attrs = {}; this.dataset = {};
+      for (const [key, value] of Object.entries(props)) {
+        if (key === 'children' || key.startsWith('on') || value == null) continue;
+        this.setAttribute(key, value);
+      }
+      elements.push(this);
+    }
+    setAttribute(key, value) {
+      this.attrs[key] = String(value);
+      if (key.startsWith('data-')) this.dataset[key.slice(5).replace(/-([a-z])/g, (_, c) => c.toUpperCase())] = String(value);
+    }
+    getAttribute(key) { return this.attrs[key] ?? null; }
+    hasAttribute(key) { return key in this.attrs; }
+    removeAttribute(key) { delete this.attrs[key]; }
+    closest(selector) {
+      for (let node = this; node; node = node.parentElement) {
+        if (selector === 'a[href]' && node.type === 'a' && node.hasAttribute('href')) return node;
+        if (selector === '[data-track]' && node.hasAttribute('data-track')) return node;
+        if (selector === 'pre, code' && ['pre', 'code'].includes(node.type)) return node;
+        if (selector === node.type) return node;
+      }
+      return null;
+    }
+    querySelectorAll(selector) {
+      assert.equal(selector, 'a[href]', 'Test DOM must explicitly model each selector the tracker uses');
+      return elements.filter(node => node.type === 'a' && node.hasAttribute('href'));
+    }
+    addEventListener(type, callback, capture) { if (capture) captures.push({type, callback}); }
+    removeEventListener() {}
+  }
+  class Anchor extends Element {
+    get href() { return new URL(this.getAttribute('href'), 'https://milvus.io').href; }
+    get referrerPolicy() { return this.getAttribute('referrerpolicy'); }
+    set referrerPolicy(value) { this.setAttribute('referrerpolicy', value); }
+  }
+  const document = {
+    cookie: 'CookieConsent=true', documentElement: {lang: page.lang},
+    querySelector(selector) {
+      if (selector === 'link[rel="canonical"]') return {href:'https://milvus.io' + page.path};
+      if (selector === '[data-content-id]') return elements.find(n => n.hasAttribute('data-content-id')) || null;
+      if (selector === 'main[lang]') return elements.find(n => n.type === 'main' && n.hasAttribute('lang')) || null;
+      throw new Error('Unmodelled selector: ' + selector);
+    },
+  };
+  const globals = {window, document, Element, HTMLAnchorElement: Anchor, crypto,
+    MutationObserver: class { observe() {} disconnect() {} },
+    navigator: {clipboard: {writeText: clipboard}}};
+  const component = load('src/components/seo-landings/LandingPage.tsx', globals, {
     'react': { useEffect() {}, useState: () => ['', () => {}] },
     'next/head': () => null, 'next/link': 'a',
     '@/components/layout/commonLayout': 'layout',
     '@/hooks/use-store': { useStore: () => ({ state: { locale: page.lang }, dispatch() {} }) },
     '@/types/localization': { LanguageEnum: { CHINESE: 'zh', ENGLISH: 'en' } },
     '@/i18n/client': { loadI18nResources() {} }, './landing.module.css': {},
-    '@/utils/cloud-attribution': attribution,
   });
   const group = page.path.includes('/compare/') ? 'compare' : 'solutions';
   const props = getLandingProps(page.lang, group, page.path.split('/').pop()).props;
   const tree = component.default({ ...props, page: { ...props.page, ...overrides } });
   const all = [];
-  function visit(node) {
+  const nodes = new Map();
+  const root = new Element('body');
+  function visit(node, parent = root) {
     if (!node || typeof node !== 'object') return;
-    if (Array.isArray(node)) return node.forEach(visit);
-    all.push(node); visit(node.props?.children);
+    if (Array.isArray(node)) return node.forEach(child => visit(child, parent));
+    all.push(node);
+    const element = node.type === 'a' ? new Anchor('a', node.props, parent)
+      : new Element(typeof node.type === 'string' ? node.type : 'component', node.props, parent);
+    nodes.set(node, element);
+    visit(node.props?.children, element);
   }
   visit(tree);
   const main = all.find(node => node.type === 'main');
+  const tracker = load('src/utils/track-cloud-links.ts', globals);
+  tracker.trackCloudLinks(root, attribution.getMilvusEntryPage(page.path),
+    {utm_source:'adwords', utm_medium:'cpc', gclid:'test-click'}, new WeakMap());
   const click = (node, nested = false) => {
-    const dataset = {};
-    for (const [key, value] of Object.entries(node.props)) {
-      if (key.startsWith('data-')) dataset[key.slice(5).replace(/-([a-z])/g, (_, c) => c.toUpperCase())] = value;
-    }
-    const anchor = { dataset, getAttribute: key => node.props[key] || null };
-    // Simulate clicking either the anchor or a nested child of that anchor.
-    const target = { closest: () => dataset.track ? anchor : null };
-    main.props.onClick({ target: nested ? { closest: () => target.closest() } : target });
+    const element = nodes.get(node) || (node.type === 'a'
+      ? new Anchor('a', node.props, nodes.get(main)) : new Element(node.type, node.props, nodes.get(main)));
+    const target = nested ? new Element('span', {}, element) : element;
+    const event = {type:'click', button:0, defaultPrevented:false, target};
+    captures.filter(listener => listener.type === 'click').forEach(listener => listener.callback(event));
+    main.props.onClick(event);
+    click.lastHref = element.type === 'a' ? element.href : '';
     return window.dataLayer.at(-1);
   };
   return { all, click, events: window.dataLayer };
@@ -76,10 +145,19 @@ test('all actual landing pages preserve CTA placement and target, with one event
       const event = r.click({ ...cta, props: { ...cta.props, href: decorated } }, true);
       assert.equal(r.events.length, before + 1);
       const location = cta.props['data-cta-location'];
-      assert.equal(event.event, location === 'benchmark' ? 'cta_benchmark_click'
+      const globalCloud = cloud?.hostname === 'cloud.zilliz.com';
+      assert.equal(event.event, globalCloud ? 'cta_zilliz_signup_click' : location === 'benchmark' ? 'cta_benchmark_click'
         : location === 'final' ? 'cta_final_click' : cloud ? 'cta_zilliz_signup_click' : 'cta_docs_click');
       assert.equal(event.cta_location, location);
-      assert.equal(event.cta_destination, cloud ? 'cloud_signup' : 'docs');
+      assert.equal(event.cta_action, cloud ? 'cloud_signup' : 'docs');
+      const destination = new URL(cta.props.href, 'https://milvus.io');
+      assert.equal(event.cta_destination, globalCloud ? destination.origin + destination.pathname : cta.props.href.split(/[?#]/)[0]);
+      assert.equal(event.content_id, 'milvus.io' + page.path);
+      if (globalCloud) {
+        assert.match(event.handoff_id, /^[a-f0-9-]{36}$/);
+        assert.equal(new URL(r.click.lastHref).searchParams.get('handoff_id'), event.handoff_id);
+        assert.equal(event.analytics_consent, 'granted');
+      }
       assert.equal(event.entry_button, cta.props['data-entry-button']);
       assert.equal(event.landing_page, page.path);
       assert.equal(event.link_url.includes('?'), false);
@@ -98,7 +176,8 @@ test('button styling cannot label an external destination as a Cloud signup', ()
   const button = r.all.find(n => n.props?.['data-cta-location'] === 'hero' && n.props.className.includes('secondary'));
   const event = r.click(button);
   assert.equal(event.event, 'cta_link_click');
-  assert.equal(event.cta_destination, 'external');
+  assert.equal(event.cta_action, 'external');
+  assert.equal(event.cta_destination, 'https://example.com/');
 });
 
 test('copy success/failure is recorded after the clipboard result, never again by click delegation', async () => {
@@ -120,7 +199,8 @@ test('copy success/failure is recorded after the clipboard result, never again b
     assert.equal(r.events.length, 1);
     assert.equal(r.events[0].event, success ? 'copy_code_snippet' : 'copy_code_snippet_failed');
     assert.equal(r.events[0].cta_location, 'code');
-    assert.equal(r.events[0].cta_destination, 'clipboard');
+    assert.equal(r.events[0].cta_action, 'clipboard');
+    assert.equal(r.events[0].cta_destination, '');
   }
 });
 

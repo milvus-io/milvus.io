@@ -410,16 +410,6 @@
       "href": "https://zilliz.com/customers/read-ai"
     }
   ],
-  "aiq": [
-    "how-can-milvus-search-lance-data",
-    "lance-iceberg-parquet-for-vector-data-lakes",
-    "when-to-use-milvus-external-collections",
-    "how-does-a-vector-database-handle-scaling-up-to-millions-or-billions-of-vectors-and-what-architectural-features-enable-this-scalability",
-    "how-do-distributed-vector-databases-handle-sharding-and-replication",
-    "how-do-you-choose-the-right-index-type-for-your-workload",
-    "what-is-hybrid-search-and-when-should-i-use-it",
-    "what-is-the-role-of-multitenancy-in-scalability-considerations-for-vector-databases-and-how-might-resource-isolation-be-handled-when-multiple-applications-share-the-same-infrastructure"
-  ],
   "related": [
     "search-on-the-lake",
     "milvus-vs-qdrant",

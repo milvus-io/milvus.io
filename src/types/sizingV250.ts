@@ -1,3 +1,12 @@
+export enum VectorTypeEnum {
+  FLOAT_VECTOR = 'FLOAT_VECTOR',
+  FLOAT16_VECTOR = 'FLOAT16_VECTOR',
+  BFLOAT16_VECTOR = 'BFLOAT16_VECTOR',
+  INT8_VECTOR = 'INT8_VECTOR',
+  BINARY_VECTOR = 'BINARY_VECTOR',
+  SPARSE_FLOAT_VECTOR = 'SPARSE_FLOAT_VECTOR',
+}
+
 export type DataSizeUnit = 'B' | 'KB' | 'MB' | 'GB' | 'TB';
 export enum SegmentSizeEnum {
   _512MB = '512',
@@ -9,8 +18,11 @@ export enum IndexTypeEnum {
   FLAT = 'FLAT',
   SCANN = 'SCANN',
   HNSW = 'HNSW',
+  HNSW_SQ = 'HNSW_SQ',
+  HNSW_PQ = 'HNSW_PQ',
   IVF_FLAT = 'IVF_FLAT',
   IVFSQ8 = 'IVFSQ8',
+  SPARSE_INVERTED_INDEX = 'SPARSE_INVERTED_INDEX',
   DISKANN = 'DISKANN',
 }
 

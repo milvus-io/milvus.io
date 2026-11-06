@@ -37,8 +37,7 @@
   "footer": {
     "resource": {
       "managed": "Verwaltetes Milvus",
-      "contact": "Demo buchen",
-      "faq": "KI-Kurzreferenz"
+      "contact": "Demo buchen"
     },
     "tools": {
       "sizing": "Milvus Dimensionierungstool",

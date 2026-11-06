@@ -2,22 +2,6 @@
   padding-top: 80px;
   padding-bottom: 80px;
 
-  .topicNav {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 12px 24px;
-    margin-bottom: 40px;
-
-    a {
-      color: var(--color-black2);
-    }
-    a[aria-current='page'] {
-      color: var(--color-primary);
-      text-decoration: underline;
-    }
-  }
-
   h1 {
     @mixin heading2;
     margin-bottom: 12px;
@@ -115,85 +99,6 @@
 }
 
 .detailContainer {
-  .readingLayout {
-    margin-top: 24px;
-    margin-bottom: 64px;
-
-    .referenceHeader {
-      margin-top: 0;
-      margin-bottom: 24px;
-
-      .referenceToolbar {
-        gap: 12px;
-        margin-bottom: 16px;
-      }
-
-      .referenceTitle {
-        margin-bottom: 0;
-        max-width: 920px;
-        font-size: 36px;
-        line-height: 1.2;
-      }
-    }
-
-    @media (--phone) {
-      margin-top: 20px;
-
-      .referenceHeader {
-        margin-bottom: 20px;
-
-        .referenceTitle {
-          font-size: 28px;
-        }
-      }
-    }
-  }
-
-  .articleColumn {
-    flex: 1;
-    min-width: 0;
-  }
-
-  .advCard {
-    margin-bottom: 24px;
-    margin-top: 0;
-  }
-
-  .shareWrapper {
-    margin-bottom: 24px;
-  }
-
-  .recommendBlogWrapper {
-    .title {
-      @mixin paragraph4-bold;
-      margin-bottom: 12px;
-    }
-
-    .recommendBlogList {
-      list-style: none;
-
-      li {
-        padding: 8px 10px;
-        a {
-          @mixin paragraph4-regular;
-          color: var(--color-black2);
-
-          &:hover {
-            color: var(--color-black1);
-          }
-        }
-      }
-
-      .allBlogBtn a {
-        font-weight: 500;
-        color: var(--color-primary);
-
-        &:hover {
-          color: var(--color-blue2);
-        }
-      }
-    }
-  }
 
   .recommendSection {
     margin-top: 80px;
@@ -245,39 +150,6 @@
     }
   }
 
-  .navButtonsWrapper {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 12px;
-    margin-top: 40px;
-
-    & > div {
-      flex: 0 1 50%;
-    }
-
-    .navButton {
-      width: 100%;
-      border-color: #ececee;
-      color: #000;
-      justify-content: center;
-
-      svg path {
-        fill: #000;
-      }
-
-      &:hover {
-        background-color: var(--color-grey-03);
-      }
-
-      &.previousBtn {
-        svg {
-          transform: rotate(180deg);
-        }
-      }
-    }
-  }
-
   .demoCardRoot {
     padding: 30px;
     border-radius: 16px;
@@ -301,42 +173,6 @@
         opacity: 1 !important;
         border-color: var(--color-black1) !important;
       }
-    }
-  }
-}
-.retiredReference {
-  max-width: 850px;
-  margin: 0 auto;
-  padding: 100px 24px 120px;
-
-  h1 {
-    font-size: clamp(30px, 5vw, 44px);
-    line-height: 1.2;
-    margin-bottom: 24px;
-  }
-
-  p {
-    font-size: 18px;
-    line-height: 1.7;
-    margin-bottom: 32px;
-  }
-
-  .retiredLabel {
-    font-size: 13px;
-    letter-spacing: 0.1em;
-    color: var(--color-black2);
-  }
-
-  nav {
-    display: flex;
-    gap: 16px 24px;
-    flex-wrap: wrap;
-
-    a {
-      color: var(--color-primary);
-      text-decoration: underline;
-      text-underline-offset: 4px;
-      padding: 8px 0;
     }
   }
 }

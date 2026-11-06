@@ -1,5 +1,7 @@
 import { useRef, useEffect, useCallback } from 'react';
 import * as d3 from 'd3';
+import { useTranslation } from 'react-i18next';
+import { useGlobalLocale } from '@/hooks/use-global-locale';
 import type { Point } from '../algorithms/metrics';
 import type { HNSWGraph as HNSWG, HNSWStep } from '../algorithms/hnsw';
 
@@ -90,6 +92,8 @@ export default function HNSWGraph({
   stepIdx,
   topK,
 }: Props) {
+  const { locale } = useGlobalLocale();
+  const { t } = useTranslation('learnMilvus', { lng: locale });
   const svgRef = useRef<SVGSVGElement>(null);
   const draggingRef = useRef(false);
 
@@ -162,7 +166,7 @@ export default function HNSWGraph({
         .attr('fill', isActive ? '#00a1ea' : '#667176')
         .attr('font-size', 13)
         .attr('font-weight', 700)
-        .text(`Layer ${layer}`);
+        .text(t('common.layer', { layer }));
       const inLayerCount = graph.nodes.filter((n) => n.maxLayer >= layer).length;
       svg
         .append('text')
@@ -170,7 +174,7 @@ export default function HNSWGraph({
         .attr('y', top + LAYER_HEIGHT / 2 + 10)
         .attr('fill', '#94a3b8')
         .attr('font-size', 10)
-        .text(`${inLayerCount} nodes`);
+        .text(t('common.nodes', { count: inLayerCount }));
 
       const inLayer = graph.nodes.filter((n) => n.maxLayer >= layer);
 
@@ -297,6 +301,7 @@ export default function HNSWGraph({
         .style('filter', isActive ? 'drop-shadow(0 0 5px rgba(0,161,234,0.4))' : 'none');
     }
   }, [
+    t,
     graph,
     query,
     steps,

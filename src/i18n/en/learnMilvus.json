@@ -21,7 +21,14 @@
     "pressRun": "Press ▶ Run Search to start.",
     "searchComplete": "Search complete.",
     "faqTitle": "Frequently asked questions",
-    "relatedTitle": "Keep exploring"
+    "relatedTitle": "Keep exploring",
+    "home": "Home",
+    "query": "Query",
+    "origin": "Origin",
+    "layer": "Layer {{layer}}",
+    "nodes": "{{count}} nodes",
+    "diskRead": "disk read",
+    "reRank": "Re-rank"
   },
   "home": {
     "title": "Learn Milvus",
@@ -178,7 +185,8 @@
       "faq3a": "Roughly the raw vectors plus the graph: about d × 4 bytes per vector for float32 data, plus on the order of M × 2 × 8 bytes of edges per node. For memory-constrained deployments, Milvus offers HNSW_SQ and HNSW_PQ, which quantize stored vectors, or DiskANN, which moves full vectors to SSD.",
       "faq4q": "When should I use HNSW instead of IVF?",
       "faq4a": "Use HNSW when query latency at high recall is the priority and the index fits in memory — it usually wins that race. Prefer IVF when you rebuild indexes frequently (much faster builds), or when combined with SQ8/PQ quantization to fit a tight memory budget."
-    }
+    },
+    "node": "Node {{node}}"
   },
   "diskann": {
     "title": "DiskANN Explorer: Billion-Scale Vector Search From SSD",
@@ -257,6 +265,9 @@
   },
   "memoryLayout": {
     "pqCodes": "PQ codes ({{bytes}} B/vec)",
-    "fullVectors": "Full vectors + graph ({{bytes}} B/vec)"
+    "fullVectors": "Full vectors + graph ({{bytes}} B/vec)",
+    "disk": "Disk",
+    "vectorsDimensions": "{{size}} vectors × {{dim}} dimensions",
+    "diskRamRatio": "Disk / RAM"
   }
 }

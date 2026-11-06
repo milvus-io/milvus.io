@@ -9,6 +9,10 @@ on:
       - postcss.config.js
       - tailwind.config.js
       - tests/dependency-compatibility.test.cjs
+      - tests/i18n-initialization.test.cjs
+      - 'src/i18n/**'
+      - src/utils/inkeep.ts
+      - 'i18n-watcher/**'
       - .github/workflows/dependency-compatibility.yml
   workflow_dispatch:
 
@@ -29,3 +33,4 @@ jobs:
       - uses: pnpm/action-setup@v6
       - run: pnpm install --frozen-lockfile
       - run: pnpm test:dependencies
+      - run: node --test tests/i18n-initialization.test.cjs

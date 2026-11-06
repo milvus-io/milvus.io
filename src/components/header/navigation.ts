@@ -83,6 +83,10 @@ export const useHeaderNavItems = ({
         label: t('tools.label'),
         children: [
           {
+            label: 'Learn Milvus',
+            href: getLocalePath('/learn-milvus'),
+          },
+          {
             label: t('tools.attu'),
             href: GITHUB_ATTU_LINK,
             rel: 'noopener',

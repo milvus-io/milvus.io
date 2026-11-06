@@ -6,7 +6,7 @@ import LearnMilvusSeo from '@/components/learn-milvus/components/LearnMilvusSeo'
 import styles from '@/components/learn-milvus/learnMilvus.module.css';
 
 export default function LearnMilvusHome() {
-  const { locale } = useGlobalLocale();
+  const { locale, getLocalePath } = useGlobalLocale();
   const { t } = useTranslation('learnMilvus', { lng: locale });
 
   const PAGES = [
@@ -19,14 +19,14 @@ export default function LearnMilvusHome() {
   ];
 
   return (
-    <Layout disableLangSelector>
+    <Layout disableSelfHreflang>
       <LearnMilvusSeo
         path="/learn-milvus"
         title={t('home.metaTitle')}
         description={t('home.metaDesc')}
         ogImage="/images/learn-milvus/og-home.png"
       />
-      <div className={styles.home}>
+      <div className={styles.home} dir={locale === 'ar' ? 'rtl' : undefined}>
         <header className={styles.homeHeader}>
           <h1>{t('home.title')}</h1>
           <p>
@@ -35,7 +35,7 @@ export default function LearnMilvusHome() {
         </header>
         <div className={styles.homeGrid}>
           {PAGES.map((page) => (
-            <Link key={page.to} href={page.to} className={styles.homeCard}>
+            <Link key={page.to} href={getLocalePath(page.to)} className={styles.homeCard}>
               <h2>{page.title}</h2>
               <p>{page.desc}</p>
             </Link>

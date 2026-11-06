@@ -106,7 +106,7 @@ const Header: React.FC<{
               href={GITHUB_MILVUS_LINK}
               className={classes.githubLink}
               target="_blank"
-              rel="noopener noreferrer"
+              rel="noopener"
             >
               <GitHubIcon />
               <span className={classes.githubText}>{t('star')}</span>
@@ -122,7 +122,7 @@ const Header: React.FC<{
               <LocalizedAnchor
                 href={signupUrl}
                 target="_blank"
-                rel="noopener noreferrer"
+                rel="noopener"
               >
                 {t('start')}
               </LocalizedAnchor>
@@ -170,7 +170,7 @@ const Header: React.FC<{
                 <LocalizedAnchor
                   href={signupUrl}
                   target="_blank"
-                  rel="noopener noreferrer"
+                  rel="noopener"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   {t('start')}

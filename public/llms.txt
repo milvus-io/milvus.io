@@ -23,7 +23,15 @@ Documentation URLs take exactly one of these four forms:
 - `<lang>` is one of: zh, zh-hant, ja, ko, de, fr, es, it, pt, ru, ar, id. Omit the segment for English.
 - API reference URLs are `https://milvus.io/api-reference/<sdk>/<version>/<page>.md` and
   are versioned separately from the docs; see the API Reference section.
-- Blog, AI Quick Reference, and Learn pages do not use a `.md` suffix.
+- Blog and Learn pages do not use a `.md` suffix.
+- Learn Milvus uses `/learn-milvus` for the English home and
+  `/learn-milvus/<topic>` for a topic. Translations put the language before
+  the collection: `/<lang>/learn-milvus` or `/<lang>/learn-milvus/<topic>`,
+  never `/learn-milvus/<lang>`. Supported languages: zh, zh-hant, ja, ko, fr, de, es, it, pt, ru, id, ar.
+  Published topics: metric, ivf, hnsw, diskann.
+  Use the language matching the user's request when available. All 65 exact
+  learning URLs are listed in the Interactive Learning sections below; do not
+  append `.md`, invent a topic, or cite the unpublished Tradeoff dashboard.
 
 **Unknown paths return a hard 404 — they do not redirect and they do not fall
 back to a search page.** A URL that looks right but was never published is a
@@ -721,7 +729,7 @@ Each SDK is versioned independently of the docs — the newest published version
 
 ## Interactive Learning
 
-Browser-based visualizations of how the index and metric choices actually behave.
+Browser-based visualizations of how index and metric choices behave. Each page also contains server-rendered explanations; topic pages include parameter guidance and FAQs that can be read without running the animations. These are educational simulations, not production benchmarks.
 
 - [Learn Milvus](https://milvus.io/learn-milvus): Index of the interactive index and metric visualizations.
 - [IVF Visualized](https://milvus.io/learn-milvus/ivf): FLAT vs IVF search animation with a live nprobe/recall tradeoff.
@@ -747,9 +755,73 @@ Maintained outside milvus.io; these are the canonical repositories.
 These areas hold thousands of pages and are not enumerated here. Do not guess a slug inside them — resolve one through https://milvus.io/sitemap.xml or the section index below.
 
 - [Blog](https://milvus.io/blog): Release announcements, engineering deep dives, and benchmarks. Article URLs are `/blog/<slug>` with no `.md` suffix.
-- [AI Quick Reference](https://milvus.io/ai-quick-reference): Core concepts for vector search, indexing, RAG, data preparation, and production operations, with implementation guides and sources.
 - [Learn AI and Vector DB](https://milvus.io/learn-ai-and-vectordb): Long-form explainers on vector databases and AI infrastructure.
 - [Use Cases](https://milvus.io/use-cases): Production use cases and customer stories.
 - [Milvus Demos](https://milvus.io/milvus-demos): Live demo applications, including reverse image search.
 - [Bootcamp](https://milvus.io/bootcamp): Hands-on notebooks and end-to-end example projects.
 - [Community](https://milvus.io/community): Contributing, governance, and community channels.
+
+## Interactive Learning — Other Languages
+
+The same five learning pages are available in the following languages. Labels and descriptions below come from the page translations.
+
+- [学习 Milvus (zh)](https://milvus.io/zh/learn-milvus): 向量数据库概念的交互式可视化：L2 ，余弦和内积相似度度量，以及IVF 、HNSW 和DiskANN 向量索引。
+- [向量相似度度量：L2 、余弦及内积 (zh)](https://milvus.io/zh/learn-milvus/metric): 拖动查询点，观察L2 、余弦值和内积如何改变“最近邻”的判定标准。了解哪种相似度度量最适合您的嵌入模型。
+- [FLAT vsIVF ：倒排文件索引的工作原理 (zh)](https://milvus.io/zh/learn-milvus/ivf): 观看暴力搜索FLAT 与基于聚类的IVF 在同一查询上的竞速。实时调整nprobe ，并了解nlist 和nprobe 如何在Milvus 中以召回率为代价换取速度。
+- [HNSW Explorer：可视化的分层可导航小世界 (zh)](https://milvus.io/zh/learn-milvus/hnsw): 逐层逐步遍历HNSW 的搜索过程。调整M和ef 参数，观察分层图如何在内存占用与速度之间进行权衡，并学习如何在Milvus 中设置这些参数。
+- [DiskANN Explorer：十亿量级向量搜索来自SSD (zh)](https://milvus.io/zh/learn-milvus/diskann): 观看DiskANN 如何使用PQ 代码在RAM 上遍历Vamana 图，并查看SSD 上的完整向量。了解在数十亿量级的向量搜索中，磁盘索引何时能胜过HNSW 。
+- [學習 Milvus (zh-hant)](https://milvus.io/zh-hant/learn-milvus): 向量資料庫概念的互動式視覺化：L2 ，包含餘弦與內積相似度指標，以及IVF 、HNSW 和DiskANN 等向量索引。
+- [向量相似度度量：L2 、餘弦及內積 (zh-hant)](https://milvus.io/zh-hant/learn-milvus/metric): 拖曳查詢點，觀察當L2 、餘弦值及內積變化時，「最近鄰」的定義如何改變。了解哪種相似度度量最適合您的嵌入模型。
+- [FLAT vsIVF ：反向檔案索引的運作原理 (zh-hant)](https://milvus.io/zh-hant/learn-milvus/ivf): 觀看暴力搜尋FLAT 與基於叢集的IVF 在同一查詢上進行競速。即時調校nprobe ，並了解nlist 與nprobe 如何在Milvus 中以召回率換取速度。
+- [HNSW 探索器：可階層導航的小世界，視覺化呈現 (zh-hant)](https://milvus.io/zh-hant/learn-milvus/hnsw): 逐步瀏覽HNSW 的搜尋層，逐層深入。調整 M 和ef ，觀察分層圖如何在記憶體與速度之間取得平衡，並學習如何在Milvus 中設定這些參數。
+- [DiskANN Explorer：十億級向量搜尋來自SSD (zh-hant)](https://milvus.io/zh-hant/learn-milvus/diskann): 觀看DiskANN 如何使用PQ 程式碼在RAM 上遍歷Vamana 圖，並在SSD 上查看完整向量。了解在十億級向量搜尋中，何時磁碟索引能勝過HNSW 。
+- [Milvus を学ぶ (ja)](https://milvus.io/ja/learn-milvus): ベクトルデータベースの概念に関するインタラクティブな可視化：L2 、コサインおよび内積による類似度指標、さらにIVF 、HNSW 、DiskANN の各ベクトルインデックス。
+- [ベクトル類似度指標：L2 、コサインおよび内積 (ja)](https://milvus.io/ja/learn-milvus/metric): クエリポイントをドラッグして、L2 、コサイン、内積によって「最も近い」隣接ベクトルがどのように変化するかを確認してください。どの類似度メトリックがあなたの埋め込みモデルに適しているかを学びましょう。
+- [FLAT vsIVF: インバーテッド・ファイル・インデックスの仕組み (ja)](https://milvus.io/ja/learn-milvus/ivf): 同じクエリに対して、ブルートフォース（FLAT ）とクラスタベース（IVF ）が競い合う様子をご覧ください。nprobe をリアルタイムで調整し、Milvus において、nlist とnprobe がリコール率と速度をどのようにトレードオフしているかを学びましょう。
+- [HNSW Explorer：階層的ナビゲーション可能なスモールワールドの可視化 (ja)](https://milvus.io/ja/learn-milvus/hnsw): HNSW の検索を層ごとに順を追って確認してください。Mとef を調整して、階層グラフがメモリと速度をどのようにトレードオフしているかを確認し、Milvus でそれらの設定方法を学びましょう。
+- [DiskANN Explorer：数十億規模のベクトル検索からSSD (ja)](https://milvus.io/ja/learn-milvus/diskann): DiskANN が、PQ のコードを用いて、RAM でVamana グラフを探索する様子を、SSD で完全なベクトルデータと共に確認してください。数十億規模のベクトル検索において、ディスク上のインデックスがHNSW を凌駕するケースについて学びましょう。
+- [학습 Milvus (ko)](https://milvus.io/ko/learn-milvus): 벡터 데이터베이스 개념의 대화형 시각화: L2, 코사인 및 내적 유사도 측정 기준, 그리고 IVF, HNSW 및 DiskANN 벡터 인덱스.
+- [벡터 유사도 측정 기준: L2, 코사인 및 내적 (ko)](https://milvus.io/ko/learn-milvus/metric): 쿼리 점을 드래그하여 L2, 코사인, 내적에 따라 어떤 이웃이 “가장 가까운” 이웃으로 변하는지 관찰해 보세요. 어떤 유사도 측정 기준이 여러분의 임베딩 모델에 적합한지 알아보세요.
+- [FLAT vs IVF: 역파일 인덱스의 작동 원리 (ko)](https://milvus.io/ko/learn-milvus/ivf): 동일한 쿼리에 대해 무차별 대입법(brute-force) FLAT 과 클러스터 기반 IVF 의 성능을 비교해 보세요. nprobe 을 실시간으로 튜닝하고, Milvus 에서 nlist 와 nprobe 가 리콜을 희생하여 속도를 얻는 방식을 알아보세요.
+- [HNSW Explorer: 시각화된 계층적 탐색 가능 스몰 월드 (ko)](https://milvus.io/ko/learn-milvus/hnsw): HNSW 의 검색을 계층별로 단계별로 진행해 보십시오. M과 ef 을 조정하여 계층적 그래프가 메모리와 속도를 어떻게 절충하는지 확인하고, Milvus 에서 이를 설정하는 방법을 알아보십시오.
+- [DiskANN Explorer: 10억 규모 벡터 검색 SSD (ko)](https://milvus.io/ko/learn-milvus/diskann): DiskANN 가 PQ 코드를 사용하여 RAM 에서 Vamana 그래프를 탐색하는 과정을 확인하고, SSD 에서 전체 벡터를 살펴보세요. 10억 규모 벡터 검색에서 디스크 기반 인덱스가 HNSW 보다 우수한 성능을 보이는 시점을 알아보세요.
+- [Apprendre Milvus (fr)](https://milvus.io/fr/learn-milvus): Visualisations interactives des concepts liés aux bases de données vectorielles : L2, mesures de similarité par cosinus et produit scalaire, ainsi que les index vectoriels IVF, HNSW et DiskANN.
+- [Mesures de similarité vectorielle : L2, cosinus et produit scalaire (fr)](https://milvus.io/fr/learn-milvus/metric): Faites glisser un point de requête et observez comment l’ L2, le cosinus et le produit scalaire modifient la définition des voisins « les plus proches ». Découvrez quelle métrique de similarité correspond à votre modèle d’embedding.
+- [FLAT vs IVF: Comment fonctionne l’index de fichier inversé (fr)](https://milvus.io/fr/learn-milvus/ivf): Observez la course entre l’ FLAT par force brute et l’ IVF par clusters sur la même requête. Optimisez l’ nprobe en temps réel et découvrez comment nlist et nprobe sacrifient le rappel au profit de la vitesse dans Milvus.
+- [HNSW Explorer : « Hierarchical Navigable Small World », visualisé (fr)](https://milvus.io/fr/learn-milvus/hnsw): Parcourez une recherche « HNSW » couche par couche. Ajustez les paramètres M et « ef » pour observer comment le graphe hiérarchique fait le compromis entre mémoire et vitesse, et découvrez comment les configurer sur Milvus.
+- [DiskANN Explorer : recherche vectorielle à l’échelle du milliard à partir de SSD (fr)](https://milvus.io/fr/learn-milvus/diskann): Regardez « DiskANN » parcourir un graphe « Vamana » avec les codes « PQ » sur RAM et les vecteurs complets sur SSD. Découvrez quand un index sur disque surpasse HNSW pour une recherche vectorielle à l’échelle du milliard.
+- [Lernen Milvus (de)](https://milvus.io/de/learn-milvus): Interaktive Visualisierungen von Konzepten der Vektordatenbank: L2, Ähnlichkeitsmetriken wie Kosinus- und Skalarprodukt sowie die Vektorindizes IVF, HNSW und DiskANN.
+- [Vektorähnlichkeitsmetriken: „ L2 “, „Cosine“ und „Inneres Produkt“ (de)](https://milvus.io/de/learn-milvus/metric): Ziehen Sie einen Abfragepunkt und beobachten Sie, wie sich durch „ L2 “, „cosine“ und „inner product“ die „nächsten“ Nachbarn ändern. Finden Sie heraus, welche Ähnlichkeitsmetrik zu Ihrem Einbettungsmodell passt.
+- [FLAT vs IVF: Wie der Inverted-File-Index funktioniert (de)](https://milvus.io/de/learn-milvus/ivf): Beobachten Sie, wie Brute-Force- FLAT und clusterbasierte IVF bei derselben Abfrage gegeneinander antreten. Optimieren Sie nprobe in Echtzeit und erfahren Sie, wie nlist und nprobe in Milvus Recall zugunsten der Geschwindigkeit opfern.
+- [HNSW Explorer: Hierarchisch navigierbare „Small World“, visualisiert (de)](https://milvus.io/de/learn-milvus/hnsw): Gehen Sie die Suche in „ HNSW “ Schicht für Schicht durch. Passen Sie M und „ ef “ an, um zu sehen, wie der hierarchische Graph Speicherplatz gegen Geschwindigkeit eintauscht, und lernen Sie, wie Sie diese in „ Milvus “ einstellen.
+- [DiskANN Explorer: Vektorsuche im Milliardenbereich aus SSD (de)](https://milvus.io/de/learn-milvus/diskann): Sehen Sie sich an, wie „ DiskANN “ einen „ Vamana “-Graphen mit „ PQ “-Codes unter RAM und vollständigen Vektoren unter SSD durchläuft. Erfahren Sie, wann ein On-Disk-Index „ HNSW “ bei der Vektorsuche im Milliardenbereich übertrifft.
+- [Aprender Milvus (es)](https://milvus.io/es/learn-milvus): Visualizaciones interactivas de conceptos de bases de datos vectoriales: L2, métricas de similitud coseno y de producto interno, además de los índices vectoriales IVF, HNSW y DiskANN.
+- [Métricas de similitud vectorial: L2, coseno y producto escalar (es)](https://milvus.io/es/learn-milvus/metric): Arrastra un punto de consulta y observa cómo el L2, el coseno y el producto interno cambian cuáles son los vecinos «más cercanos». Descubre qué métrica de similitud se adapta a tu modelo de incrustación.
+- [FLAT vs IVF: Cómo funciona el índice de archivo invertido (es)](https://milvus.io/es/learn-milvus/ivf): Observa cómo compiten entre sí la búsqueda por fuerza bruta FLAT y la basada en clústeres IVF con la misma consulta. Ajusta nprobe en tiempo real y descubre cómo nlist y nprobe sacrifican la precisión a cambio de velocidad en Milvus.
+- [HNSW Explorer: «Small World» jerárquico y navegable, visualizado (es)](https://milvus.io/es/learn-milvus/hnsw): Recorre paso a paso una búsqueda « HNSW » capa por capa. Ajusta M y « ef » para ver cómo el grafo jerárquico equilibra la memoria con la velocidad, y aprende a configurarlos en Milvus.
+- [DiskANN Explorer: Búsqueda vectorial a escala de miles de millones desde SSD (es)](https://milvus.io/es/learn-milvus/diskann): Observa cómo DiskANN recorre un grafo Vamana con códigos PQ en RAM y vectores completos en SSD. Descubre cuándo un índice en disco supera a HNSW en búsquedas vectoriales a escala de miles de millones.
+- [Imparare Milvus (it)](https://milvus.io/it/learn-milvus): Visualizzazioni interattive dei concetti relativi ai database vettoriali: L2, metriche di similarità basate sul coseno e sul prodotto interno, oltre agli indici vettoriali IVF, HNSW e DiskANN.
+- [Metriche di similarità vettoriale: L2, coseno e prodotto interno (it)](https://milvus.io/it/learn-milvus/metric): Trascinate un punto di query e osservate come l’ L2, il coseno e il prodotto interno modificano quali vicini sono i “più vicini”. Scoprite quale metrica di similarità si adatta al vostro modello di embedding.
+- [FLAT vs IVF: Come funziona l’indice a file invertito (it)](https://milvus.io/it/learn-milvus/ivf): Osservare la gara tra l’ FLAT, basato sulla forza bruta, e l’ IVF, basato su cluster, sulla stessa query. Ottimizzare nprobe in tempo reale e scoprire come nlist e nprobe scambiano il recall con la velocità in Milvus.
+- [HNSW Explorer: “Small World” gerarchico navigabile, visualizzato (it)](https://milvus.io/it/learn-milvus/hnsw): Esplorare una ricerca “ HNSW ” strato per strato. Regolare M e “ ef ” per osservare come il grafico gerarchico bilancia memoria e velocità, e imparare a impostarli su Milvus.
+- [DiskANN Explorer: Ricerca vettoriale su scala miliardaria da SSD (it)](https://milvus.io/it/learn-milvus/diskann): Guarda DiskANN percorrere un grafico Vamana con codici PQ su RAM e vettori completi su SSD. Scopri quando un indice su disco supera HNSW per la ricerca vettoriale su scala di miliardi.
+- [Aprender Milvus (pt)](https://milvus.io/pt/learn-milvus): Visualizações interativas de conceitos de bases de dados vetoriais: L2, métricas de similaridade de cosseno e de produto interno, além de IVF, HNSW e DiskANN índices vetoriais.
+- [Métricas de similaridade de vetores: L2, cosseno e produto escalar (pt)](https://milvus.io/pt/learn-milvus/metric): Arraste um ponto de consulta e observe como o L2, o coseno e o produto interno alteram quais os vizinhos que são os «mais próximos». Descubra qual a métrica de similaridade que melhor se adequa ao seu modelo de incorporação.
+- [FLAT vs IVF: Como funciona o Índice de Ficheiros Invertido (pt)](https://milvus.io/pt/learn-milvus/ivf): Veja o «brute-force» FLAT e o «cluster-based» IVF a competir na mesma consulta. Ajuste nprobe em tempo real e aprenda como nlist e nprobe trocam a precisão de recuperação pela velocidade em Milvus.
+- [HNSW Explorer: Mundo Pequeno Hierárquico Navegável, Visualizado (pt)](https://milvus.io/pt/learn-milvus/hnsw): Percorra uma pesquisa « HNSW » camada a camada. Ajuste M e « ef » para ver como o gráfico hierárquico troca memória por velocidade e aprenda a defini-los em Milvus.
+- [DiskANN Explorer: Pesquisa de vetores à escala de mil milhões a partir de SSD (pt)](https://milvus.io/pt/learn-milvus/diskann): Veja o « DiskANN » percorrer um gráfico « Vamana » com códigos « PQ » em RAM e vetores completos em SSD. Saiba quando um índice no disco supera o « HNSW » para pesquisas de vetores na ordem dos mil milhões.
+- [Изучить Milvus (ru)](https://milvus.io/ru/learn-milvus): Интерактивные визуализации концепций векторных баз данных: L2, метрики сходства по косинусу и внутреннему произведению, а также векторные индексы IVF, HNSW и DiskANN.
+- [Метрики сходства векторов: коэффициент сходства по косинусу ( L2), косинус и внутреннее произведение (ru)](https://milvus.io/ru/learn-milvus/metric): Перетащите точку запроса и понаблюдайте, как функции « L2 », косинус и внутреннее произведение меняют набор «ближайших» соседей. Узнайте, какая метрика сходства подходит для вашей модели вложения.
+- [FLAT vs IVF: Как работает индекс обратного файла (ru)](https://milvus.io/ru/learn-milvus/ivf): Посмотрите, как алгоритмы перебора (brute-force) FLAT и кластерные IVF соревнуются при обработке одного и того же запроса. Настройте nprobe в режиме реального времени и узнайте, как nlist и nprobe жертвуют точностью поиска ради скорости в Milvus.
+- [HNSW Explorer: иерархический навигационный «малый мир», визуализированный (ru)](https://milvus.io/ru/learn-milvus/hnsw): Пройдите послойно по поисковому процессу « HNSW ». Настройте параметры M и « ef », чтобы увидеть, как иерархический граф компрометирует объем памяти ради скорости, и узнайте, как их настроить, в статье Milvus.
+- [DiskANN Explorer: Поиск векторов в масштабе миллиардов из SSD (ru)](https://milvus.io/ru/learn-milvus/diskann): Посмотрите, как DiskANN проходит по графу Vamana с кодами PQ в RAM и полными векторами на SSD. Узнайте, когда индекс на диске превосходит HNSW при поиске векторов в масштабе миллиардов.
+- [Belajar Milvus (id)](https://milvus.io/id/learn-milvus): Visualisasi interaktif konsep basis data vektor: L2, metrik kesamaan kosinus dan hasil kali dalam, serta IVF, HNSW dan DiskANN indeks vektor.
+- [Metrik Kesamaan Vektor: L2, Kosinus & Produk Dalam (id)](https://milvus.io/id/learn-milvus/metric): Seret titik kueri dan amati bagaimana L2, kosinus, dan hasil kali dalam mengubah tetangga mana yang dianggap "terdekat". Pelajari metrik kesamaan mana yang sesuai dengan model embedding Anda.
+- [FLAT vs IVF: Bagaimana Indeks File Terbalik Bekerja (id)](https://milvus.io/id/learn-milvus/ivf): Saksikan persaingan antara brute-force FLAT dan berbasis kluster IVF pada kueri yang sama. Sesuaikan nprobe secara real-time dan pelajari bagaimana nlist dan nprobe menukar recall dengan kecepatan di Milvus.
+- [HNSW Explorer: Dunia Kecil Hierarkis yang Dapat Dinavigasi, Divisualisasikan (id)](https://milvus.io/id/learn-milvus/hnsw): Telusuri lapisan demi lapisan pencarian hierarkis ( HNSW ). Sesuaikan M dan " ef " untuk melihat bagaimana grafik hierarkis menukar memori dengan kecepatan, dan pelajari cara mengaturnya di Milvus.
+- [DiskANN Explorer: Pencarian Vektor Skala Miliar Dari SSD (id)](https://milvus.io/id/learn-milvus/diskann): Tonton DiskANN menjelajahi grafik Vamana dengan kode PQ di RAM dan vektor lengkap di SSD. Pelajari kapan indeks pada disk mengungguli HNSW untuk pencarian vektor berskala miliaran.
+- [تعلم Milvus (ar)](https://milvus.io/ar/learn-milvus): تصورات تفاعلية لمفاهيم قاعدة بيانات المتجهات: L2 ، ومقاييس التشابه باستخدام جيب التمام والمنتج الداخلي، بالإضافة إلى IVF ، و HNSW و DiskANN فهارس المتجهات.
+- [مقاييس تشابه المتجهات: L2 ، جيب التمام والضرب الداخلي (ar)](https://milvus.io/ar/learn-milvus/metric): اسحب نقطة استعلام وشاهد كيف يغير كل من « L2 » و«cosine» و«المنتج الداخلي» أي الجيران هم «الأقرب». تعرف على مقياس التشابه الذي يناسب نموذج التضمين الخاص بك.
+- [FLAT مقارنة مع « IVF »: كيف يعمل «Inverted File Index» (ar)](https://milvus.io/ar/learn-milvus/ivf): شاهد منافسة بين «القوة الغاشمة» ( FLAT ) و«القائمة المجمعة» ( IVF ) على نفس الاستعلام. قم بضبط «الخوارزمية المركبة» ( nprobe ) في الوقت الفعلي وتعلم كيف «تضحي» ( nlist ) و«تضحي» ( nprobe ) بالاسترجاع مقابل السرعة في «الخوارزمية المركبة» ( Milvus).
+- [HNSW Explorer: عالم صغير قابل للتنقل هرمي، مُصوَّر (ar)](https://milvus.io/ar/learn-milvus/hnsw): تصفح البحث في « HNSW » طبقةً طبقةً. اضبط «M» و« ef » لترى كيف يوازن الرسم البياني الهرمي بين الذاكرة والسرعة، وتعلم كيفية ضبطهما في Milvus.
+- [DiskANN Explorer: بحث متجهي على نطاق المليارات من SSD (ar)](https://milvus.io/ar/learn-milvus/diskann): شاهد « DiskANN » وهو يتجول في رسم بياني « Vamana » باستخدام أكواد « PQ » في RAM والمتجهات الكاملة على SSD. تعرف على متى يتفوق الفهرس الموجود على القرص على « HNSW » في البحث عن المتجهات بمليارات العناصر.

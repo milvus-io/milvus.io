@@ -50,7 +50,7 @@ function CustomLink(props: CustomButtonProps & { computedClasses: any }) {
         <a
           {...rest}
           target="_blank"
-          rel="noopener noreferrer"
+          rel="noopener"
           href={localizedHref}
           className={clsx(classes.linkButton, className, root, computedClasses)}
         >

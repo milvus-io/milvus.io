@@ -74,7 +74,7 @@ export const useHeaderNavItems = ({
           {
             label: t('tutorials.video'),
             href: MILVUS_VIDEO_LINK,
-            rel: 'noopener noreferrer',
+            rel: 'noopener',
             external: true,
           },
         ],
@@ -83,15 +83,19 @@ export const useHeaderNavItems = ({
         label: t('tools.label'),
         children: [
           {
+            label: 'Learn Milvus',
+            href: getLocalePath('/learn-milvus'),
+          },
+          {
             label: t('tools.attu'),
             href: GITHUB_ATTU_LINK,
-            rel: 'noopener noreferrer',
+            rel: 'noopener',
             external: true,
           },
           {
             label: t('tools.cli'),
             href: GITHUB_MILVUS_CLI_LINK,
-            rel: 'noopener noreferrer',
+            rel: 'noopener',
             external: true,
           },
           {
@@ -101,25 +105,25 @@ export const useHeaderNavItems = ({
           {
             label: t('tools.backup'),
             href: GITHUB_MILVUS_BACKUP_LINK,
-            rel: 'noopener noreferrer',
+            rel: 'noopener',
             external: true,
           },
           {
             label: t('tools.vts'),
             href: GITHUB_VTS_LINK,
-            rel: 'noopener noreferrer',
+            rel: 'noopener',
             external: true,
           },
           {
             label: t('tools.deepSearcher'),
             href: GITHUB_DEEP_SEARCHER_LINK,
-            rel: 'noopener noreferrer',
+            rel: 'noopener',
             external: true,
           },
           {
             label: t('tools.claudeContext'),
             href: GITHUB_CLAUDE_CONTEXT_LINK,
-            rel: 'noopener noreferrer',
+            rel: 'noopener',
             external: true,
           },
         ],
@@ -132,25 +136,25 @@ export const useHeaderNavItems = ({
           {
             label: t('community.officeHours'),
             href: MILVUS_OFFICE_HOURS_URL,
-            rel: 'noopener noreferrer',
+            rel: 'noopener',
             external: true,
           },
           {
             label: t('community.slack'),
             href: getMilvusSlackLink(locale),
-            rel: 'noopener noreferrer',
+            rel: 'noopener',
             external: true,
           },
           {
             label: t('community.discord'),
             href: DISCORD_INVITE_URL,
-            rel: 'noopener noreferrer',
+            rel: 'noopener',
             external: true,
           },
           {
             label: t('community.github'),
             href: GITHUB_MILVUS_COMMUNITY_LINK,
-            rel: 'noopener noreferrer',
+            rel: 'noopener',
             external: true,
           },
           {

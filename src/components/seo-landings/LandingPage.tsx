@@ -1,3 +1,4 @@
+import { contentDimensions, pushGrowthEvent } from '@/utils/growth-measurement';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
@@ -28,7 +29,7 @@ type PageData = {
   managed?: { h2: string; body: string }; final?: { h2: string; body: string };
 };
 type Props = { page: PageData; twinPath: string; lang: string;
-  related: { title: string; path: string }[]; references: { title: string; slug: string }[] };
+  related: { title: string; path: string }[] };
 const HOST = 'https://milvus.io';
 const json = (value: unknown) => JSON.stringify(value).replace(/</g, '\\u003c');
 function useLandingLocale(lang: string) {
@@ -112,7 +113,7 @@ function CodeBlock({ code, zh, onCopy }: { code: PageData['code']; zh: boolean; 
   </div>;
 }
 
-export default function LandingPage({ page: p, twinPath, related, references, lang }: Props) {
+export default function LandingPage({ page: p, twinPath, related, lang }: Props) {
   useLandingLocale(lang);
   const zh = lang === 'zh';
   const prefix = zh ? '/zh' : '';
@@ -135,9 +136,8 @@ export default function LandingPage({ page: p, twinPath, related, references, la
     return 'external';
   };
   const emit = (event: string, location: string, target: string, entryButton = '', url = '') => {
-    const w = window as Window & { dataLayer?: Record<string, unknown>[] };
-    (w.dataLayer = w.dataLayer || []).push({ event, landing_page: p.path, landing_topic: p.slug,
-      cta_location: location, cta_destination: target, entry_button: entryButton,
+    pushGrowthEvent(event, { ...contentDimensions('milvus.io', p.path), landing_topic: p.slug,
+      cta_location: location, cta_action: target, cta_destination: url.split(/[?#]/)[0], entry_button: entryButton,
       link_url: url.split(/[?#]/)[0] });
   };
   const cta = (c: Cta, secondary = false, event?: string, location = 'hero') => {
@@ -163,6 +163,8 @@ export default function LandingPage({ page: p, twinPath, related, references, la
     const target = (e.target as Element)?.closest?.<HTMLElement>('[data-track]');
     if (!target) return;
     const url = target.getAttribute('href') || '';
+    // Global Cloud activations are emitted once by the shared capture handler.
+    if (parseCloudEntryUrl(url)?.hostname === 'cloud.zilliz.com') return;
     emit(target.dataset.track, target.dataset.ctaLocation || '', url ? destination(url) : '',
       target.dataset.entryButton || '', url);
   };
@@ -195,7 +197,6 @@ export default function LandingPage({ page: p, twinPath, related, references, la
       {p.code && <section className="section shaded" id="code"><div className="wrap"><CodeBlock code={p.code} zh={zh}
         onCopy={success => emit(success ? 'copy_code_snippet' : 'copy_code_snippet_failed', 'code', 'clipboard')} /></div></section>}
       {!!p.stories?.length && <section className="section" id="customers"><div className="wrap"><h2>{zh ? '用户案例' : 'Customer stories'}</h2><div className="story-grid">{p.stories.map(s => <a className="story-card" href={href(s.href)} key={s.name} data-track="customer_story_click" data-cta-location="customer_story"><h3>{s.name}</h3><p>{s.text}</p><span>{zh ? '阅读案例' : 'Read the story'}</span></a>)}</div></div></section>}
-      {!!references.length && <section className="section shaded" id="learn"><div className="wrap"><h2>{zh ? '延伸阅读' : 'Explore the concepts'}</h2><ul className="aiq-list">{references.map(r => <li key={r.slug}><a href={`/ai-quick-reference/${r.slug}`}>{r.title}</a></li>)}</ul></div></section>}
       <section className="section" id="faq"><div className="wrap faq-grid"><h2>{zh ? '常见问题' : 'Frequently asked questions'}</h2><div className="faq-list">{p.faqs.map(([q,a],i) => <details className="faq-item" key={i} open={i===0}><summary>{q}</summary><p>{a}</p></details>)}</div></div></section>
       {!!related.length && <nav className="related" aria-label={zh ? '相关页面' : 'Related pages'}><div className="wrap"><strong>{zh ? '相关页面' : 'Related pages'}</strong>{related.map(r => <Link href={r.path} key={r.path}>{r.title}</Link>)}</div></nav>}
       <section className="section" id="sources"><div className="wrap"><details><summary>{zh ? '资料来源与技术文档' : 'Sources and technical documentation'} ({p.sources.length})</summary><ul className="sources-list">{p.sources.map((s,i) => <li key={i}><a href={href(s)}>{s}</a></li>)}</ul></details></div></section>

@@ -11,10 +11,14 @@ import {
   NodesKeyType,
   REFINE_VALUE_TO_N_MAP,
   RefineValueEnum,
+  VectorTypeEnum,
 } from '@/types/sizing';
 
 // Re-export common utilities
 export {
+  VectorTypeEnum,
+  SegmentSizeMetricEnum,
+  sindiSparseMemoryCalculator,
   unitBYTE2Any,
   unitAny2BYTE,
   formatNumber,
@@ -55,6 +59,9 @@ export const memoryAndDiskCalculator = (params: {
   segSize: number;
   mode: ModeEnum;
   refineType: RefineValueEnum;
+  vectorType?: VectorTypeEnum;
+  avgNnz?: number;
+  sindiCompression?: boolean;
 }) => {
   const {
     rawDataSize,
@@ -67,6 +74,9 @@ export const memoryAndDiskCalculator = (params: {
     segSize,
     mode,
     refineType,
+    vectorType,
+    avgNnz,
+    sindiCompression,
   } = params;
   const {
     indexType,
@@ -79,7 +89,10 @@ export const memoryAndDiskCalculator = (params: {
     inlinePq,
   } = indexTypeParams;
   const segmentSizeByte = unitAny2BYTE(segSize, 'MB');
-  const vectorRawDataSize = ((num * d * 32) / 8) * ONE_MILLION;
+  let vectorRawDataSize = ((num * d * 32) / 8) * ONE_MILLION;
+  if (vectorType === VectorTypeEnum.SPARSE_FLOAT_VECTOR) {
+    vectorRawDataSize = num * ONE_MILLION * (avgNnz ?? d) * (sindiCompression ? 2.8 : 8);
+  }
   const N = REFINE_VALUE_TO_N_MAP[refineType];
   const PQ_CODE_BUDGET_GB_RATIO = 0.125;
   const AISAQ_MEMORY_BYTE = unitAny2BYTE(16, 'MB'); // 16 MB
@@ -128,7 +141,26 @@ export const memoryAndDiskCalculator = (params: {
         memory: (1 + (2 * m) / d) * vectorRawDataSize,
         disk: 0,
       };
-
+      break;
+    case IndexTypeEnum.HNSW_SQ:
+      result = {
+        memory: (0.25 + (2 * m) / d) * vectorRawDataSize,
+        disk: 0,
+      };
+      break;
+    case IndexTypeEnum.HNSW_PQ:
+      result = {
+        memory: (PQ_CODE_BUDGET_GB_RATIO + (2 * m) / d) * vectorRawDataSize,
+        disk: 0,
+      };
+      break;
+    case IndexTypeEnum.SPARSE_INVERTED_INDEX:
+      result = {
+        memory: sindiCompression
+          ? num * ONE_MILLION * (avgNnz ?? d) * 2.8
+          : vectorRawDataSize * 1.2,
+        disk: 0,
+      };
       break;
     case IndexTypeEnum.DISKANN:
       result = {
@@ -160,7 +192,7 @@ export const memoryAndDiskCalculator = (params: {
 
   const scalarLocalDisk = offLoading ? num * scalarAvg * ONE_MILLION : 0;
 
-  if (indexType === IndexTypeEnum.DISKANN) {
+  if (indexType === IndexTypeEnum.DISKANN || indexType === IndexTypeEnum.AISAQ) {
     const vectorLoadingMemory = result.memory * 1.15;
     return {
       memory: vectorLoadingMemory + scalarLoadingMemory, // bytes
@@ -904,7 +936,7 @@ export const helmYmlGenerator: (
     mode === ModeEnum.Cluster && apacheType === DependencyComponentEnum.Kafka;
   const useWoodpecker =
     mode === ModeEnum.Cluster &&
-    apacheType === DependencyComponentEnum.Woodpecker;
+    (apacheType === DependencyComponentEnum.Woodpecker || (apacheType as any) === 'woodpecker' || (apacheType as any) === 2);
 
   const pulsarConfig = usePulsar
     ? `
@@ -1106,7 +1138,7 @@ export const operatorYmlGenerator: (
     mode === ModeEnum.Cluster && apacheType === DependencyComponentEnum.Kafka;
   const useWoodpecker =
     mode === ModeEnum.Cluster &&
-    apacheType === DependencyComponentEnum.Woodpecker;
+    (apacheType === DependencyComponentEnum.Woodpecker || (apacheType as any) === 'woodpecker' || (apacheType as any) === 2);
 
   const pulsarConfig = usePulsar
     ? `

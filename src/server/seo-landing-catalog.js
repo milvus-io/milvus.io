@@ -19,9 +19,7 @@ const getLandingProps = (lang, group, slug) => {
   const twin = readPages(lang === 'en' ? 'zh' : 'en').find(p => p.slug === page.slug);
   const related = readPages(lang).filter(p => page.related?.includes(p.slug))
     .map(p => ({ title: p.nav, path: p.path }));
-  const aiq = JSON.parse(fs.readFileSync(path.join(ROOT, 'aiq-index.json'), 'utf8'));
-  const references = (page.aiq || []).map(slug => ({ slug, title: aiq[slug]?.title })).filter(x => x.title);
-  return { props: { page: publicPage(page), twinPath: twin.path, related, references, lang } };
+  return { props: { page: publicPage(page), twinPath: twin.path, related, lang } };
 };
 const getLandingPaths = (lang, group, localized = false) => ({
   paths: listLandingPages(lang, group).map(p => ({ params: {

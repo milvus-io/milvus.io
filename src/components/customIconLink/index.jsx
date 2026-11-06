@@ -22,7 +22,7 @@ export default function CustomIconLink(props) {
     <Link
       href={href || ''}
       target={linkTarget}
-      rel="noopener noreferrer"
+      rel="noopener"
       className={clsx(styles.link, className)}
     >
       {showIcon && (

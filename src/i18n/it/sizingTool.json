@@ -110,5 +110,40 @@
   },
   "woodpeckerTip": "<0>Woodpecker</0> è un sistema di log write-ahead (WAL) cloud-native a partire da Milvus 2.6.0. È stato progettato per sostituire Kafka e Pulsar come MQ in Milvus per semplificare le operazioni, massimizzare il throughput e scalare senza sforzo. Per ora è integrato nei nodi di streaming.",
   "previousVersion": "La versione precedente dello strumento di dimensionamento è <0>qui</0>.",
-  "titleV250": "Strumento di dimensionamento Milvus per Milvus v2.5.x"
+  "titleV250": "Strumento di dimensionamento Milvus per Milvus v2.5.x",
+  "tabs": {
+    "cpu": "Dimensionamento della CPU",
+    "gpu": "Dimensionamento della GPU",
+    "new": "NOVITÀ",
+    "cpuHint": "Stima attuale della CPU: memoria di carico, configurazione dei nodi, dipendenze e comandi di installazione.",
+    "gpuHint": "Stima della VRAM per GPU_BRUTE_FORCE, GPU_IVF_FLAT, GPU_IVF_PQ e GPU_CAGRA, compresa la derivazione completa."
+  },
+  "gpu": {
+    "form": {
+      "million": "Milione",
+      "averageLengthTip": "Solo memoria dell'host — non viene conteggiata nella VRAM",
+      "indexDoc": "Come scegliere un indice GPU?",
+      "trainFraction": "kmeans_trainset_fraction",
+      "pqDim": "pq_dim (m)",
+      "pqDimTip": "0 = cuVS Auto → {{valore}}",
+      "pqBits": "nbits",
+      "graphDegree": "grado_di_connessione",
+      "intermediateDegree": "grado_intermedio_del_grafo",
+      "modeManualTip": "La stima della GPU non cambia modalità automaticamente: scegli quella che intendi implementare.",
+      "cacheDatasetOnDevice": "cache_dataset_on_device"
+    },
+    "result": {
+      "gpuMemory": "Memoria della GPU",
+      "vram": "VRAM",
+      "vramWithValue": "VRAM: {{vram}}"
+    },
+    "errors": {
+      "invalidNumber": "Il numero di vettori deve essere maggiore di 0, la dimensione deve essere almeno 2 e la lunghezza dei segmenti deve essere positiva.",
+      "nlistOutOfRange": "Il valore di nlist deve essere compreso tra 1 e 65536.",
+      "trainFractionOutOfRange": "kmeans_trainset_fraction deve essere compreso nell'intervallo (0, 1].",
+      "pqDimOutOfRange": "La variabile pq_dim deve essere compresa nell'intervallo [1, d].",
+      "pqCodeNotByteAligned": "pq_dim × nbits deve essere un multiplo di 8.",
+      "intermediateDegreeTooSmall": "intermediate_graph_degree deve essere maggiore o uguale a graph_degree."
+    }
+  }
 }

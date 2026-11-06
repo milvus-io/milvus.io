@@ -211,16 +211,6 @@
     "h2": "Build long-term memory for AI agents on Milvus",
     "body": "Start with the Quickstart, give each agent or user a partition key and a role, plug in Mem0 or MCP, then move the same code to a cluster or Zilliz Cloud."
   },
-  "aiq": [
-    "what-are-best-practices-for-structuring-agent-memory-in-milvus",
-    "what-are-the-types-of-agent-memory",
-    "how-to-correct-expire-and-delete-agent-memory",
-    "how-agents-choose-retrieval-tools",
-    "what-is-agentic-search",
-    "milvus-security-rbac",
-    "milvus-mcp-tools",
-    "vector-search-for-coding-agents"
-  ],
   "related": [
     "vector-database-for-rag",
     "hybrid-search",

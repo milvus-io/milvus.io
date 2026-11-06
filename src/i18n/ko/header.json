@@ -37,8 +37,7 @@
   "footer": {
     "resource": {
       "managed": "관리형 Milvus",
-      "contact": "데모 예약하기",
-      "faq": "AI 빠른 참조"
+      "contact": "데모 예약하기"
     },
     "tools": {
       "sizing": "Milvus 크기 계산 도구",

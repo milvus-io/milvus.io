@@ -453,14 +453,6 @@
       "href": "https://zilliz.com/customers/meituan"
     }
   ],
-  "aiq": [
-    "what-is-hnsw",
-    "what-is-diskann",
-    "how-do-you-choose-the-right-index-type-for-your-workload",
-    "what-is-hybrid-search-and-when-should-i-use-it",
-    "what-is-vector-reranking-and-when-should-you-apply-it",
-    "milvus-cdc-and-migration"
-  ],
   "related": [
     "milvus-vs-qdrant",
     "milvus-vs-elasticsearch",

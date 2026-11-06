@@ -1,5 +1,7 @@
 import { useRef, useEffect, useCallback } from 'react';
 import * as d3 from 'd3';
+import { useTranslation } from 'react-i18next';
+import { useGlobalLocale } from '@/hooks/use-global-locale';
 import {
   computeMetric,
   magnitude,
@@ -32,6 +34,8 @@ export default function VectorCanvas({
   colors,
   topK = 5,
 }: Props) {
+  const { locale } = useGlobalLocale();
+  const { t } = useTranslation('learnMilvus', { lng: locale });
   const svgRef = useRef<SVGSVGElement>(null);
   const draggingRef = useRef(false);
 
@@ -110,7 +114,7 @@ export default function VectorCanvas({
 
     // Metric-specific overlay
     const overlayGroup = svg.append('g').attr('class', 'overlay');
-    drawMetricOverlay(overlayGroup, query, metric, x, y);
+    drawMetricOverlay(overlayGroup, query, metric, x, y, t('common.origin'));
 
     // Connection lines from query to top-K
     const linesGroup = svg.append('g').attr('class', 'connections');
@@ -231,7 +235,7 @@ export default function VectorCanvas({
       .attr('fill', '#00a1ea')
       .attr('font-size', 12)
       .attr('font-weight', 700)
-      .text('Query');
+      .text(t('common.query'));
 
     if (metric === 'COSINE' || metric === 'IP') {
       const qMag = magnitude(query);
@@ -249,7 +253,7 @@ export default function VectorCanvas({
           .attr('stroke-dasharray', '8,4');
       }
     }
-  }, [points, query, metric, topKIndices, colors, topK, width, height, xScale, yScale]);
+  }, [points, query, metric, topKIndices, colors, topK, width, height, xScale, yScale, t]);
 
   // Drag handling
   useEffect(() => {
@@ -319,6 +323,7 @@ function drawMetricOverlay(
   metric: MetricType,
   x: d3.ScaleLinear<number, number>,
   y: d3.ScaleLinear<number, number>,
+  originLabel: string,
 ) {
   if (metric === 'L2') {
     [60, 120, 180].forEach((r) => {
@@ -349,7 +354,7 @@ function drawMetricOverlay(
       .attr('fill', '#00a1ea')
       .attr('font-size', 10)
       .attr('opacity', 0.6)
-      .text('Origin');
+      .text(originLabel);
   } else {
     const qMag = magnitude(query);
     if (qMag > 0) {

@@ -1,6 +1,9 @@
 import Head from 'next/head';
 import { ABSOLUTE_BASE_URL } from '@/consts';
 import { buildSchema } from '@/schema';
+import { useGlobalLocale } from '@/hooks/use-global-locale';
+import { useTranslation } from 'react-i18next';
+import { getLearnMilvusAlternates } from '@/utils/learn-milvus-seo';
 
 export interface FaqItem {
   question: string;
@@ -24,8 +27,10 @@ const LEARN_MILVUS_PATH = '/learn-milvus';
 
 export default function LearnMilvusSeo(props: LearnMilvusSeoProps) {
   const { path, title, description, breadcrumbName, ogImage, faq } = props;
+  const { locale, getLocalePath } = useGlobalLocale();
+  const { t } = useTranslation('learnMilvus', { lng: locale });
 
-  const url = `${ABSOLUTE_BASE_URL}${path}`;
+  const url = `${ABSOLUTE_BASE_URL}${getLocalePath(path)}`;
   const imageUrl = ogImage
     ? ogImage.startsWith('http')
       ? ogImage
@@ -33,8 +38,8 @@ export default function LearnMilvusSeo(props: LearnMilvusSeoProps) {
     : undefined;
 
   const breadcrumbItems = [
-    { name: 'Home', url: ABSOLUTE_BASE_URL },
-    { name: 'Learn Milvus', url: `${ABSOLUTE_BASE_URL}${LEARN_MILVUS_PATH}` },
+    { name: t('common.home'), url: `${ABSOLUTE_BASE_URL}${getLocalePath('/')}` },
+    { name: t('home.title'), url: `${ABSOLUTE_BASE_URL}${getLocalePath(LEARN_MILVUS_PATH)}` },
   ];
   if (path !== LEARN_MILVUS_PATH && breadcrumbName) {
     breadcrumbItems.push({ name: breadcrumbName, url });
@@ -47,6 +52,7 @@ export default function LearnMilvusSeo(props: LearnMilvusSeoProps) {
     description,
     url,
     learningResourceType: 'Interactive visualization',
+    inLanguage: locale,
     ...(imageUrl ? { image: imageUrl } : {}),
     isPartOf: {
       '@type': 'WebSite',
@@ -74,6 +80,10 @@ export default function LearnMilvusSeo(props: LearnMilvusSeoProps) {
 
   return (
     <Head>
+      {getLearnMilvusAlternates(path).map(({ hreflang, href }) => (
+        <link key={`learn-milvus-${hreflang}`} rel="alternate" hrefLang={hreflang} href={href} />
+      ))}
+      <link rel="describedby" href={`${ABSOLUTE_BASE_URL}/llms.txt`} type="text/plain" />
       <title>{title}</title>
       <meta name="description" content={description} />
       <meta property="og:title" content={title} />

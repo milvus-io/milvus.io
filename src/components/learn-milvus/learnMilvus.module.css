@@ -1,5 +1,26 @@
 /* ===== Learn Milvus — Light Theme ===== */
 
+/* Keep plot coordinates consistent when the surrounding text is right-to-left. */
+.playground svg,
+.ivfLab svg,
+.hnswExplorer svg,
+.diskannPage svg {
+  direction: ltr;
+}
+
+/* Numeric comparisons and units retain their order inside RTL content. */
+.hnswStepCounter,
+.statsMetaValue,
+.statValue,
+.memoryRowValue,
+.memoryRatio strong,
+.diskannCostValue,
+.diskannCostSub,
+.diskannCostTotal strong {
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+
 /* ===== Home Page ===== */
 .home {
   max-width: 960px;
@@ -136,7 +157,7 @@
   color: #667176;
   cursor: pointer;
   transition: all 0.2s;
-  text-align: left;
+  text-align: start;
   font-family: inherit;
 }
 
@@ -657,7 +678,7 @@
   font-size: 0.75rem;
   color: #191919;
   width: 24px;
-  text-align: right;
+  text-align: end;
 }
 
 /* ===== DiskANN Explorer ===== */

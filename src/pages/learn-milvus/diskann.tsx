@@ -28,7 +28,7 @@ const SCALES = [
 type ScaleId = (typeof SCALES)[number]['id'];
 
 export default function DiskANNExplorer() {
-  const { locale } = useGlobalLocale();
+  const { locale, getLocalePath } = useGlobalLocale();
   const { t } = useTranslation('learnMilvus', { lng: locale });
 
   const points = useMemo(() => seededPoints(23, NUM_POINTS, 220), []);
@@ -97,7 +97,7 @@ export default function DiskANNExplorer() {
   );
 
   return (
-    <Layout disableLangSelector>
+    <Layout disableSelfHreflang>
       <LearnMilvusSeo
         path="/learn-milvus/diskann"
         title={t('diskann.metaTitle')}
@@ -106,9 +106,9 @@ export default function DiskANNExplorer() {
         ogImage="/images/learn-milvus/og-diskann.png"
         faq={faq}
       />
-      <div className={styles.diskannPage}>
+      <div className={styles.diskannPage} dir={locale === 'ar' ? 'rtl' : undefined}>
         <header className={styles.playgroundHeader}>
-          <Link href="/learn-milvus" className={styles.backLink}>&larr; {t('common.back')}</Link>
+          <Link href={getLocalePath('/learn-milvus')} className={styles.backLink}>&larr; {t('common.back')}</Link>
           <h1>{t('diskann.title')}</h1>
           <p>
             <Trans t={t} i18nKey="diskann.subtitle" components={{ strong: <strong key="strong" /> }} />
@@ -148,7 +148,7 @@ export default function DiskANNExplorer() {
           <div className={styles.diskannSliders}>
             <ParamSlider label="R" value={R} min={3} max={8} onChange={(v) => { setR(v); reset(); }} hint={t('diskann.rHint')} />
             <ParamSlider label="L" value={L} min={3} max={20} onChange={(v) => { setL(v); reset(); }} hint={t('diskann.lHint')} />
-            <ParamSlider label="re-rank" value={reRank} min={TOP_K} max={Math.max(TOP_K, L)} onChange={(v) => { setReRank(v); reset(); }} hint={t('diskann.reRankHint')} />
+            <ParamSlider label={t('common.reRank')} value={reRank} min={TOP_K} max={Math.max(TOP_K, L)} onChange={(v) => { setReRank(v); reset(); }} hint={t('diskann.reRankHint')} />
             <ParamSlider label={t('common.speed')} value={speed} min={100} max={1200} onChange={setSpeed} display={(v) => `${v}ms`} hint={t('common.perStep')} />
           </div>
         </div>

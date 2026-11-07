@@ -42,6 +42,7 @@ export interface IIndexType {
   rabitqNList: number;
   m: number;
   inlinePq: number;
+  sindiCompression?: boolean;
 }
 
 export enum RefineValueEnum {

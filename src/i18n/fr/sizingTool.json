@@ -31,7 +31,10 @@
     "segmentTooltip": "datacoord.segment.maxSize est un paramètre de configuration de stockage important dans Milvus. Il définit la taille d'un segment unique, qui est l'unité de stockage physique dans Milvus. L'augmentation de cette valeur peut améliorer les performances des requêtes, mais elle consomme également plus de ressources. <0>En savoir plus.</0>",
     "refine": "Affiner",
     "refineType": "Affiner le type",
-    "inlinePq": "inline_pq"
+    "inlinePq": "inline_pq",
+    "vectorType": "Type de données vectorielles",
+    "avgNnz": "Dimensions moyennes non nulles (avg_nnz)",
+    "sindi": "Compression SINDI (Milvus 3.0)"
   },
   "overview": {
     "title": "Besoins en ressources",
@@ -106,7 +109,8 @@
     "adv2": "Configurer un cluster Milvus pour des tests de performance ou des benchmarks ? Reportez-vous à <0>VDB Bench</0> pour des instructions détaillées.",
     "tip1": "Comment exécuter Milvus avec Docker Compose ?",
     "tip2": "Comment exécuter Milvus avec Helm Chart ?",
-    "tip3": "Comment exécuter Milvus avec l'opérateur Milvus ?"
+    "tip3": "Comment exécuter Milvus avec l'opérateur Milvus ?",
+    "downloadOperator": "Télécharger le YAML de l'Operator"
   },
   "woodpeckerTip": "<0>Woodpecker</0> est un système WAL (write-ahead log) natif pour le cloud depuis Milvus 2.6.0. Il est conçu pour remplacer Kafka et Pulsar en tant que MQ dans Milvus afin de simplifier les opérations, de maximiser le débit et d'évoluer sans effort. Pour l'instant, il fonctionne de manière intégrée dans les nœuds de streaming.",
   "previousVersion": "La version précédente de l'outil de dimensionnement est <0>ici.</0>",

@@ -22,6 +22,7 @@ interface IIndexTypeBase {
   m: number;
   rabitqNList?: number;
   inlinePq?: number;
+  sindiCompression?: boolean;
 }
 
 type IndexTypeComponentProps = {
@@ -350,8 +351,8 @@ const AISAQComponent = (props: IndexTypeComponentProps) => {
 
 export const IndexTypeComponent = (props: IndexTypeComponentProps) => {
   const { data, config } = props;
+  const { t } = useTranslation('sizingTool');
   const { IndexTypeEnum } = config.types;
-
   switch (data.indexType) {
     case IndexTypeEnum.FLAT:
       return null;
@@ -362,6 +363,21 @@ export const IndexTypeComponent = (props: IndexTypeComponentProps) => {
     case IndexTypeEnum.HNSW_PQ:
       return <HNSWComponent {...props} />;
     case IndexTypeEnum.SPARSE_INVERTED_INDEX:
+      if (config.supportsWoodpecker) {
+        return (
+          <div className="mt-[16px] flex items-center gap-[8px]">
+            <p className="text-[12px] font-[500] leading-[16px]">
+              {t('form.sindi')}
+            </p>
+            <SizingSwitch
+              checked={Boolean(data.sindiCompression)}
+              onCheckedChange={value => {
+                props.onChange('sindiCompression', value);
+              }}
+            />
+          </div>
+        );
+      }
       return null;
     case IndexTypeEnum.DISKANN:
       return <DISKANNComponent {...props} />;

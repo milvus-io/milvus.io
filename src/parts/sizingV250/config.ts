@@ -2,6 +2,7 @@ import {
   ModeEnum,
   IndexTypeEnum,
   DependencyComponentEnum,
+  VectorTypeEnum,
 } from '@/types/sizingV250';
 import {
   VECTOR_RANGE_CONFIG,
@@ -14,6 +15,9 @@ import {
   N_LIST_RANGE_CONFIG,
   M_RANGE_CONFIG,
   MAXIMUM_AVERAGE_LENGTH,
+  VECTOR_TYPE_OPTIONS,
+  SPARSE_INDEX_TYPE_OPTIONS,
+  AVG_NNZ_RANGE_CONFIG,
   helmCodeExample,
   operatorCodeExample,
   HELM_CONFIG_FILE_NAME,
@@ -53,6 +57,7 @@ export const sizingV250Config: SizingVersionConfig = {
     ModeEnum,
     IndexTypeEnum,
     DependencyComponentEnum,
+    VectorTypeEnum,
   },
   consts: {
     VECTOR_RANGE_CONFIG,
@@ -65,6 +70,9 @@ export const sizingV250Config: SizingVersionConfig = {
     N_LIST_RANGE_CONFIG,
     M_RANGE_CONFIG,
     MAXIMUM_AVERAGE_LENGTH,
+    VECTOR_TYPE_OPTIONS,
+    SPARSE_INDEX_TYPE_OPTIONS,
+    AVG_NNZ_RANGE_CONFIG,
   },
   utils: {
     memoryAndDiskCalculator,

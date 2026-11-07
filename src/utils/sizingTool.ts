@@ -28,6 +28,7 @@ export {
   createDataSizeConstants,
 } from './sizingToolCommon';
 import {
+  sindiSparseMemoryCalculator,
   unitBYTE2Any,
   unitAny2BYTE,
   createRawDataSizeCalculator,
@@ -104,8 +105,7 @@ export const memoryAndDiskCalculator = (params: {
       vectorBytesPerItem = d / 8;
       break;
     case VectorTypeEnum.SPARSE_FLOAT_VECTOR:
-      vectorBytesPerItem =
-        (avgNnz ?? d) * (effectiveSindiCompression ? 2.8 : 8);
+      vectorBytesPerItem = (avgNnz ?? d) * 8;
       break;
     case VectorTypeEnum.FLOAT_VECTOR:
     default:
@@ -189,7 +189,11 @@ export const memoryAndDiskCalculator = (params: {
           : num * ONE_MILLION * (avgNnz ?? d) * 8;
       result = {
         memory: effectiveSindiCompression
-          ? num * ONE_MILLION * (avgNnz ?? d) * 2.8
+          ? sindiSparseMemoryCalculator({
+              num,
+              avgNnz: avgNnz ?? d,
+              ONE_MILLION,
+            })
           : sparseRawSize * 1.2,
         disk: 0,
       };
@@ -550,7 +554,6 @@ export const dependencyCalculator = (params: {
   dependency?: DependencyComponentEnum;
   vectorType?: VectorTypeEnum;
   avgNnz?: number;
-  sindiCompression?: boolean;
 }): DependencyConfigType => {
   const {
     num,
@@ -562,7 +565,6 @@ export const dependencyCalculator = (params: {
     dependency,
     vectorType,
     avgNnz,
-    sindiCompression,
   } = params;
   const MINIMUM_MINIO_PVC_SIZE = 30; //GB
   const MINIMUM_PULSAR_LEDGERS = 20; //GB
@@ -576,7 +578,6 @@ export const dependencyCalculator = (params: {
     scalarAvg,
     vectorType,
     avgNnz,
-    sindiCompression,
   });
 
   const minioPvc = Math.max(

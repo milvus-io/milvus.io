@@ -113,10 +113,6 @@ export const VECTOR_TYPE_OPTIONS = [
     value: VectorTypeEnum.BFLOAT16_VECTOR,
   },
   {
-    label: 'Int8',
-    value: VectorTypeEnum.INT8_VECTOR,
-  },
-  {
     label: 'Binary',
     value: VectorTypeEnum.BINARY_VECTOR,
   },

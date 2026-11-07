@@ -1,6 +1,7 @@
 import {
   CPU_LOADING_SAFETY_FACTOR,
   DEFAULT_GPU_INDEX_PARAMS,
+  DEFAULT_GPU_MILVUS_IMAGE,
   FLOAT_BYTES,
   GPU_FIXED_NODE_CONFIG,
   GPU_INDEX_PARAM_KEYS,
@@ -369,6 +370,7 @@ metadata:
 spec:
   mode: standalone
   components:
+    image: ${DEFAULT_GPU_MILVUS_IMAGE}
     standalone:
       resources:
         limits:
@@ -394,6 +396,7 @@ metadata:
 spec:
   mode: cluster
   components:
+    image: ${DEFAULT_GPU_MILVUS_IMAGE}
     mixCoord:
       resources:
         limits:

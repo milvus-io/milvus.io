@@ -169,9 +169,15 @@ export default function FormSection(props: FormSectionProps) {
       if (newType === VectorTypeEnum?.BINARY_VECTOR) {
         allowedValues = [IndexTypeEnum.FLAT, IndexTypeEnum.IVF_FLAT];
       } else if (newType === VectorTypeEnum?.INT8_VECTOR) {
-        allowedValues = [IndexTypeEnum.FLAT, IndexTypeEnum.HNSW];
+        allowedValues = [
+          IndexTypeEnum.HNSW,
+          IndexTypeEnum.HNSW_SQ,
+          IndexTypeEnum.HNSW_PQ,
+        ];
       } else {
-        allowedValues = INDEX_TYPE_OPTIONS.map((opt: any) => opt.value);
+        allowedValues = INDEX_TYPE_OPTIONS.map(
+          (opt: { value: IndexTypeEnum }) => opt.value
+        );
       }
       if (!allowedValues.includes(indexTypeParams.indexType)) {
         setIndexTypeParams(prev => ({
@@ -202,16 +208,17 @@ export default function FormSection(props: FormSectionProps) {
     }
     if (form.vectorType === VectorTypeEnum?.INT8_VECTOR) {
       return INDEX_TYPE_OPTIONS.filter(
-        (opt: any) =>
-          opt.value === IndexTypeEnum.FLAT ||
-          opt.value === IndexTypeEnum.HNSW
+        (opt: { value: IndexTypeEnum }) =>
+          opt.value === IndexTypeEnum.HNSW ||
+          opt.value === IndexTypeEnum.HNSW_SQ ||
+          opt.value === IndexTypeEnum.HNSW_PQ
       );
     }
     return INDEX_TYPE_OPTIONS;
   }, [
     form.vectorType,
-    SPARSE_INDEX_TYPE_OPTIONS,
     INDEX_TYPE_OPTIONS,
+    SPARSE_INDEX_TYPE_OPTIONS,
     VectorTypeEnum,
     IndexTypeEnum,
   ]);
@@ -315,7 +322,6 @@ export default function FormSection(props: FormSectionProps) {
       scalarAvg: form.scalarData.averageNum,
       vectorType: form.vectorType,
       avgNnz: form.avgNnz,
-      sindiCompression: Boolean(indexTypeParams.sindiCompression),
     });
     setRawDataSize(rawDataSize);
   }, [
@@ -325,7 +331,6 @@ export default function FormSection(props: FormSectionProps) {
     form.scalarData.averageNum,
     form.vectorType,
     form.avgNnz,
-    indexTypeParams.sindiCompression,
   ]);
 
   const disableStandalone = useMemo(() => {
@@ -392,7 +397,6 @@ export default function FormSection(props: FormSectionProps) {
       loadingMemory: memory,
       vectorType: form.vectorType,
       avgNnz: form.avgNnz,
-      sindiCompression: Boolean(indexTypeParams.sindiCompression),
     };
     // Add dependency for v3
     if (config.supportsWoodpecker) {

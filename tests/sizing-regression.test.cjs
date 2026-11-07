@@ -393,33 +393,22 @@ test('SINDI sparse compression algorithm reduces memory footprint to ~2.8 bytes 
   const calculatedSindiBytes = sindiSparseMemoryCalculator({ num: numVectors, avgNnz });
   assert.equal(calculatedSindiBytes, expectedSindiBytes, 'sindiSparseMemoryCalculator calculates N * avg_nnz * 2.8 bytes');
 
-  // 2. rawDataSizeCalculator with and without SINDI
-  const uncompressedRaw = rawDataSizeCalculator({
+  // 2. rawDataSizeCalculator keeps raw sparse vector size at 8 bytes per NNZ
+  const sparseRaw = rawDataSizeCalculator({
     num: numVectors,
     d: 30000,
     withScalar: false,
     scalarAvg: 0,
     vectorType: VectorTypeEnum.SPARSE_FLOAT_VECTOR,
     avgNnz,
-    sindiCompression: false,
-  });
-  const sindiRaw = rawDataSizeCalculator({
-    num: numVectors,
-    d: 30000,
-    withScalar: false,
-    scalarAvg: 0,
-    vectorType: VectorTypeEnum.SPARSE_FLOAT_VECTOR,
-    avgNnz,
-    sindiCompression: true,
   });
 
-  assert.equal(uncompressedRaw, 1000000 * avgNnz * 8, 'Standard sparse is 8 bytes per NNZ');
-  assert.equal(sindiRaw, expectedSindiBytes, 'SINDI compressed sparse is 2.8 bytes per NNZ');
-  assert.ok(sindiRaw < uncompressedRaw * 0.4, 'SINDI achieves > 60% memory savings compared to uncompressed sparse');
+  assert.equal(sparseRaw, 1000000 * avgNnz * 8, 'Standard sparse raw data is 8 bytes per NNZ');
+  assert.ok(calculatedSindiBytes < sparseRaw * 0.4, 'SINDI achieves > 60% index memory savings compared to raw sparse');
 
   // 3. memoryAndDiskCalculator with SPARSE_INVERTED_INDEX and SINDI
   const sindiMemResult = memoryAndDiskCalculator({
-    rawDataSize: sindiRaw,
+    rawDataSize: sparseRaw,
     indexTypeParams: {
       indexType: IndexTypeEnum26.SPARSE_INVERTED_INDEX,
       widthRawData: false,
@@ -525,8 +514,12 @@ test('VECTOR_TYPE_OPTIONS and sparse constants are exported with correct schema 
   assert.equal(AVG_NNZ_RANGE_CONFIG.min, 1);
   assert.equal(AVG_NNZ_RANGE_CONFIG.max, 10000);
 
-  // Verify v250 consistency
-  assert.equal(VECTOR_TYPE_OPTIONS_V250.length, 6);
+  // Verify v250 consistency (Milvus 2.5 excludes INT8_VECTOR, which was added in 2.6)
+  assert.equal(VECTOR_TYPE_OPTIONS_V250.length, 5);
+  assert.ok(
+    !VECTOR_TYPE_OPTIONS_V250.some(o => o.value === VectorTypeEnum.INT8_VECTOR),
+    'Milvus 2.5 VECTOR_TYPE_OPTIONS must not include INT8_VECTOR'
+  );
   assert.equal(SPARSE_INDEX_TYPE_OPTIONS_V250[0].value, IndexTypeEnum.SPARSE_INVERTED_INDEX);
   assert.equal(AVG_NNZ_RANGE_CONFIG_V250.defaultValue, 100);
 });
@@ -606,18 +599,39 @@ test('dependencyCalculator scales PVC size with vectorType and avgNnz', () => {
   );
 });
 
-test('gpuOperatorYmlGenerator emits gpu memory pool configuration in spec.config', () => {
-  const yml = gpuOperatorYmlGenerator({
+test('gpuOperatorYmlGenerator emits GPU image in spec.components and gpu memory pool configuration in spec.config', () => {
+  const standaloneYml = gpuOperatorYmlGenerator({
     mode: ModeEnum.Standalone,
     standaloneNodeConfig: { cpu: 8, memory: 32, count: 1 },
     clusterNodeConfig: {},
     rmmPoolSize: { initMemSize: 2048, maxMemSize: 4096 },
   });
-  assert.ok(yml.includes('initMemSize: 2048'), 'YAML must contain gpu initMemSize');
-  assert.ok(yml.includes('maxMemSize: 4096'), 'YAML must contain gpu maxMemSize');
+  assert.ok(
+    standaloneYml.includes('image: milvusdb/milvus:v2.6.25-gpu'),
+    'Standalone GPU YAML must set spec.components.image to a GPU-enabled image'
+  );
+  assert.ok(standaloneYml.includes('initMemSize: 2048'), 'YAML must contain gpu initMemSize');
+  assert.ok(standaloneYml.includes('maxMemSize: 4096'), 'YAML must contain gpu maxMemSize');
+
+  const clusterYml = gpuOperatorYmlGenerator({
+    mode: ModeEnum.Cluster,
+    standaloneNodeConfig: { cpu: 8, memory: 32, count: 1 },
+    clusterNodeConfig: {
+      queryNode: { cpu: 4, memory: 16, count: 2, gpuCount: 1 },
+      proxy: { cpu: 2, memory: 8, count: 1 },
+      mixCoord: { cpu: 2, memory: 8, count: 1 },
+      dataNode: { cpu: 4, memory: 16, count: 2 },
+      streamNode: { cpu: 2, memory: 8, count: 1 },
+    },
+    rmmPoolSize: { initMemSize: 2048, maxMemSize: 4096 },
+  });
+  assert.ok(
+    clusterYml.includes('image: milvusdb/milvus:v2.6.25-gpu'),
+    'Cluster GPU YAML must set spec.components.image to a GPU-enabled image'
+  );
 });
 
-test('memoryAndDiskCalculator and dependencyCalculator support SINDI compression via indexTypeParams and top-level params', () => {
+test('SINDI compression reduces sparse index memory while keeping rawDataSize and storage footprints independent', () => {
   const baseSparseParams = {
     rawDataSize: 100 * 1024 * 1024,
     d: 768,
@@ -628,8 +642,22 @@ test('memoryAndDiskCalculator and dependencyCalculator support SINDI compression
     segSize: 512,
     mode: ModeEnum.Cluster,
     vectorType: VectorTypeEnum.SPARSE_FLOAT_VECTOR,
-    avgNnz: 500,
+    avgNnz: 5000,
   };
+
+  const rawSize = rawDataSizeCalculator({
+    num: 10,
+    d: 768,
+    withScalar: false,
+    scalarAvg: 0,
+    vectorType: VectorTypeEnum.SPARSE_FLOAT_VECTOR,
+    avgNnz: 5000,
+  });
+  assert.equal(
+    rawSize,
+    400_000_000_000,
+    'Sparse rawDataSize must always use 8 bytes/NNZ (400 GB for 10M vectors at avgNnz=5000)'
+  );
 
   const uncompressed = memoryAndDiskCalculator({
     ...baseSparseParams,
@@ -647,37 +675,22 @@ test('memoryAndDiskCalculator and dependencyCalculator support SINDI compression
   });
   assert.ok(
     sindiViaIndexParams.memory < uncompressed.memory,
-    'SINDI via indexTypeParams.sindiCompression must reduce sparse memory footprint'
+    'SINDI via indexTypeParams.sindiCompression must reduce sparse index memory footprint'
   );
 
-  const depUncompressed = dependencyCalculator({
+  const depZeroLoading = dependencyCalculator({
     num: 10,
     d: 768,
     mode: ModeEnum.Cluster,
     withScalar: false,
     scalarAvg: 0,
-    loadingMemory: uncompressed.memory,
-    dependency: DependencyComponentEnum.Pulsar,
+    loadingMemory: 0,
+    dependency: DependencyComponentEnum26.Pulsar,
     vectorType: VectorTypeEnum.SPARSE_FLOAT_VECTOR,
     avgNnz: 5000,
-    sindiCompression: false,
   });
-  const depSindi = dependencyCalculator({
-    num: 10,
-    d: 768,
-    mode: ModeEnum.Cluster,
-    withScalar: false,
-    scalarAvg: 0,
-    loadingMemory: sindiViaIndexParams.memory,
-    dependency: DependencyComponentEnum.Pulsar,
-    vectorType: VectorTypeEnum.SPARSE_FLOAT_VECTOR,
-    avgNnz: 5000,
-    sindiCompression: true,
-  });
-  assert.ok(
-    depSindi.minio.pvc < depUncompressed.minio.pvc,
-    'SINDI compression must reduce MinIO PVC requirement for large sparse datasets'
-  );
+  assert.equal(depZeroLoading.minio.pvc, 373, 'MinIO PVC from rawDataSize alone must be 373 GiB');
+  assert.equal(depZeroLoading.pulsar.bookie.ledgers, 373, 'Pulsar ledgers from rawDataSize alone must be 373 GiB');
 });
 
 test('memoryAndDiskCalculator handles FP16/BF16 with HNSW_SQ/HNSW_PQ and DISKANN with INT8/BINARY', () => {

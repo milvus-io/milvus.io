@@ -132,74 +132,177 @@ export const useFilter = () => {
   }, [asPath]);
 };
 
+export const normalizeCodeFilterKey = (raw?: string | null): string => {
+  if (!raw) return '';
+  const cleaned = raw
+    .trim()
+    .replace(/^[?#]+/, '')
+    .replace(/%/g, '')
+    .toLowerCase();
+  if (!cleaned) return '';
+  if (cleaned === 'c++') return '?cpp';
+  return `?${cleaned}`;
+};
+
+export const matchesLanguageClass = (
+  classList: { contains: (cls: string) => boolean },
+  searchKey: string
+): boolean => {
+  const lang = normalizeCodeFilterKey(searchKey).replace(/^\?/, '');
+  if (!lang) return false;
+  if (lang === 'cpp') {
+    return (
+      classList.contains('language-cpp') || classList.contains('language-c++')
+    );
+  }
+  return classList.contains(`language-${lang}`);
+};
+
+export interface CodeBlockGroup {
+  wrapper: Element;
+  filters: HTMLAnchorElement[];
+  codes: Element[];
+  firstKey: string;
+}
+
+export const collectCodeBlockGroups = (
+  filterWrappers: ArrayLike<Element>
+): CodeBlockGroup[] => {
+  const groups: CodeBlockGroup[] = [];
+  Array.from(filterWrappers).forEach(fw => {
+    const filters: HTMLAnchorElement[] =
+      typeof fw.querySelectorAll === 'function'
+        ? Array.from(fw.querySelectorAll('a'))
+        : [];
+    let firstKey = '';
+    filters.forEach(f => {
+      const key = normalizeCodeFilterKey(f.getAttribute('href') || f.hash);
+      if (!firstKey && key) {
+        firstKey = key;
+      }
+      f['key'] = key;
+    });
+
+    const codes: Element[] = [];
+    let next = fw.nextElementSibling;
+    while (next) {
+      if (next.tagName === 'P' && !(next.textContent || '').trim()) {
+        next = next.nextElementSibling;
+        continue;
+      }
+      if (next.tagName === 'PRE') {
+        const found =
+          typeof next.querySelectorAll === 'function'
+            ? next.querySelectorAll('[class*="language-"]')
+            : [];
+        if (found.length) {
+          found.forEach(c => codes.push(c));
+        } else if (next.className && next.className.includes('language-')) {
+          codes.push(next);
+        }
+        next = next.nextElementSibling;
+        continue;
+      }
+      break;
+    }
+
+    groups.push({
+      wrapper: fw,
+      filters,
+      codes,
+      firstKey,
+    });
+  });
+  return groups;
+};
+
+export const collectScopedCodeBlocks = (
+  filterWrappers: ArrayLike<Element>
+): Set<Element> => {
+  const groups = collectCodeBlockGroups(filterWrappers);
+  const set = new Set<Element>();
+  groups.forEach(g => g.codes.forEach(c => set.add(c)));
+  return set;
+};
+
 export const useMultipleCodeFilter = () => {
   const { asPath } = useRouter();
   const SEARCH = 'search';
   useEffect(() => {
-    const setSearch = (val: string) => window.localStorage.setItem(SEARCH, val);
+    const setSearch = (val: string) =>
+      window.localStorage.setItem(SEARCH, normalizeCodeFilterKey(val));
     const getSearch = () => {
-      return window.localStorage.getItem(SEARCH);
+      return normalizeCodeFilterKey(window.localStorage.getItem(SEARCH));
     };
-
-    const filterWrappers = document.querySelectorAll('.multipleCode');
-    const allFilters = [];
-    let firstSearch = '';
-    filterWrappers.forEach(fw => {
-      const fs = fw.querySelectorAll('a');
-      fs.forEach(f => {
-        if (!firstSearch) {
-          // <a href='#node' >xxx</a>
-          firstSearch = f.hash.replace('#', '?');
-        }
-        f['key'] = f.hash.replace('#', '?');
-        allFilters.push(f);
-      });
-    });
 
     const allContents = document.querySelectorAll(`[class*="language-"]`);
     if (!allContents.length) return;
+
+    const filterWrappers = document.querySelectorAll('.multipleCode');
     if (!filterWrappers.length) {
       allContents.forEach(c => c.classList.toggle('active', true));
       return;
     }
-    // the language options of current code block
-    // we must make sure options are same on single page
-    const languageList = Array.prototype.map.call(
-      filterWrappers[0].children,
-      item => item.getAttribute('href')
-    );
-    const clickEventHandler = targetSearch => {
-      const search = targetSearch;
-      setSearch(targetSearch);
-      const currentFilters = allFilters.filter(f => f.key === search);
-      allFilters.forEach(f => f.classList.toggle('active', false));
-      currentFilters.forEach(cf => cf.classList.toggle('active', true));
-      allContents.forEach(c => c.classList.toggle('active', false));
-      const contents = document.querySelectorAll(
-        `.language-${search.replace('?', '').replace(/%/g, '')}`
-      );
 
-      contents.forEach(c => c.classList.toggle('active', true));
+    const groups = collectCodeBlockGroups(filterWrappers);
+
+    const allGroupedCodes = new Set<Element>();
+    groups.forEach(g => g.codes.forEach(c => allGroupedCodes.add(c)));
+
+    // Standalone code blocks outside .multipleCode groups always stay visible
+    allContents.forEach(c => {
+      if (!allGroupedCodes.has(c)) {
+        c.classList.toggle('active', true);
+      }
+    });
+
+    const allFilters = groups.flatMap(g => g.filters);
+    const languageList = Array.from(
+      new Set(allFilters.map(f => f['key']).filter(Boolean))
+    );
+    const firstGlobalSearch = groups[0]?.firstKey || '';
+
+    const clickEventHandler = (targetSearch?: string | null) => {
+      const search = normalizeCodeFilterKey(targetSearch);
+      if (!search) return;
+      setSearch(search);
+
+      groups.forEach(group => {
+        const hasMatchingTab = group.filters.some(f => f['key'] === search);
+        const activeKey = hasMatchingTab
+          ? search
+          : group.filters.find(f => f.classList.contains('active'))?.['key'] ||
+            group.firstKey;
+
+        group.filters.forEach(f => {
+          f.classList.toggle('active', f['key'] === activeKey);
+        });
+
+        group.codes.forEach(c => {
+          c.classList.toggle(
+            'active',
+            matchesLanguageClass(c.classList, activeKey)
+          );
+        });
+      });
     };
 
     filterWrappers.forEach(w => {
       w.addEventListener('click', (e: Event) => {
         e.preventDefault();
         if (e.target instanceof HTMLAnchorElement && e.target.tagName === 'A') {
-          clickEventHandler(e.target.hash.replace('#', '?'));
+          clickEventHandler(e.target.getAttribute('href') || e.target.hash);
         }
       });
     });
 
     if (window) {
       const cacheSearch = getSearch();
-      let localSearch;
-      // there may be no recorded language on the current page
-      // so we must judge
+      let localSearch = '';
       if (cacheSearch && languageList.includes(cacheSearch)) {
         localSearch = cacheSearch;
       } else {
-        localSearch = firstSearch;
+        localSearch = firstGlobalSearch;
       }
       if (localSearch) {
         clickEventHandler(localSearch);

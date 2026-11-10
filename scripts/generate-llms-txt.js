@@ -187,11 +187,6 @@ const CURATED = {
           'Release announcements, engineering deep dives, and benchmarks. Article URLs are `/blog/<slug>` with no `.md` suffix.',
         ],
         [
-          'Learn AI and Vector DB',
-          `${ORIGIN}/learn-ai-and-vectordb`,
-          'Long-form explainers on vector databases and AI infrastructure.',
-        ],
-        [
           'Use Cases',
           `${ORIGIN}/use-cases`,
           'Production use cases and customer stories.',

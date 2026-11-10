@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 // Keep old bookmarks, API calls and cached client navigation from reviving
-// the deleted collection. This also applies when Next runs without Nginx.
+// the deleted collections. This also applies when Next runs without Nginx.
 export function middleware(request: NextRequest) {
-  const api = /\/(?:api\/ai-quick-reference)(?:\/|$)/i.test(request.nextUrl.pathname);
+  const api = /\/api\/(?:ai-quick-reference|learn-ai-and-vectordb)(?:\/|$)/i.test(request.nextUrl.pathname);
   return new NextResponse(
     api
-      ? JSON.stringify({ message: 'AI Quick Reference has been permanently removed.' })
+      ? JSON.stringify({ message: 'This section has been permanently removed.' })
       : '<!doctype html><html lang="en"><head><meta name="robots" content="noindex"><title>410 Gone | Milvus</title></head><body><main><h1>410 Gone</h1><p>This section has been permanently removed.</p><p><a href="https://milvus.io/docs">Milvus documentation</a></p></main></body></html>',
     {
       status: 410,
@@ -28,5 +28,10 @@ export const config = {
     '/images/ai-reference/:path*',
     '/:lang(en|zh-hant|zh|ja|jp|fr|ko|ru|de|es|pt|it|ar|id|cn)/images/ai-reference/:path*',
     '/assets/milvus-faq.csv',
+    '/learn-ai-and-vectordb/:path*',
+    '/:lang(en|zh-hant|zh|ja|jp|fr|ko|ru|de|es|pt|it|ar|id|cn)/learn-ai-and-vectordb/:path*',
+    '/api/learn-ai-and-vectordb/:path*',
+    '/:lang(en|zh-hant|zh|ja|jp|fr|ko|ru|de|es|pt|it|ar|id|cn)/api/learn-ai-and-vectordb/:path*',
+    '/assets/learn-ai.csv',
   ],
 };

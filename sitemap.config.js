@@ -70,9 +70,9 @@ const LOCALIZED_DOCS_RE = new RegExp(`^/docs/(${CUT_LANGS.join('|')})(/|$)`);
 const VERSIONED_DOCS_RE = new RegExp(
   `^/docs/(?:(?:${INDEXABLE_NON_EN_LANGS.join('|')})/)?v\\d+\\.\\d+\\.x(/|$)`
 );
-// The entire retired collection, including historical locale-prefixed URLs,
+// The retired collections, including historical locale-prefixed URLs,
 // must stay out of generated sitemaps.
-const RETIRED_REFERENCE_RE = /^\/(?:(?:en|zh-hant|zh|ja|jp|fr|ko|ru|de|es|pt|it|ar|id|cn)\/)?(?:ai-quick-reference|api\/ai-quick-reference)(?:\/|$)/i;
+const RETIRED_REFERENCE_RE = /^\/(?:(?:en|zh-hant|zh|ja|jp|fr|ko|ru|de|es|pt|it|ar|id|cn)\/)?(?:ai-quick-reference|api\/ai-quick-reference|learn-ai-and-vectordb|api\/learn-ai-and-vectordb)(?:\/|$)/i;
 
 const toPathname = loc => {
   try {

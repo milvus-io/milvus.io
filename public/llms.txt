@@ -755,7 +755,6 @@ Maintained outside milvus.io; these are the canonical repositories.
 These areas hold thousands of pages and are not enumerated here. Do not guess a slug inside them — resolve one through https://milvus.io/sitemap.xml or the section index below.
 
 - [Blog](https://milvus.io/blog): Release announcements, engineering deep dives, and benchmarks. Article URLs are `/blog/<slug>` with no `.md` suffix.
-- [Learn AI and Vector DB](https://milvus.io/learn-ai-and-vectordb): Long-form explainers on vector databases and AI infrastructure.
 - [Use Cases](https://milvus.io/use-cases): Production use cases and customer stories.
 - [Milvus Demos](https://milvus.io/milvus-demos): Live demo applications, including reverse image search.
 - [Bootcamp](https://milvus.io/bootcamp): Hands-on notebooks and end-to-end example projects.

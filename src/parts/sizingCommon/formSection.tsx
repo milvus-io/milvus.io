@@ -176,7 +176,7 @@ export default function FormSection(props: FormSectionProps) {
         ];
       } else {
         allowedValues = INDEX_TYPE_OPTIONS.map(
-          (opt: { value: IndexTypeEnum }) => opt.value
+          (opt: { value: string }) => opt.value
         );
       }
       if (!allowedValues.includes(indexTypeParams.indexType)) {
@@ -208,7 +208,7 @@ export default function FormSection(props: FormSectionProps) {
     }
     if (form.vectorType === VectorTypeEnum?.INT8_VECTOR) {
       return INDEX_TYPE_OPTIONS.filter(
-        (opt: { value: IndexTypeEnum }) =>
+        (opt: { value: string }) =>
           opt.value === IndexTypeEnum.HNSW ||
           opt.value === IndexTypeEnum.HNSW_SQ ||
           opt.value === IndexTypeEnum.HNSW_PQ

@@ -456,7 +456,11 @@ export default function FormSection(props: FormSectionProps) {
               <SelectTrigger className={classes.selectTrigger}>
                 {VECTOR_TYPE_OPTIONS.find((v: any) => v.value === form.vectorType)?.label || form.vectorType}
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent onCloseAutoFocus={event => {
+                // The close animation can finish after the user has already
+                // focused a numeric field. Do not steal that new focus.
+                if (document.activeElement instanceof HTMLInputElement) event.preventDefault();
+              }}>
                 {VECTOR_TYPE_OPTIONS.map((v: any) => (
                   <SelectItem
                     key={v.value}

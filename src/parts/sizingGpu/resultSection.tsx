@@ -1,7 +1,7 @@
+import { useSizingTranslation } from '@/parts/sizingCommon/useSizingTranslation';
 import { LocalizedAnchor } from '@/components/localizedLinks';
 import { useMemo, useState } from 'react';
 import clsx from 'clsx';
-import { useTranslation } from 'react-i18next';
 import {
   Collapsible,
   CollapsibleContent,
@@ -56,6 +56,7 @@ interface INodeRow {
 }
 
 interface GpuResultSectionProps {
+  milvusImage?: string;
   className?: string;
   snapshot: IGpuSnapshot;
   error: GpuValidationErrorEnum | null;
@@ -63,19 +64,21 @@ interface GpuResultSectionProps {
 
 export default function GpuResultSection(props: GpuResultSectionProps) {
   const { className, snapshot, error } = props;
-  const { t } = useTranslation('sizingTool');
+  const { t } = useSizingTranslation();
 
   const [isMilvusOpen, setIsMilvusOpen] = useState(true);
   const [hasCopied, setHasCopied] = useState(false);
 
   const gpuOperatorYaml = useMemo(() => {
     return gpuOperatorYmlGenerator({
+      milvusImage: props.milvusImage,
       mode: snapshot.params.mode,
       standaloneNodeConfig: snapshot.result.standaloneNodeConfig,
       clusterNodeConfig: snapshot.result.clusterNodeConfig,
       rmmPoolSize: snapshot.result.rmmPoolSize,
     });
   }, [
+    props.milvusImage,
     snapshot.params.mode,
     snapshot.result.standaloneNodeConfig,
     snapshot.result.clusterNodeConfig,

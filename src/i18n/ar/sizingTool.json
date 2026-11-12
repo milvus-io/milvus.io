@@ -34,7 +34,9 @@
     "inlinePq": "مضمنة_بقس",
     "vectorType": "نوع البيانات المتجهية",
     "avgNnz": "متوسط الأبعاد غير الصفرية (avg_nnz)",
-    "sindi": "ضغط SINDI (Milvus 3.0)"
+    "sindi": "ضغط SINDI (Milvus 3.0)",
+    "sparseMetric": "Sparse Metric",
+    "sindiEstimate": "Compressed index estimate: about 2.8 bytes per non-zero entry. Actual usage varies with data and encoding; raw vectors remain 8 bytes per entry."
   },
   "overview": {
     "title": "متطلبات الموارد",
@@ -110,7 +112,10 @@
     "tip1": "كيفية تشغيل Milvus مع Docker Compose؟",
     "tip2": "كيفية تشغيل Milvus مع Helm Chart؟",
     "tip3": "كيفية تشغيل Milvus مع Milvus Operator؟",
-    "downloadOperator": "تنزيل Operator YAML"
+    "downloadOperator": "تنزيل Operator YAML",
+    "v300Profile": "Milvus 3.0.5: embedded Woodpecker and a consolidated coordinator. Helm chart 5.0.33 / Operator 1.3.0.",
+    "sparseIndexHelp": "After deployment, install pymilvus>=3.0 and run python milvus-3-sparse-index.py COLLECTION FIELD against an existing sparse field (BM25 function output for BM25). Compressed estimates require the new index format and newly built or explicitly rebuilt indexes; an image upgrade does not migrate existing indexes.",
+    "downloadSparseIndex": "Download Sparse Index Script"
   },
   "woodpeckerTip": "<0>نقار الخشب</0> هو نظام سجل الكتابة الأمامية السحابية (WAL) منذ الإصدار Milvus 2.6.0. وهو مصمم ليحل محل Kafka وPulsar كـ MQ في Milvus لتبسيط العمليات وزيادة الإنتاجية والتوسع دون عناء. في الوقت الحالي يتم تشغيله مدمجًا في عقد التدفق.",
   "previousVersion": "الإصدار السابق من أداة التحجيم <0>هنا</0>.",

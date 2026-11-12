@@ -52,7 +52,7 @@ test('v2.5 downloads Operator cluster YAML with valid mode and Pulsar/Kafka valu
   expect(kafka).not.toMatch(/pulsarv3|NaN|Infinity/);
 });
 test('precision and sparse NNZ affect displayed footprint; SINDI only reduces loading memory', async ({ page: p }) => {
-  await p.goto(BASE + '/tools/sizing');
+  await p.goto(BASE + '/tools/sizing-v300');
   const raw = value(p, 'Raw Data Size:');
   await expect(raw).toContainText('2.9 GB');
   await choose(p, /Float32/, 'Float16 (FP16)');

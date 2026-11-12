@@ -3,7 +3,8 @@ import { ReactNode } from 'react';
 // Version config type for sizing tool
 export interface SizingVersionConfig {
   // Version identifier
-  version: 'v3' | 'v250';
+  version: 'v3' | 'v250' | 'v300';
+  supportsSindi?: boolean;
 
   // Whether this version supports RABITQ index and refine feature
   supportsRabitq: boolean;

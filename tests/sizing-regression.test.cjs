@@ -772,3 +772,72 @@ test('binary index options map to supported names and calculate non-zero memory 
     assert.equal(ivf.memory, (16_000_000 + 128 * 16 + 512 * 1024 * 1024 * 2) * 1.15);
   }
 });
+
+const yaml = require('js-yaml');
+const { helmYmlGeneratorV300, operatorYmlGeneratorV300, sparseIndexScriptV300, MILVUS_V300_IMAGE } = require('../src/utils/sizingToolV300.ts');
+const { sizingV300Config } = require('../src/parts/sizing/configV300.ts');
+const { sizingV26Config } = require('../src/parts/sizing/config.ts');
+const profileParams = {
+  ...dummyClusterConfig,
+  streamNode: { cpu: 2, memory: 8, count: 1 },
+  standaloneNode: { cpu: 2, memory: 8, count: 1 },
+  segmentSize: 512,
+};
+for (const mode of [ModeEnum.Standalone, ModeEnum.Cluster]) {
+  for (const compressed of [false, true]) {
+    test(`3.0 mode=${mode} compressed=${compressed} exports concrete resources, image and runtime config`, () => {
+      const params = { ...profileParams, sindiCompression: compressed };
+      const operator = yaml.load(operatorYmlGeneratorV300(params, DependencyComponentEnum26.Woodpecker, mode));
+      const helm = yaml.load(helmYmlGeneratorV300(params, DependencyComponentEnum26.Woodpecker, mode));
+      const runtime = yaml.load(helm.extraConfigFiles['user.yaml']);
+      assert.deepEqual(runtime, operator.spec.config);
+      assert.equal(runtime.mq.type, 'woodpecker');
+      assert.equal(runtime.woodpecker.storage.type, 'minio');
+      assert.equal(runtime.dataCoord.segment.maxSize, 512);
+      assert.equal(runtime.dataCoord.targetVecIndexVersion, compressed ? 10 : undefined);
+      assert.equal(operator.spec.mode, mode === ModeEnum.Cluster ? 'cluster' : 'standalone');
+      assert.equal(operator.spec.components.image, MILVUS_V300_IMAGE);
+      assert.equal(operator.spec.components.streamingMode, true);
+      assert.equal(operator.spec.dependencies.msgStreamType, 'woodpecker');
+      assert.equal(helm.image.all.tag, 'v3.0.5');
+      assert.equal(helm.cluster.enabled, mode === ModeEnum.Cluster);
+      assert.equal(helm.streaming.enabled, true);
+      assert.equal(helm.streaming.woodpecker.embedded, true);
+      for (const name of ['pulsar', 'pulsarv3', 'kafka', 'indexNode', 'indexCoordinator', 'rootCoordinator', 'queryCoordinator', 'dataCoordinator']) assert.equal(helm[name].enabled, false);
+      assert.equal(helm.woodpecker.enabled, false, 'No separate WAL service outside the resource estimate');
+      const nodes = mode === ModeEnum.Cluster ? ['mixCoord', 'proxy', 'streamingNode', 'dataNode', 'queryNode'] : ['standalone'];
+      for (const name of nodes) {
+        const node = operator.spec.components[name];
+        assert.ok(node.replicas >= 1);
+        assert.ok(node.resources.limits.cpu > 0);
+        assert.match(node.resources.limits.memory, /^[1-9][\d.]*Gi$/);
+      }
+      assert.equal(helm.minio.mode, mode === ModeEnum.Cluster ? 'distributed' : 'standalone');
+      assert.ok(helm.minio.persistence.enabled);
+    });
+  }
+}
+test('SINDI enablement and version-specific controls are isolated from 2.6', () => {
+  assert.equal(sizingV300Config.supportsSindi, true);
+  assert.ok(!sizingV26Config.supportsSindi);
+  assert.deepEqual(sizingV300Config.consts.DEPENDENCY_COMPONENTS.map(d => d.value), ['woodpecker']);
+  for (const metric of ['IP', 'BM25']) {
+    const script = sparseIndexScriptV300(true, metric);
+    assert.ok(script.includes(`metric_type="${metric}"`));
+    assert.ok(script.includes('"inverted_index_algo":"SINDI"'));
+    assert.ok(script.includes(`"quant_type":"${metric === 'IP' ? 'fp16' : 'u16'}"`));
+    assert.ok(script.includes('"inverted_index_codec":"block_streamvbyte"'));
+    assert.ok(!sparseIndexScriptV300(false, metric).includes('quant_type'));
+  }
+});
+test('3.0 GPU manifests pin the GPU image and streaming architecture', () => {
+  for (const mode of [ModeEnum.Standalone, ModeEnum.Cluster]) {
+    const manifest = yaml.load(gpuOperatorYmlGenerator({
+      mode, standaloneNodeConfig: profileParams.standaloneNode,
+      clusterNodeConfig: { ...profileParams }, milvusImage: `${MILVUS_V300_IMAGE}-gpu`,
+    }));
+    assert.equal(manifest.spec.components.image, 'milvusdb/milvus:v3.0.5-gpu');
+    assert.equal(manifest.spec.components.streamingMode, true);
+    assert.equal(manifest.spec.dependencies.msgStreamType, 'woodpecker');
+  }
+});

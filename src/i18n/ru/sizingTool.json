@@ -34,7 +34,9 @@
     "inlinePq": "inline_pq",
     "vectorType": "Тип векторных данных",
     "avgNnz": "Среднее число ненулевых измерений (avg_nnz)",
-    "sindi": "Сжатие SINDI (Milvus 3.0)"
+    "sindi": "Сжатие SINDI (Milvus 3.0)",
+    "sparseMetric": "Sparse Metric",
+    "sindiEstimate": "Compressed index estimate: about 2.8 bytes per non-zero entry. Actual usage varies with data and encoding; raw vectors remain 8 bytes per entry."
   },
   "overview": {
     "title": "Требования к ресурсам",
@@ -110,7 +112,10 @@
     "tip1": "Как запустить Milvus с Docker Compose?",
     "tip2": "Как запустить Milvus с Helm Chart?",
     "tip3": "Как запустить Milvus с Milvus Operator?",
-    "downloadOperator": "Скачать Operator YAML"
+    "downloadOperator": "Скачать Operator YAML",
+    "v300Profile": "Milvus 3.0.5: embedded Woodpecker and a consolidated coordinator. Helm chart 5.0.33 / Operator 1.3.0.",
+    "sparseIndexHelp": "After deployment, install pymilvus>=3.0 and run python milvus-3-sparse-index.py COLLECTION FIELD against an existing sparse field (BM25 function output for BM25). Compressed estimates require the new index format and newly built or explicitly rebuilt indexes; an image upgrade does not migrate existing indexes.",
+    "downloadSparseIndex": "Download Sparse Index Script"
   },
   "woodpeckerTip": "<0>Woodpecker</0> - это облачная нативная система журналов с опережающей записью (WAL), появившаяся в Milvus 2.6.0. Она призвана заменить Kafka и Pulsar в качестве MQ в Milvus, чтобы упростить операции, максимизировать пропускную способность и легко масштабироваться. На данный момент она работает встроенной в узлы потоковой передачи данных.",
   "previousVersion": "Предыдущая версия инструмента для определения размеров находится <0>здесь.</0>",

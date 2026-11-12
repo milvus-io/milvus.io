@@ -34,7 +34,9 @@
     "inlinePq": "inline_pq",
     "vectorType": "Type de données vectorielles",
     "avgNnz": "Dimensions moyennes non nulles (avg_nnz)",
-    "sindi": "Compression SINDI (Milvus 3.0)"
+    "sindi": "Compression SINDI (Milvus 3.0)",
+    "sparseMetric": "Sparse Metric",
+    "sindiEstimate": "Compressed index estimate: about 2.8 bytes per non-zero entry. Actual usage varies with data and encoding; raw vectors remain 8 bytes per entry."
   },
   "overview": {
     "title": "Besoins en ressources",
@@ -110,7 +112,10 @@
     "tip1": "Comment exécuter Milvus avec Docker Compose ?",
     "tip2": "Comment exécuter Milvus avec Helm Chart ?",
     "tip3": "Comment exécuter Milvus avec l'opérateur Milvus ?",
-    "downloadOperator": "Télécharger le YAML de l'Operator"
+    "downloadOperator": "Télécharger le YAML de l'Operator",
+    "v300Profile": "Milvus 3.0.5: embedded Woodpecker and a consolidated coordinator. Helm chart 5.0.33 / Operator 1.3.0.",
+    "sparseIndexHelp": "After deployment, install pymilvus>=3.0 and run python milvus-3-sparse-index.py COLLECTION FIELD against an existing sparse field (BM25 function output for BM25). Compressed estimates require the new index format and newly built or explicitly rebuilt indexes; an image upgrade does not migrate existing indexes.",
+    "downloadSparseIndex": "Download Sparse Index Script"
   },
   "woodpeckerTip": "<0>Woodpecker</0> est un système WAL (write-ahead log) natif pour le cloud depuis Milvus 2.6.0. Il est conçu pour remplacer Kafka et Pulsar en tant que MQ dans Milvus afin de simplifier les opérations, de maximiser le débit et d'évoluer sans effort. Pour l'instant, il fonctionne de manière intégrée dans les nœuds de streaming.",
   "previousVersion": "La version précédente de l'outil de dimensionnement est <0>ici.</0>",

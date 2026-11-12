@@ -1,5 +1,6 @@
+import { useSizingTranslation } from '@/parts/sizingCommon/useSizingTranslation';
 import classes from './index.module.css';
-import { Trans, useTranslation } from 'react-i18next';
+import { Trans } from 'react-i18next';
 import clsx from 'clsx';
 import {
   TooltipProvider,
@@ -73,7 +74,7 @@ export const DependencyComponent = (props: {
   isOutOfCalculate: boolean;
   config: SizingVersionConfig;
 }) => {
-  const { t } = useTranslation('sizingTool');
+  const { t } = useSizingTranslation();
   const { data, mode, dependency, isOutOfCalculate, config } = props;
 
   const { ModeEnum, DependencyComponentEnum } = config.types;

@@ -29,6 +29,9 @@ import {
 } from '@/components/ui/select';
 import { useRouter } from 'next/router';
 import { SIZING_TOOL_VERSION_OPTIONS } from '@/consts/sizing';
+import { sizingV300Config } from '@/parts/sizing/configV300';
+import { sizingV26Config } from '@/parts/sizing/config';
+import { MILVUS_V300_GPU_IMAGE } from '@/utils/sizingToolV300';
 import { baseValues } from '@/parts/sizing/config';
 import { SizingTabs, sizingTabId, sizingTabPanelId } from '@/components/sizing';
 import { GpuSizingTool } from '@/parts/sizingGpu';
@@ -38,6 +41,7 @@ const { etcdBaseValue, minioBaseValue, pulsarBaseValue, kafkaBaseValue } =
 type Props = {
   locale: LanguageEnum;
   latestTag: string;
+  profile?: 'v300';
 };
 
 enum SizingTabEnum {
@@ -56,8 +60,9 @@ export default function SizingTool(props: Props) {
   const { locale = LanguageEnum.ENGLISH, latestTag } = props;
   const { t } = useTranslation('sizingTool', { lng: locale });
   const router = useRouter();
+  const profileConfig = props.profile === 'v300' ? sizingV300Config : sizingV26Config;
   const currentVersion = SIZING_TOOL_VERSION_OPTIONS.find(
-    option => option.href === router.pathname
+    option => option.href === router.pathname.replace('/[lang]', '')
   );
   const [calculatedResult, setCalculatedResult] = useState<ICalculateResult>({
     rawDataSize: 0,
@@ -115,8 +120,12 @@ export default function SizingTool(props: Props) {
   });
 
   const [selectedVersion, setSelectedVersion] = useState<string>(
-    currentVersion?.value || SIZING_TOOL_VERSION_OPTIONS[0].value
+    currentVersion?.value || (props.profile === 'v300' ? 'Milvus 3.0.x' : 'Milvus 2.6.x')
   );
+
+  useEffect(() => {
+    setSelectedVersion(currentVersion?.value ?? 'Milvus 2.6.x');
+  }, [currentVersion?.value]);
 
   // Defaults to CPU; `?tab=gpu` selects the GPU calculator so the view is
   // linkable. Both panels stay mounted so each keeps its own form state.
@@ -241,10 +250,14 @@ export default function SizingTool(props: Props) {
             <div className={classes.contentContainer}>
               <FormSection
                 className={classes.leftSection}
+                key={`form-${profileConfig.version}`}
+                config={profileConfig}
                 asyncCalculatedResult={asyncCalculatedResult}
               />
               <ResultSection
                 className={classes.rightSection}
+                key={`result-${profileConfig.version}`}
+                config={profileConfig}
                 calculatedResult={calculatedResult}
                 latestMilvusTag={latestTag}
               />
@@ -260,10 +273,11 @@ export default function SizingTool(props: Props) {
               [classes.hiddenPanel]: tab !== SizingTabEnum.Gpu,
             })}
           >
-            <GpuSizingTool />
+            <GpuSizingTool milvusImage={props.profile === 'v300' ? MILVUS_V300_GPU_IMAGE : undefined} />
           </div>
 
           <ZillizAdv
+            locale={locale}
             className={classes.zillizAdv}
             ctaLink={`${CLOUD_SIGNUP_LINK}?utm_source=milvusio&utm_medium=referral&utm_campaign=milvus_bottom_banner&utm_content=tools/sizing`}
           />

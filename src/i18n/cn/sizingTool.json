@@ -34,7 +34,9 @@
     "inlinePq": "inline_pq",
     "vectorType": "向量数据类型",
     "avgNnz": "平均非零维度 (avg_nnz)",
-    "sindi": "SINDI 压缩 (Milvus 3.0)"
+    "sindi": "SINDI 压缩 (Milvus 3.0)",
+    "sparseMetric": "稀疏向量度量",
+    "sindiEstimate": "压缩索引估算约为每个非零元素 2.8 字节，实际占用随数据与编码变化；原始向量仍按 8 字节估算。"
   },
   "overview": {
     "title": "资源需求",
@@ -110,7 +112,10 @@
     "tip1": "如何使用 Docker Compose 运行 Milvus？",
     "tip2": "如何使用 Helm 图表运行 Milvus？",
     "tip3": "如何使用 Milvus 操作员运行 Milvus？",
-    "downloadOperator": "下载 Operator YAML"
+    "downloadOperator": "下载 Operator YAML",
+    "v300Profile": "Milvus 3.0.5：内嵌 Woodpecker、合并协调节点。Helm 5.0.33 / Operator 1.3.0。",
+    "sparseIndexHelp": "集群就绪后，安装 pymilvus>=3.0，运行 python milvus-3-sparse-index.py COLLECTION FIELD。字段须已存在；BM25 需使用 BM25 函数输出字段。压缩估算要求启用新索引格式并创建或显式重建索引；仅升级镜像不会迁移已有索引。",
+    "downloadSparseIndex": "下载稀疏索引脚本"
   },
   "woodpeckerTip": "<0>啄木鸟</0>（<0>Woodpecker</0>）是 Milvus 2.6.0 推出的云原生写日志（WAL）系统。它旨在取代 Kafka 和 Pulsar 作为 Milvus 中的 MQ，以简化操作、最大化吞吐量并轻松扩展。目前，它嵌入在流节点中运行。",
   "previousVersion": "上一版本的尺寸工具在<0>这里</0>。",

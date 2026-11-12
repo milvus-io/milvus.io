@@ -37,7 +37,9 @@
     "refineType": "Refine Type",
     "vectorType": "Vector Data Type",
     "avgNnz": "Average Non-zero Dimensions (avg_nnz)",
-    "sindi": "SINDI Compression (Milvus 3.0)"
+    "sindi": "SINDI Compression (Milvus 3.0)",
+    "sparseMetric": "Sparse Metric",
+    "sindiEstimate": "Compressed index estimate: about 2.8 bytes per non-zero entry. Actual usage varies with data and encoding; raw vectors remain 8 bytes per entry."
   },
   "overview": {
     "title": "Resource Requirements",
@@ -113,7 +115,10 @@
     "tip1": "How to run Milvus with Docker Compose?",
     "tip2": "How to run Milvus with Helm Chart?",
     "tip3": "How to run Milvus with Milvus Operator?",
-    "downloadOperator": "Download Operator YAML"
+    "downloadOperator": "Download Operator YAML",
+    "v300Profile": "Milvus 3.0.5: embedded Woodpecker and a consolidated coordinator. Helm chart 5.0.33 / Operator 1.3.0.",
+    "sparseIndexHelp": "After deployment, install pymilvus>=3.0 and run python milvus-3-sparse-index.py COLLECTION FIELD against an existing sparse field (BM25 function output for BM25). Compressed estimates require the new index format and newly built or explicitly rebuilt indexes; an image upgrade does not migrate existing indexes.",
+    "downloadSparseIndex": "Download Sparse Index Script"
   },
   "tabs": {
     "cpu": "CPU Sizing",

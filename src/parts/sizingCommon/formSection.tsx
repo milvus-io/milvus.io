@@ -1,3 +1,4 @@
+import { useSizingTranslation } from '@/parts/sizingCommon/useSizingTranslation';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import classes from './index.module.css';
 import {
@@ -20,7 +21,7 @@ import {
 } from '@/components/ui';
 import clsx from 'clsx';
 import { IndexTypeComponent } from './indexTypeComponent';
-import { Trans, useTranslation } from 'react-i18next';
+import { Trans } from 'react-i18next';
 import { TooltipArrow } from '@radix-ui/react-tooltip';
 import { ExternalLinkIcon } from '@/components/icons';
 import Link from 'next/link';
@@ -35,7 +36,7 @@ interface FormSectionProps {
 }
 
 export default function FormSection(props: FormSectionProps) {
-  const { t } = useTranslation('sizingTool');
+  const { t } = useSizingTranslation();
   const { className, config, onCalculatedResult, disableCalculationThreshold = false } = props;
 
   const {
@@ -123,11 +124,12 @@ export default function FormSection(props: FormSectionProps) {
     if (config.supportsRabitq) {
       base.rabitqNList = N_LIST_RANGE_CONFIG.defaultValue;
     }
-    if (config.supportsWoodpecker) {
+    if (config.supportsSindi) {
+      base.sparseMetric = 'IP';
       base.sindiCompression = false;
     }
     return base;
-  }, [config.supportsRabitq]);
+  }, [config.supportsRabitq, config.supportsSindi]);
 
   const [indexTypeParams, setIndexTypeParams] = useState(initialIndexTypeParams);
 
@@ -371,7 +373,7 @@ export default function FormSection(props: FormSectionProps) {
       mode: currentMode,
       vectorType: form.vectorType,
       avgNnz: form.avgNnz,
-      sindiCompression: Boolean(indexTypeParams.sindiCompression),
+      sindiCompression: Boolean(config.supportsSindi && indexTypeParams.sindiCompression),
     };
 
     // Add refineType for v3
@@ -417,6 +419,9 @@ export default function FormSection(props: FormSectionProps) {
       dependency: form.dependency,
       vectorType: form.vectorType,
       avgNnz: form.avgNnz,
+      segmentSize: Number(form.segmentSize),
+      sindiCompression: Boolean(config.supportsSindi && form.vectorType === VectorTypeEnum?.SPARSE_FLOAT_VECTOR && indexTypeParams.sindiCompression),
+      sparseMetric: indexTypeParams.sparseMetric ?? 'IP',
       isOutOfCalculate: disableCalculationThreshold ? false : rawDataSize > $1B768D,
     });
   }, [form, indexTypeParams, refine]);

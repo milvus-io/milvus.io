@@ -3,13 +3,15 @@ import { ListItemTickIcon, RightTopArrowIcon } from '@/components/icons';
 import styles from './index.module.css';
 import { useTranslation } from 'react-i18next';
 import clsx from 'clsx';
+import { LanguageEnum } from '@/types/localization';
 import { CLOUD_SIGNUP_LINK } from '@/consts';
 
 export default function ZillizAdv(props: {
+  locale?: LanguageEnum;
   className?: string;
   ctaLink?: string;
 }) {
-  const { t } = useTranslation('blog');
+  const { t } = useTranslation('blog', { lng: props.locale });
   const {
     className = '',
     ctaLink = `${CLOUD_SIGNUP_LINK}?utm_source=milvusio&utm_medium=referral&utm_campaign=milvus_bottom_banner&utm_content=blog`,

@@ -1,6 +1,7 @@
+import { useSizingTranslation } from '@/parts/sizingCommon/useSizingTranslation';
 import { useEffect, useState } from 'react';
 import clsx from 'clsx';
-import { Trans, useTranslation } from 'react-i18next';
+import { Trans } from 'react-i18next';
 import { TooltipArrow } from '@radix-ui/react-tooltip';
 import { SizingInput, SizingRange, SizingSwitch } from '@/components/sizing';
 import {
@@ -102,7 +103,7 @@ const useNumericField = (
 
 export default function GpuFormSection(props: GpuFormSectionProps) {
   const { className, onCalculatedResult } = props;
-  const { t } = useTranslation('sizingTool');
+  const { t } = useSizingTranslation();
 
   const [form, setForm] = useState<IGpuFormState>(DEFAULT_GPU_FORM);
 

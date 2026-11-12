@@ -47,7 +47,7 @@ import {
   formatOutOfCalData,
 } from '@/utils/sizingTool';
 import { SizingVersionConfig } from '@/parts/sizingCommon';
-export { baseValues } from '@/parts/sizingCommon';
+export { baseValues } from '@/parts/sizingCommon/baseValues';
 
 export const sizingV3Config: SizingVersionConfig = {
   version: 'v3',
@@ -107,3 +107,6 @@ export const sizingV3Config: SizingVersionConfig = {
     dockerComposeExample,
   },
 };
+
+// Keep 2.6 compatibility separate from 3.0's opt-in sparse index format.
+export const sizingV26Config = sizingV3Config;

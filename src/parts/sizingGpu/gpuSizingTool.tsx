@@ -5,7 +5,7 @@ import GpuResultSection from './resultSection';
 import { IGpuPayload, IGpuSnapshot, INITIAL_GPU_SNAPSHOT } from './config';
 import { GpuValidationErrorEnum } from '@/types/sizingGpu';
 
-export default function GpuSizingTool() {
+export default function GpuSizingTool({ milvusImage }: { milvusImage?: string }) {
   const [snapshot, setSnapshot] = useState<IGpuSnapshot>(INITIAL_GPU_SNAPSHOT);
   const [error, setError] = useState<GpuValidationErrorEnum | null>(null);
 
@@ -26,6 +26,7 @@ export default function GpuSizingTool() {
       />
       <GpuResultSection
         className={pageClasses.rightSection}
+        milvusImage={milvusImage}
         snapshot={snapshot}
         error={error}
       />

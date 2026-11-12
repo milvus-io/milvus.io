@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useRef, useState } from 'react';
+import { useEffect, useCallback, useMemo, useRef, useState } from 'react';
 import { Range } from 'react-range';
 import { scaleLinear } from 'd3-scale';
 import clsx from 'clsx';
@@ -7,6 +7,7 @@ import { SizingInput } from '../sizingInput';
 
 type RangeConfigType = {
   min: number;
+  step?: number;
   max: number;
   defaultValue: number;
   range: number[];
@@ -56,7 +57,7 @@ export const SizingRange = (props: SizingRangePropsType) => {
   const clampRange = (v: number) => {
     if (v <= rangeConfig.min) return rangeConfig.min;
     if (v >= rangeConfig.max) return rangeConfig.max;
-    return v;
+    return rangeConfig.step ? Math.min(rangeConfig.max, Math.ceil(v / rangeConfig.step) * rangeConfig.step) : v;
   };
 
   const clampDomain = (v: number) => {
@@ -68,6 +69,14 @@ export const SizingRange = (props: SizingRangePropsType) => {
   const domainValue = clampDomain(toDomainValue(value));
 
   const [inputValue, setInputValue] = useState(`${value}`);
+
+  // Keep the user's draft while focused. Prop updates/effects can arrive after
+  // later keystrokes, so comparing only the last committed number is racy.
+  // Blur normalizes the draft; unfocused controls still follow external values.
+  const isEditingInput = useRef(false);
+  useEffect(() => {
+    if (!isEditingInput.current) setInputValue(`${value}`);
+  }, [value]);
 
   // Ref to the inner track DOM element so we can compute click/drag positions.
   // react-range@1.10.0 has a broken `isIOS()` check that aborts onMouseDownTrack
@@ -136,6 +145,7 @@ export const SizingRange = (props: SizingRangePropsType) => {
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    isEditingInput.current = true;
     let raw = e.target.value;
     let num = Number(raw);
     if (isNaN(num)) {
@@ -153,6 +163,7 @@ export const SizingRange = (props: SizingRangePropsType) => {
   };
 
   const handleFormatInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    isEditingInput.current = false;
     let num = Number(e.target.value);
     if (isNaN(num)) {
       num = rangeConfig.min;
@@ -230,6 +241,7 @@ export const SizingRange = (props: SizingRangePropsType) => {
         <SizingInput
           value={inputValue}
           unit={unit}
+          onFocus={() => { isEditingInput.current = true; }}
           onChange={handleInputChange}
           onBlur={handleFormatInput}
           customSize="small"

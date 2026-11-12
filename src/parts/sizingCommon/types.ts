@@ -3,7 +3,8 @@ import { ReactNode } from 'react';
 // Version config type for sizing tool
 export interface SizingVersionConfig {
   // Version identifier
-  version: 'v3' | 'v250';
+  version: 'v3' | 'v250' | 'v300';
+  supportsSindi?: boolean;
 
   // Whether this version supports RABITQ index and refine feature
   supportsRabitq: boolean;
@@ -25,6 +26,7 @@ export interface SizingVersionConfig {
     IndexTypeEnum: any;
     DependencyComponentEnum?: any;
     RefineValueEnum?: any;
+    VectorTypeEnum?: Record<string, string>;
   };
 
   consts: {
@@ -39,6 +41,16 @@ export interface SizingVersionConfig {
     M_RANGE_CONFIG: any;
     MAXIMUM_AVERAGE_LENGTH: any;
     REFINE_OPTIONS?: any;
+    VECTOR_TYPE_OPTIONS?: Array<{ label: string; value: string }>;
+    BINARY_INDEX_TYPE_OPTIONS?: Array<{ label: string; value: string }>;
+    SPARSE_INDEX_TYPE_OPTIONS?: Array<{ label: string; value: string }>;
+    AVG_NNZ_RANGE_CONFIG?: {
+      min: number;
+      max: number;
+      defaultValue: number;
+      domain: number[];
+      range: number[];
+    };
   };
 
   utils: {

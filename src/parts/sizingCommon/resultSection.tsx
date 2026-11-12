@@ -1,3 +1,5 @@
+import { useSizingTranslation } from '@/parts/sizingCommon/useSizingTranslation';
+import { sparseIndexScriptV300 } from '@/utils/sizingToolV300';
 import { LocalizedAnchor } from '@/components/localizedLinks';
 import clsx from 'clsx';
 import classes from './index.module.css';
@@ -20,7 +22,7 @@ import {
   DownloadIcon,
 } from '@/components/icons';
 import { DependencyComponent } from './dependencyComponent';
-import { Trans, useTranslation } from 'react-i18next';
+import { Trans } from 'react-i18next';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import CustomButton from '@/components/customButton';
 import { MilvusComponent } from './milvusComponent';
@@ -43,7 +45,7 @@ interface ResultSectionProps {
 }
 
 export default function ResultSection(props: ResultSectionProps) {
-  const { t } = useTranslation('sizingTool');
+  const { t } = useSizingTranslation();
   const { className, calculatedResult, latestMilvusTag, config } = props;
 
   const { ModeEnum } = config.types;
@@ -134,7 +136,7 @@ export default function ResultSection(props: ResultSectionProps) {
     };
   }, []);
 
-  const standaloneInstallOptions = [
+  const dockerInstallOptions = [
     {
       label: t('install.docker'),
       value: InstallTypeEnum.Docker,
@@ -162,6 +164,8 @@ sudo docker compose up -d`,
     },
   ];
 
+  const standaloneInstallOptions = config.version === 'v300' ? clusterInstallOptions : dockerInstallOptions;
+
   const [installInfo, setInstallInfo] = useState({
     options: standaloneInstallOptions,
     value: standaloneInstallOptions[0].value,
@@ -171,6 +175,10 @@ sudo docker compose up -d`,
     const configGenerator =
       type === 'helm' ? helmYmlGenerator : operatorYmlGenerator;
     const configParams: any = {
+      localDiskSize,
+      standaloneNode: standaloneNodeConfig,
+      segmentSize: calculatedResult.segmentSize,
+      sindiCompression: calculatedResult.sindiCompression,
       proxy,
       mixCoord,
       [extraNodeKey]: extraNode,
@@ -510,20 +518,41 @@ sudo docker compose up -d`,
       </div>
 
       <div className="">
+        {config.version === 'v300' && (
+          <div className="mb-[16px] text-[12px]">
+            <p>{t('install.v300Profile')}</p>
+            {calculatedResult.vectorType === config.types.VectorTypeEnum?.SPARSE_FLOAT_VECTOR && (
+              <>
+                <p className="my-[8px]">{t('install.sparseIndexHelp')}</p>
+                <CustomButton variant="outlined" onClick={() => {
+                  const url = URL.createObjectURL(new Blob([sparseIndexScriptV300(
+                    Boolean(calculatedResult.sindiCompression), calculatedResult.sparseMetric
+                  )], { type: 'text/x-python' }));
+                  const a = document.createElement('a');
+                  a.href = url;
+                  a.download = 'milvus-3-sparse-index.py';
+                  a.click();
+                  URL.revokeObjectURL(url);
+                }}>{t('install.downloadSparseIndex')}</CustomButton>
+              </>
+            )}
+          </div>
+        )}
         <div className="flex items-center justify-between gap-[16px] mb-[12px]">
           <p className={classes.font14Bold}>{t('install.title')}</p>
           <Select
+            value={installInfo.value}
             onValueChange={v => {
               setInstallInfo(installInfo => ({
                 ...installInfo,
                 value: v as InstallTypeEnum,
               }));
             }}
-            disabled={mode === ModeEnum.Standalone}
+            disabled={mode === ModeEnum.Standalone && config.version !== 'v300'}
           >
             <SelectTrigger
               className="py-[10px] px-[12px] h-[36px] w-[300px] text-[12px] leading-[18px] text-black1 border-[1px] border-solid border-black4 rounded-[8px]"
-              disabled={mode === ModeEnum.Standalone}
+              disabled={mode === ModeEnum.Standalone && config.version !== 'v300'}
             >
               {
                 installInfo.options.find(v => v.value === installInfo.value)

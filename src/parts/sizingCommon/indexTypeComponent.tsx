@@ -1,3 +1,4 @@
+import { useSizingTranslation } from '@/parts/sizingCommon/useSizingTranslation';
 import {
   RadioGroupItem,
   RadioGroup,
@@ -9,7 +10,6 @@ import {
 import classes from './index.module.css';
 import clsx from 'clsx';
 import { SizingInput, SizingRange, SizingSwitch, } from '@/components/sizing';
-import { useTranslation } from 'react-i18next';
 import { useState, useMemo, useRef, useCallback, useEffect } from 'react';
 import { SizingVersionConfig } from './types';
 
@@ -22,6 +22,8 @@ interface IIndexTypeBase {
   m: number;
   rabitqNList?: number;
   inlinePq?: number;
+  sindiCompression?: boolean;
+  sparseMetric?: 'IP' | 'BM25';
 }
 
 type IndexTypeComponentProps = {
@@ -34,7 +36,7 @@ type IndexTypeComponentProps = {
 
 const SCANNComponent = (props: IndexTypeComponentProps) => {
   const { data, onChange } = props;
-  const { t } = useTranslation('sizingTool');
+  const { t } = useSizingTranslation();
 
   return (
     <div className="mt-[16px]">
@@ -62,7 +64,7 @@ const SCANNComponent = (props: IndexTypeComponentProps) => {
 };
 
 const HNSWComponent = (props: IndexTypeComponentProps) => {
-  const { t } = useTranslation('sizingTool');
+  const { t } = useSizingTranslation();
   const { data, onChange, config } = props;
   const { M_RANGE_CONFIG } = config.consts;
   const [inputString, setInputString] = useState<string>(data.m.toString());
@@ -113,7 +115,7 @@ const HNSWComponent = (props: IndexTypeComponentProps) => {
 };
 
 const DISKANNComponent = (props: IndexTypeComponentProps) => {
-  const { t } = useTranslation('sizingTool');
+  const { t } = useSizingTranslation();
   const { data, onChange, config } = props;
   const { MAX_NODE_DEGREE_RANGE_CONFIG } = config.consts;
 
@@ -135,7 +137,7 @@ const DISKANNComponent = (props: IndexTypeComponentProps) => {
 };
 
 const IVFFlatComponent = (props: IndexTypeComponentProps) => {
-  const { t } = useTranslation('sizingTool');
+  const { t } = useSizingTranslation();
   const { data, onChange, config } = props;
   const { N_LIST_RANGE_CONFIG } = config.consts;
 
@@ -157,7 +159,7 @@ const IVFFlatComponent = (props: IndexTypeComponentProps) => {
 };
 
 const IVFSQ8Component = (props: IndexTypeComponentProps) => {
-  const { t } = useTranslation('sizingTool');
+  const { t } = useSizingTranslation();
   const { data, onChange, config } = props;
   const { N_LIST_RANGE_CONFIG } = config.consts;
 
@@ -179,7 +181,7 @@ const IVFSQ8Component = (props: IndexTypeComponentProps) => {
 };
 
 const RABITQComponent = (props: IndexTypeComponentProps) => {
-  const { t } = useTranslation('sizingTool');
+  const { t } = useSizingTranslation();
   const { data, onChange, config, refine = '', onRefineChange = () => { } } = props;
   const { N_LIST_RANGE_CONFIG, REFINE_OPTIONS } = config.consts;
   const { RefineValueEnum } = config.types;
@@ -260,7 +262,7 @@ const RABITQComponent = (props: IndexTypeComponentProps) => {
 };
 
 const AISAQComponent = (props: IndexTypeComponentProps) => {
-  const { t } = useTranslation('sizingTool');
+  const { t } = useSizingTranslation();
   const { data, onChange, config } = props;
   const { MAX_NODE_DEGREE_RANGE_CONFIG } = config.consts;
 
@@ -350,9 +352,10 @@ const AISAQComponent = (props: IndexTypeComponentProps) => {
 
 export const IndexTypeComponent = (props: IndexTypeComponentProps) => {
   const { data, config } = props;
+  const { t } = useSizingTranslation();
   const { IndexTypeEnum } = config.types;
-
   switch (data.indexType) {
+    case IndexTypeEnum.BIN_FLAT:
     case IndexTypeEnum.FLAT:
       return null;
     case IndexTypeEnum.SCANN:
@@ -362,9 +365,36 @@ export const IndexTypeComponent = (props: IndexTypeComponentProps) => {
     case IndexTypeEnum.HNSW_PQ:
       return <HNSWComponent {...props} />;
     case IndexTypeEnum.SPARSE_INVERTED_INDEX:
+      if (config.supportsSindi) {
+        return (
+          <div className="mt-[16px]">
+            <label className="text-[12px] block mb-[12px]">
+              {t('form.sparseMetric')}
+              <select aria-label={t('form.sparseMetric')} value={data.sparseMetric ?? 'IP'}
+                onChange={e => props.onChange('sparseMetric', e.target.value)}>
+                <option value="IP">IP (SPLADE)</option>
+                <option value="BM25">BM25</option>
+              </select>
+            </label>
+            <div className="flex items-center gap-[8px]">
+            <p className="text-[12px] font-[500] leading-[16px]">
+              {t('form.sindi')}
+            </p>
+            <SizingSwitch
+              checked={Boolean(data.sindiCompression)}
+              onCheckedChange={value => {
+                props.onChange('sindiCompression', value);
+              }}
+            />
+            </div>
+            <p className="text-[12px] mt-[8px]">{t('form.sindiEstimate')}</p>
+          </div>
+        );
+      }
       return null;
     case IndexTypeEnum.DISKANN:
       return <DISKANNComponent {...props} />;
+    case IndexTypeEnum.BIN_IVF_FLAT:
     case IndexTypeEnum.IVF_FLAT:
       return <IVFFlatComponent {...props} />;
     case IndexTypeEnum.IVFSQ8:

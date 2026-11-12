@@ -4,6 +4,7 @@ import {
   DependencyComponentEnum,
   ModeEnum,
   RefineValueEnum,
+  VectorTypeEnum,
 } from '@/types/sizing';
 
 export const ONE_MILLION = Math.pow(10, 6);
@@ -107,6 +108,53 @@ export const INDEX_TYPE_OPTIONS = [
   },
 ];
 
+export const VECTOR_TYPE_OPTIONS = [
+  {
+    label: 'Float32 (FP32)',
+    value: VectorTypeEnum.FLOAT_VECTOR,
+  },
+  {
+    label: 'Float16 (FP16)',
+    value: VectorTypeEnum.FLOAT16_VECTOR,
+  },
+  {
+    label: 'BFloat16 (BF16)',
+    value: VectorTypeEnum.BFLOAT16_VECTOR,
+  },
+  {
+    label: 'Int8',
+    value: VectorTypeEnum.INT8_VECTOR,
+  },
+  {
+    label: 'Binary',
+    value: VectorTypeEnum.BINARY_VECTOR,
+  },
+  {
+    label: 'Sparse Float',
+    value: VectorTypeEnum.SPARSE_FLOAT_VECTOR,
+  },
+];
+
+export const BINARY_INDEX_TYPE_OPTIONS = [
+  { label: 'BIN_FLAT', value: IndexTypeEnum.BIN_FLAT },
+  { label: 'BIN_IVF_FLAT', value: IndexTypeEnum.BIN_IVF_FLAT },
+];
+
+export const SPARSE_INDEX_TYPE_OPTIONS = [
+  {
+    label: 'SPARSE_INVERTED_INDEX',
+    value: IndexTypeEnum.SPARSE_INVERTED_INDEX,
+  },
+];
+
+export const AVG_NNZ_RANGE_CONFIG = {
+  min: 1,
+  max: 10000,
+  defaultValue: 100,
+  domain: [0, 25, 50, 75, 100],
+  range: [1, 20, 100, 500, 10000],
+};
+
 export const DEPENDENCY_COMPONENTS = [
   {
     label: 'Pulsar',
@@ -179,6 +227,7 @@ export const OPERATOR_CONFIG_FILE_NAME = 'operatorConfigYml.yml';
 export const MAXIMUM_AVERAGE_LENGTH = 60 * ONE_MILLION;
 
 export const SIZING_TOOL_VERSION_OPTIONS = [
+  { label: 'Milvus 3.0.x', value: 'Milvus 3.0.x', href: '/tools/sizing-v300' },
   {
     label: 'Milvus 2.6.x',
     value: 'Milvus 2.6.x',

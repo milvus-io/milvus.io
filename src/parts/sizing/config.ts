@@ -3,6 +3,7 @@ import {
   IndexTypeEnum,
   DependencyComponentEnum,
   RefineValueEnum,
+  VectorTypeEnum,
 } from '@/types/sizing';
 import {
   VECTOR_RANGE_CONFIG,
@@ -16,6 +17,10 @@ import {
   M_RANGE_CONFIG,
   MAXIMUM_AVERAGE_LENGTH,
   REFINE_OPTIONS,
+  VECTOR_TYPE_OPTIONS,
+  BINARY_INDEX_TYPE_OPTIONS,
+  SPARSE_INDEX_TYPE_OPTIONS,
+  AVG_NNZ_RANGE_CONFIG,
   helmCodeExample,
   operatorCodeExample,
   HELM_CONFIG_FILE_NAME,
@@ -42,7 +47,7 @@ import {
   formatOutOfCalData,
 } from '@/utils/sizingTool';
 import { SizingVersionConfig } from '@/parts/sizingCommon';
-export { baseValues } from '@/parts/sizingCommon';
+export { baseValues } from '@/parts/sizingCommon/baseValues';
 
 export const sizingV3Config: SizingVersionConfig = {
   version: 'v3',
@@ -56,6 +61,7 @@ export const sizingV3Config: SizingVersionConfig = {
     IndexTypeEnum,
     DependencyComponentEnum,
     RefineValueEnum,
+    VectorTypeEnum,
   },
   consts: {
     VECTOR_RANGE_CONFIG,
@@ -69,6 +75,10 @@ export const sizingV3Config: SizingVersionConfig = {
     M_RANGE_CONFIG,
     MAXIMUM_AVERAGE_LENGTH,
     REFINE_OPTIONS,
+    VECTOR_TYPE_OPTIONS,
+    BINARY_INDEX_TYPE_OPTIONS,
+    SPARSE_INDEX_TYPE_OPTIONS,
+    AVG_NNZ_RANGE_CONFIG,
   },
   utils: {
     memoryAndDiskCalculator,
@@ -97,3 +107,6 @@ export const sizingV3Config: SizingVersionConfig = {
     dockerComposeExample,
   },
 };
+
+// Keep 2.6 compatibility separate from 3.0's opt-in sparse index format.
+export const sizingV26Config = sizingV3Config;

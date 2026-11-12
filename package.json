@@ -19,7 +19,8 @@
     "test:inkeep": "npx playwright test tests/inkeep.test.js",
     "test:anchors": "npx playwright test tests/heading-anchor-fallback.test.js",
     "test:dependencies": "node --test tests/dependency-compatibility.test.cjs",
-    "test:sizing": "node --test tests/sizing-regression.test.cjs"
+    "test:sizing": "node --test tests/sizing-regression.test.cjs",
+    "test:sizing:browser": "playwright test --config=playwright.sizing.config.cjs"
   },
   "dependencies": {
     "@docsearch/css": "^3.9.0",
@@ -97,6 +98,7 @@
     "concurrently": "^10.0.6",
     "dotenv": "^18.0.9",
     "eslint": "9.39.2",
+    "js-yaml": "4.3.2",
     "postcss": "8.5.32",
     "postcss-custom-media": "^12.0.3",
     "postcss-mixins": "^12.1.2",

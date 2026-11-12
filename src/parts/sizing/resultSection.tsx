@@ -1,8 +1,10 @@
 import { ResultSection as BaseResultSection } from '@/parts/sizingCommon';
-import { sizingV3Config } from './config';
+import { sizingV26Config } from './config';
+import { SizingVersionConfig } from '@/parts/sizingCommon/types';
 import { ICalculateResult } from '@/types/sizing';
 
 export default function ResultSection(props: {
+  config?: SizingVersionConfig;
   className?: string;
   calculatedResult: ICalculateResult;
   latestMilvusTag: string;
@@ -14,7 +16,7 @@ export default function ResultSection(props: {
       className={className}
       calculatedResult={calculatedResult}
       latestMilvusTag={latestMilvusTag}
-      config={sizingV3Config}
+      config={props.config ?? sizingV26Config}
     />
   );
 }

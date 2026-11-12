@@ -22,15 +22,15 @@ Module._resolveFilename = function(request, parent, isMain, options) {
   return origResolve.call(this, request, parent, isMain, options);
 };
 
-const { operatorYmlGenerator, helmYmlGenerator: helmYmlGeneratorV250 } = require('../src/utils/sizingToolV250.ts');
+const { operatorYmlGenerator, helmYmlGenerator: helmYmlGeneratorV250, memoryAndDiskCalculator: memoryAndDiskCalculatorV250 } = require('../src/utils/sizingToolV250.ts');
 const { ModeEnum, DependencyComponentEnum, IndexTypeEnum } = require('../src/types/sizingV250.ts');
-const { INDEX_TYPE_OPTIONS } = require('../src/consts/sizingV250.ts');
-const { REFINE_OPTIONS, INDEX_TYPE_OPTIONS: INDEX_TYPE_OPTIONS_26 } = require('../src/consts/sizing.ts');
+const { INDEX_TYPE_OPTIONS, VECTOR_TYPE_OPTIONS: VECTOR_TYPE_OPTIONS_V250, SPARSE_INDEX_TYPE_OPTIONS: SPARSE_INDEX_TYPE_OPTIONS_V250, AVG_NNZ_RANGE_CONFIG: AVG_NNZ_RANGE_CONFIG_V250 } = require('../src/consts/sizingV250.ts');
+const { REFINE_OPTIONS, INDEX_TYPE_OPTIONS: INDEX_TYPE_OPTIONS_26, VECTOR_TYPE_OPTIONS, SPARSE_INDEX_TYPE_OPTIONS, AVG_NNZ_RANGE_CONFIG } = require('../src/consts/sizing.ts');
 const { RefineValueEnum, REFINE_VALUE_TO_N_MAP, VectorTypeEnum, IndexTypeEnum: IndexTypeEnum26, DependencyComponentEnum: DependencyComponentEnum26 } = require('../src/types/sizing.ts');
 const { GpuIndexTypeEnum } = require('../src/types/sizingGpu.ts');
 const { GRAPH_DEGREE_RANGE_CONFIG, INTERMEDIATE_GRAPH_DEGREE_RANGE_CONFIG, DEFAULT_GPU_INDEX_PARAMS } = require('../src/consts/sizingGpu.ts');
 const { fetchMilvusReleases } = require('../src/http/milvus.ts');
-const { unitBYTE2Any, rawDataSizeCalculator, memoryAndDiskCalculator, sindiSparseMemoryCalculator, SegmentSizeMetricEnum, helmYmlGenerator, operatorYmlGenerator: operatorYmlGeneratorV24 } = require('../src/utils/sizingTool.ts');
+const { unitBYTE2Any, rawDataSizeCalculator, memoryAndDiskCalculator, dependencyCalculator, sindiSparseMemoryCalculator, SegmentSizeMetricEnum, helmYmlGenerator, operatorYmlGenerator: operatorYmlGeneratorV24 } = require('../src/utils/sizingTool.ts');
 const { gpuIndexMemoryCalculator, rmmPoolSizeCalculator, gpuOperatorYmlGenerator } = require('../src/utils/sizingToolGpu.ts');
 
 const dummyClusterConfig = {
@@ -393,33 +393,22 @@ test('SINDI sparse compression algorithm reduces memory footprint to ~2.8 bytes 
   const calculatedSindiBytes = sindiSparseMemoryCalculator({ num: numVectors, avgNnz });
   assert.equal(calculatedSindiBytes, expectedSindiBytes, 'sindiSparseMemoryCalculator calculates N * avg_nnz * 2.8 bytes');
 
-  // 2. rawDataSizeCalculator with and without SINDI
-  const uncompressedRaw = rawDataSizeCalculator({
+  // 2. rawDataSizeCalculator keeps raw sparse vector size at 8 bytes per NNZ
+  const sparseRaw = rawDataSizeCalculator({
     num: numVectors,
     d: 30000,
     withScalar: false,
     scalarAvg: 0,
     vectorType: VectorTypeEnum.SPARSE_FLOAT_VECTOR,
     avgNnz,
-    sindiCompression: false,
-  });
-  const sindiRaw = rawDataSizeCalculator({
-    num: numVectors,
-    d: 30000,
-    withScalar: false,
-    scalarAvg: 0,
-    vectorType: VectorTypeEnum.SPARSE_FLOAT_VECTOR,
-    avgNnz,
-    sindiCompression: true,
   });
 
-  assert.equal(uncompressedRaw, 1000000 * avgNnz * 8, 'Standard sparse is 8 bytes per NNZ');
-  assert.equal(sindiRaw, expectedSindiBytes, 'SINDI compressed sparse is 2.8 bytes per NNZ');
-  assert.ok(sindiRaw < uncompressedRaw * 0.4, 'SINDI achieves > 60% memory savings compared to uncompressed sparse');
+  assert.equal(sparseRaw, 1000000 * avgNnz * 8, 'Standard sparse raw data is 8 bytes per NNZ');
+  assert.ok(calculatedSindiBytes < sparseRaw * 0.4, 'SINDI achieves > 60% index memory savings compared to raw sparse');
 
   // 3. memoryAndDiskCalculator with SPARSE_INVERTED_INDEX and SINDI
   const sindiMemResult = memoryAndDiskCalculator({
-    rawDataSize: sindiRaw,
+    rawDataSize: sparseRaw,
     indexTypeParams: {
       indexType: IndexTypeEnum26.SPARSE_INVERTED_INDEX,
       widthRawData: false,
@@ -507,4 +496,368 @@ test('HNSW_SQ and HNSW_PQ do not suffer from refineType state leakage', () => {
   });
 
   assert.equal(sqNone.memory, sqFP32.memory, 'HNSW_SQ memory must not be inflated by leftover refineType state');
+});
+
+test('VECTOR_TYPE_OPTIONS and sparse constants are exported with correct schema and defaults', () => {
+  assert.ok(Array.isArray(VECTOR_TYPE_OPTIONS), 'VECTOR_TYPE_OPTIONS must be an array');
+  assert.equal(VECTOR_TYPE_OPTIONS.length, 6, 'Must contain 6 vector types (FP32, FP16, BF16, Int8, Binary, Sparse)');
+  assert.ok(VECTOR_TYPE_OPTIONS.some(o => o.value === VectorTypeEnum.FLOAT16_VECTOR));
+  assert.ok(VECTOR_TYPE_OPTIONS.some(o => o.value === VectorTypeEnum.BFLOAT16_VECTOR));
+  assert.ok(VECTOR_TYPE_OPTIONS.some(o => o.value === VectorTypeEnum.INT8_VECTOR));
+  assert.ok(VECTOR_TYPE_OPTIONS.some(o => o.value === VectorTypeEnum.BINARY_VECTOR));
+  assert.ok(VECTOR_TYPE_OPTIONS.some(o => o.value === VectorTypeEnum.SPARSE_FLOAT_VECTOR));
+
+  assert.ok(Array.isArray(SPARSE_INDEX_TYPE_OPTIONS), 'SPARSE_INDEX_TYPE_OPTIONS must be an array');
+  assert.equal(SPARSE_INDEX_TYPE_OPTIONS[0].value, IndexTypeEnum26.SPARSE_INVERTED_INDEX);
+
+  assert.equal(AVG_NNZ_RANGE_CONFIG.defaultValue, 100);
+  assert.equal(AVG_NNZ_RANGE_CONFIG.min, 1);
+  assert.equal(AVG_NNZ_RANGE_CONFIG.max, 10000);
+
+  // Verify v250 consistency (Milvus 2.5 excludes INT8_VECTOR, which was added in 2.6)
+  assert.equal(VECTOR_TYPE_OPTIONS_V250.length, 5);
+  assert.ok(
+    !VECTOR_TYPE_OPTIONS_V250.some(o => o.value === VectorTypeEnum.INT8_VECTOR),
+    'Milvus 2.5 VECTOR_TYPE_OPTIONS must not include INT8_VECTOR'
+  );
+  assert.equal(SPARSE_INDEX_TYPE_OPTIONS_V250[0].value, IndexTypeEnum.SPARSE_INVERTED_INDEX);
+  assert.equal(AVG_NNZ_RANGE_CONFIG_V250.defaultValue, 100);
+});
+
+test('memoryAndDiskCalculator accurately computes FP16, BF16, INT8, and BINARY vector memory', () => {
+  const baseParams = {
+    rawDataSize: 100 * 1024 * 1024,
+    d: 128,
+    num: 1,
+    withScalar: false,
+    offLoading: false,
+    scalarAvg: 0,
+    segSize: 512,
+    mode: ModeEnum.Cluster,
+    indexTypeParams: { indexType: IndexTypeEnum26.FLAT },
+  };
+
+  const fp32 = memoryAndDiskCalculator({ ...baseParams, vectorType: VectorTypeEnum.FLOAT_VECTOR });
+  const fp16 = memoryAndDiskCalculator({ ...baseParams, vectorType: VectorTypeEnum.FLOAT16_VECTOR });
+  const bf16 = memoryAndDiskCalculator({ ...baseParams, vectorType: VectorTypeEnum.BFLOAT16_VECTOR });
+  const int8 = memoryAndDiskCalculator({ ...baseParams, vectorType: VectorTypeEnum.INT8_VECTOR });
+  const bin = memoryAndDiskCalculator({ ...baseParams, vectorType: VectorTypeEnum.BINARY_VECTOR });
+
+  // In FLAT index without scalars, segment overhead is identical, vector memory scales directly with byte size
+  assert.equal(fp16.memory, bf16.memory, 'FP16 and BF16 must use identical memory (2 bytes per dimension)');
+  assert.ok(fp16.memory < fp32.memory, 'FP16 memory must be smaller than FP32');
+  assert.ok(int8.memory < fp16.memory, 'INT8 memory must be smaller than FP16');
+  assert.ok(bin.memory < int8.memory, 'Binary vector memory must be smallest (1 bit per dimension)');
+
+  // Check v250 calculator
+  const v250Fp32 = memoryAndDiskCalculatorV250({ ...baseParams, vectorType: VectorTypeEnum.FLOAT_VECTOR });
+  const v250Fp16 = memoryAndDiskCalculatorV250({ ...baseParams, vectorType: VectorTypeEnum.FLOAT16_VECTOR });
+  assert.ok(v250Fp16.memory < v250Fp32.memory, 'v250 FP16 memory must be smaller than FP32');
+});
+
+test('memoryAndDiskCalculator handles SPARSE_FLOAT_VECTOR with avgNnz across calculators', () => {
+  const sparseParams = {
+    rawDataSize: 100 * 1024 * 1024,
+    d: 0,
+    num: 1,
+    withScalar: false,
+    offLoading: false,
+    scalarAvg: 0,
+    segSize: 512,
+    mode: ModeEnum.Cluster,
+    indexTypeParams: { indexType: IndexTypeEnum26.SPARSE_INVERTED_INDEX },
+    vectorType: VectorTypeEnum.SPARSE_FLOAT_VECTOR,
+    avgNnz: 100,
+  };
+
+  const resV26 = memoryAndDiskCalculator(sparseParams);
+  const resV250 = memoryAndDiskCalculatorV250(sparseParams);
+
+  assert.ok(resV26.memory > 0, 'v2.6 sparse memory must be positive');
+  assert.ok(resV250.memory > 0, 'v2.5 sparse memory must be positive');
+});
+test('dependencyCalculator scales PVC size with vectorType and avgNnz', () => {
+  const baseDepParams = {
+    num: 10,
+    d: 128,
+    mode: ModeEnum.Cluster,
+    withScalar: false,
+    scalarAvg: 0,
+    loadingMemory: 10 * 1024 * 1024 * 1024,
+    dependency: DependencyComponentEnum.Pulsar,
+  };
+
+  const depFp32 = dependencyCalculator(baseDepParams);
+  const depSparseLarge = dependencyCalculator({
+    ...baseDepParams,
+    vectorType: VectorTypeEnum.SPARSE_FLOAT_VECTOR,
+    avgNnz: 5000,
+  });
+  assert.ok(
+    depSparseLarge.minio.pvc > depFp32.minio.pvc,
+    'High avgNnz sparse vector must allocate significantly larger MinIO PVC'
+  );
+});
+
+test('gpuOperatorYmlGenerator emits GPU image in spec.components and gpu memory pool configuration in spec.config', () => {
+  const standaloneYml = gpuOperatorYmlGenerator({
+    mode: ModeEnum.Standalone,
+    standaloneNodeConfig: { cpu: 8, memory: 32, count: 1 },
+    clusterNodeConfig: {},
+    rmmPoolSize: { initMemSize: 2048, maxMemSize: 4096 },
+  });
+  assert.ok(
+    standaloneYml.includes('image: milvusdb/milvus:v2.6.25-gpu'),
+    'Standalone GPU YAML must set spec.components.image to a GPU-enabled image'
+  );
+  assert.ok(standaloneYml.includes('initMemSize: 2048'), 'YAML must contain gpu initMemSize');
+  assert.ok(standaloneYml.includes('maxMemSize: 4096'), 'YAML must contain gpu maxMemSize');
+
+  const clusterYml = gpuOperatorYmlGenerator({
+    mode: ModeEnum.Cluster,
+    standaloneNodeConfig: { cpu: 8, memory: 32, count: 1 },
+    clusterNodeConfig: {
+      queryNode: { cpu: 4, memory: 16, count: 2, gpuCount: 1 },
+      proxy: { cpu: 2, memory: 8, count: 1 },
+      mixCoord: { cpu: 2, memory: 8, count: 1 },
+      dataNode: { cpu: 4, memory: 16, count: 2 },
+      streamNode: { cpu: 2, memory: 8, count: 1 },
+    },
+    rmmPoolSize: { initMemSize: 2048, maxMemSize: 4096 },
+  });
+  assert.ok(
+    clusterYml.includes('image: milvusdb/milvus:v2.6.25-gpu'),
+    'Cluster GPU YAML must set spec.components.image to a GPU-enabled image'
+  );
+});
+
+test('SINDI compression reduces sparse index memory while keeping rawDataSize and storage footprints independent', () => {
+  const baseSparseParams = {
+    rawDataSize: 100 * 1024 * 1024,
+    d: 768,
+    num: 10,
+    withScalar: false,
+    offLoading: false,
+    scalarAvg: 0,
+    segSize: 512,
+    mode: ModeEnum.Cluster,
+    vectorType: VectorTypeEnum.SPARSE_FLOAT_VECTOR,
+    avgNnz: 5000,
+  };
+
+  const rawSize = rawDataSizeCalculator({
+    num: 10,
+    d: 768,
+    withScalar: false,
+    scalarAvg: 0,
+    vectorType: VectorTypeEnum.SPARSE_FLOAT_VECTOR,
+    avgNnz: 5000,
+  });
+  assert.equal(
+    rawSize,
+    400_000_000_000,
+    'Sparse rawDataSize must always use 8 bytes/NNZ (400 GB for 10M vectors at avgNnz=5000)'
+  );
+
+  const uncompressed = memoryAndDiskCalculator({
+    ...baseSparseParams,
+    indexTypeParams: {
+      indexType: IndexTypeEnum26.SPARSE_INVERTED_INDEX,
+      sindiCompression: false,
+    },
+  });
+  const sindiViaIndexParams = memoryAndDiskCalculator({
+    ...baseSparseParams,
+    indexTypeParams: {
+      indexType: IndexTypeEnum26.SPARSE_INVERTED_INDEX,
+      sindiCompression: true,
+    },
+  });
+  assert.ok(
+    sindiViaIndexParams.memory < uncompressed.memory,
+    'SINDI via indexTypeParams.sindiCompression must reduce sparse index memory footprint'
+  );
+
+  const depZeroLoading = dependencyCalculator({
+    num: 10,
+    d: 768,
+    mode: ModeEnum.Cluster,
+    withScalar: false,
+    scalarAvg: 0,
+    loadingMemory: 0,
+    dependency: DependencyComponentEnum26.Pulsar,
+    vectorType: VectorTypeEnum.SPARSE_FLOAT_VECTOR,
+    avgNnz: 5000,
+  });
+  assert.equal(depZeroLoading.minio.pvc, 373, 'MinIO PVC from rawDataSize alone must be 373 GiB');
+  assert.equal(depZeroLoading.pulsar.bookie.ledgers, 373, 'Pulsar ledgers from rawDataSize alone must be 373 GiB');
+});
+
+test('memoryAndDiskCalculator handles FP16/BF16 with HNSW_SQ/HNSW_PQ and DISKANN with INT8/BINARY', () => {
+  const common = {
+    rawDataSize: 100 * 1024 * 1024,
+    d: 768,
+    num: 1,
+    withScalar: false,
+    offLoading: false,
+    scalarAvg: 0,
+    segSize: 512,
+    mode: ModeEnum.Cluster,
+    refineType: RefineValueEnum.None,
+  };
+
+  const hnswSqFp32 = memoryAndDiskCalculator({
+    ...common,
+    vectorType: VectorTypeEnum.FLOAT_VECTOR,
+    indexTypeParams: { indexType: IndexTypeEnum26.HNSW_SQ, m: 16 },
+  });
+  const hnswSqFp16 = memoryAndDiskCalculator({
+    ...common,
+    vectorType: VectorTypeEnum.FLOAT16_VECTOR,
+    indexTypeParams: { indexType: IndexTypeEnum26.HNSW_SQ, m: 16 },
+  });
+  const hnswPqBf16 = memoryAndDiskCalculator({
+    ...common,
+    vectorType: VectorTypeEnum.BFLOAT16_VECTOR,
+    indexTypeParams: { indexType: IndexTypeEnum26.HNSW_PQ, m: 16 },
+  });
+  assert.equal(
+    hnswSqFp16.memory,
+    hnswSqFp32.memory,
+    'HNSW_SQ memory uses 8-bit SQ codes + 32-bit graph edges without double-halving FP16'
+  );
+  assert.ok(
+    hnswPqBf16.memory < hnswSqFp16.memory,
+    'HNSW_PQ memory with BF16 must be smaller than HNSW_SQ'
+  );
+
+  const diskannFp32 = memoryAndDiskCalculator({
+    ...common,
+    vectorType: VectorTypeEnum.FLOAT_VECTOR,
+    indexTypeParams: { indexType: IndexTypeEnum26.DISKANN, maxDegree: 56 },
+  });
+  const diskannInt8 = memoryAndDiskCalculator({
+    ...common,
+    vectorType: VectorTypeEnum.INT8_VECTOR,
+    indexTypeParams: { indexType: IndexTypeEnum26.DISKANN, maxDegree: 56 },
+  });
+  const diskannBinary = memoryAndDiskCalculator({
+    ...common,
+    vectorType: VectorTypeEnum.BINARY_VECTOR,
+    indexTypeParams: { indexType: IndexTypeEnum26.DISKANN, maxDegree: 56 },
+  });
+  assert.ok(
+    diskannInt8.disk < diskannFp32.disk,
+    'DiskANN on INT8 vectors must require less local disk than FP32'
+  );
+  assert.ok(
+    diskannBinary.memory < diskannInt8.memory,
+    'DiskANN RAM cache on BINARY vectors must be bounded by binary vector size'
+  );
+});
+
+test('binary index options map to supported names and calculate non-zero memory in both versions', () => {
+  for (const [consts, types, calculator] of [
+    [require('../src/consts/sizing.ts'), require('../src/types/sizing.ts'), memoryAndDiskCalculator],
+    [require('../src/consts/sizingV250.ts'), require('../src/types/sizingV250.ts'), memoryAndDiskCalculatorV250],
+  ]) {
+    assert.deepEqual(consts.BINARY_INDEX_TYPE_OPTIONS.map(o => o.value), ['BIN_FLAT', 'BIN_IVF_FLAT']);
+    const params = {
+      num: 1, d: 128, rawDataSize: 16_000_000, vectorType: types.VectorTypeEnum.BINARY_VECTOR,
+      withScalar: false, offLoading: false, scalarAvg: 0, segSize: 512, mode: types.ModeEnum.Cluster,
+    };
+    const flat = calculator({ ...params, indexTypeParams: { indexType: types.IndexTypeEnum.BIN_FLAT } });
+    const ivf = calculator({ ...params, indexTypeParams: { indexType: types.IndexTypeEnum.BIN_IVF_FLAT, flatNList: 128 } });
+    assert.equal(flat.memory, (16_000_000 + 512 * 1024 * 1024 * 2) * 1.15);
+    assert.equal(ivf.memory, (16_000_000 + 128 * 16 + 512 * 1024 * 1024 * 2) * 1.15);
+  }
+});
+
+const yaml = require('js-yaml');
+const { helmYmlGeneratorV300, operatorYmlGeneratorV300, sparseIndexScriptV300, MILVUS_V300_IMAGE } = require('../src/utils/sizingToolV300.ts');
+const { sizingV300Config } = require('../src/parts/sizing/configV300.ts');
+const { sizingV26Config } = require('../src/parts/sizing/config.ts');
+const profileParams = {
+  ...dummyClusterConfig,
+  streamNode: { cpu: 2, memory: 8, count: 1 },
+  standaloneNode: { cpu: 2, memory: 8, count: 1 },
+  segmentSize: 512,
+};
+for (const mode of [ModeEnum.Standalone, ModeEnum.Cluster]) {
+  for (const compressed of [false, true]) {
+    test(`3.0 mode=${mode} compressed=${compressed} exports concrete resources, image and runtime config`, () => {
+      const params = { ...profileParams, sindiCompression: compressed };
+      const operator = yaml.load(operatorYmlGeneratorV300(params, DependencyComponentEnum26.Woodpecker, mode));
+      const helm = yaml.load(helmYmlGeneratorV300(params, DependencyComponentEnum26.Woodpecker, mode));
+      const runtime = yaml.load(helm.extraConfigFiles['user.yaml']);
+      assert.deepEqual(runtime, operator.spec.config);
+      assert.equal(runtime.mq.type, 'woodpecker');
+      assert.equal(runtime.woodpecker.storage.type, 'minio');
+      assert.equal(runtime.dataCoord.segment.maxSize, 512);
+      assert.equal(runtime.dataCoord.targetVecIndexVersion, compressed ? 10 : undefined);
+      assert.equal(operator.spec.mode, mode === ModeEnum.Cluster ? 'cluster' : 'standalone');
+      assert.equal(operator.spec.components.image, MILVUS_V300_IMAGE);
+      assert.equal(operator.spec.components.streamingMode, true);
+      assert.equal(operator.spec.dependencies.msgStreamType, 'woodpecker');
+      assert.equal(helm.image.all.tag, 'v3.0.5');
+      assert.equal(helm.cluster.enabled, mode === ModeEnum.Cluster);
+      assert.equal(helm.streaming.enabled, true);
+      assert.equal(helm.streaming.woodpecker.embedded, true);
+      for (const name of ['pulsar', 'pulsarv3', 'kafka', 'indexNode', 'indexCoordinator', 'rootCoordinator', 'queryCoordinator', 'dataCoordinator']) assert.equal(helm[name].enabled, false);
+      assert.equal(helm.woodpecker.enabled, false, 'No separate WAL service outside the resource estimate');
+      const nodes = mode === ModeEnum.Cluster ? ['mixCoord', 'proxy', 'streamingNode', 'dataNode', 'queryNode'] : ['standalone'];
+      for (const name of nodes) {
+        const node = operator.spec.components[name];
+        assert.ok(node.replicas >= 1);
+        assert.ok(node.resources.limits.cpu > 0);
+        assert.match(node.resources.limits.memory, /^[1-9][\d.]*Gi$/);
+      }
+      assert.equal(helm.minio.mode, mode === ModeEnum.Cluster ? 'distributed' : 'standalone');
+      assert.ok(helm.minio.persistence.enabled);
+    });
+  }
+}
+test('SINDI enablement and version-specific controls are isolated from 2.6', () => {
+  assert.equal(sizingV300Config.supportsSindi, true);
+  assert.ok(!sizingV26Config.supportsSindi);
+  assert.deepEqual(sizingV300Config.consts.DEPENDENCY_COMPONENTS.map(d => d.value), ['woodpecker']);
+  for (const metric of ['IP', 'BM25']) {
+    const script = sparseIndexScriptV300(true, metric);
+    assert.ok(script.includes(`metric_type="${metric}"`));
+    assert.ok(script.includes('"inverted_index_algo":"SINDI"'));
+    assert.ok(script.includes(`"quant_type":"${metric === 'IP' ? 'fp16' : 'u16'}"`));
+    assert.ok(script.includes('"inverted_index_codec":"block_streamvbyte"'));
+    assert.ok(!sparseIndexScriptV300(false, metric).includes('quant_type'));
+  }
+});
+test('3.0 GPU manifests pin the GPU image and streaming architecture', () => {
+  for (const mode of [ModeEnum.Standalone, ModeEnum.Cluster]) {
+    const manifest = yaml.load(gpuOperatorYmlGenerator({
+      mode, standaloneNodeConfig: profileParams.standaloneNode,
+      clusterNodeConfig: { ...profileParams }, milvusImage: `${MILVUS_V300_IMAGE}-gpu`,
+    }));
+    assert.equal(manifest.spec.components.image, 'milvusdb/milvus:v3.0.5-gpu');
+    assert.equal(manifest.spec.components.streamingMode, true);
+    assert.equal(manifest.spec.dependencies.msgStreamType, 'woodpecker');
+  }
+});
+
+test('3.0 disk cache estimates reach scheduler requests, runtime capacity and cache volumes', () => {
+  for (const mode of [ModeEnum.Standalone, ModeEnum.Cluster]) {
+    const params = { ...profileParams, localDiskSize: 100 * 1024 ** 3, queryNode: { ...profileParams.queryNode, count: 2 } };
+    const helm = yaml.load(helmYmlGeneratorV300(params, DependencyComponentEnum26.Woodpecker, mode));
+    const operator = yaml.load(operatorYmlGeneratorV300(params, DependencyComponentEnum26.Woodpecker, mode));
+    const key = mode === ModeEnum.Cluster ? 'queryNode' : 'standalone';
+    const node = operator.spec.components[key];
+    const reservedGi = Number(node.resources.requests['ephemeral-storage'].slice(0, -2));
+    assert.ok(reservedGi * (mode === ModeEnum.Cluster ? 2 : 1) >= 115);
+    assert.equal(node.resources.limits['ephemeral-storage'], `${reservedGi}Gi`);
+    assert.equal(helm[key].resources.requests['ephemeral-storage'], `${reservedGi}Gi`);
+    assert.equal(helm[key].disk.size.enabled, true);
+    assert.equal(node.env.find(e => e.name === 'LOCAL_STORAGE_SIZE').value, `${reservedGi}`);
+    assert.equal(node.volumes[0].emptyDir.sizeLimit, `${reservedGi}Gi`);
+    assert.equal(node.volumeMounts[0].mountPath, operator.spec.config.localStorage.path);
+    if (mode === ModeEnum.Standalone) assert.equal(helm.standalone.persistence.enabled, false, 'Use the sized local cache instead of an unrelated default 50Gi PVC');
+    else assert.equal(operator.spec.components.dataNode.resources.requests['ephemeral-storage'], undefined);
+  }
 });

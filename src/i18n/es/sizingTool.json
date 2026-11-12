@@ -31,7 +31,12 @@
     "segmentTooltip": "datacoord.segment.maxSize es un importante parámetro de configuración de almacenamiento en Milvus. Define el tamaño de un único segmento, que es la unidad física de almacenamiento en Milvus. Aumentar este valor puede mejorar el rendimiento de las consultas, pero también consumirá más recursos. <0>Ver más.</0>",
     "refine": "Perfeccione",
     "refineType": "Refinar tipo",
-    "inlinePq": "inline_pq"
+    "inlinePq": "inline_pq",
+    "vectorType": "Tipo de datos vectoriales",
+    "avgNnz": "Dimensiones promedio no nulas (avg_nnz)",
+    "sindi": "Compresión SINDI (Milvus 3.0)",
+    "sparseMetric": "Sparse Metric",
+    "sindiEstimate": "Compressed index estimate: about 2.8 bytes per non-zero entry. Actual usage varies with data and encoding; raw vectors remain 8 bytes per entry."
   },
   "overview": {
     "title": "Requisitos de Recursos",
@@ -106,7 +111,11 @@
     "adv2": "¿Configurando un clúster de Milvus para pruebas de rendimiento o benchmarking? Consulta <0>VDB Bench</0> para obtener una guía detallada.",
     "tip1": "¿Cómo ejecutar Milvus con Docker Compose?",
     "tip2": "¿Cómo ejecutar Milvus con Helm Chart?",
-    "tip3": "¿Cómo ejecutar Milvus con Milvus Operator?"
+    "tip3": "¿Cómo ejecutar Milvus con Milvus Operator?",
+    "downloadOperator": "Descargar YAML de Operator",
+    "v300Profile": "Milvus 3.0.5: embedded Woodpecker and a consolidated coordinator. Helm chart 5.0.33 / Operator 1.3.0.",
+    "sparseIndexHelp": "After deployment, install pymilvus>=3.0 and run python milvus-3-sparse-index.py COLLECTION FIELD against an existing sparse field (BM25 function output for BM25). Compressed estimates require the new index format and newly built or explicitly rebuilt indexes; an image upgrade does not migrate existing indexes.",
+    "downloadSparseIndex": "Download Sparse Index Script"
   },
   "woodpeckerTip": "<0>Woodpecker</0> es un sistema de registro de escritura anticipada (WAL) nativo de la nube desde Milvus 2.6.0. Está diseñado para sustituir a Kafka y Pulsar como MQ en Milvus para simplificar las operaciones, maximizar el rendimiento y escalar sin esfuerzo. Por ahora se ejecuta integrado en los nodos de streaming.",
   "previousVersion": "La versión anterior de la herramienta de dimensionamiento está <0>aquí</0>.",

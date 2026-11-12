@@ -1,6 +1,7 @@
 import {
   CPU_LOADING_SAFETY_FACTOR,
   DEFAULT_GPU_INDEX_PARAMS,
+  DEFAULT_GPU_MILVUS_IMAGE,
   FLOAT_BYTES,
   GPU_FIXED_NODE_CONFIG,
   GPU_INDEX_PARAM_KEYS,
@@ -354,8 +355,14 @@ export const gpuOperatorYmlGenerator = (params: {
   clusterNodeConfig: Record<NodesKeyType, NodesValueType>;
   standaloneNodeConfig: NodesValueType;
   mode: ModeEnum;
+  rmmPoolSize?: { initMemSize: number; maxMemSize: number };
+  milvusImage?: string;
 }) => {
-  const { clusterNodeConfig, standaloneNodeConfig, mode } = params;
+  const { clusterNodeConfig, standaloneNodeConfig, mode, rmmPoolSize } = params;
+  const milvusImage = params.milvusImage ?? DEFAULT_GPU_MILVUS_IMAGE;
+  const v300 = milvusImage.includes(':v3.0.');
+  const initMemSize = rmmPoolSize ? rmmPoolSize.initMemSize : 2048;
+  const maxMemSize = rmmPoolSize ? rmmPoolSize.maxMemSize : 4096;
   if (mode === ModeEnum.Standalone) {
     return `apiVersion: milvus.io/v1beta1
 kind: Milvus
@@ -366,14 +373,19 @@ metadata:
 spec:
   mode: standalone
   components:
+    image: ${milvusImage}
+${v300 ? '    streamingMode: true\n' : ''}
     standalone:
       resources:
         limits:
           cpu: ${standaloneNodeConfig.cpu}
           memory: ${standaloneNodeConfig.memory}Gi
           nvidia.com/gpu: "1"
-  config: {}
-  dependencies: {}
+  config:
+    gpu:
+      initMemSize: ${initMemSize}
+      maxMemSize: ${maxMemSize}
+  dependencies: ${v300 ? '\n    msgStreamType: woodpecker' : '{}'}
 `;
   }
 
@@ -388,6 +400,8 @@ metadata:
 spec:
   mode: cluster
   components:
+    image: ${milvusImage}
+${v300 ? '    streamingMode: true\n' : ''}
     mixCoord:
       resources:
         limits:
@@ -419,8 +433,11 @@ spec:
         limits:
           cpu: ${streamNode.cpu}
           memory: ${streamNode.memory}Gi
-  config: {}
-  dependencies: {}
+  config:
+    gpu:
+      initMemSize: ${initMemSize}
+      maxMemSize: ${maxMemSize}
+  dependencies: ${v300 ? '\n    msgStreamType: woodpecker' : '{}'}
 `;
 };
 

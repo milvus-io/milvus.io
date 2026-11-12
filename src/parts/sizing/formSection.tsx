@@ -1,8 +1,10 @@
 import { FormSection as BaseFormSection } from '@/parts/sizingCommon';
-import { sizingV3Config } from './config';
+import { sizingV26Config } from './config';
+import { SizingVersionConfig } from '@/parts/sizingCommon/types';
 import { ICalculateResult } from '@/types/sizing';
 
 export default function FormSection(props: {
+  config?: SizingVersionConfig;
   className: string;
   asyncCalculatedResult: (params: ICalculateResult) => void;
   disableCalculationThreshold?: boolean;
@@ -12,7 +14,7 @@ export default function FormSection(props: {
   return (
     <BaseFormSection
       className={className}
-      config={sizingV3Config}
+      config={props.config ?? sizingV26Config}
       onCalculatedResult={asyncCalculatedResult}
       disableCalculationThreshold={disableCalculationThreshold}
     />

@@ -31,7 +31,12 @@
     "segmentTooltip": "datacoord.segment.maxSize 是 Milvus 中一個重要的儲存配置參數。它定義了單一區段的大小，也就是 Milvus 中的實體儲存單位。增加此值可提高查詢效能，但也會消耗更多的資源。<0>檢視更多。</0>",
     "refine": "精煉",
     "refineType": "精煉類型",
-    "inlinePq": "內聯_pq"
+    "inlinePq": "內聯_pq",
+    "vectorType": "向量資料類型",
+    "avgNnz": "平均非零維度 (avg_nnz)",
+    "sindi": "SINDI 壓縮 (Milvus 3.0)",
+    "sparseMetric": "Sparse Metric",
+    "sindiEstimate": "Compressed index estimate: about 2.8 bytes per non-zero entry. Actual usage varies with data and encoding; raw vectors remain 8 bytes per entry."
   },
   "overview": {
     "title": "資源需求",
@@ -106,7 +111,11 @@
     "adv2": "設置 Milvus 集群以進行性能測試或基準測試？參考<0>VDB 基準</0>以獲取詳細指導。",
     "tip1": "如何使用 Docker Compose 運行 Milvus？",
     "tip2": "如何使用 Helm Chart 運行 Milvus？",
-    "tip3": "如何使用 Milvus Operator 運行 Milvus？"
+    "tip3": "如何使用 Milvus Operator 運行 Milvus？",
+    "downloadOperator": "下載 Operator YAML",
+    "v300Profile": "Milvus 3.0.5: embedded Woodpecker and a consolidated coordinator. Helm chart 5.0.33 / Operator 1.3.0.",
+    "sparseIndexHelp": "After deployment, install pymilvus>=3.0 and run python milvus-3-sparse-index.py COLLECTION FIELD against an existing sparse field (BM25 function output for BM25). Compressed estimates require the new index format and newly built or explicitly rebuilt indexes; an image upgrade does not migrate existing indexes.",
+    "downloadSparseIndex": "Download Sparse Index Script"
   },
   "woodpeckerTip": "<0>Woodpecker</0>是自 Milvus 2.6.0 起推出的雲原生寫入日誌 (WAL) 系統。它旨在取代 Kafka 和 Pulsar 作為 Milvus 中的 MQ，以簡化作業、最大化吞吐量，並毫不費力地進行擴充。目前，它嵌入在串流節點中執行。",
   "previousVersion": "上一版本的尺寸工具在<0>這裡</0>。",

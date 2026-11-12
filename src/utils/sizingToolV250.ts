@@ -9,6 +9,7 @@ import {
   PulsarDataType,
   KafkaDataType,
   NodesKeyType,
+  VectorTypeEnum,
 } from '@/types/sizingV250';
 
 // Re-export common utilities
@@ -52,6 +53,8 @@ export const memoryAndDiskCalculator = (params: {
   scalarAvg: number;
   segSize: number;
   mode: ModeEnum;
+  vectorType?: VectorTypeEnum;
+  avgNnz?: number;
 }) => {
   const {
     rawDataSize,
@@ -63,25 +66,53 @@ export const memoryAndDiskCalculator = (params: {
     indexTypeParams,
     segSize,
     mode,
+    vectorType,
+    avgNnz,
   } = params;
   const { indexType, widthRawData, maxDegree, m, flatNList, sq8NList } =
     indexTypeParams;
   const segmentSizeByte = unitAny2BYTE(segSize, 'MB');
-  const vectorRawDataSize = ((num * d * 32) / 8) * ONE_MILLION;
-
+  let vectorBytesPerItem: number;
+  switch (vectorType) {
+    case VectorTypeEnum.FLOAT16_VECTOR:
+    case VectorTypeEnum.BFLOAT16_VECTOR:
+      vectorBytesPerItem = (d * 16) / 8;
+      break;
+    case VectorTypeEnum.INT8_VECTOR:
+      vectorBytesPerItem = d;
+      break;
+    case VectorTypeEnum.BINARY_VECTOR:
+      vectorBytesPerItem = d / 8;
+      break;
+    case VectorTypeEnum.SPARSE_FLOAT_VECTOR:
+      vectorBytesPerItem = (avgNnz ?? d) * 8;
+      break;
+    case VectorTypeEnum.FLOAT_VECTOR:
+    default:
+      vectorBytesPerItem = (d * 32) / 8;
+      break;
+  }
+  const vectorRawDataSize = num * ONE_MILLION * vectorBytesPerItem;
+  const fp32RawDataSize = num * ONE_MILLION * d * 4;
+  const graphMemory = (2 * m / d) * fp32RawDataSize;
+  const sq8Memory = fp32RawDataSize / 4;
+  const pqMemory = 0.125 * fp32RawDataSize;
+  const vamanaGraphDisk = (maxDegree / d) * fp32RawDataSize;
   let result = {
     memory: 0,
     disk: 0,
   };
-  const rowSize = (d * 32) / 8;
+  const rowSize = vectorBytesPerItem;
 
   switch (indexType) {
+    case IndexTypeEnum.BIN_FLAT:
     case IndexTypeEnum.FLAT:
       result = {
         memory: vectorRawDataSize,
         disk: 0,
       };
       break;
+    case IndexTypeEnum.BIN_IVF_FLAT:
     case IndexTypeEnum.IVF_FLAT:
       result = {
         memory: vectorRawDataSize + flatNList * rowSize,
@@ -90,46 +121,51 @@ export const memoryAndDiskCalculator = (params: {
       break;
     case IndexTypeEnum.IVFSQ8:
       result = {
-        memory: vectorRawDataSize / 4 + sq8NList * rowSize,
+        memory: sq8Memory + sq8NList * rowSize,
         disk: 0,
       };
       break;
     case IndexTypeEnum.SCANN:
       result = {
         memory: widthRawData
-          ? (9 / 8) * vectorRawDataSize
-          : (1 / 8) * vectorRawDataSize,
+          ? vectorRawDataSize + (1 / 8) * fp32RawDataSize
+          : (1 / 8) * fp32RawDataSize,
         disk: 0,
       };
       break;
     case IndexTypeEnum.HNSW:
       result = {
-        memory: (1 + (2 * m) / d) * vectorRawDataSize,
+        memory: vectorRawDataSize + graphMemory,
         disk: 0,
       };
       break;
     case IndexTypeEnum.HNSW_SQ:
       result = {
-        memory: (0.25 + (2 * m) / d) * vectorRawDataSize,
+        memory: sq8Memory + graphMemory,
         disk: 0,
       };
       break;
     case IndexTypeEnum.HNSW_PQ:
       result = {
-        memory: (0.125 + (2 * m) / d) * vectorRawDataSize,
+        memory: pqMemory + graphMemory,
         disk: 0,
       };
       break;
-    case IndexTypeEnum.SPARSE_INVERTED_INDEX:
+    case IndexTypeEnum.SPARSE_INVERTED_INDEX: {
+      const sparseRawSize =
+        vectorType === VectorTypeEnum.SPARSE_FLOAT_VECTOR
+          ? vectorRawDataSize
+          : num * ONE_MILLION * (avgNnz ?? d) * 8;
       result = {
-        memory: vectorRawDataSize * 1.2,
+        memory: sparseRawSize * 1.2,
         disk: 0,
       };
       break;
+    }
     case IndexTypeEnum.DISKANN:
       result = {
-        memory: vectorRawDataSize / 4,
-        disk: (1 + maxDegree / d) * vectorRawDataSize,
+        memory: Math.min(sq8Memory, vectorRawDataSize),
+        disk: vectorRawDataSize + vamanaGraphDisk,
       };
       break;
     default:
@@ -249,8 +285,19 @@ export const dependencyCalculator = (params: {
   withScalar: boolean;
   scalarAvg: number;
   loadingMemory: number;
+  vectorType?: VectorTypeEnum;
+  avgNnz?: number;
 }): DependencyConfigType => {
-  const { num, d, mode, scalarAvg, withScalar, loadingMemory } = params;
+  const {
+    num,
+    d,
+    mode,
+    scalarAvg,
+    withScalar,
+    loadingMemory,
+    vectorType,
+    avgNnz,
+  } = params;
   const MINIMUM_MINIO_PVC_SIZE = 30; //GB
   const MINIMUM_PULSAR_LEDGERS = 20; //GB
   const MAXIMUM_PULSAR_JOURNAL = 50; //GB
@@ -261,6 +308,8 @@ export const dependencyCalculator = (params: {
     d,
     withScalar,
     scalarAvg,
+    vectorType,
+    avgNnz,
   });
 
   const minioPvc = Math.max(

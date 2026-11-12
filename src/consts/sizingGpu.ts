@@ -247,3 +247,6 @@ export const GPU_VALIDATION_ERROR_CODES: Record<
   [GpuValidationErrorEnum.IntermediateDegreeTooSmall]:
     'IntermediateDegreeTooSmall',
 };
+
+/** Default GPU-enabled Milvus image written into exported Operator manifests. */
+export const DEFAULT_GPU_MILVUS_IMAGE = 'milvusdb/milvus:v2.6.25-gpu';

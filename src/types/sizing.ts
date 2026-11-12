@@ -21,6 +21,8 @@ export enum SegmentSizeMetricEnum {
 
 export enum IndexTypeEnum {
   FLAT = 'FLAT',
+  BIN_FLAT = 'BIN_FLAT',
+  BIN_IVF_FLAT = 'BIN_IVF_FLAT',
   SCANN = 'SCANN',
   HNSW = 'HNSW',
   HNSW_SQ = 'HNSW_SQ',
@@ -42,6 +44,7 @@ export interface IIndexType {
   rabitqNList: number;
   m: number;
   inlinePq: number;
+  sindiCompression?: boolean;
 }
 
 export enum RefineValueEnum {

@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useRef, useState } from 'react';
+import { useEffect, useCallback, useMemo, useRef, useState } from 'react';
 import { Range } from 'react-range';
 import { scaleLinear } from 'd3-scale';
 import clsx from 'clsx';
@@ -7,6 +7,7 @@ import { SizingInput } from '../sizingInput';
 
 type RangeConfigType = {
   min: number;
+  step?: number;
   max: number;
   defaultValue: number;
   range: number[];
@@ -56,7 +57,7 @@ export const SizingRange = (props: SizingRangePropsType) => {
   const clampRange = (v: number) => {
     if (v <= rangeConfig.min) return rangeConfig.min;
     if (v >= rangeConfig.max) return rangeConfig.max;
-    return v;
+    return rangeConfig.step ? Math.min(rangeConfig.max, Math.ceil(v / rangeConfig.step) * rangeConfig.step) : v;
   };
 
   const clampDomain = (v: number) => {
@@ -68,6 +69,10 @@ export const SizingRange = (props: SizingRangePropsType) => {
   const domainValue = clampDomain(toDomainValue(value));
 
   const [inputValue, setInputValue] = useState(`${value}`);
+
+  useEffect(() => {
+    setInputValue(`${value}`);
+  }, [value]);
 
   // Ref to the inner track DOM element so we can compute click/drag positions.
   // react-range@1.10.0 has a broken `isIOS()` check that aborts onMouseDownTrack

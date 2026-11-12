@@ -70,12 +70,12 @@ export const SizingRange = (props: SizingRangePropsType) => {
 
   const [inputValue, setInputValue] = useState(`${value}`);
 
-  // Preserve a numeric draft (including an empty field or an unaligned Binary
-  // dimension) until blur. Only external value changes replace the draft.
-  const pendingInputValue = useRef<number | undefined>(undefined);
+  // Keep the user's draft while focused. Prop updates/effects can arrive after
+  // later keystrokes, so comparing only the last committed number is racy.
+  // Blur normalizes the draft; unfocused controls still follow external values.
+  const isEditingInput = useRef(false);
   useEffect(() => {
-    if (value !== pendingInputValue.current) setInputValue(`${value}`);
-    pendingInputValue.current = undefined;
+    if (!isEditingInput.current) setInputValue(`${value}`);
   }, [value]);
 
   // Ref to the inner track DOM element so we can compute click/drag positions.
@@ -145,6 +145,7 @@ export const SizingRange = (props: SizingRangePropsType) => {
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    isEditingInput.current = true;
     let raw = e.target.value;
     let num = Number(raw);
     if (isNaN(num)) {
@@ -158,11 +159,11 @@ export const SizingRange = (props: SizingRangePropsType) => {
 
     const clamped = clampRange(num);
     setInputValue(raw);
-    pendingInputValue.current = clamped;
     onRangeChange(clamped);
   };
 
   const handleFormatInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    isEditingInput.current = false;
     let num = Number(e.target.value);
     if (isNaN(num)) {
       num = rangeConfig.min;
@@ -240,6 +241,7 @@ export const SizingRange = (props: SizingRangePropsType) => {
         <SizingInput
           value={inputValue}
           unit={unit}
+          onFocus={() => { isEditingInput.current = true; }}
           onChange={handleInputChange}
           onBlur={handleFormatInput}
           customSize="small"

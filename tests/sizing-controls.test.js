@@ -43,7 +43,9 @@ test('keyboard entry preserves drafts before numeric and Binary normalization', 
   await page.getByRole('option', { name: 'Binary', exact: true }).click();
   const dimension = rangeInput(page, 'Vector Dimension');
   await dimension.fill('');
-  await dimension.pressSequentially('127');
+  await expect(dimension).toHaveValue('');
+  await dimension.pressSequentially('127', { delay: 50 });
+  await expect(dimension).toBeFocused();
   await expect(dimension).toHaveValue('127');
   await dimension.blur();
   await expect(dimension).toHaveValue('128');

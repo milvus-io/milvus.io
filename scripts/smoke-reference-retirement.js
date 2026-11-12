@@ -8,7 +8,7 @@ const base = new URL(process.env.REFERENCE_TEST_URL || 'http://127.0.0.1:8033');
 const scope = process.env.REFERENCE_TEST_SCOPE || 'all';
 assert.ok(['all', 'retired'].includes(scope), 'REFERENCE_TEST_SCOPE must be all or retired');
 const timeout = Number(process.env.REFERENCE_REQUEST_TIMEOUT_MS || 30000);
-const retiredLink = /(?:ai-quick-reference|\/images\/ai-reference|milvus-faq\.csv)/i;
+const retiredLink = /(?:ai-quick-reference|\/images\/ai-reference|milvus-faq\.csv|learn-ai-and-vectordb|learn-ai\.csv)/i;
 const agents = [
   { name: 'playwright', ua: 'Playwright-Test/1.0', cookies: '' },
   { name: 'googlebot-zh', ua: 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)', cookies: 'lang=zh' },
@@ -116,6 +116,11 @@ async function sitemaps() {
     '/_next/data/' + (buildId || 'old-build-id') + '/ai-quick-reference.json',
     '/_next/data/' + (buildId || 'old-build-id') + '/ai-quick-reference/agentic-search.json',
     '/_next/data/' + (buildId || 'old-build-id') + '/zh/ai-quick-reference/agentic-search.json',
+    '/learn-ai-and-vectordb', '/learn-ai-and-vectordb/', '/learn-ai-and-vectordb?page=2',
+    '/learn-ai-and-vectordb/test-workflow', '/fr/learn-ai-and-vectordb/test-workflow',
+    '/api/learn-ai-and-vectordb', '/zh/api/learn-ai-and-vectordb', '/assets/learn-ai.csv',
+    '/_next/data/' + (buildId || 'old-build-id') + '/learn-ai-and-vectordb.json',
+    '/_next/data/' + (buildId || 'old-build-id') + '/zh/learn-ai-and-vectordb/test-workflow.json',
   ];
   for (const agent of agents) {
     for (let index = 0; index < paths.length; index += 4) {
@@ -126,7 +131,7 @@ async function sitemaps() {
   let sitemapCount = 0;
   if (scope === 'all') {
     for (const path of [
-      '/docs/quickstart.md', '/learn-ai-and-vectordb', '/solutions', '/compare',
+      '/docs/quickstart.md', '/learn-milvus', '/learn-milvus/hnsw', '/solutions', '/compare',
       '/solutions/hybrid-search', '/compare/milvus-vs-pgvector',
       '/zh/solutions', '/zh/compare', '/llms.txt',
     ]) await healthy(path);

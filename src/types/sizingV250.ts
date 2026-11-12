@@ -16,6 +16,8 @@ export enum SegmentSizeEnum {
 
 export enum IndexTypeEnum {
   FLAT = 'FLAT',
+  BIN_FLAT = 'BIN_FLAT',
+  BIN_IVF_FLAT = 'BIN_IVF_FLAT',
   SCANN = 'SCANN',
   HNSW = 'HNSW',
   HNSW_SQ = 'HNSW_SQ',

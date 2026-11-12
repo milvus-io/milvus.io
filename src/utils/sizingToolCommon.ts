@@ -120,10 +120,8 @@ export const createRawDataSizeCalculator = (ONE_MILLION: number) => {
     scalarAvg: number;
     vectorType?: VectorTypeEnum;
     avgNnz?: number;
-    sindiCompression?: boolean;
   }) => {
-    const { num, d, withScalar, scalarAvg, vectorType, avgNnz, sindiCompression } = params;
-
+    const { num, d, withScalar, scalarAvg, vectorType, avgNnz } = params;
     let vectorBytesPerItem: number;
     switch (vectorType) {
       case VectorTypeEnum.FLOAT16_VECTOR:
@@ -137,9 +135,9 @@ export const createRawDataSizeCalculator = (ONE_MILLION: number) => {
         vectorBytesPerItem = d / 8;
         break;
       case VectorTypeEnum.SPARSE_FLOAT_VECTOR:
-        // Standard sparse vector: avgNnz * 8 bytes (dim int32 + val float32)
-        // Milvus 3.0 SINDI compressed: avgNnz * 2.8 bytes
-        vectorBytesPerItem = (avgNnz ?? d) * (sindiCompression ? 2.8 : 8);
+        // Standard sparse vector: avgNnz * 8 bytes (dim int32 + val float32);
+        // SINDI compression applies only to the inverted index, not raw data.
+        vectorBytesPerItem = (avgNnz ?? d) * 8;
         break;
       case VectorTypeEnum.FLOAT_VECTOR:
       default:

@@ -1,0 +1,62 @@
+name: Validate sizing profiles
+
+on:
+  pull_request:
+    paths:
+      - 'src/parts/sizing*/**'
+      - 'src/components/sizing/**'
+      - 'src/consts/sizing*'
+      - 'src/types/sizing*'
+      - 'src/utils/sizing*'
+      - 'src/pages/**/sizing*.tsx'
+      - 'src/i18n/**/sizingTool.json'
+      - 'src/parts/blogs/zillizAdv/**'
+      - 'src/http/milvus.ts'
+      - 'tests/sizing*'
+      - 'playwright.sizing.config.cjs'
+      - 'package.json'
+      - 'pnpm-lock.yaml'
+      - '.github/workflows/sizing-check.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  calculators-and-types:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+      - uses: pnpm/action-setup@v6
+      - run: pnpm install --frozen-lockfile --ignore-scripts
+      - run: pnpm test:sizing
+      - name: Supply public stats shape without a CMS request
+        run: node -e "require('fs').writeFileSync('global-stats.json', JSON.stringify({milvusStars:0,pipInstall:0}))"
+      - run: pnpm exec tsc --noEmit --incremental false
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+      - uses: pnpm/action-setup@v6
+      - run: pnpm install --frozen-lockfile --ignore-scripts
+      - run: pnpm exec playwright install --with-deps chromium
+      - name: Supply public stats shape without a CMS request
+        run: node -e "require('fs').writeFileSync('global-stats.json', JSON.stringify({milvusStars:0,pipInstall:0}))"
+      - run: pnpm test:sizing:browser
+      - uses: actions/upload-artifact@v7
+        if: failure()
+        with:
+          name: sizing-browser-failures
+          path: /tmp/milvus-sizing-test-results

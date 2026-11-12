@@ -1,3 +1,4 @@
+import { getLocalePath } from '@/utils/localization';
 import { LocalizedAnchor } from '@/components/localizedLinks';
 import React, { useState, useMemo } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
@@ -40,7 +41,7 @@ export default function SizingTool(props: Props) {
   const { t } = useTranslation('sizingTool', { lng: locale });
   const router = useRouter();
   const currentVersion = SIZING_TOOL_VERSION_OPTIONS.find(
-    option => option.href === router.pathname
+    option => option.href === router.pathname.replace('/[lang]', '')
   );
 
   const [calculatedResult, setCalculatedResult] = useState<ICalculateResult>({
@@ -99,7 +100,7 @@ export default function SizingTool(props: Props) {
   });
 
   const [selectedVersion, setSelectedVersion] = useState<string>(
-    currentVersion?.value || SIZING_TOOL_VERSION_OPTIONS[0].value
+    currentVersion?.value || 'Milvus 2.5.x and earlier'
   );
 
   const updateCalculatedResult = (result: ICalculateResult) => {
@@ -108,10 +109,10 @@ export default function SizingTool(props: Props) {
 
   const handleSelectVersion = (value: string) => {
     setSelectedVersion(value);
-    router.push(
-      SIZING_TOOL_VERSION_OPTIONS.find(option => option.value === value)
-        ?.href || '/tools/sizing'
-    );
+    router.push(getLocalePath({
+      locale,
+      path: SIZING_TOOL_VERSION_OPTIONS.find(option => option.value === value)?.href || '/tools/sizing',
+    }));
   };
 
   return (
@@ -175,6 +176,7 @@ export default function SizingTool(props: Props) {
           </div>
 
           <ZillizAdv
+            locale={locale}
             className={classes.zillizAdv}
             ctaLink={`${CLOUD_SIGNUP_LINK}?utm_source=milvusio&utm_medium=referral&utm_campaign=milvus_bottom_banner&utm_content=tools/sizing`}
           />

@@ -4,6 +4,7 @@ import { DependencyComponentEnum, ModeEnum, NodesValueType } from '@/types/sizin
 export const MILVUS_V300_TAG = 'v3.0.5';
 export const MILVUS_V300_IMAGE = `milvusdb/milvus:${MILVUS_V300_TAG}`;
 export const MILVUS_V300_GPU_IMAGE = `${MILVUS_V300_IMAGE}-gpu`;
+const LOCAL_DATA_PATH = '/var/lib/milvus/data';
 
 interface DeploymentParams {
   proxy: NodesValueType;
@@ -14,6 +15,7 @@ interface DeploymentParams {
   standaloneNode: NodesValueType;
   etcdData: NodesValueType & { pvc: number };
   minioData: NodesValueType & { pvc: number };
+  localDiskSize?: number;
   segmentSize?: number;
   sindiCompression?: boolean;
 }
@@ -25,18 +27,40 @@ export const milvusV300RuntimeConfig = (p: Pick<DeploymentParams, 'segmentSize' 
 woodpecker:
   storage:
     type: minio
+localStorage:
+  path: ${LOCAL_DATA_PATH}
 dataCoord:
   segment:
     maxSize: ${p.segmentSize ?? 1024}
 ${p.sindiCompression ? '  targetVecIndexVersion: 10\n' : ''}`;
 
 const indent = (text: string, spaces: number) => text.trimEnd().split('\n').map(line => `${' '.repeat(spaces)}${line}`).join('\n');
-const resources = (node: NodesValueType) => `limits:
+// Local index/Mmap cache is split over query nodes (or held by standalone).
+// Reserve 15% headroom and whole GiB so the scheduler can satisfy the estimate.
+const localDiskGi = (p: DeploymentParams, cluster: boolean) => {
+  const bytes = p.localDiskSize ?? 0;
+  if (!Number.isFinite(bytes) || bytes <= 0) return 0;
+  const count = cluster ? Math.max(1, p.queryNode.count) : 1;
+  return Math.ceil(bytes * 1.15 / count / 1024 ** 3);
+};
+const resources = (node: NodesValueType, diskGi = 0) => `limits:
   cpu: ${node.cpu}
-  memory: ${node.memory}Gi
+  memory: ${node.memory}Gi${diskGi ? `\n  ephemeral-storage: ${diskGi}Gi` : ''}
 requests:
   cpu: ${node.cpu}
-  memory: ${node.memory}Gi`;
+  memory: ${node.memory}Gi${diskGi ? `\n  ephemeral-storage: ${diskGi}Gi` : ''}`;
+const cacheNode = (key: string) => key === 'standalone' || key === 'queryNode';
+const operatorCache = (diskGi: number) => `      env:
+      - name: LOCAL_STORAGE_SIZE
+        value: "${diskGi}"
+      volumeMounts:
+      - name: sizing-local-data
+        mountPath: ${LOCAL_DATA_PATH}
+      volumes:
+      - name: sizing-local-data
+        emptyDir:
+          sizeLimit: ${diskGi}Gi
+`;
 
 const ensureWoodpecker = (dependency: DependencyComponentEnum) => {
   if (dependency !== DependencyComponentEnum.Woodpecker) {
@@ -47,6 +71,7 @@ const ensureWoodpecker = (dependency: DependencyComponentEnum) => {
 export const helmYmlGeneratorV300 = (p: DeploymentParams, dependency: DependencyComponentEnum, mode: ModeEnum) => {
   ensureWoodpecker(dependency);
   const cluster = mode === ModeEnum.Cluster;
+  const diskGi = localDiskGi(p, cluster);
   const nodes = cluster
     ? { mixCoordinator: p.mixCoord, proxy: p.proxy, streamingNode: p.streamNode, dataNode: p.dataNode, queryNode: p.queryNode }
     : { standalone: p.standaloneNode };
@@ -81,7 +106,7 @@ queryCoordinator:
   enabled: false
 dataCoordinator:
   enabled: false
-${Object.entries(nodes).map(([key, node]) => `${key}:\n  ${cluster ? `enabled: true\n  replicas: ${node.count}` : 'replicas: 1\n  messageQueue: woodpecker'}\n  resources:\n${indent(resources(node), 4)}`).join('\n')}
+${Object.entries(nodes).map(([key, node]) => `${key}:\n  ${cluster ? `enabled: true\n  replicas: ${node.count}` : 'replicas: 1\n  messageQueue: woodpecker'}\n  resources:\n${indent(resources(node, cacheNode(key) ? diskGi : 0), 4)}${cacheNode(key) && diskGi ? '\n  disk:\n    enabled: true\n    size:\n      enabled: true' : ''}${key === 'standalone' ? '\n  persistence:\n    enabled: false' : ''}`).join('\n')}
 ${!cluster ? 'mixCoordinator:\n  enabled: false\n' : ''}extraConfigFiles:
   user.yaml: |
 ${indent(milvusV300RuntimeConfig(p), 4)}
@@ -106,6 +131,7 @@ ${indent(resources(p.minioData), 4)}
 export const operatorYmlGeneratorV300 = (p: DeploymentParams, dependency: DependencyComponentEnum, mode: ModeEnum) => {
   ensureWoodpecker(dependency);
   const cluster = mode === ModeEnum.Cluster;
+  const diskGi = localDiskGi(p, cluster);
   const nodes = cluster
     ? { mixCoord: p.mixCoord, proxy: p.proxy, streamingNode: p.streamNode, dataNode: p.dataNode, queryNode: p.queryNode }
     : { standalone: p.standaloneNode };
@@ -118,7 +144,7 @@ spec:
   components:
     image: ${MILVUS_V300_IMAGE}
     streamingMode: true
-${Object.entries(nodes).map(([key, node]) => `    ${key}:\n      replicas: ${node.count}\n      resources:\n${indent(resources(node), 8)}`).join('\n')}
+${Object.entries(nodes).map(([key, node]) => `    ${key}:\n      replicas: ${node.count}\n      resources:\n${indent(resources(node, cacheNode(key) ? diskGi : 0), 8)}\n${cacheNode(key) && diskGi ? operatorCache(diskGi) : ''}`).join('\n')}
   config:
 ${indent(milvusV300RuntimeConfig(p), 4)}
   dependencies:

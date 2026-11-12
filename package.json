@@ -19,7 +19,8 @@
     "test:inkeep": "npx playwright test tests/inkeep.test.js",
     "test:anchors": "npx playwright test tests/heading-anchor-fallback.test.js",
     "test:dependencies": "node --test tests/dependency-compatibility.test.cjs",
-    "test:sizing": "node --test tests/sizing-regression.test.cjs"
+    "test:sizing": "node --test tests/sizing-regression.test.cjs",
+    "test:sizing:browser": "playwright test --config=playwright.sizing.config.cjs"
   },
   "dependencies": {
     "@docsearch/css": "^3.9.0",

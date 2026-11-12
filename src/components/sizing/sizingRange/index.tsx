@@ -70,8 +70,12 @@ export const SizingRange = (props: SizingRangePropsType) => {
 
   const [inputValue, setInputValue] = useState(`${value}`);
 
+  // Preserve a numeric draft (including an empty field or an unaligned Binary
+  // dimension) until blur. Only external value changes replace the draft.
+  const pendingInputValue = useRef<number | undefined>(undefined);
   useEffect(() => {
-    setInputValue(`${value}`);
+    if (value !== pendingInputValue.current) setInputValue(`${value}`);
+    pendingInputValue.current = undefined;
   }, [value]);
 
   // Ref to the inner track DOM element so we can compute click/drag positions.
@@ -154,6 +158,7 @@ export const SizingRange = (props: SizingRangePropsType) => {
 
     const clamped = clampRange(num);
     setInputValue(raw);
+    pendingInputValue.current = clamped;
     onRangeChange(clamped);
   };
 

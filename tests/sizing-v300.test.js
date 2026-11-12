@@ -79,3 +79,30 @@ test('localized 3.0 profile has the correct version and Chinese enablement help'
   await expect(p.getByRole('combobox', { name: '稀疏向量度量', exact: true })).toBeVisible();
   await expect(p.getByRole('button', { name: '下载稀疏索引脚本', exact: true })).toBeVisible();
 });
+
+test('localized version selection preserves the language and correct legacy profile', async ({ page: p }) => {
+  await p.goto(BASE + '/zh/tools/sizing-v250');
+  await expect(p.getByRole('combobox').filter({ hasText: /^Milvus 2.5.x and earlier$/ })).toBeVisible();
+  await expect(p.locator('pre')).toContainText(/releases\/download\/v2\.5\./);
+  await choose(p, /^Milvus 2.5.x and earlier$/, 'Milvus 3.0.x');
+  await expect(p).toHaveURL(/\/zh\/tools\/sizing-v300$/);
+  await choose(p, /^Milvus 3.0.x$/, 'Milvus 2.6.x');
+  await expect(p).toHaveURL(/\/zh\/tools\/sizing$/);
+  await expect(p.locator('pre')).toContainText(/releases\/download\/v2\.6\./);
+});
+
+test('DiskANN local cache reaches both downloaded deployment formats', async ({ page: p }) => {
+  await p.goto(BASE + '/tools/sizing-v300');
+  await choose(p, /^FLAT$/, 'DISKANN');
+  const helm = yaml.load(await download(p, 'Helm Chart'));
+  const disk = helm.standalone.resources.requests['ephemeral-storage'];
+  expect(disk).toMatch(/^[1-9]\d*Gi$/);
+  expect(helm.standalone.persistence.enabled).toBe(false);
+  expect(helm.standalone.disk.size.enabled).toBe(true);
+  await choose(p, /^Helm Chart$/, 'Milvus Operator');
+  const operator = yaml.load(await download(p, 'Milvus Operator'));
+  expect(operator.spec.components.standalone.resources.requests['ephemeral-storage']).toBe(disk);
+  expect(operator.spec.components.standalone.volumes[0].emptyDir.sizeLimit).toBe(disk);
+  expect(operator.spec.components.standalone.env[0].name).toBe('LOCAL_STORAGE_SIZE');
+  expect(operator.spec.components.standalone.volumeMounts[0].mountPath).toBe(operator.spec.config.localStorage.path);
+});

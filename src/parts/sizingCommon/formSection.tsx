@@ -497,7 +497,7 @@ export default function FormSection(props: FormSectionProps) {
                   : val);
               }}
               value={form.dimension}
-              placeholder={`[${DIMENSION_RANGE_CONFIG.min}, ${DIMENSION_RANGE_CONFIG.max}]`}
+              placeholder={`[${form.vectorType === VectorTypeEnum?.BINARY_VECTOR ? 8 : DIMENSION_RANGE_CONFIG.min}, ${DIMENSION_RANGE_CONFIG.max}]`}
             />
           </div>
         )}

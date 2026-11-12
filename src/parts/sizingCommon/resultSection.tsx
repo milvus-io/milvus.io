@@ -175,6 +175,7 @@ sudo docker compose up -d`,
     const configGenerator =
       type === 'helm' ? helmYmlGenerator : operatorYmlGenerator;
     const configParams: any = {
+      localDiskSize,
       standaloneNode: standaloneNodeConfig,
       segmentSize: calculatedResult.segmentSize,
       sindiCompression: calculatedResult.sindiCompression,

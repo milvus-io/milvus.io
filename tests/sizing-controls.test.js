@@ -29,3 +29,22 @@ for (const route of ['/tools/sizing', '/tools/sizing-v250']) {
     await expect(page.getByText('nlist', { exact: true })).toBeVisible();
   });
 }
+
+test('keyboard entry preserves drafts before numeric and Binary normalization', async ({ page }) => {
+  await page.goto(`${BASE}/tools/sizing`);
+  const count = rangeInput(page, 'Number of Vectors');
+  await count.fill('');
+  await expect(count).toHaveValue('');
+  await count.pressSequentially('0.125');
+  await expect(count).toHaveValue('0.125');
+  await count.blur();
+  await expect(count).toHaveValue('0.125');
+  await page.getByRole('combobox').filter({ hasText: /Float32/ }).click();
+  await page.getByRole('option', { name: 'Binary', exact: true }).click();
+  const dimension = rangeInput(page, 'Vector Dimension');
+  await dimension.fill('');
+  await dimension.pressSequentially('127');
+  await expect(dimension).toHaveValue('127');
+  await dimension.blur();
+  await expect(dimension).toHaveValue('128');
+});

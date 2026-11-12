@@ -1,3 +1,4 @@
+import { getLocalePath } from '@/utils/localization';
 import { LocalizedLink } from '@/components/localizedLinks';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
@@ -163,10 +164,10 @@ export default function SizingTool(props: Props) {
 
   const handleSelectVersion = (value: string) => {
     setSelectedVersion(value);
-    router.push(
-      SIZING_TOOL_VERSION_OPTIONS.find(option => option.value === value)
-        ?.href || '/tools/sizing'
-    );
+    router.push(getLocalePath({
+      locale,
+      path: SIZING_TOOL_VERSION_OPTIONS.find(option => option.value === value)?.href || '/tools/sizing',
+    }));
   };
 
   return (

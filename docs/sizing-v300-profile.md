@@ -25,6 +25,14 @@ runtime config explicitly selects `mq.type: woodpecker` and
 `woodpecker.storage.type: minio`; it does not rely on an inherited MQ default.
 No website environment variables or database migrations are required.
 
+DiskANN and Mmap local-disk estimates are exported as per-query-node (or
+standalone) ephemeral-storage requests and limits, rounded up to GiB with 15%
+headroom. Helm enables the corresponding runtime disk capacity; Operator adds
+`LOCAL_STORAGE_SIZE` and a bounded cache volume at the configured local-data
+path. Standalone Helm uses a local cache rather than an unrelated default 50Gi
+PVC; durable data and the embedded WAL remain in object storage. Ensure worker
+nodes provide enough suitable local disk for these requests.
+
 ## Sparse index enablement
 
 The SINDI control is only exposed in the 3.0 profile. Enabling it exports
@@ -76,6 +84,9 @@ uses 8 bytes/non-zero entry. No 3.0 compression control is offered on 2.5/2.6.
 
 ## Validation performed
 
+- The sizing CI workflow runs `pnpm test:sizing`, TypeScript, and
+  `pnpm test:sizing:browser` on sizing changes. The checked-in Playwright config
+  starts a local server; `BASE_URL` can target an already running server.
 - Calculator and YAML structural regression tests cover legacy 2.5/2.6 and the
   four 3.0 combinations of standalone/cluster and compression on/off.
 - Browser tests cover version navigation, script downloads for both metrics,

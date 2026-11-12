@@ -841,3 +841,23 @@ test('3.0 GPU manifests pin the GPU image and streaming architecture', () => {
     assert.equal(manifest.spec.dependencies.msgStreamType, 'woodpecker');
   }
 });
+
+test('3.0 disk cache estimates reach scheduler requests, runtime capacity and cache volumes', () => {
+  for (const mode of [ModeEnum.Standalone, ModeEnum.Cluster]) {
+    const params = { ...profileParams, localDiskSize: 100 * 1024 ** 3, queryNode: { ...profileParams.queryNode, count: 2 } };
+    const helm = yaml.load(helmYmlGeneratorV300(params, DependencyComponentEnum26.Woodpecker, mode));
+    const operator = yaml.load(operatorYmlGeneratorV300(params, DependencyComponentEnum26.Woodpecker, mode));
+    const key = mode === ModeEnum.Cluster ? 'queryNode' : 'standalone';
+    const node = operator.spec.components[key];
+    const reservedGi = Number(node.resources.requests['ephemeral-storage'].slice(0, -2));
+    assert.ok(reservedGi * (mode === ModeEnum.Cluster ? 2 : 1) >= 115);
+    assert.equal(node.resources.limits['ephemeral-storage'], `${reservedGi}Gi`);
+    assert.equal(helm[key].resources.requests['ephemeral-storage'], `${reservedGi}Gi`);
+    assert.equal(helm[key].disk.size.enabled, true);
+    assert.equal(node.env.find(e => e.name === 'LOCAL_STORAGE_SIZE').value, `${reservedGi}`);
+    assert.equal(node.volumes[0].emptyDir.sizeLimit, `${reservedGi}Gi`);
+    assert.equal(node.volumeMounts[0].mountPath, operator.spec.config.localStorage.path);
+    if (mode === ModeEnum.Standalone) assert.equal(helm.standalone.persistence.enabled, false, 'Use the sized local cache instead of an unrelated default 50Gi PVC');
+    else assert.equal(operator.spec.components.dataNode.resources.requests['ephemeral-storage'], undefined);
+  }
+});

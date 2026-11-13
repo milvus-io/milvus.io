@@ -5,6 +5,7 @@ import {
   generateMenuDataOfCurrentVersion,
   generateAllContentDataOfAllVersion,
   getAvailableLanguagesForDoc,
+  docExistsInVersion,
 } from '@/utils/docs';
 import { GetStaticProps } from 'next';
 import { generateApiMenuDataOfCurrentVersion } from '@/utils/apiReference';
@@ -13,6 +14,7 @@ import { DocDetailPage } from '@/components/localization/DocDetail';
 import {
   getDocHreflangUrls,
   getDocCanonicalUrl,
+  getDocCanonicalLang,
 } from '@/components/localization/utils';
 import {
   stripMdListDataForClient,
@@ -117,11 +119,21 @@ export const createDocDetailProps = (lang: LanguageEnum, version = '') => {
       docId: id,
       availableLanguages,
     });
+    // Archived versions canonicalize to the latest-version page only when that
+    // page exists in latest for the canonical language; otherwise self.
+    const existsInLatest =
+      currentVersion !== latestVersion &&
+      docExistsInVersion({
+        version: latestVersion,
+        lang: getDocCanonicalLang(lang),
+        id,
+      });
     const canonicalUrl = getDocCanonicalUrl({
       lang,
       version: currentVersion,
       latestVersion,
       docId: id,
+      existsInLatest,
     });
 
     const { codeList, anchorList } = propsInfo;

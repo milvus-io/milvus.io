@@ -288,6 +288,22 @@ export const generateSingleDocContent = (params: {
   }
 };
 
+// Whether a doc id is served (non-deprecated) in the given version/language.
+// Uses the cached frontmatter-only index, so it is cheap on the on-demand path.
+export const docExistsInVersion = (params: {
+  version: string;
+  lang: LanguageEnum;
+  id: string;
+}): boolean => {
+  const { version, lang, id } = params;
+  if (!version || !id) return false;
+  return generateAllContentDataOfSingleVersion({
+    version,
+    lang,
+    withContent: false,
+  }).some(v => v.frontMatter.id === id);
+};
+
 export const generateAllContentDataOfAllVersion = (lang?: LanguageEnum) => {
   const language = lang || LanguageEnum.ENGLISH;
   const cacheKey = `all-content-${language}`;

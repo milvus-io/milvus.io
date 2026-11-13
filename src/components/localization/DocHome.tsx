@@ -42,7 +42,14 @@ export function DocHomepage(props: DocHomePageProps) {
     hreflangUrls,
   } = props;
   const seoUrl = getSeoUrl({ lang, version, latestVersion });
-  const canonicalUrl = getDocCanonicalUrl({ lang, version, latestVersion });
+  // Every version ships a docs home, so an archived version's home always has a
+  // latest-version equivalent to canonicalize to.
+  const canonicalUrl = getDocCanonicalUrl({
+    lang,
+    version,
+    latestVersion,
+    existsInLatest: true,
+  });
   const homePageLink = getHomePageLink({ lang, version, latestVersion });
 
   return (

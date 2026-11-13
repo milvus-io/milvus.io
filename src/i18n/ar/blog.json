@@ -13,7 +13,8 @@
     "engineering": "الهندسة",
     "announcements": "الإعلانات",
     "tutorials": "الدروس",
-    "usecases": "حالات الاستخدام"
+    "usecases": "حالات الاستخدام",
+    "insights": "رؤى"
   },
   "aiService": {
     "title": "اسألني أي شيء عن Milvus!",

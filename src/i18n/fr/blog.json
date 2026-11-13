@@ -13,7 +13,8 @@
     "engineering": "Ingénierie",
     "announcements": "Annonces",
     "tutorials": "Tutoriels",
-    "usecases": "Cas d'Utilisation"
+    "usecases": "Cas d'Utilisation",
+    "insights": "Analyses"
   },
   "aiService": {
     "title": "Posez-moi toutes vos questions sur Milvus !",

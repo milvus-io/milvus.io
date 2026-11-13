@@ -63,6 +63,7 @@ enum BlogTag {
   announcements = 'announcements',
   tutorials = 'tutorials',
   useCases = 'usecases',
+  insights = 'insights',
 }
 
 interface BlogFilter {
@@ -88,6 +89,10 @@ const convertToNewTag = (tag: string) => {
   }
   if ([BlogTag.scenarios].includes(processedTag)) {
     return BlogTag.useCases;
+  }
+  // a few posts use the singular form
+  if ((processedTag as string) === 'tutorial') {
+    return BlogTag.tutorials;
   }
   return processedTag;
 };
@@ -364,6 +369,7 @@ export const BlogHome: React.FC<Props> = props => {
       BlogTag.announcements,
       BlogTag.tutorials,
       BlogTag.useCases,
+      BlogTag.insights,
     ] as const;
     const filterTagItems = filterTags.map(f => renderFilterTagItem(f));
 

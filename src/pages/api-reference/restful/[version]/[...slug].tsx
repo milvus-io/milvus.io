@@ -35,6 +35,8 @@ import Breadcrumb from '@/components/breadcrumb';
 import { useBreadcrumbLabels } from '@/hooks/use-breadcrumb-lables';
 import { getApiCanonicalUrl } from '@/components/localization/utils';
 
+const toRestfulRouteMd = (path: string) => path.replace(/\.mdx$/, '.md');
+
 export default function RestfulApiReference(props: {
   mdxSource: MDXRemoteSerializeResult;
   headingContent: string;
@@ -83,12 +85,15 @@ export default function RestfulApiReference(props: {
   // Use route category ('restful') not languageCategory ('milvus-restful') for URL,
   // and convert .mdx extension to .md to match the actual route.
   const routeRelativePath = relativePath.replace(/\.mdx$/, '.md');
+  // mds are built from the .mdx source paths; normalize them to the .md route
+  // form too, otherwise no archived page ever matches latest and every
+  // archived restful page self-canonicalizes.
   const canonicalUrl = getApiCanonicalUrl({
     languageCategory: category,
     version,
     latestVersion,
     relativePath: routeRelativePath,
-    latestVersionMds: latestVersionData?.mds,
+    latestVersionMds: latestVersionData?.mds.map(toRestfulRouteMd),
   });
 
   const activeLabels = useBreadcrumbLabels({
@@ -188,6 +193,14 @@ export async function getStaticPaths() {
     v => v.language === ApiReferenceLanguageEnum.Restful
   )?.latestVersion;
 
+  // Latest-version ids in the same form the page passes to getApiCanonicalUrl,
+  // so the sitemap can skip archived pages that canonicalize to latest.
+  const latestVersionMds = routers
+    .filter(v => v.frontMatter.version === latestVersion)
+    .map(v =>
+      toRestfulRouteMd(formatApiRelativePath(v.frontMatter.relativePath))
+    );
+
   const corePaths: { params: { version: string; slug: string[] } }[] = [];
   const onDemandUrlsByVersion = new Map<string, string[]>();
 
@@ -201,9 +214,20 @@ export async function getStaticPaths() {
       corePaths.push({ params: { version, slug } });
     } else {
       const url = `/api-reference/restful/${version}/${slug.join('/')}`;
+      // Register the version even when every URL is filtered so a stale
+      // segment from an earlier build is overwritten with an empty list.
       const list = onDemandUrlsByVersion.get(version) || [];
-      list.push(url);
       onDemandUrlsByVersion.set(version, list);
+      // Only self-canonical archived pages belong in the sitemap.
+      const canonicalUrl = getApiCanonicalUrl({
+        languageCategory: ApiReferenceRouteEnum.Restful,
+        version,
+        latestVersion,
+        relativePath: toRestfulRouteMd(v.frontMatter.relativePath),
+        latestVersionMds,
+      });
+      if (canonicalUrl !== `${ABSOLUTE_BASE_URL}${url}`) return;
+      list.push(url);
     }
   });
 

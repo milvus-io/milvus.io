@@ -101,26 +101,44 @@ export const getApiCanonicalUrl = (params: {
   return `${ABSOLUTE_BASE_URL}/api-reference/${languageCategory}${targetRelativePath}`;
 };
 
+// The language whose page a doc canonicalizes to: indexable languages
+// (en/zh/ko/zh-hant/ja) keep their own language, every other language
+// consolidates to English.
+export const getDocCanonicalLang = (lang: LanguageEnum): LanguageEnum =>
+  isIndexableLanguage(lang) ? lang : LanguageEnum.ENGLISH;
+
 // Canonical URL for a doc page, handling both the version and language axes:
-// - Version: always self-references the current version. Archived versions keep
-//   their version segment (for example, /docs/v2.6.x) because old versions are
-//   distinct content, not duplicates of the latest docs — we never collapse a
-//   version onto another (which could point at a non-equivalent or missing page).
+// - Version: archived versions (for example, /docs/v2.6.x/x.md) point to the
+//   latest-version equivalent (/docs/x.md) when that page exists in the latest
+//   version (existsInLatest), mirroring getApiCanonicalUrl, so old versions stop
+//   competing with latest in search. When the page no longer exists in latest,
+//   the archived page keeps its version segment and self-references, so we never
+//   canonicalize to a 404.
 // - Language: indexable languages (en/zh/ko/zh-hant/ja) self-reference so each
 //   gets indexed; every other language drops its language segment and points to
-//   the English page of the SAME version, consolidating it to English instead of
-//   competing for the index. The English source always has the same docId, so
-//   this target is guaranteed to exist.
+//   the English page, consolidating it to English instead of competing for the
+//   index. The English source always has the same docId, so for the same version
+//   this target is guaranteed to exist; for the latest version the caller must
+//   check existence in getDocCanonicalLang(lang) before setting existsInLatest.
 export const getDocCanonicalUrl = (params: {
   lang: LanguageEnum;
   version: string;
   latestVersion: string;
   docId?: string;
+  existsInLatest?: boolean;
 }): string => {
-  const { lang, version, latestVersion, docId } = params;
+  const {
+    lang,
+    version,
+    latestVersion,
+    docId,
+    existsInLatest = false,
+  } = params;
+  const canonicalLang = getDocCanonicalLang(lang);
   const langSuffix =
-    isIndexableLanguage(lang) && lang !== LanguageEnum.ENGLISH ? `/${lang}` : '';
-  const versionSuffix = version === latestVersion ? '' : `/${version}`;
+    canonicalLang === LanguageEnum.ENGLISH ? '' : `/${canonicalLang}`;
+  const versionSuffix =
+    version === latestVersion || existsInLatest ? '' : `/${version}`;
   const docIdSuffix = docId ? `/${docId}` : '';
 
   return `${ABSOLUTE_BASE_URL}/docs${langSuffix}${versionSuffix}${docIdSuffix}`;

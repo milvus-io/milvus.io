@@ -13,7 +13,8 @@
     "engineering": "Инженерия",
     "announcements": "Объявления",
     "tutorials": "Учебные пособия",
-    "usecases": "Варианты использования"
+    "usecases": "Варианты использования",
+    "insights": "Мнения"
   },
   "aiService": {
     "title": "Спросите меня о чем угодно по Milvus!",

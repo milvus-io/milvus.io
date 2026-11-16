@@ -4,6 +4,11 @@
     "definition": "什麼是 Milvus",
     "cases": "使用案例"
   },
+  "nav": {
+    "solutions": "解決方案",
+    "compare": "產品比較",
+    "learnMilvus": "學習 Milvus"
+  },
   "docs": "文檔",
   "tutorials": {
     "label": "教程",

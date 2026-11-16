@@ -4,6 +4,11 @@
     "definition": "Milvusとは",
     "cases": "ユースケース"
   },
+  "nav": {
+    "solutions": "ソリューション",
+    "compare": "データベースの比較",
+    "learnMilvus": "Milvus を学ぶ"
+  },
   "docs": "ドキュメント",
   "tutorials": {
     "label": "チュートリアル",

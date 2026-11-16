@@ -43,9 +43,14 @@ export function getAcquisitionContext(site: string, path: string, referrer: stri
   const existing = incoming.first_touch_at ? incoming : saved;
   const now = new Date().toISOString();
   const page = normalizeAttributionPage(path.split(/[?#]/)[0] || '/');
+  // The first-touch bundle crosses sites through the handoff URL, a session does
+  // not: only a context from this same site keeps its entry page, and a stored
+  // session always wins over both.
+  const carriedSession =
+    !existing.first_entry_site || existing.first_entry_site === site ? existing : {};
   const result: Context = { attribution_version: '2', first_touch_scope: 'browser_session',
-    session_entry_page: saved.session_entry_page || page,
-    session_started_at: saved.session_started_at || now };
+    session_entry_page: saved.session_entry_page || carriedSession.session_entry_page || page,
+    session_started_at: saved.session_started_at || carriedSession.session_started_at || now };
   if (existing.first_touch_at) {
     // Copy a first bundle as a unit. A legacy bundle is never enriched from the
     // current URL/cached campaign and never receives a v2 completeness marker.

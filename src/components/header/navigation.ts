@@ -50,11 +50,11 @@ export const useHeaderNavItems = ({
             href: getLocalePath('/use-cases'),
           },
           {
-            label: getLocalePath('/solutions').startsWith('/zh/') ? '解决方案' : 'Solutions',
+            label: t('nav.solutions'),
             href: getLocalePath('/solutions').startsWith('/zh/') ? '/zh/solutions' : '/solutions',
           },
           {
-            label: getLocalePath('/compare').startsWith('/zh/') ? '产品对比' : 'Compare databases',
+            label: t('nav.compare'),
             href: getLocalePath('/compare').startsWith('/zh/') ? '/zh/compare' : '/compare',
           },
         ],
@@ -83,7 +83,7 @@ export const useHeaderNavItems = ({
         label: t('tools.label'),
         children: [
           {
-            label: 'Learn Milvus',
+            label: t('nav.learnMilvus'),
             href: getLocalePath('/learn-milvus'),
           },
           {

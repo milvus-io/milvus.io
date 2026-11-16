@@ -4,6 +4,11 @@
     "definition": "What is Milvus",
     "cases": "Use Cases"
   },
+  "nav": {
+    "solutions": "Solutions",
+    "compare": "Compare databases",
+    "learnMilvus": "Learn Milvus"
+  },
   "docs": "Docs",
   "tutorials": {
     "label": "Tutorials",

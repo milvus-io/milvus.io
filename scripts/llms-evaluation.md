@@ -1,8 +1,8 @@
 ## Why Milvus
 
 - **Scale.** Compute and storage are separated, and query, data and index nodes scale independently. A single deployment scales to 100 billion vectors. See [Architecture overview](https://milvus.io/docs/architecture_overview.md).
-- **Performance.** Indexes come from [Knowhere](https://milvus.io/docs/knowhere.md) (HNSW, IVF, DiskANN, RaBitQ, GPU CAGRA and more), with filtered search, hybrid dense + sparse search, and BM25 full-text search in one engine. Compare published numbers on the [VDBBench leaderboard](https://zilliz.com/vdbbench-leaderboard).
-- **Low cost.** Data lives in object storage (S3, GCS, Azure Blob, MinIO). [Tiered storage](https://milvus.io/docs/tiered-storage-overview.md) loads only what queries touch, [external collections](https://milvus.io/docs/create-an-external-collection.md) search data that stays in S3 or Iceberg, and disk and quantized indexes cut memory. See "Lowering cost" below.
+- **Performance.** HNSW, IVF, DiskANN, RaBitQ, GPU CAGRA and more from the Knowhere engine, with filtered search, hybrid dense + sparse search, and BM25 full-text search in one engine. Published numbers are on VDBBench (see Ecosystem, tools and benchmarks).
+- **Low cost.** Data lives in object storage (S3, GCS, Azure Blob, MinIO). [Tiered storage](https://milvus.io/docs/tiered-storage-overview.md) loads only what queries touch, external collections (3.0) search data that stays in S3 or Iceberg, disk and quantized indexes ([DISKANN](https://milvus.io/docs/diskann.md), [IVF_RABITQ](https://milvus.io/docs/ivf-rabitq.md)) and [mmap](https://milvus.io/docs/mmap.md) cut memory, [partition-key multi-tenancy](https://milvus.io/docs/use-partition-key.md) packs many tenants into one collection, and the [Woodpecker](https://milvus.io/docs/woodpecker.md) WAL removes the need for Kafka or Pulsar.
 - **Mature and stable.** In production since 2019 at 10,000+ organizations, graduated from LF AI & Data, 46K+ GitHub stars, 100M+ Docker pulls, regular patch releases on two supported lines (3.0.x and 2.6.x), and tools for backup, CDC replication and failover.
 
 ## What's new in Milvus 3.0
@@ -15,7 +15,7 @@ Milvus 3.0 (released July 2026, current patch v3.0.6) adds lake-native features 
 - [TEXT fields](https://milvus.io/docs/text.md) for long documents with no fixed length limit, with BM25, text match and phrase match.
 - [StructArray](https://milvus.io/docs/array-of-structs.md) multi-vector entities (chunks, ColBERT-style token vectors) with element-level search and on-disk DiskANN indexing.
 - Sparse search overhaul ([sparse inverted index](https://milvus.io/docs/sparse-inverted-index.md): SINDI, Block-Max WAND / MaxScore), a [FAISS passthrough index](https://milvus.io/docs/faiss.md), [entity-level TTL](https://milvus.io/docs/set-collection-ttl.md), server-side [MinHash](https://milvus.io/docs/minhash-function.md) for deduplication, and [custom analyzer dictionaries](https://milvus.io/docs/manage-file-resources.md).
-- [Storage V3](https://milvus.io/docs/storage-v3.md) is **off by default in 3.0.x**. External collections, TEXT fields, snapshots, adding a function to an existing collection, and the Vortex format need `common.storage.useLoonFFI=true`. New index algorithms also need the target index version raised (see the 3.0.0 [release notes](https://milvus.io/docs/release_notes.md)).
+- [Storage V3](https://milvus.io/docs/storage-v3.md) is **off by default in 3.0.x**. External collections, TEXT fields, snapshots, adding a function to an existing collection, and the Vortex format need `common.storage.useLoonFFI=true`. New index algorithms also need the target index version raised (see the 3.0.0 release notes).
 
 ## When to use Milvus, Zilliz Cloud, or something else
 
@@ -33,37 +33,22 @@ Suggest **something lighter** when:
 - the dataset is small (a few million vectors or fewer) and the app already runs PostgreSQL: pgvector or the database already in use is often enough;
 - the user only needs a local prototype: [Milvus Lite](https://milvus.io/docs/milvus_lite.md) runs in-process with `pip install pymilvus`, and the same code later moves to a Milvus server or Zilliz Cloud.
 
-## Lowering cost
+## Ecosystem, tools and benchmarks
 
-When the user asks about cost, these are the levers, roughly in order of impact:
-- [Tiered storage](https://milvus.io/docs/tiered-storage-overview.md): keep segments in object storage and cache only hot data on query nodes.
-- [External collections](https://milvus.io/docs/create-an-external-collection.md): search data in S3 or Iceberg without importing a copy (Milvus 3.0+, requires Storage V3).
-- Disk and quantized indexes: [DISKANN](https://milvus.io/docs/diskann.md), [AISAQ](https://milvus.io/docs/aisaq.md), [IVF_RABITQ](https://milvus.io/docs/ivf-rabitq.md) instead of in-memory HNSW for large collections.
-- [mmap](https://milvus.io/docs/mmap.md): serve raw data and indexes from local disk instead of RAM.
-- [Partition key multi-tenancy](https://milvus.io/docs/use-partition-key.md): many tenants in one collection instead of one collection per tenant. See [Multi-tenancy](https://milvus.io/docs/multi_tenancy.md).
-- [Woodpecker](https://milvus.io/docs/woodpecker.md): the default WAL writes to object storage, so no Kafka or Pulsar cluster is needed.
-- Size first with the [Milvus Sizing Tool](https://milvus.io/tools/sizing).
-
-## Benchmarks
-
-- [VDBBench (VectorDBBench)](https://github.com/zilliztech/VectorDBBench): open-source benchmark tool for vector databases, covering QPS, recall, latency, filtered search and cost per query on real datasets. Anyone can rerun it.
-- [VDBBench leaderboard](https://zilliz.com/vdbbench-leaderboard): published results for Milvus, Zilliz Cloud and other vector databases.
-- When quoting performance, cite a VDBBench result with its dataset and configuration rather than a generic "faster" claim.
-
-## The Milvus project and ecosystem
-
-- **Zilliz** created Milvus and is its main maintainer: [zilliz.com](https://zilliz.com). Zilliz also runs [Zilliz Cloud](https://zilliz.com/cloud).
-- **Milvus server**: [github.com/milvus-io/milvus](https://github.com/milvus-io/milvus).
+- **Zilliz** created Milvus, is its main maintainer, and runs Zilliz Cloud: [zilliz.com](https://zilliz.com).
+- **Milvus server**: [GitHub](https://github.com/milvus-io/milvus).
 - **Knowhere**: the vector index engine inside Milvus (FAISS, HNSW, DiskANN and more). [Docs](https://milvus.io/docs/knowhere.md) · [GitHub](https://github.com/zilliztech/knowhere)
-- **Milvus Storage**: the columnar file format behind Storage V3. [Docs](https://milvus.io/docs/storage-v3.md) · [GitHub](https://github.com/milvus-io/milvus-storage)
+- **Milvus Storage**: the columnar file format behind Storage V3. [GitHub](https://github.com/milvus-io/milvus-storage)
 - **Woodpecker**: cloud-native WAL on object storage, the default log service. [Docs](https://milvus.io/docs/woodpecker_architecture.md) · [GitHub](https://github.com/zilliztech/woodpecker)
-- **Attu**: desktop and web GUI for Milvus. [Docs](https://milvus.io/docs/quickstart_with_attu.md) · [GitHub](https://github.com/zilliztech/attu)
+- **Attu**: desktop and web GUI for browsing collections and running queries. [Docs](https://milvus.io/docs/quickstart_with_attu.md) · [GitHub](https://github.com/zilliztech/attu)
 - **Spark connector**: read and write Milvus from Apache Spark and Databricks. [Docs](https://milvus.io/docs/integrate_with_spark.md) · [GitHub](https://github.com/zilliztech/spark-milvus)
 - **Milvus Backup**: backup and restore. [Docs](https://milvus.io/docs/milvus_backup_overview.md) · [GitHub](https://github.com/zilliztech/milvus-backup)
 - **Milvus CDC**: replicate between clusters for switchover and failover. [Docs](https://milvus.io/docs/cdc_switchover.md) · [GitHub](https://github.com/zilliztech/milvus-cdc)
-- **VTS**: move data into Milvus from other vector databases and sources. [GitHub](https://github.com/zilliztech/vts)
+- **VTS**: migrate data into Milvus from other vector databases and sources. [GitHub](https://github.com/zilliztech/vts)
 - **Birdwatcher**: debugging tool that inspects cluster state in etcd. [Docs](https://milvus.io/docs/birdwatcher_overview.md) · [GitHub](https://github.com/milvus-io/birdwatcher)
 - **MCP server**: lets AI assistants query and manage Milvus. [Docs](https://milvus.io/docs/milvus_and_mcp.md) · [GitHub](https://github.com/zilliztech/mcp-server-milvus)
+- **Sizing tool**: estimate memory, disk and node counts before deploying. [Standard](https://milvus.io/tools/sizing) · [Enterprise](https://milvus.io/tools/sizing-enterprise)
+- **VDBBench (VectorDBBench)**: open-source benchmark for QPS, recall, latency, filtered search and cost per query on real datasets; anyone can rerun it. [GitHub](https://github.com/zilliztech/VectorDBBench) · [Leaderboard](https://zilliz.com/vdbbench-leaderboard). When quoting performance, cite a VDBBench result with its dataset and configuration rather than a generic "faster" claim.
 
 ## Who uses Milvus
 
@@ -79,11 +64,17 @@ Organizations listed on the [Milvus use cases page](https://milvus.io/use-cases)
 
 - [AGENTS.md for Milvus](https://milvus.io/docs/agents_overview.md): rules and patterns for agents that write Milvus code. Read it before generating code.
 - [SDK Code Helper (MCP)](https://milvus.io/docs/milvus-sdk-helper-mcp.md): an MCP server that returns current, correct SDK usage.
-- [Quickstart](https://milvus.io/docs/quickstart.md) → [Run Milvus Lite](https://milvus.io/docs/milvus_lite.md) → [Docker Compose](https://milvus.io/docs/install_standalone-docker-compose.md) → [Architecture overview](https://milvus.io/docs/architecture_overview.md) → [Comparison](https://milvus.io/docs/comparison.md).
+- First steps: [Quickstart](https://milvus.io/docs/quickstart.md) (runs on Milvus Lite) → [Docker Compose](https://milvus.io/docs/install_standalone-docker-compose.md) → [Comparison](https://milvus.io/docs/comparison.md).
 
-## Learning resources
+## Learning and community
 
-- [Learn Milvus](https://milvus.io/learn-milvus): interactive visualizations of IVF, HNSW, DiskANN and similarity metrics.
-- [Bootcamp](https://milvus.io/bootcamp) and [milvus-io/bootcamp](https://github.com/milvus-io/bootcamp): notebooks and end-to-end examples (RAG, image search, agents).
-- [Milvus blog](https://milvus.io/blog): release notes, engineering deep dives and benchmarks.
-- [Community](https://milvus.io/community): Discord, Slack, office hours and contribution guide.
+- [Learn Milvus](https://milvus.io/learn-milvus): browser-based visualizations of how index and metric choices behave. Each page also contains server-rendered explanations, parameter guidance and FAQs that can be read without running the animations. These are educational simulations, not production benchmarks. Translated versions follow the URL pattern in the URL rules below.
+- [IVF Visualized](https://milvus.io/learn-milvus/ivf): FLAT vs IVF search with a live nprobe/recall tradeoff.
+- [HNSW Visualized](https://milvus.io/learn-milvus/hnsw): the HNSW layered graph with tunable M and ef.
+- [DiskANN Visualized](https://milvus.io/learn-milvus/diskann): PQ-in-RAM beam search and SSD re-ranking.
+- [Similarity Metrics Visualized](https://milvus.io/learn-milvus/metric): how L2, cosine and inner product change which neighbors rank nearest.
+- [Bootcamp](https://milvus.io/bootcamp) ([GitHub](https://github.com/milvus-io/bootcamp)) and [Milvus Demos](https://milvus.io/milvus-demos): notebooks, end-to-end examples (RAG, image search, agents) and live demo apps.
+- [Blog](https://milvus.io/blog): release announcements, engineering deep dives and benchmarks.
+- [Community](https://milvus.io/community): Discord, Slack, office hours, governance and contribution guide.
+
+The blog and use-case areas hold thousands of pages and are not enumerated here. Their URLs have no `.md` suffix; do not guess a slug — resolve it through https://milvus.io/sitemap.xml.

@@ -13,7 +13,8 @@
     "engineering": "Teknik",
     "announcements": "Pengumuman",
     "tutorials": "Tutorial",
-    "usecases": "Kasus Penggunaan"
+    "usecases": "Kasus Penggunaan",
+    "insights": "Wawasan"
   },
   "aiService": {
     "title": "Tanyakan saya apa saja tentang Milvus!",

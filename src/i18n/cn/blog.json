@@ -13,7 +13,8 @@
     "engineering": "工程",
     "announcements": "公告",
     "tutorials": "教程",
-    "usecases": "用例"
+    "usecases": "用例",
+    "insights": "观点"
   },
   "aiService": {
     "title": "问我任何关于 Milvus!",

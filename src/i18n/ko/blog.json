@@ -13,7 +13,8 @@
     "engineering": "엔지니어링",
     "announcements": "공지사항",
     "tutorials": "튜토리얼",
-    "usecases": "사용 사례"
+    "usecases": "사용 사례",
+    "insights": "인사이트"
   },
   "aiService": {
     "title": "Milvus에 대해 무엇이든 물어보세요!",

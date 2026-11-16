@@ -57,17 +57,18 @@ test('English-only routes lock $cookie_lang to en so non-English browsers do not
   }
 });
 
-test('Go API reference v3.0.x+ redirects to v2.6.x line alongside cpp, rust, and csharp fallbacks', () => {
-  const goDeep = /^\/api-reference\/go\/v[3-9]\.[0-9]+\.x\/(.+)$/;
-  const goRoot = /^\/api-reference\/go\/v[3-9]\.[0-9]+\.x\/?$/;
-  assert.ok(conf.includes('rewrite ^/api-reference/go/v[3-9]\\.[0-9]+\\.x/(.+)$ /api-reference/go/v2.6.x/$1 permanent;'));
-  assert.ok(conf.includes('rewrite ^/api-reference/go/v[3-9]\\.[0-9]+\\.x/?$ /api-reference/go/v2.6.x/About.md permanent;'));
-
-  const deepMatch = '/api-reference/go/v3.0.x/Client/New.md'.match(goDeep);
-  assert.ok(deepMatch);
-  assert.equal(`/api-reference/go/v2.6.x/${deepMatch[1]}`, '/api-reference/go/v2.6.x/Client/New.md');
-  assert.ok(goRoot.test('/api-reference/go/v3.0.x'));
-  assert.ok(goRoot.test('/api-reference/go/v3.0.x/'));
+test('published Go v3.0.x API pages are not redirected to an older SDK version', () => {
+  const apiRules = [...conf.matchAll(/rewrite\s+(\^\/api-reference\/\S+)\s+\S+\s+permanent;/g)]
+    .map(([, pattern]) => new RegExp(pattern));
+  assert.ok(apiRules.length > 0);
+  for (const uri of [
+    '/api-reference/go/v3.0.x',
+    '/api-reference/go/v3.0.x/',
+    '/api-reference/go/v3.0.x/About.md',
+    '/api-reference/go/v3.0.x/Client/New.md',
+  ]) {
+    assert.equal(apiRules.some(rule => rule.test(uri)), false, uri);
+  }
 });
 
 test('$do_lang_redirect regex anchors (?!\\1$) so zh-hant -> zh transitions are not suppressed', () => {

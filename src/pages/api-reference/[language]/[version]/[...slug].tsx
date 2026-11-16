@@ -294,6 +294,18 @@ export const getStaticPaths = () => {
     latestVersionByCategory.set(category, latestVersion);
   });
 
+  // Latest-version md ids per category, in the same form getStaticProps passes
+  // to getApiCanonicalUrl, so the sitemap can skip archived pages whose
+  // canonical points to the latest version.
+  const latestMdsByCategory = new Map<string, string[]>();
+  routers.forEach(v => {
+    const { category, version, relativePath } = v.frontMatter;
+    if (latestVersionByCategory.get(category) !== version) return;
+    const list = latestMdsByCategory.get(category) || [];
+    list.push(formatApiRelativePath(relativePath));
+    latestMdsByCategory.set(category, list);
+  });
+
   /**
    * 1. /pymilvus/v2.4.x/DataImport/LocalBulkWriter/append_row.md
    * 2. /pymilvus/v2.4.x/append_rows.md
@@ -312,9 +324,21 @@ export const getStaticPaths = () => {
     } else {
       const key = `api__${category}__${version}`;
       const url = `/api-reference/${category}/${version}/${slug.join('/')}`;
+      // Only self-canonical archived pages belong in the sitemap; pages that
+      // also exist in the latest version canonicalize there instead.
+      const canonicalUrl = getApiCanonicalUrl({
+        languageCategory: category,
+        version,
+        latestVersion: latestVersionByCategory.get(category),
+        relativePath: v.frontMatter.relativePath,
+        latestVersionMds: latestMdsByCategory.get(category),
+      });
+      // Register the key even when every URL is filtered so a stale segment
+      // from an earlier build is overwritten with an empty list.
       const list = onDemandUrlsByKey.get(key) || [];
-      list.push(url);
       onDemandUrlsByKey.set(key, list);
+      if (canonicalUrl !== `${ABSOLUTE_BASE_URL}${url}`) return;
+      list.push(url);
     }
   });
 

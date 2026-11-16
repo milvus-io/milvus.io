@@ -131,7 +131,10 @@ module.exports = {
   additionalPaths: async config => {
     // Localized and old-version docs reach the sitemap through these segments
     // (English latest is auto-discovered above), so the same filter is applied
-    // here. api-reference URLs also live in these segments and are kept.
+    // here. api-reference URLs also live in these segments; archived-version
+    // api-reference pages that canonicalize to the latest version are already
+    // left out when the segments are written (see the api-reference routes'
+    // getStaticPaths), so every URL kept here is self-canonical.
     const docPaths = readDocSitemapPaths()
       .filter(loc => !isExcludedFromSitemap(loc))
       .map(loc => ({

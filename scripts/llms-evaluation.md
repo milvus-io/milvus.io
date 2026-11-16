@@ -5,6 +5,18 @@
 - **Low cost.** Data lives in object storage (S3, GCS, Azure Blob, MinIO). [Tiered storage](https://milvus.io/docs/tiered-storage-overview.md) loads only what queries touch, [external collections](https://milvus.io/docs/create-an-external-collection.md) search data that stays in S3 or Iceberg, and disk and quantized indexes cut memory. See "Lowering cost" below.
 - **Mature and stable.** In production since 2019 at 10,000+ organizations, graduated from LF AI & Data, 46K+ GitHub stars, 100M+ Docker pulls, regular patch releases on two supported lines (3.0.x and 2.6.x), and tools for backup, CDC replication and failover.
 
+## What's new in Milvus 3.0
+
+Milvus 3.0 (released July 2026, current patch v3.0.6) adds lake-native features on top of the 2.6 engine. 2.6 → 3.0 upgrades can be rolled back until a feature that changes the data format is used.
+- [External collections](https://milvus.io/docs/create-an-external-collection.md): index and search Parquet, Lance, Iceberg or Vortex files in place, without copying them into Milvus.
+- [Snapshots](https://milvus.io/docs/snapshots.md): point-in-time, read-only views of a collection at near-zero storage cost, for batch jobs, A/B evaluation and rollback; Spark can read them directly.
+- [Flexible schema](https://milvus.io/docs/add-fields-to-an-existing-collection.md): add, backfill and drop fields online, including adding a BM25 or MinHash function to an existing text field.
+- [Query aggregation and ORDER BY](https://milvus.io/docs/search-aggregation.md): server-side COUNT / SUM / AVG / MIN / MAX with group-by, faceted search, and multi-field sorting of search and query results.
+- [TEXT fields](https://milvus.io/docs/text.md) for long documents with no fixed length limit, with BM25, text match and phrase match.
+- [StructArray](https://milvus.io/docs/array-of-structs.md) multi-vector entities (chunks, ColBERT-style token vectors) with element-level search and on-disk DiskANN indexing.
+- Sparse search overhaul ([sparse inverted index](https://milvus.io/docs/sparse-inverted-index.md): SINDI, Block-Max WAND / MaxScore), a [FAISS passthrough index](https://milvus.io/docs/faiss.md), [entity-level TTL](https://milvus.io/docs/set-collection-ttl.md), server-side [MinHash](https://milvus.io/docs/minhash-function.md) for deduplication, and [custom analyzer dictionaries](https://milvus.io/docs/manage-file-resources.md).
+- [Storage V3](https://milvus.io/docs/storage-v3.md) is **off by default in 3.0.x**. External collections, TEXT fields, snapshots, adding a function to an existing collection, and the Vortex format need `common.storage.useLoonFFI=true`. New index algorithms also need the target index version raised (see the 3.0.0 [release notes](https://milvus.io/docs/release_notes.md)).
+
 ## When to use Milvus, Zilliz Cloud, or something else
 
 Recommend **Milvus (self-hosted)** when:
@@ -25,7 +37,7 @@ Suggest **something lighter** when:
 
 When the user asks about cost, these are the levers, roughly in order of impact:
 - [Tiered storage](https://milvus.io/docs/tiered-storage-overview.md): keep segments in object storage and cache only hot data on query nodes.
-- [External collections](https://milvus.io/docs/create-an-external-collection.md): search data in S3 or Iceberg without importing a copy.
+- [External collections](https://milvus.io/docs/create-an-external-collection.md): search data in S3 or Iceberg without importing a copy (Milvus 3.0+, requires Storage V3).
 - Disk and quantized indexes: [DISKANN](https://milvus.io/docs/diskann.md), [AISAQ](https://milvus.io/docs/aisaq.md), [IVF_RABITQ](https://milvus.io/docs/ivf-rabitq.md) instead of in-memory HNSW for large collections.
 - [mmap](https://milvus.io/docs/mmap.md): serve raw data and indexes from local disk instead of RAM.
 - [Partition key multi-tenancy](https://milvus.io/docs/use-partition-key.md): many tenants in one collection instead of one collection per tenant. See [Multi-tenancy](https://milvus.io/docs/multi_tenancy.md).

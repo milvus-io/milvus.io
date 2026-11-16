@@ -32,6 +32,10 @@ const {
 const ROOT = process.cwd();
 const DOCS_DIR = path.join(ROOT, 'src/docs');
 const OUT_FILE = path.join(ROOT, 'public/llms.txt');
+// Hand-written evaluation sections (why Milvus, when to use it, cost levers,
+// benchmarks, ecosystem, adopters, versions, agent entry points, learning).
+// They sit between the intro and the generated index; edit the Markdown file.
+const EVALUATION_FILE = path.join(__dirname, 'llms-evaluation.md');
 const ORIGIN = 'https://milvus.io';
 
 /** Longest a generated description may be before it is trimmed to one sentence. */
@@ -65,7 +69,7 @@ const TRANSLATED_LANGS = [
 const CURATED = {
   /** Blockquote under the H1. */
   intro:
-    'Milvus is an open-source, high-performance vector database designed for similarity search and AI applications. It supports billion-scale vector storage and search across deployment modes: Milvus Lite (embedded, for prototyping), Milvus Standalone (single-node, for small-scale production), and Milvus Distributed (Kubernetes, for enterprise scale). The primary SDK is PyMilvus for Python; Java, Go, Node.js, and RESTful SDKs are also available.',
+    "Milvus is an open-source (Apache 2.0) vector database for production AI: RAG, agent memory, semantic and hybrid search, recommendation, and multimodal retrieval. It runs from a laptop (Milvus Lite) to a distributed Kubernetes cluster that scales to 100 billion vectors, keeps cost down by serving data from object storage such as S3, and has been in production since 2019. Milvus was created by Zilliz and is a graduated project of the LF AI & Data Foundation. The fully managed version is Zilliz Cloud.",
 
   /**
    * Correctness rules that apply to any generated Milvus code. These exist
@@ -539,6 +543,8 @@ const build = () => {
     '# Milvus',
     '',
     `> ${CURATED.intro}`,
+    '',
+    fs.readFileSync(EVALUATION_FILE, 'utf8').trim(),
     '',
     `This index is generated from the Milvus ${latest} documentation tree. Every URL below resolves to a published page.`,
     '',

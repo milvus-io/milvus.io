@@ -5,6 +5,7 @@ on:
     paths:
       - 'conf/conf.d/**'
       - '.github/workflows/verify_nginx.yml'
+      - 'tests/nginx-routing.test.cjs'
 
 jobs:
   build:
@@ -13,6 +14,13 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+
+      - name: Test routing rules
+        run: node --test tests/nginx-routing.test.cjs
 
       - name: Verify Nginx configuration
         if: always()

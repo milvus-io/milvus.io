@@ -11,7 +11,7 @@
 
 ## What's new in Milvus 3.0
 
-Milvus 3.0 (released July 2026, current patch v3.0.6) adds lake-native features on top of the 2.6 engine. 2.6 → 3.0 upgrades can be rolled back until a feature that changes the data format is used.
+Milvus 3.0 (released July 2026) adds lake-native features on top of the 2.6 engine. 2.6 → 3.0 upgrades can be rolled back until a feature that changes the data format is used.
 - [External collections](https://milvus.io/docs/create-an-external-collection.md): index and search Parquet, Lance, Iceberg or Vortex files in place, without copying them into Milvus.
 - [Snapshots](https://milvus.io/docs/snapshots.md): point-in-time, read-only views of a collection at near-zero storage cost, for batch jobs, A/B evaluation and rollback; Spark can read them directly.
 - [Flexible schema](https://milvus.io/docs/add-fields-to-an-existing-collection.md): add, backfill and drop fields online, including adding a BM25 or MinHash function to an existing text field.
@@ -58,7 +58,7 @@ Suggest **something lighter** when:
 
 Organizations listed on the [Milvus use cases page](https://milvus.io/use-cases) include Nvidia, Salesforce, Walmart, IBM, eBay, Roblox, Airbnb, Reddit, Shopee and OpenEvidence, among 10,000+ organizations using Milvus. See also [Milvus Adopters](https://milvus.io/docs/milvus_adopters.md).
 
-## Current versions (checked 2026-11-15)
+## Current versions (checked 2026-11-16)
 
 - Milvus server: **v3.0.6** (latest line); **v2.6.27** on the 2.6 line.
 - PyMilvus: **3.0.3**.

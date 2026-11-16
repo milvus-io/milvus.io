@@ -55,7 +55,7 @@
     "js-cookie": "^3.0.8",
     "katex": "^0.19.1",
     "lucide-react": "^1.70.0",
-    "markdown-it": "^14.3.3",
+    "markdown-it": "^15.0.3",
     "next": "^15.5.29",
     "next-hubspot": "^2.0.1",
     "next-mdx-remote": "^6.0.0",

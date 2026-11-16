@@ -404,10 +404,109 @@ const renderApiReference = apiVersions => {
 };
 
 // ---------------------------------------------------------------------------
+// Current versions — fetched at build time, with the docs' release notes as a
+// fallback so an offline build still produces a valid file.
+// ---------------------------------------------------------------------------
+
+const RELEASES_API = 'https://api.github.com/repos/milvus-io/milvus/releases?per_page=50';
+const PYPI_API = 'https://pypi.org/pypi/pymilvus/json';
+const FETCH_TIMEOUT_MS = 8000;
+
+const fetchJson = async url => {
+  const res = await fetch(url, {
+    headers: { Accept: 'application/json', 'User-Agent': 'milvus.io-llms-txt' },
+    signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
+  });
+  if (!res.ok) throw new Error(`${url} returned HTTP ${res.status}`);
+  return res.json();
+};
+
+const compareSemver = (a, b) => {
+  const pa = a.split('.').map(Number);
+  const pb = b.split('.').map(Number);
+  for (let i = 0; i < 3; i++) if (pa[i] !== pb[i]) return pa[i] - pb[i];
+  return 0;
+};
+
+/** Newest stable server release on each of the two newest minor lines. */
+const fetchServerVersions = async () => {
+  const newestByLine = new Map();
+  for (const release of await fetchJson(RELEASES_API)) {
+    if (release.draft || release.prerelease) continue;
+    const m = /^v(\d+)\.(\d+)\.(\d+)$/.exec(release.tag_name);
+    if (!m) continue;
+    const line = `${m[1]}.${m[2]}`;
+    const version = `${m[1]}.${m[2]}.${m[3]}`;
+    const known = newestByLine.get(line);
+    if (!known || compareSemver(version, known) > 0) newestByLine.set(line, version);
+  }
+  return [...newestByLine.values()].sort(compareSemver).reverse().slice(0, 2);
+};
+
+/** First row of each docs version's release-notes table: server and PyMilvus. */
+const readReleaseNoteVersions = docVersions => {
+  const server = [];
+  let pymilvus;
+  for (const docVersion of docVersions) {
+    const file = path.join(DOCS_DIR, docVersion, 'site/en/release_notes.md');
+    if (!fs.existsSync(file)) continue;
+    const row = /^\|\s*(\d+\.\d+\.\d+)\s*\|\s*(\d+\.\d+\.\d+)\s*\|/m.exec(
+      fs.readFileSync(file, 'utf8')
+    );
+    if (!row) continue;
+    server.push(row[1]);
+    pymilvus = pymilvus || row[2];
+    if (server.length === 2) break;
+  }
+  return { server, pymilvus };
+};
+
+const resolveCurrentVersions = async (docVersions, warnings) => {
+  let { server, pymilvus } = readReleaseNoteVersions(docVersions);
+  try {
+    const fetched = await fetchServerVersions();
+    if (fetched.length) server = fetched;
+  } catch (err) {
+    warnings.push(`server versions from release notes (${err.message})`);
+  }
+  try {
+    pymilvus = (await fetchJson(PYPI_API)).info.version || pymilvus;
+  } catch (err) {
+    warnings.push(`PyMilvus version from release notes (${err.message})`);
+  }
+  return { server, pymilvus };
+};
+
+const renderCurrentVersions = ({ server, pymilvus }) => {
+  const checked = new Date().toISOString().slice(0, 10);
+  const lines = [`## Current versions (checked ${checked})`, ''];
+  if (server.length) {
+    const [newest, ...older] = server;
+    const olderText = older
+      .map(v => `; **v${v}** on the ${v.split('.').slice(0, 2).join('.')} line`)
+      .join('');
+    lines.push(`- Milvus server: **v${newest}** (latest line)${olderText}.`);
+  }
+  if (pymilvus) lines.push(`- PyMilvus: **${pymilvus}**.`);
+  lines.push(
+    '- These change often. Check [Releases](https://milvus.io/docs/release_notes.md), PyPI or GitHub before pinning a version.'
+  );
+  return lines.join('\n');
+};
+
+const renderEvaluation = versions => {
+  const text = fs.readFileSync(EVALUATION_FILE, 'utf8').trim();
+  if (!text.includes('{{CURRENT_VERSIONS}}')) {
+    throw new Error(`${EVALUATION_FILE} is missing the {{CURRENT_VERSIONS}} placeholder`);
+  }
+  return text.replace('{{CURRENT_VERSIONS}}', renderCurrentVersions(versions));
+};
+
+// ---------------------------------------------------------------------------
 // Main
 // ---------------------------------------------------------------------------
 
-const build = () => {
+const build = async () => {
   const { versions, latest } = resolveDocVersions();
   if (!latest) throw new Error('no usable docs version found');
 
@@ -420,13 +519,15 @@ const build = () => {
   const docsById = indexDocFiles(siteDir);
   const menu = readJson(menuFile);
   const apiVersions = resolveApiReferenceVersions();
+  const versionWarnings = [];
+  const currentVersions = await resolveCurrentVersions(versions, versionWarnings);
 
   const head = [
     '# Milvus',
     '',
     `> ${CURATED.intro}`,
     '',
-    fs.readFileSync(EVALUATION_FILE, 'utf8').trim(),
+    renderEvaluation(currentVersions),
     '',
     `This index is generated from the Milvus ${latest} documentation tree. Every URL below resolves to a published page.`,
     '',
@@ -438,7 +539,7 @@ const build = () => {
     '',
   ];
 
-  const out = { lines: [], warnings: [], count: 0 };
+  const out = { lines: [], warnings: versionWarnings, count: 0 };
   renderMenu(menu, docsById, [], 2, out);
 
   const body = [
@@ -457,15 +558,20 @@ const build = () => {
 };
 
 if (require.main === module) {
-  const { text, count, warnings, latest } = build();
-  fs.writeFileSync(OUT_FILE, text, 'utf8');
-
-  for (const warning of warnings) console.warn(`[llms.txt] ${warning}`);
-  console.log(
-    `[llms.txt] ${count} doc links from ${latest} -> public/llms.txt (${(
-      Buffer.byteLength(text) / 1024
-    ).toFixed(1)}KB)`
-  );
+  build()
+    .then(({ text, count, warnings, latest }) => {
+      fs.writeFileSync(OUT_FILE, text, 'utf8');
+      for (const warning of warnings) console.warn(`[llms.txt] ${warning}`);
+      console.log(
+        `[llms.txt] ${count} doc links from ${latest} -> public/llms.txt (${(
+          Buffer.byteLength(text) / 1024
+        ).toFixed(1)}KB)`
+      );
+    })
+    .catch(err => {
+      console.error(err);
+      process.exit(1);
+    });
 }
 
 module.exports = { renderUrlRules };

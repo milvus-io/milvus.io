@@ -7,9 +7,6 @@ const baseURL = 'https://demos.milvus.io';
 const instance = axios.create({
   baseURL,
   timeout: 20000,
-  headers: {
-    'Content-Type': 'applycation/json',
-  },
 });
 
 instance.interceptors.request.use(

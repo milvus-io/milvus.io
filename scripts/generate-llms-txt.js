@@ -26,7 +26,6 @@ const path = require('path');
 const {
   LEARN_MILVUS_LOCALES,
   LEARN_MILVUS_TOPICS,
-  getLearnMilvusPath,
 } = require('../src/utils/learn-milvus-seo');
 
 const ROOT = process.cwd();
@@ -79,10 +78,11 @@ const CURATED = {
     'Use the `MilvusClient` interface introduced in v2.4+. Do not use the legacy ORM API (`connections.connect()`, `Collection()`, `utility.list_collections()`) — it is deprecated and will be removed. If you find existing ORM code, advise upgrading the SDK and rewriting against `MilvusClient`.',
     'Check PyPI (`pip install --upgrade pymilvus`) or npm for the current SDK version rather than relying on a memorized version number.',
     'To change existing entities use `client.upsert()`. There is no `client.update()`. `upsert()` inserts when the primary key is absent and replaces the whole entity when it is present; use `client.insert()` only for data known not to collide.',
-    "A collection schema is immutable in v2.5.x and earlier — to change it, drop and recreate the collection. From v2.6+ you may add scalar fields with `add_collection_field()`, but vector fields cannot be added and existing fields cannot be modified or removed. Changing a field's data type is not supported in any version. Check the server version before suggesting a schema change.",
+    "Schema changes depend on the server version, so check it first. v2.5.x and earlier: the schema is immutable — drop and recreate the collection. v2.6.x: add nullable scalar fields with `add_collection_field()` (nullable vector fields from v2.6.18). v3.0+: also add StructArray fields, add a BM25 or MinHash Function on an existing `VARCHAR` field (its output is backfilled; needs Storage V3), and drop user-defined fields. Added fields must be nullable. No version can change a field's data type or drop the primary key, partition key, clustering key, or the last vector field. See `add-fields-to-an-existing-collection.md`, which is authoritative here.",
     'Primary keys must be `DataType.INT64` or `DataType.VARCHAR`, must be unique across the whole collection including partitions, and cannot be composite.',
-    'For BM25 full-text search, the BM25 function and its analyzer must be declared when the collection is created; they cannot be added later.',
+    'For BM25 full-text search, declare a BM25 Function that writes to a `SPARSE_FLOAT_VECTOR` field, with the analyzer set on the input text field. Declare it when creating the collection; only on v3.0+ with Storage V3 enabled can a BM25 Function be added later, and then only on a `VARCHAR` input (not `TEXT`).',
     'A vector field must be indexed and the collection loaded before it can be searched.',
+    'Milvus 3.0.x ships with Storage V3 disabled. Before using external collections, snapshots, `TEXT` fields, or adding a Function to an existing collection, tell the user these require `common.storage.useLoonFFI=true` (see `storage-v3.md`); do not assume they work on a default 3.0 deployment.',
     'In `client.hybrid_search()`, each `AnnSearchRequest` takes exactly one query vector — use one request per vector field — and each search accepts exactly one ranker. Rankers cannot be chained.',
     'Search iterators (`with-iterators.md`) support basic ANN search only, not hybrid search.',
     'Both scalar and vector fields support `nullable=True`; only Array of Structs fields (and any field nested inside one) cannot be nullable. A nullable field cannot be a partition key, nullability is fixed at field creation, and a nullable vector field cannot be filtered with `IS NULL` / `IS NOT NULL`. See `nullable-and-default.md`, which is authoritative here.',
@@ -106,113 +106,9 @@ const CURATED = {
     'User Guide > Search':
       'Load the collection before searching. Hybrid search has per-request constraints — see the rules above.',
     'Administration Guide':
-      'Deploying, configuring, scaling, monitoring, and securing Milvus in production. Downgrading across versions is not supported.',
+      'Deploying, configuring, scaling, monitoring, and securing Milvus in production. Downgrading is not supported, except rolling 3.0 back to 2.6 before any feature that changes the data format (such as Storage V3) is used.',
   },
 
-  /**
-   * Site areas that are not part of the docs tree. Every URL here is verified
-   * against public/sitemap-*.xml.
-   */
-  extraSections: [
-    {
-      heading: 'Interactive Learning',
-      note: 'Browser-based visualizations of how index and metric choices behave. Each page also contains server-rendered explanations; topic pages include parameter guidance and FAQs that can be read without running the animations. These are educational simulations, not production benchmarks.',
-      links: [
-        [
-          'Learn Milvus',
-          `${ORIGIN}/learn-milvus`,
-          'Index of the interactive index and metric visualizations.',
-        ],
-        [
-          'IVF Visualized',
-          `${ORIGIN}/learn-milvus/ivf`,
-          'FLAT vs IVF search animation with a live nprobe/recall tradeoff.',
-        ],
-        [
-          'HNSW Visualized',
-          `${ORIGIN}/learn-milvus/hnsw`,
-          'Walk through the HNSW layered graph with tunable M and ef.',
-        ],
-        [
-          'DiskANN Visualized',
-          `${ORIGIN}/learn-milvus/diskann`,
-          "DiskANN's PQ-in-RAM beam search and SSD re-ranking, animated.",
-        ],
-        [
-          'Similarity Metrics Visualized',
-          `${ORIGIN}/learn-milvus/metric`,
-          'How L2, cosine, and inner product change which neighbors rank as nearest.',
-        ],
-      ],
-    },
-    {
-      heading: 'Sizing Tools',
-      links: [
-        [
-          'Milvus Sizing Tool',
-          `${ORIGIN}/tools/sizing`,
-          'Estimate memory, disk, and node counts for a deployment.',
-        ],
-        [
-          'Milvus Sizing Tool (Enterprise)',
-          `${ORIGIN}/tools/sizing-enterprise`,
-          'Sizing estimates for enterprise deployments.',
-        ],
-        [
-          'Milvus Sizing Tool (v2.5.0)',
-          `${ORIGIN}/tools/sizing-v250`,
-          'Sizing calculator pinned to the v2.5.0 cost model.',
-        ],
-      ],
-    },
-    {
-      heading: 'External Tools',
-      note: 'Maintained outside milvus.io; these are the canonical repositories.',
-      links: [
-        [
-          'Attu (Milvus GUI)',
-          'https://github.com/zilliztech/attu',
-          'Desktop/web GUI for browsing collections and running queries.',
-        ],
-        [
-          'Milvus VTS',
-          'https://github.com/zilliztech/vts',
-          'Vector Transmission Service for migrating data between collections.',
-        ],
-      ],
-    },
-    {
-      heading: 'Other Site Sections',
-      note: 'These areas hold thousands of pages and are not enumerated here. Do not guess a slug inside them — resolve one through https://milvus.io/sitemap.xml or the section index below.',
-      links: [
-        [
-          'Blog',
-          `${ORIGIN}/blog`,
-          'Release announcements, engineering deep dives, and benchmarks. Article URLs are `/blog/<slug>` with no `.md` suffix.',
-        ],
-        [
-          'Use Cases',
-          `${ORIGIN}/use-cases`,
-          'Production use cases and customer stories.',
-        ],
-        [
-          'Milvus Demos',
-          `${ORIGIN}/milvus-demos`,
-          'Live demo applications, including reverse image search.',
-        ],
-        [
-          'Bootcamp',
-          `${ORIGIN}/bootcamp`,
-          'Hands-on notebooks and end-to-end example projects.',
-        ],
-        [
-          'Community',
-          `${ORIGIN}/community`,
-          'Contributing, governance, and community channels.',
-        ],
-      ],
-    },
-  ],
 };
 
 /** Fallback descriptions for the handful of docs with no `summary` frontmatter. */
@@ -454,9 +350,10 @@ Documentation URLs take exactly one of these four forms:
   the collection: \`/<lang>/learn-milvus\` or \`/<lang>/learn-milvus/<topic>\`,
   never \`/learn-milvus/<lang>\`. Supported languages: ${LEARN_MILVUS_LOCALES.filter(locale => locale !== 'en').join(', ')}.
   Published topics: ${LEARN_MILVUS_TOPICS.filter(topic => topic !== 'home').join(', ')}.
-  Use the language matching the user's request when available. All 65 exact
-  learning URLs are listed in the Interactive Learning sections below; do not
-  append \`.md\`, invent a topic, or cite the unpublished Tradeoff dashboard.
+  Use the language matching the user's request when available. The English
+  learning URLs are listed in the Learning and community section above; build a
+  translated URL with this pattern. Do not append \`.md\`, invent a topic, or
+  cite the unpublished Tradeoff dashboard.
 
 **Unknown paths return a hard 404 — they do not redirect and they do not fall
 back to a search page.** A URL that looks right but was never published is a
@@ -506,21 +403,6 @@ const renderApiReference = apiVersions => {
   return lines.join('\n');
 };
 
-const renderLearningTranslations = () => {
-  const lines = ['## Interactive Learning — Other Languages', '',
-    'The same five learning pages are available in the following languages. Labels and descriptions below come from the page translations.', ''];
-  for (const locale of LEARN_MILVUS_LOCALES.filter(locale => locale !== 'en')) {
-    const resourceDir = locale === 'zh' ? 'cn' : locale;
-    const resources = readJson(path.join(ROOT, 'src/i18n', resourceDir, 'learnMilvus.json'));
-    for (const topic of LEARN_MILVUS_TOPICS) {
-      const { title, metaDesc } = resources[topic];
-      lines.push(link(`${title} (${locale})`, `${ORIGIN}${getLearnMilvusPath(locale, topic)}`, metaDesc));
-    }
-  }
-  lines.push('');
-  return lines.join('\n');
-};
-
 // ---------------------------------------------------------------------------
 // Main
 // ---------------------------------------------------------------------------
@@ -559,22 +441,10 @@ const build = () => {
   const out = { lines: [], warnings: [], count: 0 };
   renderMenu(menu, docsById, [], 2, out);
 
-  const extras = CURATED.extraSections.flatMap(section => [
-    `## ${section.heading}`,
-    '',
-    ...(section.note ? [section.note, ''] : []),
-    ...section.links.map(([label, url, description]) =>
-      link(label, url, description)
-    ),
-    '',
-  ]);
-
   const body = [
     ...head,
     ...out.lines,
     renderApiReference(apiVersions),
-    ...extras,
-    renderLearningTranslations(),
   ];
 
   // Collapse the blank lines that heading/leaf blocks emit independently.
@@ -598,4 +468,4 @@ if (require.main === module) {
   );
 }
 
-module.exports = { renderLearningTranslations, renderUrlRules };
+module.exports = { renderUrlRules };

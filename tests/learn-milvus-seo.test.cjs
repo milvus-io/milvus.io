@@ -103,18 +103,19 @@ test('actual sitemap serialization includes all 65 pages with matching, unmodifi
   assert.doesNotMatch(xml, /tradeoff|learn-milvus\/learn-milvus/);
 });
 
-test('llms.txt lists all exact learning URLs once and explains translated URL grammar', () => {
+test('llms.txt lists the English learning URLs once and explains translated URL grammar', () => {
   const text = fs.readFileSync(path.join(root, 'public/llms.txt'), 'utf8');
   const urls = [...text.matchAll(/^\- \[[^\n]+?\]\((https:\/\/milvus\.io\/[^)]+)\)/gm)]
     .map(match => match[1]).filter(url => /\/(?:learn-milvus)(?:\/|$)/.test(new URL(url).pathname));
-  const expected = getLearnMilvusSitemapPaths().map(page => origin + page.loc);
-  assert.equal(urls.length, 65);
+  const expected = getLearnMilvusSitemapPaths()
+    .filter(page => page.loc.startsWith('/learn-milvus'))
+    .map(page => origin + page.loc);
+  assert.equal(urls.length, 5);
   assert.deepEqual(urls.sort(), expected.sort());
   assert.match(text, /`\/<lang>\/learn-milvus\/<topic>`/);
   assert.match(text, /server-rendered explanations/);
   assert.doesNotMatch(urls.join('\n'), /\.md|tradeoff/);
-  const { renderLearningTranslations, renderUrlRules } = require('../scripts/generate-llms-txt');
-  assert.ok(text.includes(renderLearningTranslations().trim()), 'committed translations match the generator');
+  const { renderUrlRules } = require('../scripts/generate-llms-txt');
   const grammar = renderUrlRules(['v3.0.x'], 'v3.0.x').match(/- Learn Milvus uses [\s\S]*?(?=\n\n\*\*Unknown)/)[0];
   assert.ok(text.includes(grammar), 'committed URL grammar matches the generator');
 });

@@ -87,7 +87,7 @@ export const Community: FC<Props> = (props: Props) => {
     },
 
     {
-      label: 'Twitter',
+      label: 'X',
       imgUrl: '/images/community/socialMedia/twitter.svg',
       href: 'https://twitter.com/milvusio',
       catLabel: t('join'),

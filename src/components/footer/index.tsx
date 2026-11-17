@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { LocalizedAnchor } from '@/components/localizedLinks';
 import React from 'react';
+import styles from './index.module.css';
 import { useTranslation, Trans } from 'react-i18next';
 import clsx from 'clsx';
 import pageClasses from '@/styles/responsive.module.css';
@@ -263,8 +264,21 @@ const Footer = (props: Props) => {
             <p className="mt-[24px] text-[16px] font-[500] leading-[24px] self-start">
               {t('header:footer.followUs')}
             </p>
-            <div className="flex mt-[12px] space-x-[12px]">
-              {isCNSite ? <SocialMediasCN /> : <SocialMedias />}
+            <div className="mt-[12px] w-full">
+              {isCNSite ? <SocialMediasCN /> : locale === LanguageEnum.JAPANESE ? (
+                <div className={styles.socialLinks}>
+                  <LocalizedAnchor
+                    href={getMilvusSlackLink(locale)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={styles.slackLink}
+                  >
+                    <img src="/images/slack/slack.svg" width={24} height={24} alt="" />
+                    {t('header:footer.joinSlack')}
+                  </LocalizedAnchor>
+                  <SocialMedias excludeSlack classes={{ root: styles.secondaryLinks }} />
+                </div>
+              ) : <SocialMedias />}
             </div>
             <p className="mt-[24px] text-[16px] font-[500] leading-[24px] self-start">
               {t('header:footer.askAI')}

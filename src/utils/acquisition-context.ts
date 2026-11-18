@@ -43,6 +43,8 @@ export function getAcquisitionContext(site: string, path: string, referrer: stri
   const existing = incoming.first_touch_at ? incoming : saved;
   const now = new Date().toISOString();
   const page = normalizeAttributionPage(path.split(/[?#]/)[0] || '/');
+  // First-touch attribution can cross sites. Session entry and start time
+  // come from this site's session storage or the current visit.
   const result: Context = { attribution_version: '2', first_touch_scope: 'browser_session',
     session_entry_page: saved.session_entry_page || page,
     session_started_at: saved.session_started_at || now };

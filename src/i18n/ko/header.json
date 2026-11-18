@@ -4,6 +4,11 @@
     "definition": "Milvus란 무엇인가요?",
     "cases": "사용 사례"
   },
+  "nav": {
+    "solutions": "솔루션",
+    "compare": "데이터베이스 비교",
+    "learnMilvus": "Milvus 배우기"
+  },
   "docs": "문서",
   "tutorials": {
     "label": "튜토리얼",

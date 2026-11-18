@@ -4,6 +4,11 @@
     "definition": "Что такое Milvus",
     "cases": "Варианты использования"
   },
+  "nav": {
+    "solutions": "Решения",
+    "compare": "Сравнение баз данных",
+    "learnMilvus": "Изучить Milvus"
+  },
   "docs": "Документы",
   "tutorials": {
     "label": "Учебные пособия",

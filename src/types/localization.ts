@@ -32,3 +32,13 @@ export const INDEXABLE_LANGUAGES: LanguageEnum[] = [
 
 export const isIndexableLanguage = (lang: LanguageEnum | string): boolean =>
   INDEXABLE_LANGUAGES.includes(lang as LanguageEnum);
+
+// Languages written right-to-left. The direction is derived from this list so
+// the server-rendered <html> tag and client-side locale switches agree, and so
+// adding a RTL locale only means adding one language here.
+export const RTL_LANGUAGES: LanguageEnum[] = [LanguageEnum.ARABIC];
+
+export type TextDirection = 'ltr' | 'rtl';
+
+export const getTextDirection = (lang: LanguageEnum | string): TextDirection =>
+  RTL_LANGUAGES.includes(lang as LanguageEnum) ? 'rtl' : 'ltr';

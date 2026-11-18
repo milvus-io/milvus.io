@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { LocalizedAnchor } from '@/components/localizedLinks';
 import React from 'react';
+import styles from './index.module.css';
 import { useTranslation, Trans } from 'react-i18next';
 import clsx from 'clsx';
 import pageClasses from '@/styles/responsive.module.css';
@@ -65,8 +66,16 @@ const Footer = (props: Props) => {
           name: t('header:footer.resource.contact'),
           to: getLocalePath('/contact'),
         },
-        { id: 'resource-solutions', name: isCNSite ? '解决方案' : 'Solutions', to: isCNSite ? '/zh/solutions' : '/solutions' },
-        { id: 'resource-compare', name: isCNSite ? '产品对比' : 'Compare databases', to: isCNSite ? '/zh/compare' : '/compare' },
+        {
+          id: 'resource-solutions',
+          name: t('header:nav.solutions'),
+          to: getLocalePath('/solutions').startsWith('/zh/') ? '/zh/solutions' : '/solutions',
+        },
+        {
+          id: 'resource-compare',
+          name: t('header:nav.compare'),
+          to: getLocalePath('/compare').startsWith('/zh/') ? '/zh/compare' : '/compare',
+        },
       ],
     },
     {
@@ -94,7 +103,7 @@ const Footer = (props: Props) => {
       id: 'tools',
       title: t(`common:v3trans.main.nav.tools`),
       children: [
-        { id: 'tool-learn-milvus', name: 'Learn Milvus', to: getLocalePath('/learn-milvus') },
+        { id: 'tool-learn-milvus', name: t('header:nav.learnMilvus'), to: getLocalePath('/learn-milvus') },
         { id: 'tool-1', name: 'Attu', to: GITHUB_ATTU_LINK },
         { id: 'tool-2', name: 'Milvus CLI', to: GITHUB_MILVUS_CLI_LINK },
         {
@@ -263,8 +272,21 @@ const Footer = (props: Props) => {
             <p className="mt-[24px] text-[16px] font-[500] leading-[24px] self-start">
               {t('header:footer.followUs')}
             </p>
-            <div className="flex mt-[12px] space-x-[12px]">
-              {isCNSite ? <SocialMediasCN /> : <SocialMedias />}
+            <div className="mt-[12px] w-full">
+              {isCNSite ? <SocialMediasCN /> : locale === LanguageEnum.JAPANESE ? (
+                <div className={styles.socialLinks}>
+                  <LocalizedAnchor
+                    href={getMilvusSlackLink(locale)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={styles.slackLink}
+                  >
+                    <img src="/images/slack/slack.svg" width={24} height={24} alt="" />
+                    {t('header:footer.joinSlack')}
+                  </LocalizedAnchor>
+                  <SocialMedias excludeSlack classes={{ root: styles.secondaryLinks }} />
+                </div>
+              ) : <SocialMedias />}
             </div>
             <p className="mt-[24px] text-[16px] font-[500] leading-[24px] self-start">
               {t('header:footer.askAI')}

@@ -4,6 +4,11 @@
     "definition": "Milvusとは",
     "cases": "ユースケース"
   },
+  "nav": {
+    "solutions": "ソリューション",
+    "compare": "データベースの比較",
+    "learnMilvus": "Milvus を学ぶ"
+  },
   "docs": "ドキュメント",
   "tutorials": {
     "label": "チュートリアル",
@@ -44,6 +49,7 @@
       "backup": "Milvus バックアップツール",
       "vts": "ベクトル転送サービス (VTS)"
     },
+    "joinSlack": "Slack に参加",
     "followUs": "フォローする",
     "askAI": "AIにミルバスについて聞く"
   }

@@ -54,6 +54,7 @@ const getSocialMediaLinks = (locale: string) => [
 
 export function SocialMedias(props: {
   excludeSlack?: boolean;
+  excludeDiscord?: boolean;
   classes?: {
     root?: string;
     link?: string;
@@ -67,7 +68,7 @@ export function SocialMedias(props: {
   } = useStore();
   return (
     <div className={clsx('flex items-center justify-start gap-[12px]', root)}>
-      {getSocialMediaLinks(locale).filter(s => !props.excludeSlack || s.name !== 'Slack').map(s => {
+      {getSocialMediaLinks(locale).filter(s => (!props.excludeSlack || s.name !== 'Slack') && (!props.excludeDiscord || s.name !== 'Discord')).map(s => {
         return (
           <CustomButton
             variant="text"

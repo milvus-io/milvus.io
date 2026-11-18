@@ -49,6 +49,7 @@
       "backup": "Milvus バックアップツール",
       "vts": "ベクトル転送サービス (VTS)"
     },
+    "joinSlack": "Slack に参加",
     "followUs": "フォローする",
     "askAI": "AIにミルバスについて聞く"
   }

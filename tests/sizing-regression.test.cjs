@@ -30,7 +30,7 @@ const { RefineValueEnum, REFINE_VALUE_TO_N_MAP, VectorTypeEnum, IndexTypeEnum: I
 const { GpuIndexTypeEnum } = require('../src/types/sizingGpu.ts');
 const { GRAPH_DEGREE_RANGE_CONFIG, INTERMEDIATE_GRAPH_DEGREE_RANGE_CONFIG, DEFAULT_GPU_INDEX_PARAMS } = require('../src/consts/sizingGpu.ts');
 const { fetchMilvusReleases } = require('../src/http/milvus.ts');
-const { unitBYTE2Any, rawDataSizeCalculator, memoryAndDiskCalculator, dependencyCalculator, sindiSparseMemoryCalculator, SegmentSizeMetricEnum, helmYmlGenerator, operatorYmlGenerator: operatorYmlGeneratorV24 } = require('../src/utils/sizingTool.ts');
+const { unitBYTE2Any, unitAny2BYTE, rawDataSizeCalculator, memoryAndDiskCalculator, dependencyCalculator, clusterNodesConfigCalculator, standaloneNodeConfigCalculator, milvusOverviewDataCalculator, dependencyOverviewDataCalculator, sindiSparseMemoryCalculator, SegmentSizeMetricEnum, helmYmlGenerator, operatorYmlGenerator: operatorYmlGeneratorV24 } = require('../src/utils/sizingTool.ts');
 const { gpuIndexMemoryCalculator, rmmPoolSizeCalculator, gpuOperatorYmlGenerator } = require('../src/utils/sizingToolGpu.ts');
 
 const dummyClusterConfig = {
@@ -860,4 +860,128 @@ test('3.0 disk cache estimates reach scheduler requests, runtime capacity and ca
     if (mode === ModeEnum.Standalone) assert.equal(helm.standalone.persistence.enabled, false, 'Use the sized local cache instead of an unrelated default 50Gi PVC');
     else assert.equal(operator.spec.components.dataNode.resources.requests['ephemeral-storage'], undefined);
   }
+});
+
+// The sizing UI derives every number it renders from the pure calculators in
+// src/utils/sizingTool.ts. These cases pin the cluster tiers, the standalone
+// profile, the overview totals and the empty-workload behaviour so the engine
+// stays deterministic without a browser.
+const GiB = 1024 ** 3;
+
+const zeroNode = { cpu: 0, memory: 0, count: 0 };
+
+test('clusterNodesConfigCalculator maps memory to the 96-512 GB tier and derived stream nodes', () => {
+  const config = clusterNodesConfigCalculator({ memory: 128 * GiB });
+  assert.deepEqual(config.queryNode, { cpu: 8, memory: 32, count: 4 });
+  assert.deepEqual(config.proxy, { cpu: 8, memory: 32, count: 1 });
+  assert.deepEqual(config.mixCoord, { cpu: 8, memory: 32, count: 1 });
+  assert.deepEqual(config.dataNode, { cpu: 8, memory: 16, count: 8 });
+  assert.deepEqual(config.streamNode, { cpu: 4, memory: 16, count: 1 });
+});
+
+test('clusterNodesConfigCalculator resolves exact tier boundaries to the higher tier', () => {
+  // 8 GB opens the [8, 16) entry instead of the [0, 8) one.
+  assert.deepEqual(clusterNodesConfigCalculator({ memory: 8 * GiB }).queryNode, { cpu: 4, memory: 16, count: 1 });
+  // 512 GB switches to 16 CPU / 64 GB query nodes, 8 per node count.
+  assert.deepEqual(clusterNodesConfigCalculator({ memory: 512 * GiB }).queryNode, { cpu: 16, memory: 64, count: 8 });
+  // 2048 GB switches to 32 CPU / 128 GB query nodes and 8 stream nodes.
+  const largest = clusterNodesConfigCalculator({ memory: 2048 * GiB });
+  assert.deepEqual(largest.queryNode, { cpu: 32, memory: 128, count: 16 });
+  assert.deepEqual(largest.streamNode, { cpu: 8, memory: 32, count: 8 });
+});
+
+test('cluster and standalone calculators keep a zero-memory input finite and on the smallest profile', () => {
+  const cluster = clusterNodesConfigCalculator({ memory: 0 });
+  for (const key of ['queryNode', 'proxy', 'mixCoord', 'dataNode', 'streamNode']) {
+    assert.ok(cluster[key], `${key} must stay defined for 0 bytes`);
+    assert.ok(Number.isFinite(cluster[key].cpu) && cluster[key].cpu >= 0, `${key}.cpu must be finite`);
+    assert.ok(Number.isFinite(cluster[key].memory) && cluster[key].memory >= 0, `${key}.memory must be finite`);
+    assert.ok(Number.isInteger(cluster[key].count) && cluster[key].count >= 0, `${key}.count must be a non-negative integer`);
+  }
+  assert.deepEqual(cluster.queryNode, { cpu: 2, memory: 8, count: 1 });
+  assert.deepEqual(standaloneNodeConfigCalculator({ memory: 0 }), { cpu: 2, memory: 8, count: 1 });
+  assert.deepEqual(standaloneNodeConfigCalculator({ memory: 100 * GiB }), { cpu: 32, memory: 128, count: 1 });
+});
+
+test('milvusOverviewDataCalculator sums cluster components and honours standalone mode', () => {
+  const clusterNodeConfig = clusterNodesConfigCalculator({ memory: 128 * GiB });
+  const standaloneNodeConfig = { cpu: 2, memory: 8, count: 1 };
+
+  // queryNode 8x4 + proxy 8x1 + mixCoord 8x1 + dataNode 8x8 + streamNode 4x1
+  assert.deepEqual(
+    milvusOverviewDataCalculator({ standaloneNodeConfig, clusterNodeConfig, mode: ModeEnum.Cluster }),
+    { milvusCpu: 116, milvusMemory: 336 }
+  );
+  assert.deepEqual(
+    milvusOverviewDataCalculator({ standaloneNodeConfig, clusterNodeConfig, mode: ModeEnum.Standalone }),
+    { milvusCpu: 2, milvusMemory: 8 }
+  );
+});
+
+test('milvusOverviewDataCalculator returns zero instead of NaN when every component count is zero', () => {
+  const overview = milvusOverviewDataCalculator({
+    standaloneNodeConfig: zeroNode,
+    clusterNodeConfig: { queryNode: zeroNode, proxy: zeroNode, mixCoord: zeroNode, dataNode: zeroNode, streamNode: zeroNode },
+    mode: ModeEnum.Cluster,
+  });
+  assert.deepEqual(overview, { milvusCpu: 0, milvusMemory: 0 });
+  assert.equal(Number.isNaN(overview.milvusCpu), false);
+  assert.equal(Number.isNaN(overview.milvusMemory), false);
+});
+
+test('empty workloads stay at zero payload and keep the minimum dependency storage floors', () => {
+  assert.equal(rawDataSizeCalculator({ num: 0, d: 768, withScalar: true, scalarAvg: 100 }), 0);
+  assert.equal(sindiSparseMemoryCalculator({ num: 0, avgNnz: 120 }), 0);
+
+  const config = dependencyCalculator({
+    num: 0,
+    d: 768,
+    mode: ModeEnum.Standalone,
+    withScalar: false,
+    scalarAvg: 0,
+    loadingMemory: 0,
+  });
+  assert.deepEqual(config.etcd, { cpu: 0.5, memory: 1, pvc: 10, count: 1 });
+  // The 30 GB MinIO floor still applies to an empty dataset.
+  assert.deepEqual(config.minio, { cpu: 1, memory: 4, pvc: 30, count: 1 });
+  assert.equal(config.pulsar, undefined);
+  assert.equal(config.kafka, undefined);
+
+  assert.deepEqual(
+    dependencyOverviewDataCalculator({ dependency: DependencyComponentEnum.Pulsar, dependencyConfig: config }),
+    { dependencyCpu: 1.5, dependencyMemory: 5, dependencyStorage: 40 }
+  );
+});
+
+test('unit conversion helpers stay exact at unit boundaries and at zero', () => {
+  assert.deepEqual(unitBYTE2Any(0), { size: 0, unit: 'B' });
+  assert.deepEqual(unitBYTE2Any(GiB, 'GB'), { size: 1, unit: 'GB' });
+  assert.equal(unitAny2BYTE(0, 'GB'), 0);
+  assert.equal(unitAny2BYTE(1, 'GB'), GiB);
+  assert.equal(unitAny2BYTE(1024, 'MB'), GiB);
+
+  // Zero vectors still carry the per-segment buffer, but never NaN/Infinity.
+  const empty = memoryAndDiskCalculator({
+    rawDataSize: 0,
+    d: 768,
+    num: 0,
+    withScalar: false,
+    offLoading: false,
+    scalarAvg: 0,
+    segSize: 1024,
+    mode: ModeEnum.Standalone,
+    refineType: RefineValueEnum.None,
+    indexTypeParams: {
+      indexType: IndexTypeEnum26.HNSW,
+      widthRawData: false,
+      maxDegree: 56,
+      flatNList: 128,
+      sq8NList: 128,
+      rabitqNList: 128,
+      m: 30,
+      inlinePq: 56,
+    },
+  });
+  assert.ok(Number.isFinite(empty.memory) && empty.memory >= 0, 'zero-vector memory must be finite');
+  assert.equal(empty.disk, 0, 'HNSW without offloading has no local disk footprint');
 });

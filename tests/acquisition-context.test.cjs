@@ -64,6 +64,25 @@ test('versioned API page labels are safe for handoff, including existing session
     const query = new URLSearchParams({ first_landing_page: path, session_entry_page: path, first_touch_at: first.first_touch_at });
     const incoming = getAcquisitionContext('milvus.io', '/docs?' + query, '');
     assert.equal(incoming.first_landing_page, expected);
-    assert.equal(incoming.session_entry_page, expected);
+    assert.equal(incoming.session_entry_page, '/docs');
   }
+});
+
+test('cross-site return keeps first touch and starts a new local session', () => {
+  const first = getAcquisitionContext('milvus.io', '/docs', '');
+  const onZilliz = getAcquisitionContext(
+    'zilliz.com', '/cloud?' + new URLSearchParams(first), ''
+  );
+  assert.equal(onZilliz.session_entry_page, '/cloud');
+
+  const returning = new URLSearchParams({
+    ...onZilliz,
+    session_started_at: '2026-01-01T00:00:00.000Z',
+  });
+  const result = getAcquisitionContext('milvus.io', '/compare?' + returning, '');
+  assert.equal(result.first_entry_site, 'milvus.io');
+  assert.equal(result.first_landing_page, '/docs');
+  assert.equal(result.first_touch_at, first.first_touch_at);
+  assert.equal(result.session_entry_page, '/compare');
+  assert.notEqual(result.session_started_at, returning.get('session_started_at'));
 });

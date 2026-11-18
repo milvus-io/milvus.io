@@ -284,7 +284,7 @@ const Footer = (props: Props) => {
                     <img src="/images/slack/slack.svg" width={24} height={24} alt="" />
                     {t('header:footer.joinSlack')}
                   </LocalizedAnchor>
-                  <SocialMedias excludeSlack classes={{ root: styles.secondaryLinks }} />
+                  <SocialMedias excludeSlack excludeDiscord classes={{ root: styles.secondaryLinks }} />
                 </div>
               ) : <SocialMedias />}
             </div>

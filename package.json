@@ -68,6 +68,8 @@
     "react-player": "^2.16.1",
     "react-range": "^1.10.0",
     "react-simple-code-editor": "^0.14.1",
+    "remarkable": "^2.0.1",
+    "remarkable-katex": "^1.2.1",
     "swiper": "^14.4.0",
     "tailwind-merge": "^2.6.1",
     "tailwindcss-animate": "^1.0.7",

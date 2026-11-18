@@ -2,7 +2,7 @@ import { useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useRouter, usePathname } from 'next/navigation';
 
-import { LanguageEnum } from '@/types/localization';
+import { LanguageEnum, getTextDirection } from '@/types/localization';
 import {
   DOCS_LANGUAGE_DISABLED_MAP,
   SHOW_LANGUAGE_SELECTOR_VERSIONS,
@@ -51,6 +51,7 @@ export const useGlobalLocale = () => {
 
   useEffect(() => {
     document.documentElement.lang = locale;
+    document.documentElement.dir = getTextDirection(locale);
   }, [locale]);
 
   const handleDocsLocaleChange = (newLocale: LanguageEnum) => {

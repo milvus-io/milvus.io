@@ -4,6 +4,11 @@
     "definition": "Apa itu Milvus",
     "cases": "Kasus Penggunaan"
   },
+  "nav": {
+    "solutions": "Solusi",
+    "compare": "Bandingkan basis data",
+    "learnMilvus": "Pelajari Milvus"
+  },
   "docs": "Dokumen",
   "tutorials": {
     "label": "Tutorial",

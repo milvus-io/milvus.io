@@ -1,5 +1,6 @@
 import { Html, Head, Main, NextScript } from 'next/document';
 import { getFallbackResources, resources } from '@/i18n/server';
+import { getTextDirection } from '@/types/localization';
 
 export default function Document(props) {
   const pageProps = props.__NEXT_DATA__.props.pageProps || {};
@@ -8,7 +9,7 @@ export default function Document(props) {
   // Only the English keys this locale lacks — see getFallbackResources.
   const i18nFallback = resources[lang] ? getFallbackResources(lang) : null;
   return (
-    <Html lang={lang}>
+    <Html lang={lang} dir={getTextDirection(lang)}>
       <Head>
         <link
           rel="preload"

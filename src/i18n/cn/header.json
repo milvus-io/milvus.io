@@ -4,6 +4,11 @@
     "definition": "什么是 Milvus",
     "cases": "使用案例"
   },
+  "nav": {
+    "solutions": "解决方案",
+    "compare": "产品对比",
+    "learnMilvus": "学习 Milvus"
+  },
   "docs": "文档",
   "tutorials": {
     "label": "教程",
@@ -32,7 +37,7 @@
     "slack": "Slack"
   },
   "start": "开始使用",
-  "star": "Star",
+  "star": "星标",
   "contact": "预约演示",
   "footer": {
     "resource": {

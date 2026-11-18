@@ -4,6 +4,11 @@
     "definition": "ما هو Milvus؟",
     "cases": "حالات الاستخدام"
   },
+  "nav": {
+    "solutions": "الحلول",
+    "compare": "مقارنة قواعد البيانات",
+    "learnMilvus": "تعلّم Milvus"
+  },
   "docs": "الوثائق",
   "tutorials": {
     "label": "الدروس",
@@ -20,7 +25,7 @@
     "backup": "نسخ احتياطي Milvus",
     "vts": "VTS",
     "deepSearcher": "باحث عميق",
-    "claudeContext": "سياق كلود كلود"
+    "claudeContext": "سياق Claude"
   },
   "blog": "المدونة",
   "community": {
@@ -45,6 +50,6 @@
       "vts": "خدمة نقل المتجهات (VTS)"
     },
     "followUs": "تابعنا",
-    "askAI": "اسأل منظمة العفو الدولية عن ميلفوس"
+    "askAI": "اسأل الذكاء الاصطناعي عن Milvus"
   }
 }

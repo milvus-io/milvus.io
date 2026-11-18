@@ -4,7 +4,12 @@
     "definition": "Qu'est-ce que Milvus",
     "cases": "Cas d'Utilisation"
   },
-  "docs": "Docs",
+  "nav": {
+    "solutions": "Solutions",
+    "compare": "Comparer les bases de données",
+    "learnMilvus": "Apprendre Milvus"
+  },
+  "docs": "Documentation",
   "tutorials": {
     "label": "Tutoriels",
     "codelabs": "Codelabs",
@@ -45,6 +50,6 @@
       "vts": "Service de Transport de Vecteurs (VTS)"
     },
     "followUs": "Suivez-nous",
-    "askAI": "Ask AI about Milvus"
+    "askAI": "Posez une question à l'IA sur Milvus"
   }
 }

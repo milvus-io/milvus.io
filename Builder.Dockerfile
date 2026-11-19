@@ -1,13 +1,7 @@
-FROM node:22-alpine AS base
+FROM node:22-alpine3.24 AS base
 WORKDIR /app
 
 RUN npm install -g pnpm@10.33.0
-
-
-ARG REPO_STATICS_KEY
-ARG INKEEP_API_KEY
-ARG MSERVICE_URL
-ARG CMS_BASE_URL
 
 FROM base AS dependency
 COPY package.json pnpm-lock.yaml .npmrc ./
@@ -16,6 +10,11 @@ RUN pnpm install --frozen-lockfile --prefer-offline \
  && rm -rf /root/.pnpm-store
 
 FROM dependency AS builder
+ARG REPO_STATICS_KEY
+ARG INKEEP_API_KEY
+ARG MSERVICE_URL
+ARG CMS_BASE_URL
+
 COPY src ./src
 COPY public ./public
 COPY content ./content
@@ -34,21 +33,25 @@ RUN find src/docs -type f \( \
       -o -iname '*.mp4' -o -iname '*.mov' -o -iname '*.webm' \
     \) -delete
 
-# => Run container
-FROM zilliz/zilliz-web-runner
+# Preserve the existing Nginx configuration and GeoIP database from a fixed snapshot.
+FROM zilliz/zilliz-web-runner@sha256:baa1f93c18b2ba2646ee451a8c3da37918dd43be8107eb870092cc4c0459622d AS nginx-config
 
-RUN apk add --no-cache bash
+FROM base AS nginx-runtime
+RUN apk add --no-cache bash supervisor 'nginx>=1.30.7' \
+      nginx-mod-http-geoip2 nginx-mod-http-headers-more \
+ && mkdir -p /var/log/supervisor \
+ && rm -f /etc/nginx/http.d/default.conf
 
-# Install supervisor
-RUN apk add --no-cache bash supervisor
-
-# Create supervisor log directory
-RUN mkdir -p /var/log/supervisor
-RUN rm -rf /etc/nginx/conf.d/default.conf
-
+COPY --from=nginx-config /etc/nginx/nginx.conf /etc/nginx/nginx.conf
+COPY --from=nginx-config /etc/nginx/conf.d/geoip2.conf /etc/nginx/conf.d/dbip-country-lite.mmdb /etc/nginx/conf.d/
 COPY conf/conf.d /etc/nginx/conf.d
 COPY supervisord.conf /etc/supervisord.conf
+RUN ln -sf /dev/stdout /var/log/nginx/access.log \
+ && ln -sf /dev/stderr /var/log/nginx/error.log \
+ && nginx -v \
+ && nginx -t
 
+FROM nginx-runtime AS runner
 COPY --from=builder /app/.next /app/.next
 COPY --from=builder /app/src/blogs /app/src/blogs
 # Doc and api-reference pages are rendered on demand (blocking fallback), so the

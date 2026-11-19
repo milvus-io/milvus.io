@@ -4,6 +4,9 @@ on:
   pull_request:
     paths:
       - 'conf/conf.d/**'
+      - 'Builder.Dockerfile'
+      - 'Preview.Dockerfile'
+      - 'supervisord.conf'
       - '.github/workflows/verify_nginx.yml'
       - 'tests/nginx-routing.test.cjs'
 
@@ -25,7 +28,5 @@ jobs:
       - name: Verify Nginx configuration
         if: always()
         run: |
-          docker run --rm \
-            -v ${{ github.workspace }}/conf/conf.d/client.conf:/etc/nginx/conf.d/client.conf \
-            zilliz/zilliz-web-runner \
-            sh -c 'if nginx -t -c /etc/nginx/nginx.conf; then echo "Nginx configuration is valid."; else echo "Nginx configuration is invalid."; exit 1; fi'
+          docker build --target nginx-runtime -f Builder.Dockerfile .
+          docker build --target nginx-runtime -f Preview.Dockerfile .

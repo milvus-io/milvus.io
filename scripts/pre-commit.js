@@ -1,23 +1,17 @@
-const { execSync } = require('child_process');
+const { execFileSync } = require('child_process');
 const path = require('path');
 
-const execOptions = { encoding: 'utf8' };
-
-// Paths
-const confDir = path.resolve(__dirname, '../conf');
-const imageName = 'zilliz/zilliz-web-runner';
-const containerName = 'nginx-test-container';
+const root = path.resolve(__dirname, '..');
 
 try {
-  // Run container to test Nginx configuration
-  console.info('Running container to test Nginx configuration...');
-  execSync(
-    `docker run --rm --name ${containerName} -v ${confDir}:/etc/nginx/conf.d ${imageName} nginx -t`,
-    execOptions
-  );
-
-  console.info('Nginx configuration test passed!');
+  for (const dockerfile of ['Builder.Dockerfile', 'Preview.Dockerfile']) {
+    console.info(`Validating Nginx configuration in ${dockerfile}...`);
+    execFileSync('docker', ['build', '--platform', 'linux/amd64', '--target', 'nginx-runtime', '-f', dockerfile, '.'], {
+      cwd: root,
+      stdio: 'inherit',
+    });
+  }
 } catch (error) {
-  console.error('Nginx configuration test failed:', error.stderr || error.message);
+  console.error('Nginx configuration test failed:', error.message);
   process.exit(1);
 }

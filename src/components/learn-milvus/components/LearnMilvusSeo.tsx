@@ -83,7 +83,7 @@ export default function LearnMilvusSeo(props: LearnMilvusSeoProps) {
       {getLearnMilvusAlternates(path).map(({ hreflang, href }) => (
         <link key={`learn-milvus-${hreflang}`} rel="alternate" hrefLang={hreflang} href={href} />
       ))}
-      <link rel="describedby" href={`${ABSOLUTE_BASE_URL}/llms.txt`} type="text/plain" />
+      <link rel="describedby" href={`${ABSOLUTE_BASE_URL}/llms.txt`} type="text/plain" key="llms-txt" />
       <title>{title}</title>
       <meta name="description" content={description} />
       <meta property="og:title" content={title} />

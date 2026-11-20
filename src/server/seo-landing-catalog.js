@@ -33,4 +33,4 @@ const getLandingSitemapPaths = () => LANGUAGES.flatMap(lang => [
   ...readPages(lang).map(p => ({ loc: p.path, lastmod: p.reviewedOn, changefreq: 'monthly', priority: 0.7 })),
   ...['solutions', 'compare'].map(group => ({ loc: `${lang === 'zh' ? '/zh' : ''}/${group}`, changefreq: 'monthly', priority: 0.7 })),
 ]);
-module.exports = { LANGUAGES, readPages, listLandingPages, getLandingProps, getLandingPaths, getLandingIndexProps, getLandingSitemapPaths };
+module.exports = { LANGUAGES, readPages, listLandingPages, publicPage, getLandingProps, getLandingPaths, getLandingIndexProps, getLandingSitemapPaths };

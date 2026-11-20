@@ -3,11 +3,13 @@ import InkeepChatButtonContainer from '@/components/inkeep/InkeepChatButton';
 import { ErrorBoundary } from 'next/dist/client/components/error-boundary';
 import Head from 'next/head';
 import Script from 'next/script';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 import Error from './error';
 import { StoreProvider } from '@/hooks/use-store';
 import { useCloudLinkTracking } from '@/hooks/use-cloud-link-tracking';
 
-import '../i18n/client';
+import { hasFullI18nResources, loadI18nResources } from '../i18n/client';
 import '../styles/variables.css';
 import '../styles/media.css';
 import '../styles/fonts.css';
@@ -19,6 +21,21 @@ const ENABLE_ANALYTICS = process.env.NODE_ENV === 'production';
 
 function MyApp({ Component, pageProps }) {
   useCloudLinkTracking();
+  const router = useRouter();
+  const locale = pageProps.lang || pageProps.locale || 'en';
+  const route = `${router.pathname}:${locale}`;
+  const [readyRoute, setReadyRoute] = useState(route);
+  const translationsReady = readyRoute === route || hasFullI18nResources(locale);
+  useEffect(() => {
+    if (translationsReady) return;
+    let active = true;
+    loadI18nResources(locale).then(() => {
+      if (active) setReadyRoute(route);
+    }).catch(() => {
+      if (active) window.location.reload();
+    });
+    return () => { active = false; };
+  }, [route, translationsReady, locale]);
 
   return (
     <ErrorBoundary
@@ -29,6 +46,7 @@ function MyApp({ Component, pageProps }) {
       <StoreProvider>
         <>
           <Head>
+            <link rel="describedby" href="https://milvus.io/llms.txt" type="text/plain" key="llms-txt" />
             <link rel="shortcut icon" href="/favicon.ico" />
             <link
               rel="icon"
@@ -50,7 +68,7 @@ function MyApp({ Component, pageProps }) {
               content="milvus, vector database, milvus docs, milvus blogs"
             />
           </Head>
-          <Component {...pageProps} />
+          {translationsReady && <Component {...pageProps} />}
           {ENABLE_ANALYTICS && (
             <Script
               strategy="afterInteractive"

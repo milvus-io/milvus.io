@@ -4,6 +4,16 @@ const path = require('path');
 const fs = require('fs');
 const axios = require('axios');
 
+const markdownRoutes = [
+  ...['solutions', 'compare'].flatMap(group => ['', '/zh'].flatMap(prefix => [
+    `${prefix}/${group}`, `${prefix}/${group}/:slug`,
+  ])),
+  '/docs',
+  '/docs/:path*',
+  '/blog/:id',
+  '/:lang/blog/:id',
+];
+
 const nextConfig = {
   images: {
     loader: 'akamai',
@@ -38,8 +48,20 @@ module.exports = async () => {
         ...config,
       };
     },
+    async rewrites() {
+      return {
+        beforeFiles: markdownRoutes.map(source => ({
+          source,
+          has: [{ type: 'header', key: 'accept', value: '.*text/markdown.*' }],
+          destination: `/api/markdown${source}`,
+        })),
+        afterFiles: [],
+        fallback: [],
+      };
+    },
     async headers() {
       return [
+        ...markdownRoutes.map(source => ({ source, headers: [{ key: 'Vary', value: 'Accept' }] })),
         {
           source: '/fonts/:path*',
           headers: [

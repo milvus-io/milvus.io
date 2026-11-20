@@ -117,7 +117,7 @@ export const BlogHome: React.FC<Props> = props => {
   const router = useRouter();
   const query: BlogFilter = router.query;
 
-  const { t } = useTranslation(['blog', 'footer'], { lng: props.locale });
+  const { t } = useTranslation('blog', { lng: props.locale });
   const [filter, setFilter] = useState<BlogFilter>(query);
 
   useEffect(() => {

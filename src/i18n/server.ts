@@ -79,7 +79,13 @@ const fallbackCache = new Map<string, Record<string, unknown>>();
  * makes React throw away the server DOM. Shipping just the gap (~15KB, vs ~67KB
  * for the whole English bundle) keeps both sides in agreement.
  */
-export function getFallbackResources(lang: string) {
+export function getFallbackResources(lang: string, namespaces?: readonly string[]) {
+  if (namespaces) {
+    const fallback = getFallbackResources(lang);
+    return fallback && Object.fromEntries(
+      Object.entries(fallback).filter(([namespace]) => namespaces.includes(namespace))
+    );
+  }
   if (!lang || lang === defaultLanguage) return null;
   const cached = fallbackCache.get(lang);
   if (cached) return cached;

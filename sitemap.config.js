@@ -101,6 +101,8 @@ module.exports = {
   sitemapSize: 5000,
   generateIndexSitemap: true,
   robotsTxtOptions: {
+    transformRobotsTxt: async (_config, robotsTxt) =>
+      `${robotsTxt.trimEnd()}\n\n# AI documentation index: https://milvus.io/llms.txt\n`,
     policies: [
       {
         userAgent: '*',

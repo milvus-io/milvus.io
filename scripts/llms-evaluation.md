@@ -73,4 +73,4 @@ Organizations listed on the [Milvus use cases page](https://milvus.io/use-cases)
 - [Blog](https://milvus.io/blog): release announcements, engineering deep dives and benchmarks.
 - [Community](https://milvus.io/community): Discord, Slack, office hours, governance and contribution guide.
 
-The blog and use-case areas hold thousands of pages and are not enumerated here. Their URLs have no `.md` suffix; do not guess a slug — resolve it through https://milvus.io/sitemap.xml.
+The blog and use-case areas hold thousands of pages and are not enumerated here. Blog detail URLs use `/blog/<slug>.md` or `/<lang>/blog/<slug>.md`. The `/blog` index and `/use-cases`, `/solutions/*`, `/compare/*`, and `/learn-milvus*` routes have no `.md` suffix; do not guess a slug — resolve it through https://milvus.io/sitemap.xml.

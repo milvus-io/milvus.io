@@ -15,7 +15,7 @@ type Bench = { title: string; caption: string; unit: string; source: string; sou
   rows: { system: string; label: string; value: number; detail: string; highlight?: boolean }[];
   cta?: { text: string; label: string; href: string } };
 type Feature = { title: string; body: string; bullets?: string[] };
-type PageData = {
+export type PageData = {
   slug: string; path: string; nav: string; title: string; description: string; h1: string;
   lang: string; layout?: string; intro?: string; sub?: string; proof: string[]; logos?: string[];
   primary_cta: Cta; secondary_cta: Cta; diagram: { caption: string }; sources: string[];

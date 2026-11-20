@@ -1,5 +1,5 @@
 /**
- * Generates public/llms.txt from the docs themselves.
+ * Generates public/llms.txt and public/llms-full.txt from the docs.
  *
  * Why this is generated rather than hand-written: a stale llms.txt is worse
  * than none. When a page an agent needs is missing from the index, the agent
@@ -28,9 +28,11 @@ const {
   LEARN_MILVUS_TOPICS,
 } = require('../src/utils/learn-milvus-seo');
 
-const ROOT = process.cwd();
+const { getLandingIndexProps } = require('../src/server/seo-landing-catalog');
+const ROOT = path.resolve(__dirname, '..');
 const DOCS_DIR = path.join(ROOT, 'src/docs');
 const OUT_FILE = path.join(ROOT, 'public/llms.txt');
+const FULL_FILE = path.join(ROOT, 'public/llms-full.txt');
 // Hand-written evaluation sections (why Milvus, when to use it, cost levers,
 // benchmarks, ecosystem, adopters, versions, agent entry points, learning).
 // They sit between the intro and the generated index; edit the Markdown file.
@@ -344,7 +346,12 @@ Documentation URLs take exactly one of these four forms:
 - \`<lang>\` is one of: ${TRANSLATED_LANGS.join(', ')}. Omit the segment for English.
 - API reference URLs are \`${ORIGIN}/api-reference/<sdk>/<version>/<page>.md\` and
   are versioned separately from the docs; see the API Reference section.
-- Blog and Learn pages do not use a \`.md\` suffix.
+- Blog detail URLs use \`/blog/<slug>.md\` or \`/<lang>/blog/<slug>.md\`.
+- The blog index (\`/blog\`), \`/use-cases\`, solutions, comparisons, and Learn Milvus
+  routes do not use a \`.md\` suffix.
+- English solution and comparison details use \`/solutions/<slug>\` and
+  \`/compare/<slug>\`. Simplified Chinese uses \`/zh/solutions/<slug>\` and
+  \`/zh/compare/<slug>\`.
 - Learn Milvus uses \`/learn-milvus\` for the English home and
   \`/learn-milvus/<topic>\` for a topic. Translations put the language before
   the collection: \`/<lang>/learn-milvus\` or \`/<lang>/learn-milvus/<topic>\`,
@@ -359,7 +366,7 @@ Documentation URLs take exactly one of these four forms:
 back to a search page.** A URL that looks right but was never published is a
 dead link for the reader.
 
-Therefore: cite only page ids that appear in this file. If the page you need is
+Therefore: cite only page ids listed in this index or the complete index. If the page you need is
 not listed, say it is not in the index rather than assembling a plausible slug
 from the topic name. \`${ORIGIN}/sitemap.xml\` enumerates every published URL and
 is the correct place to resolve anything this file does not cover.`;
@@ -506,7 +513,74 @@ const renderEvaluation = versions => {
 // Main
 // ---------------------------------------------------------------------------
 
+const renderLandings = () => [
+  ['solutions', 'Solutions', 'Explore Milvus architectures and workloads.'],
+  ['compare', 'Comparisons', 'Compare Milvus with other vector search systems.'],
+].map(([group, title, description]) => [
+  `## ${title}`, '',
+  link(title, `${ORIGIN}/${group}`, description),
+  ...getLandingIndexProps('en', group).props.pages.map(page =>
+    link(page.title, ORIGIN + page.path, page.description)
+  ),
+].join('\n')).join('\n\n');
+
+const coreDocIds = new Set([
+  'overview.md', 'quickstart.md', 'install-overview.md', 'connect-to-milvus-server.md',
+  'release_notes.md', 'architecture_overview.md', 'manage-collections.md',
+  'schema.md', 'insert-update-delete.md', 'index-explained.md',
+  'single-vector-search.md', 'multi-vector-search.md', 'full-text-search.md',
+  'filtered-search.md', 'agents_overview.md', 'storage-v3.md',
+]);
+
+const renderIndexes = ({ versions, latest, evaluation, documentation, apiReference }) => {
+  const head = [
+    '# Milvus',
+    '',
+    `> ${CURATED.intro}`,
+    '',
+    evaluation,
+    '',
+    renderLandings(),
+    '',
+    `See [the complete documentation index](${ORIGIN}/llms-full.txt) for every menu-listed page in Milvus ${latest}.`,
+    '',
+    renderUrlRules(versions, latest),
+    '',
+    '## Rules for generating Milvus code',
+    '',
+    ...CURATED.codingRules.map(rule => `- ${rule}`),
+    '',
+  ];
+
+  const format = body => `${[...head, body, '', apiReference]
+    .join('\n').replace(/\n{3,}/g, '\n\n').trim()}\n`;
+  const coreLinks = documentation.split('\n').filter(line => {
+    const id = line.match(/\]\(https:\/\/milvus\.io\/docs\/([^/)]+)\)/)?.[1];
+    return coreDocIds.has(id);
+  });
+  return {
+    text: format(['## Core documentation', '', ...coreLinks].join('\n')),
+    fullText: format(documentation),
+  };
+};
+
+// Reuse the published tree and version snapshot in shallow checkouts.
+const renderFromSnapshot = snapshot => {
+  const latest = snapshot.match(/latest version \((v[\d.x]+)\), English/)[1];
+  const versions = [latest, ...snapshot.match(/is one of: (v[^\n]+?)\. Omit/)[1].split(', ')];
+  const current = snapshot.match(/^## Current versions[^]*?(?=\n\n## )/m)[0];
+  return renderIndexes({
+    versions, latest,
+    evaluation: fs.readFileSync(EVALUATION_FILE, 'utf8').trim().replace('{{CURRENT_VERSIONS}}', current),
+    documentation: snapshot.slice(snapshot.indexOf('## About Milvus'), snapshot.indexOf('## API Reference')).trim(),
+    apiReference: snapshot.slice(snapshot.indexOf('## API Reference')),
+  });
+};
+
 const build = async () => {
+  if (!fs.existsSync(path.join(DOCS_DIR, 'version.json'))) {
+    return { ...renderFromSnapshot(fs.readFileSync(FULL_FILE, 'utf8')), warnings: [] };
+  }
   const { versions, latest } = resolveDocVersions();
   if (!latest) throw new Error('no usable docs version found');
 
@@ -522,51 +596,26 @@ const build = async () => {
   const versionWarnings = [];
   const currentVersions = await resolveCurrentVersions(versions, versionWarnings);
 
-  const head = [
-    '# Milvus',
-    '',
-    `> ${CURATED.intro}`,
-    '',
-    renderEvaluation(currentVersions),
-    '',
-    `This index is generated from the Milvus ${latest} documentation tree. Every URL below resolves to a published page.`,
-    '',
-    renderUrlRules(versions, latest),
-    '',
-    '## Rules for generating Milvus code',
-    '',
-    ...CURATED.codingRules.map(rule => `- ${rule}`),
-    '',
-  ];
-
   const out = { lines: [], warnings: versionWarnings, count: 0 };
   renderMenu(menu, docsById, [], 2, out);
-
-  const body = [
-    ...head,
-    ...out.lines,
-    renderApiReference(apiVersions),
-  ];
-
-  // Collapse the blank lines that heading/leaf blocks emit independently.
-  const text = `${body
-    .join('\n')
-    .replace(/\n{3,}/g, '\n\n')
-    .trim()}\n`;
-
-  return { text, count: out.count, warnings: out.warnings, latest };
+  return {
+    ...renderIndexes({
+      versions, latest,
+      evaluation: renderEvaluation(currentVersions),
+      documentation: out.lines.join('\n'),
+      apiReference: renderApiReference(apiVersions),
+    }),
+    warnings: out.warnings,
+  };
 };
 
 if (require.main === module) {
   build()
-    .then(({ text, count, warnings, latest }) => {
+    .then(({ text, fullText, warnings }) => {
       fs.writeFileSync(OUT_FILE, text, 'utf8');
       for (const warning of warnings) console.warn(`[llms.txt] ${warning}`);
-      console.log(
-        `[llms.txt] ${count} doc links from ${latest} -> public/llms.txt (${(
-          Buffer.byteLength(text) / 1024
-        ).toFixed(1)}KB)`
-      );
+      fs.writeFileSync(FULL_FILE, fullText, 'utf8');
+      console.log('Generated public/llms.txt and public/llms-full.txt');
     })
     .catch(err => {
       console.error(err);
@@ -574,4 +623,4 @@ if (require.main === module) {
     });
 }
 
-module.exports = { renderUrlRules };
+module.exports = { build, renderIndexes, renderFromSnapshot, renderUrlRules };

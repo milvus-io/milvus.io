@@ -24,6 +24,7 @@ type I18nResource = Record<string, unknown>;
 
 declare global {
   interface Window {
+    __I18N_PARTIAL__?: boolean;
     __I18N_RESOURCES__?: Record<string, I18nResource>;
     /**
      * Partial English bundle holding only the keys the current locale is
@@ -98,16 +99,28 @@ const getResourceLoader = (locale: string) => {
   }
 };
 
-export const loadI18nResources = async (locale = defaultLanguage) => {
-  const normalizedLocale = normalizeLocale(locale);
-  if (loadedLanguages.has(normalizedLocale)) {
-    return;
-  }
+const pendingLanguages = new Map<string, Promise<void>>();
 
-  const inlineResources = window.__I18N_RESOURCES__?.[normalizedLocale];
-  const resources =
-    inlineResources ?? (await getResourceLoader(normalizedLocale)());
-  addResource(normalizedLocale, resources as Record<string, unknown>);
+const loadLanguage = (locale: string) => {
+  if (loadedLanguages.has(locale)) return Promise.resolve();
+  const pending = pendingLanguages.get(locale);
+  if (pending) return pending;
+
+  const inlineResources = window.__I18N_PARTIAL__
+    ? undefined
+    : window.__I18N_RESOURCES__?.[locale];
+  const loading = Promise.resolve(inlineResources ?? getResourceLoader(locale)())
+    .then(resource => addResource(locale, resource))
+    .finally(() => pendingLanguages.delete(locale));
+  pendingLanguages.set(locale, loading);
+  return loading;
+};
+
+export const hasFullI18nResources = (locale: string) =>
+  loadedLanguages.has(normalizeLocale(locale)) && loadedLanguages.has(defaultLanguage);
+
+export const loadI18nResources = async (locale = defaultLanguage) => {
+  await Promise.all([loadLanguage(normalizeLocale(locale)), loadLanguage(defaultLanguage)]);
 };
 
 if (isBrowser && !i18n.isInitialized) {
@@ -144,7 +157,7 @@ if (isBrowser && !i18n.isInitialized) {
     },
   });
 
-  if (initialResources) {
+  if (initialResources && !window.__I18N_PARTIAL__) {
     loadedLanguages.add(initialLocale);
   }
   // `fallbackResources` is deliberately NOT marked as loaded: it only holds the

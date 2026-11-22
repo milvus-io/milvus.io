@@ -9,6 +9,7 @@ on:
       - 'src/types/sizing*'
       - 'src/utils/sizing*'
       - 'src/pages/**/sizing*.tsx'
+      - 'src/pages/_document.tsx'
       - 'src/i18n/**/sizingTool.json'
       - 'src/parts/blogs/zillizAdv/**'
       - 'src/http/milvus.ts'

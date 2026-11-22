@@ -72,7 +72,7 @@ test('inline i18n has the namespaces used by each page and loads full resources 
   for (const [page, expected] of Object.entries({
     '/': ['home'], '/[lang]': ['home'], '/docs/zh/[id]': ['docs', 'llm'],
     '/[lang]/blog/[id]': ['blog', 'llm', 'home'], '/learn-milvus/metric': ['learnMilvus'],
-    '/[lang]/tools/sizing-v300': ['sizingTool'], '/intro': ['intro'],
+    '/[lang]/tools/sizing-v300': ['sizingTool', 'blog'], '/intro': ['intro'],
     '/[lang]/use-cases': ['useCase'], '/milvus-demos/reverse-image-search': ['demo', 'home'],
     '/community': ['community'], '/contact': ['contact'], '/404': ['notFound'], '/error': ['notFound'],
     '/[lang]/solutions/[slug]': ['home'], '/compare': ['home'],

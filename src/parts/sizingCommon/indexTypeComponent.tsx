@@ -273,11 +273,11 @@ const AISAQComponent = (props: IndexTypeComponentProps) => {
 
   const clampInlinePq = useCallback(
     (value: number) => {
-      const min = MAX_NODE_DEGREE_RANGE_CONFIG.min;
+      const min = 0;
       const max = data.maxDegree;
       return Math.min(Math.max(value, min), max);
     },
-    [MAX_NODE_DEGREE_RANGE_CONFIG.min, data.maxDegree]
+    [data.maxDegree]
   );
 
   const commitInlinePq = useCallback(

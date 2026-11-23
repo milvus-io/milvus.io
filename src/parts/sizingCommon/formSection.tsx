@@ -114,7 +114,7 @@ export default function FormSection(props: FormSectionProps) {
   const initialIndexTypeParams = useMemo(() => {
     const base: any = {
       indexType: INDEX_TYPE_OPTIONS[0].value,
-      widthRawData: false,
+      widthRawData: true,
       maxDegree: MAX_NODE_DEGREE_RANGE_CONFIG.defaultValue,
       inlinePq: MAX_NODE_DEGREE_RANGE_CONFIG.defaultValue,
       flatNList: N_LIST_RANGE_CONFIG.defaultValue,
@@ -398,6 +398,7 @@ export default function FormSection(props: FormSectionProps) {
       scalarAvg: form.scalarData.averageNum,
       mode: currentMode,
       loadingMemory: memory,
+      localDiskSize: localDisk,
       vectorType: form.vectorType,
       avgNnz: form.avgNnz,
     };

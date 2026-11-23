@@ -553,6 +553,7 @@ export const dependencyCalculator = (params: {
   withScalar: boolean;
   scalarAvg: number;
   loadingMemory: number;
+  localDiskSize?: number;
   dependency?: DependencyComponentEnum;
   vectorType?: VectorTypeEnum;
   avgNnz?: number;
@@ -564,6 +565,7 @@ export const dependencyCalculator = (params: {
     scalarAvg,
     withScalar,
     loadingMemory,
+    localDiskSize = 0,
     dependency,
     vectorType,
     avgNnz,
@@ -583,7 +585,7 @@ export const dependencyCalculator = (params: {
   });
 
   const minioPvc = Math.max(
-    Math.ceil((rawDataSize + loadingMemory) / 1024 / 1024 / 1024),
+    Math.ceil((rawDataSize + loadingMemory + localDiskSize) / 1024 / 1024 / 1024),
     MINIMUM_MINIO_PVC_SIZE
   ); // GB
 
@@ -1160,6 +1162,7 @@ export const operatorYmlGenerator: (
     streamNode: NodesValueType;
     queryNode: NodesValueType;
     dataNode: NodesValueType;
+    standaloneNode?: NodesValueType;
     etcdData: NodesValueType & {
       pvc: number;
     };
@@ -1178,6 +1181,7 @@ export const operatorYmlGenerator: (
     streamNode,
     queryNode,
     dataNode,
+    standaloneNode,
     etcdData,
     minioData,
     pulsarData,
@@ -1277,17 +1281,14 @@ export const operatorYmlGenerator: (
   `;
 
   const apacheConfig = pulsarConfig || kafkaConfig || '';
-
-  return `apiVersion: milvus.io/v1beta1
-kind: Milvus
-metadata:
-  name: my-release
-  labels:
-    app: milvus
-spec:
-  mode: ${mode === ModeEnum.Cluster ? 'cluster' : 'standalone'}
-  components:
-    mixCoord:
+  const standalone = standaloneNode ?? {
+    count: 1,
+    cpu: queryNode.cpu,
+    memory: queryNode.memory,
+  };
+  const componentsBlock =
+    mode === ModeEnum.Cluster
+      ? `    mixCoord:
       replicas: ${mixCoord.count}
       resources:
         limits:
@@ -1316,7 +1317,24 @@ spec:
       resources:
         limits:
           cpu: ${dataNode.cpu}
-          memory: ${dataNode.memory}Gi
+          memory: ${dataNode.memory}Gi`
+      : `    standalone:
+      replicas: ${standalone.count}
+      resources:
+        limits:
+          cpu: ${standalone.cpu}
+          memory: ${standalone.memory}Gi`;
+
+  return `apiVersion: milvus.io/v1beta1
+kind: Milvus
+metadata:
+  name: my-release
+  labels:
+    app: milvus
+spec:
+  mode: ${mode === ModeEnum.Cluster ? 'cluster' : 'standalone'}
+  components:
+${componentsBlock}
   config: {}
   dependencies:
 ${useWoodpecker ? woodpeckerMsg : ''}
@@ -1353,7 +1371,7 @@ ${useWoodpecker ? woodpeckerMsg : ''}
     storage:
       inCluster:
         values:
-          mode: distributed
+          mode: ${mode === ModeEnum.Cluster ? 'distributed' : 'standalone'}
           resources:
             limits:
               cpu: ${minioData.cpu}

@@ -27,7 +27,11 @@ import {
   generateSingleRestfulDocContent,
   SPLIT_FLAG,
 } from '@/utils/restful';
-import { writeSitemapSegment } from '@/utils/doc-sitemap-segments';
+import {
+  writeSitemapSegment,
+  type ContentSitemapEntry,
+} from '@/utils/doc-sitemap-segments';
+import { getContentLastModified } from '@/server/content-freshness';
 
 import classes from '@/styles/docDetail.module.css';
 import styles from '@/styles/restful.module.css';
@@ -202,22 +206,19 @@ export async function getStaticPaths() {
     );
 
   const corePaths: { params: { version: string; slug: string[] } }[] = [];
-  const onDemandUrlsByVersion = new Map<string, string[]>();
+  const sitemapPages: ContentSitemapEntry[] = [];
 
   routers.forEach(v => {
     const {
       frontMatter: { id, parentIds, version },
     } = v;
     const slug = [...parentIds, id.replace('.mdx', '.md')];
+    const loc = `/api-reference/restful/${version}/${slug.join('/')}`;
+    const onDemand = version !== latestVersion;
 
-    if (version === latestVersion) {
+    if (!onDemand) {
       corePaths.push({ params: { version, slug } });
     } else {
-      const url = `/api-reference/restful/${version}/${slug.join('/')}`;
-      // Register the version even when every URL is filtered so a stale
-      // segment from an earlier build is overwritten with an empty list.
-      const list = onDemandUrlsByVersion.get(version) || [];
-      onDemandUrlsByVersion.set(version, list);
       // Only self-canonical archived pages belong in the sitemap.
       const canonicalUrl = getApiCanonicalUrl({
         languageCategory: ApiReferenceRouteEnum.Restful,
@@ -226,17 +227,16 @@ export async function getStaticPaths() {
         relativePath: toRestfulRouteMd(v.frontMatter.relativePath),
         latestVersionMds,
       });
-      if (canonicalUrl !== `${ABSOLUTE_BASE_URL}${url}`) return;
-      list.push(url);
+      if (canonicalUrl !== `${ABSOLUTE_BASE_URL}${loc}`) return;
     }
+    sitemapPages.push({
+      loc,
+      lastmod: getContentLastModified(v.sourcePath, v.frontMatter),
+      onDemand,
+    });
   });
 
-  // next-sitemap auto-discovers prerendered pages from the prerender manifest,
-  // so only on-demand routes need their URLs recorded here. This keeps the
-  // sitemap complete without duplicating the prerendered latest-version URLs.
-  onDemandUrlsByVersion.forEach((urls, version) => {
-    writeSitemapSegment(`api__restful__${version}`, urls);
-  });
+  writeSitemapSegment('api__restful', sitemapPages);
 
   return {
     paths: corePaths,

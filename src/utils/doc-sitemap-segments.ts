@@ -1,14 +1,17 @@
 import fs from 'fs';
 import { join } from 'path';
 
-// Doc and api-reference detail pages are rendered on demand (blocking fallback)
-// instead of being fully prerendered, so next-sitemap can no longer discover
-// them from the prerender manifest. During `next build` each route writes its
-// URLs here, and sitemap.config.js reads them back so the sitemap stays
-// complete for SEO.
+// During next build, record content dates for prerendered routes and URLs for
+// on-demand routes that next-sitemap cannot discover in the prerender manifest.
 export const DOC_SITEMAP_SEGMENT_DIR = join(process.cwd(), '.doc-sitemap');
 
-export const writeSitemapSegment = (key: string, urls: string[]) => {
+export interface ContentSitemapEntry {
+  loc: string;
+  lastmod?: string;
+  onDemand?: boolean;
+}
+
+export const writeSitemapSegment = (key: string, pages: ContentSitemapEntry[]) => {
   // Only relevant during a production build; skip the filesystem churn in dev,
   // where getStaticPaths runs per request.
   if (process.env.NODE_ENV !== 'production') return;
@@ -17,7 +20,7 @@ export const writeSitemapSegment = (key: string, urls: string[]) => {
     fs.mkdirSync(DOC_SITEMAP_SEGMENT_DIR, { recursive: true });
     fs.writeFileSync(
       join(DOC_SITEMAP_SEGMENT_DIR, `${key}.json`),
-      JSON.stringify(urls)
+      JSON.stringify(pages)
     );
   } catch (error) {
     console.error('writeDocSitemapSegment error:', error);

@@ -40,7 +40,7 @@ export const generateAllBlogContentList = (params?: {
 
       return {
         frontMatter: {
-          ...data,
+          ...JSON.parse(JSON.stringify(data)),
           date: `${data.date}`,
           tags: data.tags ? data.tags.split(',').map(t => t.trim()) : [],
         },

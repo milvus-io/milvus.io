@@ -55,7 +55,7 @@ const generateBlogListData = (
     const { tag, date, cover, title = '', content, metaData, ...rest } = data;
 
     return {
-      ...rest,
+      ...JSON.parse(JSON.stringify(rest)),
       id: v,
       date: new Date(data.date).toJSON(),
       cover: generateBlogCover(cover, new Date(data.date)),
@@ -91,7 +91,7 @@ const generateBlogData = (locale: LanguageEnum = LanguageEnum.ENGLISH) => {
     }
 
     return {
-      ...rest,
+      ...JSON.parse(JSON.stringify(rest)),
       id: v,
       date: new Date(data.date).toJSON(),
       cover: generateBlogCover(cover, new Date(data.date)),

@@ -35,6 +35,7 @@ export function DocDetailPage(props: DocDetailPageProps) {
     lang,
     hreflangUrls,
     canonicalUrl,
+    lastModified,
   } = props;
 
   const {
@@ -88,25 +89,33 @@ export function DocDetailPage(props: DocDetailPageProps) {
     menu: menus,
   });
 
-  // /docs/* is the largest, highest-value corpus → TechArticle + breadcrumb.
   // Breadcrumb mirrors the visible trail (Home → Docs → page); intermediate
   // category labels are omitted since they have no standalone URL.
   const docTitle = `${frontMatter?.title || headingContent}`;
-  const ldSchemas = useMemo(
-    () => [
+  const ldSchemas = useMemo(() => {
+    const breadcrumb = buildSchema('breadcrumb', [
+      { name: 'Home', url: ABSOLUTE_BASE_URL },
+      { name: headerT('docs'), url: `${ABSOLUTE_BASE_URL}${homePageLink}` },
+      { name: docTitle, url: seoUrl },
+    ]);
+    // The canonical page defines the article's language, version, and date.
+    if (seoUrl !== canonicalUrl) return [breadcrumb];
+
+    return [
       buildSchema('techArticle', {
-        absoluteUrl: seoUrl,
+        absoluteUrl: canonicalUrl,
         title: docTitle,
         desc: summary || undefined,
+        modifiedTime: lastModified,
+        inLanguage: lang,
+        softwareVersion: version,
       }),
-      buildSchema('breadcrumb', [
-        { name: 'Home', url: ABSOLUTE_BASE_URL },
-        { name: headerT('docs'), url: `${ABSOLUTE_BASE_URL}${homePageLink}` },
-        { name: docTitle, url: seoUrl },
-      ]),
-    ],
-    [seoUrl, docTitle, summary, homePageLink, headerT]
-  );
+      breadcrumb,
+    ];
+  }, [
+    canonicalUrl, seoUrl, docTitle, summary, lastModified, lang, version,
+    homePageLink, headerT,
+  ]);
 
   return (
     <>

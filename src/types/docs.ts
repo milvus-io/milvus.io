@@ -114,6 +114,7 @@ export interface ApiContentFrontMatterType {
 export interface ApiFileDateInfoType {
   frontMatter: ApiContentFrontMatterType;
   content: string;
+  sourcePath: string;
 }
 
 export interface ApiRoutesDataType {
@@ -144,6 +145,7 @@ export interface DocDetailPageProps {
     frontMatter: DocFrontMatterType;
   };
   canonicalUrl: string;
+  lastModified: string | null;
   blog: BlogFrontMatterType | null;
   version: string;
   lang: LanguageEnum;

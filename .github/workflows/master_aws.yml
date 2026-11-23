@@ -89,6 +89,9 @@ jobs:
           rm -f src/pages/tools/sizing-v250-enterprise.tsx
           rm -f src/pages/tools/sizing-enterprise.tsx
 
+      - name: Index content modification dates
+        run: node scripts/generate-content-freshness.js --require-history
+
       - name: Generate docker image tag name
         id: generate-tag-name
         run: |

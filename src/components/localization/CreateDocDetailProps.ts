@@ -1,4 +1,5 @@
 import {
+  BASE_DOC_DIR,
   generateDocVersionInfo,
   generateAllContentDataOfSingleVersion,
   generateSingleDocContent,
@@ -21,6 +22,11 @@ import {
   stripMenuForClient,
 } from '@/utils/client-doc-data';
 import { writeSitemapSegment } from '@/utils/doc-sitemap-segments';
+import {
+  getContentLastModified,
+  readContentFrontMatter,
+} from '@/server/content-freshness';
+import { join } from 'path';
 
 export default DocDetailPage;
 
@@ -28,32 +34,46 @@ export const createDocDetailProps = (lang: LanguageEnum, version = '') => {
   const getPageStaticPaths = () => {
     const { latestVersion } = generateDocVersionInfo();
     const currentVersion = version || latestVersion;
-    const latestDocContentList = generateAllContentDataOfSingleVersion({
+    const content = generateAllContentDataOfSingleVersion({
       version: currentVersion,
       lang,
     });
+    const seenIds = new Set<string>();
+    const docs = content.filter(({ frontMatter: { id } }) => {
+      // Match generateSingleDocContent, which renders the first source for an ID.
+      if (seenIds.has(id)) return false;
+      seenIds.add(id);
+      return true;
+    });
 
-    const paths = latestDocContentList.map(v => ({
+    const paths = docs.map(v => ({
       params: { id: v.frontMatter.id },
     }));
 
     // Only the English latest version is prerendered at build time. Every other
     // language/version is generated on demand via the blocking fallback and then
     // cached by the running server, which keeps build time and memory low.
-    const isCorePrerender =
-      lang === LanguageEnum.ENGLISH && version === '';
+    const isCorePrerender = lang === LanguageEnum.ENGLISH && version === '';
 
-    // next-sitemap auto-discovers prerendered pages from the prerender manifest,
-    // so only on-demand routes need their URLs recorded here. This keeps the
-    // sitemap complete without duplicating the prerendered English latest URLs.
-    if (!isCorePrerender) {
-      const langSegment =
-        lang === LanguageEnum.ENGLISH ? '' : `/${lang}`;
-      const versionSegment = version ? `/${version}` : '';
-      writeSitemapSegment(
-        `docs__${lang}__${version || 'latest'}`,
-        paths.map(p => `/docs${langSegment}${versionSegment}/${p.params.id}`)
+    if (!version && process.env.NODE_ENV === 'production') {
+      const baseUrl = lang === LanguageEnum.ENGLISH ? '/docs' : `/docs/${lang}`;
+      const homeFile = join(
+        BASE_DOC_DIR, 'localization', currentVersion, 'site', lang, 'home/home.md'
       );
+      writeSitemapSegment(`docs__${lang}__latest`, [
+        {
+          loc: baseUrl,
+          lastmod: getContentLastModified(homeFile, readContentFrontMatter(homeFile)),
+        },
+        ...docs.map(({ editPath, frontMatter }) => ({
+          loc: `${baseUrl}/${frontMatter.id}`,
+          lastmod: getContentLastModified(
+            join(BASE_DOC_DIR, 'localization', editPath),
+            frontMatter
+          ),
+          onDemand: !isCorePrerender,
+        })),
+      ]);
     }
 
     return {
@@ -138,6 +158,10 @@ export const createDocDetailProps = (lang: LanguageEnum, version = '') => {
 
     const { codeList, anchorList } = propsInfo;
     const headingContent = anchorList?.[0]?.label;
+    const lastModified = getContentLastModified(
+      join(BASE_DOC_DIR, 'localization', editPath),
+      frontMatter
+    );
 
     return {
       props: {
@@ -148,8 +172,9 @@ export const createDocDetailProps = (lang: LanguageEnum, version = '') => {
           anchorList,
           summary: frontMatter.summary || '',
           editPath,
-          frontMatter,
+          frontMatter: JSON.parse(JSON.stringify(frontMatter)),
         },
+        lastModified: lastModified ?? null,
         blog: null,
         version: currentVersion,
         latestVersion,

@@ -94,6 +94,7 @@ const readApiFile = (params: {
      * language: 'pymilvus'
      * */
     fileDataList.push({
+      sourcePath: filePath,
       frontMatter: {
         ...data,
         id,

@@ -1,4 +1,5 @@
 const { execSync } = require('child_process');
+const { rmSync } = require('fs');
 
 const args = process.argv.slice(2);
 let envArgs = {};
@@ -24,6 +25,7 @@ if (!/max[-_]old[-_]space[-_]size/.test(process.env.NODE_OPTIONS || '')) {
     `${process.env.NODE_OPTIONS || ''} --max-old-space-size=8192`.trim();
 }
 
+rmSync('.doc-sitemap', { recursive: true, force: true });
 execSync('next build', {
   stdio: 'inherit',
 });

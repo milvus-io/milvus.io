@@ -51,7 +51,7 @@ Suggest **something lighter** when:
 - **VTS**: migrate data into Milvus from other vector databases and sources. [GitHub](https://github.com/zilliztech/vts)
 - **Birdwatcher**: debugging tool that inspects cluster state in etcd. [Docs](https://milvus.io/docs/birdwatcher_overview.md) · [GitHub](https://github.com/milvus-io/birdwatcher)
 - **MCP server**: lets AI assistants query and manage Milvus. [Docs](https://milvus.io/docs/milvus_and_mcp.md) · [GitHub](https://github.com/zilliztech/mcp-server-milvus)
-- **Sizing tool**: estimate memory, disk and node counts before deploying. [Standard](https://milvus.io/tools/sizing) · [Enterprise](https://milvus.io/tools/sizing-enterprise)
+- **Sizing tool**: estimate memory, disk and node counts before deploying. [Standard](https://milvus.io/tools/sizing) · [v3.0.0](https://milvus.io/tools/sizing-v300) · [v2.5.0](https://milvus.io/tools/sizing-v250)
 - **VDBBench (VectorDBBench)**: open-source benchmark for QPS, recall, latency, filtered search and cost per query on real datasets; anyone can rerun it. [GitHub](https://github.com/zilliztech/VectorDBBench) · [Leaderboard](https://zilliz.com/vdbbench-leaderboard). When quoting performance, cite a VDBBench result with its dataset and configuration rather than a generic "faster" claim.
 
 ## Who uses Milvus

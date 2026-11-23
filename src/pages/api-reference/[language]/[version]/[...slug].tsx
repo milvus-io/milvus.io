@@ -38,7 +38,11 @@ import {
 import { formatApiRelativePath } from '@/utils';
 import { ABSOLUTE_BASE_URL } from '@/consts';
 import { getApiCanonicalUrl } from '@/components/localization/utils';
-import { writeSitemapSegment } from '@/utils/doc-sitemap-segments';
+import {
+  writeSitemapSegment,
+  type ContentSitemapEntry,
+} from '@/utils/doc-sitemap-segments';
+import { getContentLastModified } from '@/server/content-freshness';
 import { useBreadcrumbLabels } from '@/hooks/use-breadcrumb-lables';
 import { useAnchorEventListener } from '@/hooks/use-anchor-event-listener';
 
@@ -311,19 +315,19 @@ export const getStaticPaths = () => {
    * 2. /pymilvus/v2.4.x/append_rows.md
    */
   const corePaths: { params: { language: string; version: string; slug: string[] } }[] = [];
-  const onDemandUrlsByKey = new Map<string, string[]>();
+  const sitemapPages: ContentSitemapEntry[] = [];
 
   routers.forEach(v => {
     const {
       frontMatter: { id, parentIds, category, version },
     } = v;
     const slug = [...parentIds, id];
+    const loc = `/api-reference/${category}/${version}/${slug.join('/')}`;
+    const onDemand = latestVersionByCategory.get(category) !== version;
 
-    if (latestVersionByCategory.get(category) === version) {
+    if (!onDemand) {
       corePaths.push({ params: { language: category, version, slug } });
     } else {
-      const key = `api__${category}__${version}`;
-      const url = `/api-reference/${category}/${version}/${slug.join('/')}`;
       // Only self-canonical archived pages belong in the sitemap; pages that
       // also exist in the latest version canonicalize there instead.
       const canonicalUrl = getApiCanonicalUrl({
@@ -333,21 +337,16 @@ export const getStaticPaths = () => {
         relativePath: v.frontMatter.relativePath,
         latestVersionMds: latestMdsByCategory.get(category),
       });
-      // Register the key even when every URL is filtered so a stale segment
-      // from an earlier build is overwritten with an empty list.
-      const list = onDemandUrlsByKey.get(key) || [];
-      onDemandUrlsByKey.set(key, list);
-      if (canonicalUrl !== `${ABSOLUTE_BASE_URL}${url}`) return;
-      list.push(url);
+      if (canonicalUrl !== `${ABSOLUTE_BASE_URL}${loc}`) return;
     }
+    sitemapPages.push({
+      loc,
+      lastmod: getContentLastModified(v.sourcePath, v.frontMatter),
+      onDemand,
+    });
   });
 
-  // next-sitemap auto-discovers prerendered pages from the prerender manifest,
-  // so only on-demand routes need their URLs recorded here. This keeps the
-  // sitemap complete without duplicating the prerendered latest-version URLs.
-  onDemandUrlsByKey.forEach((urls, key) => {
-    writeSitemapSegment(key, urls);
-  });
+  writeSitemapSegment('api__sdk', sitemapPages);
 
   return {
     paths: corePaths,

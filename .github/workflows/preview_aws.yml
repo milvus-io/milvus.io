@@ -84,6 +84,9 @@ jobs:
           rm -rf src/docs/v2.0.x
           rm -rf src/docs/v2.1.x
 
+      - name: Index content modification dates
+        run: node scripts/generate-content-freshness.js --require-history
+
       - name: Generate docker image tag name
         id: generate-tag-name
         run: |

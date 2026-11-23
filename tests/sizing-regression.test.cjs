@@ -24,8 +24,8 @@ Module._resolveFilename = function(request, parent, isMain, options) {
 
 const { operatorYmlGenerator, helmYmlGenerator: helmYmlGeneratorV250, memoryAndDiskCalculator: memoryAndDiskCalculatorV250 } = require('../src/utils/sizingToolV250.ts');
 const { ModeEnum, DependencyComponentEnum, IndexTypeEnum } = require('../src/types/sizingV250.ts');
-const { INDEX_TYPE_OPTIONS, VECTOR_TYPE_OPTIONS: VECTOR_TYPE_OPTIONS_V250, SPARSE_INDEX_TYPE_OPTIONS: SPARSE_INDEX_TYPE_OPTIONS_V250, AVG_NNZ_RANGE_CONFIG: AVG_NNZ_RANGE_CONFIG_V250 } = require('../src/consts/sizingV250.ts');
-const { REFINE_OPTIONS, INDEX_TYPE_OPTIONS: INDEX_TYPE_OPTIONS_26, VECTOR_TYPE_OPTIONS, SPARSE_INDEX_TYPE_OPTIONS, AVG_NNZ_RANGE_CONFIG } = require('../src/consts/sizing.ts');
+const { INDEX_TYPE_OPTIONS, VECTOR_TYPE_OPTIONS: VECTOR_TYPE_OPTIONS_V250, SPARSE_INDEX_TYPE_OPTIONS: SPARSE_INDEX_TYPE_OPTIONS_V250, AVG_NNZ_RANGE_CONFIG: AVG_NNZ_RANGE_CONFIG_V250, MAX_NODE_DEGREE_RANGE_CONFIG: MAX_NODE_DEGREE_RANGE_CONFIG_V250 } = require('../src/consts/sizingV250.ts');
+const { REFINE_OPTIONS, INDEX_TYPE_OPTIONS: INDEX_TYPE_OPTIONS_26, VECTOR_TYPE_OPTIONS, SPARSE_INDEX_TYPE_OPTIONS, AVG_NNZ_RANGE_CONFIG, MAX_NODE_DEGREE_RANGE_CONFIG } = require('../src/consts/sizing.ts');
 const { RefineValueEnum, REFINE_VALUE_TO_N_MAP, VectorTypeEnum, IndexTypeEnum: IndexTypeEnum26, DependencyComponentEnum: DependencyComponentEnum26 } = require('../src/types/sizing.ts');
 const { GpuIndexTypeEnum } = require('../src/types/sizingGpu.ts');
 const { GRAPH_DEGREE_RANGE_CONFIG, INTERMEDIATE_GRAPH_DEGREE_RANGE_CONFIG, DEFAULT_GPU_INDEX_PARAMS } = require('../src/consts/sizingGpu.ts');
@@ -984,4 +984,54 @@ test('unit conversion helpers stay exact at unit boundaries and at zero', () => 
   });
   assert.ok(Number.isFinite(empty.memory) && empty.memory >= 0, 'zero-vector memory must be finite');
   assert.equal(empty.disk, 0, 'HNSW without offloading has no local disk footprint');
+});
+
+test('AISAQ max_degree bounds match Knowhere [5, 1200], dependencyCalculator includes localDiskSize in MinIO PVC, formSection defaults widthRawData=true, and v2.6 standalone Operator YAML emits components.standalone', () => {
+  // 1. Knowhere AISAQ max_degree limits
+  assert.equal(MAX_NODE_DEGREE_RANGE_CONFIG.min, 5);
+  assert.equal(MAX_NODE_DEGREE_RANGE_CONFIG.max, 1200);
+  assert.equal(MAX_NODE_DEGREE_RANGE_CONFIG_V250.min, 5);
+  assert.equal(MAX_NODE_DEGREE_RANGE_CONFIG_V250.max, 1200);
+
+  // 2. indexTypeComponent allows inline_pq=0 and formSection defaults widthRawData=true
+  const indexTypeSrc = fs.readFileSync(path.join(__dirname, '..', 'src/parts/sizingCommon/indexTypeComponent.tsx'), 'utf8');
+  assert.ok(indexTypeSrc.includes('const min = 0;'), 'clampInlinePq must allow inline_pq=0');
+  const formSrc = fs.readFileSync(path.join(__dirname, '..', 'src/parts/sizingCommon/formSection.tsx'), 'utf8');
+  assert.ok(formSrc.includes('widthRawData: true,'), 'formSection must default widthRawData to true');
+  assert.ok(formSrc.includes('localDiskSize: localDisk,'), 'formSection must pass localDiskSize to dependencyCalculator');
+
+  // 3. dependencyCalculator adds localDiskSize to MinIO PVC when provided
+  const depNoDisk = dependencyCalculator({
+    num: 1,
+    d: 768,
+    mode: ModeEnum.Cluster,
+    withScalar: false,
+    scalarAvg: 0,
+    loadingMemory: 40 * GiB,
+  });
+  const depWithDisk = dependencyCalculator({
+    num: 1,
+    d: 768,
+    mode: ModeEnum.Cluster,
+    withScalar: false,
+    scalarAvg: 0,
+    loadingMemory: 40 * GiB,
+    localDiskSize: 50 * GiB,
+  });
+  assert.equal(depWithDisk.minio.pvc - depNoDisk.minio.pvc, 50, 'localDiskSize must add 50 GiB to MinIO PVC');
+
+  // 4. v2.6 Operator YAML in Standalone mode emits components.standalone & storage.inCluster.values.mode=standalone
+  const standaloneObj = yaml.load(
+    operatorYmlGeneratorV24(
+      { ...dummyClusterConfig, streamNode: { count: 1, cpu: 2, memory: 8 }, standaloneNode: { count: 1, cpu: 4, memory: 16 } },
+      DependencyComponentEnum26.Woodpecker,
+      ModeEnum.Standalone
+    )
+  );
+  assert.equal(standaloneObj.spec.mode, 'standalone');
+  assert.deepEqual(Object.keys(standaloneObj.spec.components), ['standalone']);
+  assert.equal(standaloneObj.spec.components.standalone.replicas, 1);
+  assert.equal(standaloneObj.spec.components.standalone.resources.limits.cpu, 4);
+  assert.equal(standaloneObj.spec.components.standalone.resources.limits.memory, '16Gi');
+  assert.equal(standaloneObj.spec.dependencies.storage.inCluster.values.mode, 'standalone');
 });

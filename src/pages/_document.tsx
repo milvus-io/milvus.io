@@ -10,7 +10,7 @@ const routeNamespaces: [RegExp, string[]][] = [
   [/^\/docs(?:\/|$)/, ['docs', 'llm']],
   [/^\/blog(?:\/|$)/, ['blog', 'llm']],
   [/^\/learn-milvus(?:\/|$)/, ['learnMilvus']],
-  [/^\/tools\/sizing(?:-|\/|$)/, ['sizingTool']],
+  [/^\/tools\/sizing(?:-|\/|$)/, ['sizingTool', 'blog']],
   [/^\/intro$/, ['intro']],
   [/^\/use-cases$/, ['useCase']],
   [/^\/milvus-demos(?:\/|$)/, ['demo']],

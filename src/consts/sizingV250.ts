@@ -26,11 +26,11 @@ export const DIMENSION_RANGE_CONFIG = {
 };
 
 export const MAX_NODE_DEGREE_RANGE_CONFIG = {
-  min: 1,
-  max: 2048,
+  min: 5,
+  max: 1200,
   defaultValue: 56,
   domain: [0, 20, 40, 60, 80, 100],
-  range: [1, 8, 32, 128, 512, 2048],
+  range: [5, 16, 56, 128, 512, 1200],
 };
 
 export const M_RANGE_CONFIG = {

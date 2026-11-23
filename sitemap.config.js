@@ -2,18 +2,19 @@ const fs = require('fs');
 const { join } = require('path');
 const { getLandingSitemapPaths } = require('./src/server/seo-landing-catalog');
 const { getLearnMilvusSitemapPaths } = require('./src/utils/learn-milvus-seo');
+const { getContentLastModified, readContentFrontMatter } = require(
+  './src/server/content-freshness'
+);
 const landingSitemapPaths = getLandingSitemapPaths();
 const landingSitemapByPath = new Map(landingSitemapPaths.map(page => [page.loc, page]));
 const learnMilvusSitemapPaths = getLearnMilvusSitemapPaths();
 const learnMilvusSitemapByPath = new Map(learnMilvusSitemapPaths.map(page => [page.loc, page]));
 
-// Doc detail pages are rendered on demand and recorded here during the build by
-// src/utils/doc-sitemap-segments.ts. Read them back so on-demand docs still
-// appear in the sitemap (the prerendered English latest pages are discovered
-// automatically from the prerender manifest and are not written as segments).
+// The build records dates for prerendered Docs and API references, and URLs
+// for their on-demand pages that are absent from Next's prerender manifest.
 const DOC_SITEMAP_SEGMENT_DIR = join(process.cwd(), '.doc-sitemap');
 
-const readDocSitemapPaths = () => {
+const readDocSitemapEntries = () => {
   try {
     if (!fs.existsSync(DOC_SITEMAP_SEGMENT_DIR)) {
       return [];
@@ -21,23 +22,31 @@ const readDocSitemapPaths = () => {
     const files = fs
       .readdirSync(DOC_SITEMAP_SEGMENT_DIR)
       .filter(file => file.endsWith('.json'));
-    const urls = new Set();
+    const entries = [];
     files.forEach(file => {
       try {
         const list = JSON.parse(
           fs.readFileSync(join(DOC_SITEMAP_SEGMENT_DIR, file), 'utf-8')
         );
-        list.forEach(url => urls.add(url));
+        list.forEach(page => entries.push(
+          typeof page === 'string' ? { loc: page, onDemand: true } : page
+        ));
       } catch (error) {
         console.error(`Failed to read sitemap segment ${file}:`, error);
       }
     });
-    return [...urls];
+    return entries;
   } catch (error) {
-    console.error('readDocSitemapPaths error:', error);
+    console.error('readDocSitemapEntries error:', error);
     return [];
   }
 };
+
+const docSitemapEntries = readDocSitemapEntries();
+const lastmodByPath = new Map();
+for (const { loc, lastmod } of docSitemapEntries) {
+  if (!lastmodByPath.has(loc)) lastmodByPath.set(loc, lastmod);
+}
 
 // Keep the sitemap focused on high-value canonical URLs: English plus the
 // non-English languages that carry real GSC traffic (zh/ko/zh-hant/ja), at
@@ -73,6 +82,35 @@ const VERSIONED_DOCS_RE = new RegExp(
 // The retired collections, including historical locale-prefixed URLs,
 // must stay out of generated sitemaps.
 const RETIRED_REFERENCE_RE = /^\/(?:(?:en|zh-hant|zh|ja|jp|fr|ko|ru|de|es|pt|it|ar|id|cn)\/)?(?:ai-quick-reference|api\/ai-quick-reference|learn-ai-and-vectordb|api\/learn-ai-and-vectordb)(?:\/|$)/i;
+const CONTENT_PATH_RE = /^(?:\/docs|\/api-reference|(?:\/[a-z-]+)?\/blog)(?:\/|$)/;
+const BLOG_DETAIL_RE = /^(?:\/([a-z-]+))?\/blog\/([^/]+\.md)$/;
+
+const decodePath = pathname => pathname.split('/').map(segment => {
+  try {
+    const decoded = decodeURIComponent(segment);
+    return /[/\\]/.test(decoded) ? segment : decoded;
+  } catch (error) {
+    return segment;
+  }
+}).join('/');
+
+const getBlogLastmod = pathname => {
+  const match = BLOG_DETAIL_RE.exec(pathname);
+  if (!match) return;
+
+  const [, lang, id] = match;
+  if (lang && lang !== 'en') {
+    const localized = `src/blogs/localization/blog/${lang}/${id}`;
+    const frontMatter = readContentFrontMatter(localized);
+    if (typeof frontMatter?.title === 'string' && frontMatter.title.trim()) {
+      return getContentLastModified(localized, frontMatter);
+    }
+  }
+  // Localized blog routes render the English article when no translation exists.
+  const english = `src/blogs/blog/en/${id}`;
+  const frontMatter = readContentFrontMatter(english);
+  if (frontMatter) return getContentLastModified(english, frontMatter);
+};
 
 const toPathname = loc => {
   try {
@@ -113,37 +151,39 @@ module.exports = {
       },
     ],
   },
-  // Filters auto-discovered URLs (prerendered English latest docs and all blog
-  // posts come through here). Returns null to drop a URL; otherwise mirrors
-  // next-sitemap's default transform so kept URLs are unchanged.
+  // The manifest supplies prerendered URLs. Resolve their content dates before
+  // serializing, including routes that Next has percent-encoded.
   transform: async (config, path) => {
     if (isExcludedFromSitemap(path)) return null;
     const landing = landingSitemapByPath.get(path);
     if (landing) return landing;
     const learning = learnMilvusSitemapByPath.get(path);
     if (learning) return learning;
+    const pathname = decodePath(path);
+    let lastmod;
+    if (CONTENT_PATH_RE.test(pathname)) {
+      lastmod = lastmodByPath.get(pathname) ?? getBlogLastmod(pathname);
+    } else if (config.autoLastmod) {
+      lastmod = new Date().toISOString();
+    }
     return {
       loc: path,
       changefreq: config.changefreq,
       priority: config.priority,
-      lastmod: config.autoLastmod ? new Date().toISOString() : undefined,
+      lastmod,
       alternateRefs: config.alternateRefs ?? [],
     };
   },
-  additionalPaths: async config => {
-    // Localized and old-version docs reach the sitemap through these segments
-    // (English latest is auto-discovered above), so the same filter is applied
-    // here. api-reference URLs also live in these segments; archived-version
-    // api-reference pages that canonicalize to the latest version are already
-    // left out when the segments are written (see the api-reference routes'
-    // getStaticPaths), so every URL kept here is self-canonical.
-    const docPaths = readDocSitemapPaths()
+  additionalPaths: async () => {
+    // Archived API pages are recorded only when they are self-canonical.
+    const urls = new Set(docSitemapEntries.filter(page => page.onDemand).map(page => page.loc));
+    const docPaths = [...urls]
       .filter(loc => !isExcludedFromSitemap(loc))
       .map(loc => ({
         loc,
         changefreq: 'weekly',
         priority: 0.7,
-        lastmod: new Date().toISOString(),
+        lastmod: lastmodByPath.get(loc),
       }));
 
     return [...docPaths, ...landingSitemapPaths, ...learnMilvusSitemapPaths];

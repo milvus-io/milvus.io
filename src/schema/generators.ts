@@ -29,6 +29,8 @@ export interface ArticleInput {
   desc?: string;
   publishTime?: DateInput;
   modifiedTime?: DateInput;
+  inLanguage?: string;
+  softwareVersion?: string;
   imageUrl?: string;
   /** Named human author; falls back to the Organization when absent. */
   author?: { name?: string; type?: 'Person' | 'Organization' };
@@ -42,6 +44,8 @@ export function articleSchema({
   desc,
   publishTime,
   modifiedTime,
+  inLanguage,
+  softwareVersion,
   imageUrl,
   author,
 }: ArticleInput): SchemaObject {
@@ -59,6 +63,10 @@ export function articleSchema({
     image: imageUrl ? [imageUrl] : undefined,
     datePublished,
     dateModified,
+    inLanguage,
+    about: softwareVersion
+      ? { '@type': 'SoftwareApplication', name: SITE.name, softwareVersion }
+      : undefined,
     author:
       author?.name && author.type === 'Person'
         ? { '@type': 'Person', name: author.name }

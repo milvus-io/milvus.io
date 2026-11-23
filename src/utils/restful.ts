@@ -118,6 +118,7 @@ const readApiFile = (params: {
      * language: 'pymilvus'
      * */
     fileDataList.push({
+      sourcePath: filePath,
       frontMatter: {
         ...data,
         id: id.replace('.mdx', '.md'),

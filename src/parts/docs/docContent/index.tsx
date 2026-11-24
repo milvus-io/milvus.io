@@ -44,7 +44,7 @@ const DocHtmlContent = React.memo(function DocHtmlContent({
   type: 'doc' | 'api';
 }) {
   return (
-    <div
+    <article
       className={clsx('doc-style', 'doc-post-content', {
         'api-reference-wrapper': type === 'api',
       })}

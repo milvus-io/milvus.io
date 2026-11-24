@@ -24,6 +24,8 @@ interface LearnMilvusSeoProps {
 }
 
 const LEARN_MILVUS_PATH = '/learn-milvus';
+const serializeJsonLd = (value: unknown) =>
+  JSON.stringify(value).replace(/</g, '\\u003c');
 
 export default function LearnMilvusSeo(props: LearnMilvusSeoProps) {
   const { path, title, description, breadcrumbName, ogImage, faq } = props;
@@ -55,14 +57,10 @@ export default function LearnMilvusSeo(props: LearnMilvusSeoProps) {
     inLanguage: locale,
     ...(imageUrl ? { image: imageUrl } : {}),
     isPartOf: {
-      '@type': 'WebSite',
-      name: 'Milvus',
-      url: ABSOLUTE_BASE_URL,
+      '@id': `${ABSOLUTE_BASE_URL}/#website`,
     },
     publisher: {
-      '@type': 'Organization',
-      name: 'Milvus',
-      url: ABSOLUTE_BASE_URL,
+      '@id': `${ABSOLUTE_BASE_URL}/#organization`,
     },
   };
 
@@ -108,16 +106,16 @@ export default function LearnMilvusSeo(props: LearnMilvusSeoProps) {
       {imageUrl && <meta name="twitter:image" content={imageUrl} />}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(learningResourceLd) }}
+        dangerouslySetInnerHTML={{ __html: serializeJsonLd(learningResourceLd) }}
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
+        dangerouslySetInnerHTML={{ __html: serializeJsonLd(breadcrumbLd) }}
       />
       {faqLd && (
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }}
+          dangerouslySetInnerHTML={{ __html: serializeJsonLd(faqLd) }}
         />
       )}
     </Head>

@@ -1,6 +1,10 @@
 import clsx from 'clsx';
+import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { ABSOLUTE_BASE_URL } from '@/consts';
+import JsonLd from '@/components/JsonLd';
+import { buildSchema, SITE } from '@/schema';
 import { LanguageEnum } from '@/types/localization';
 import DocLayout from '@/components/layout/docLayout';
 import HomeContent from '@/parts/docs/docHome';
@@ -30,6 +34,7 @@ export interface DocHomePageProps {
 // latest version's home page
 export function DocHomepage(props: DocHomePageProps) {
   const { t } = useTranslation('docs', { lng: props.lang });
+  const { t: headerT } = useTranslation('header', { lng: props.lang });
   const {
     homeData,
     blog,
@@ -52,8 +57,38 @@ export function DocHomepage(props: DocHomePageProps) {
   });
   const homePageLink = getHomePageLink({ lang, version, latestVersion });
 
+  const ldSchemas = useMemo(() => {
+    const homeUrl =
+      lang === LanguageEnum.ENGLISH
+        ? ABSOLUTE_BASE_URL
+        : `${ABSOLUTE_BASE_URL}/${lang}`;
+    const breadcrumb = buildSchema('breadcrumb', [
+      { name: 'Home', url: homeUrl },
+      { name: headerT('docs'), url: seoUrl },
+    ]);
+    if (seoUrl !== canonicalUrl) return [breadcrumb];
+    return [
+      buildSchema('collectionPage', {
+        absoluteUrl: canonicalUrl,
+        name: t('metaTitle'),
+        desc: t('homepageDesc', { version }),
+        inLanguage: lang,
+        about: {
+          '@type': 'SoftwareApplication',
+          '@id': `${SITE.softwareAppId}-${encodeURIComponent(version)}`,
+          name: SITE.name,
+          url: SITE.url,
+          softwareVersion: version,
+        },
+      }),
+      breadcrumb,
+    ];
+  }, [lang, headerT, seoUrl, canonicalUrl, t, version]);
+
   return (
-    <DocLayout
+    <>
+      <JsonLd schema={ldSchemas} />
+      <DocLayout
       version={version}
       latestVersion={latestVersion}
       isHome
@@ -88,6 +123,7 @@ export function DocHomepage(props: DocHomePageProps) {
         />
       }
       center={<HomeContent homeData={homeData} latestBlog={blog} lang={lang} />}
-    />
+      />
+    </>
   );
 }

@@ -143,13 +143,13 @@ export default function ReverseImageSearch() {
   }, [partialLoading, noData, file, searchResult.length, pageIndex]);
 
   return (
-    <main ref={scrollContainerRef} className={classes.outerContainer}>
+    <div ref={scrollContainerRef} className={classes.outerContainer}>
       <Layout showFooter={false} disableLangSelector>
         <Head>
           <title>{TITLE}</title>
           <meta name="description" content={DESC} />
         </Head>
-        <div className={clsx(pageClasses.container, classes.pageContainer)}>
+        <main className={clsx(pageClasses.container, classes.pageContainer)}>
           {/* for seo */}
           <h1
             style={{
@@ -187,11 +187,11 @@ export default function ReverseImageSearch() {
               />
             )}
           </div>
-        </div>
+        </main>
       </Layout>
       {loading && !partialLoading ? <Loading /> : null}
       <Modal {...modalConfig} />
       <FloatBoard />
-    </main>
+    </div>
   );
 }

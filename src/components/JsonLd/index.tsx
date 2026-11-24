@@ -6,10 +6,13 @@ interface JsonLdProps {
   schema: SchemaObject | (SchemaObject | null | undefined)[];
 }
 
+const serializeJsonLd = (obj: SchemaObject) =>
+  JSON.stringify(obj).replace(/</g, '\\u003c');
+
 /**
  * Renders one or more JSON-LD `<script>` tags into the document head.
- * Each object is serialized with JSON.stringify (never hand-built strings)
- * and gets a stable key so Next.js's <Head> de-dupes correctly across pages.
+ * Each object is serialized with JSON.stringify and `<` escaped to `\u003c`
+ * so untrusted or CMS/HTML-derived text can never break out of `<script>`.
  */
 export default function JsonLd({ schema }: JsonLdProps) {
   const items = (Array.isArray(schema) ? schema : [schema]).filter(
@@ -29,7 +32,7 @@ export default function JsonLd({ schema }: JsonLdProps) {
           <script
             key={key}
             type="application/ld+json"
-            dangerouslySetInnerHTML={{ __html: JSON.stringify(obj) }}
+            dangerouslySetInnerHTML={{ __html: serializeJsonLd(obj) }}
           />
         );
       })}

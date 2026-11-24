@@ -28,11 +28,20 @@
 }
 
 .navBar {
+  width: 100%;
+  max-width: 1644px;
   height: 58px;
+  margin: 0 auto;
+  padding-inline: 32px;
+  box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 24px;
+
+  @media (--phone) {
+    padding-inline: 24px;
+  }
 }
 
 .leftSection {
@@ -65,7 +74,8 @@
 
 .desktopNavButton,
 .desktopNavLink {
-  height: 21px;
+  position: relative;
+  height: 58px;
   display: flex;
   align-items: center;
   gap: 4px;
@@ -84,6 +94,21 @@
   transition: color 0.2s ease;
 }
 
+.desktopNavActive {
+  color: #00131a;
+  font-weight: 600;
+}
+
+.desktopNavActive::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: #00b3ff;
+}
+
 .desktopNavButton:hover,
 .desktopNavButton:focus-visible,
 .desktopDropdown:focus-within .desktopNavButton,
@@ -94,7 +119,11 @@
 }
 
 .desktopNavButton:focus-visible,
-.desktopNavLink:focus-visible,
+.desktopNavLink:focus-visible {
+  outline: 2px solid #00131a;
+  outline-offset: -4px;
+}
+
 .desktopDropdownLink:focus-visible,
 .menuIconBtn:focus-visible,
 .contactLink:focus-visible,
@@ -117,7 +146,7 @@
   position: absolute;
   inset-inline-start: 0;
   top: 100%;
-  padding-top: 12px;
+  padding-top: 4px;
   visibility: hidden;
   opacity: 0;
   transform: translateY(-4px);
@@ -166,9 +195,14 @@
 }
 
 .desktopDropdownLink:hover,
-.desktopDropdownLink:focus-visible {
+.desktopDropdownLink:focus-visible,
+.desktopDropdownLink[aria-current='page'] {
   background: rgba(0, 0, 0, 0.04);
   color: #00131a;
+}
+
+.desktopDropdownLink[aria-current='page'] {
+  font-weight: 600;
 }
 
 .actions {
@@ -314,13 +348,6 @@
   }
 }
 
-@media (min-width: 1280px) and (max-width: 1550px) {
-  .navBarWrapper .navBar,
-  .collapsedNav .mobileNavInner {
-    width: min(calc(100% - 48px), 1280px);
-  }
-}
-
 @media (max-width: 1400px) {
   .navBar {
     gap: 12px;
@@ -414,12 +441,20 @@
 }
 
 .mobileNavInner {
+  width: 100%;
+  max-width: 1644px;
   height: 100%;
   display: flex;
   flex-direction: column;
   margin: 0 auto;
+  padding-inline: 32px;
+  box-sizing: border-box;
   overflow-y: auto;
   overscroll-behavior: contain;
+
+  @media (--phone) {
+    padding-inline: 24px;
+  }
 }
 
 .mobileNavList {
@@ -452,12 +487,14 @@
 
 .mobileNavButton,
 .mobileNavLink {
+  position: relative;
   padding: 10px 16px;
   cursor: pointer;
 }
 
 .mobileNavLinkWithChildren,
 .mobileNavGroupLabel {
+  position: relative;
   flex: 1 1 auto;
   padding: 10px 16px;
   border: 0;
@@ -467,6 +504,21 @@
   font: inherit;
   text-align: start;
   text-decoration: none;
+}
+
+.mobileNavActive {
+  color: var(--color-btn-hover, #0077ad);
+}
+
+.mobileNavActive::before {
+  content: '';
+  position: absolute;
+  inset-inline-start: 0;
+  top: 8px;
+  bottom: 8px;
+  width: 3px;
+  border-radius: 2px;
+  background: var(--color-btn-hover, #0077ad);
 }
 
 .mobileSubMenuToggle {
@@ -525,6 +577,13 @@
   text-decoration: none;
 }
 
+.mobileSubMenuLink[aria-current='page'] {
+  color: var(--color-btn-hover, #0077ad);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
 .mobileActions {
   position: sticky;
   bottom: 0;
@@ -551,10 +610,6 @@
 
 .mobileStartButton {
   width: 100%;
-}
-
-.collapsedNav .navBarWrapper {
-  border-bottom-color: #d1d5db;
 }
 
 .collapsedNav .navBar {
@@ -587,10 +642,6 @@
 }
 
 @media (max-width: 1279px) {
-  .navBarWrapper {
-    border-bottom-color: #d1d5db;
-  }
-
   .navBar {
     gap: 12px;
   }

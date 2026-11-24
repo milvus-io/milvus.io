@@ -8,7 +8,7 @@
     background-color: #fff;
     display: flex;
     height: 100%;
-    left: 0;
+    inset-inline-start: 0;
     top: 0;
     bottom: 0;
     z-index: 999;
@@ -29,11 +29,11 @@
   .buttonWrapper {
     flex: 0 0 1px;
     position: relative;
-    border-right: 1px solid var(--color-grey-04);
+    border-inline-end: 1px solid var(--color-grey-04);
 
     .floatBtn {
       position: absolute;
-      left: -13px;
+      inset-inline-start: -13px;
       top: 0;
       bottom: 0;
       width: 24px;
@@ -63,6 +63,20 @@
         transform: rotate(0);
         box-shadow: 3px 3px 5px rgb(0 0 0 / 20%);
       }
+    }
+  }
+}
+
+:global(html[lang='ar']) {
+  .flexibleSectionWrapper .buttonWrapper .floatBtn {
+    .controller {
+      transform: rotate(0);
+      box-shadow: 3px -3px 5px rgb(0 0 0 / 20%);
+    }
+
+    .expandIcon {
+      transform: rotate(180deg);
+      box-shadow: -3px 3px 5px rgb(0 0 0 / 20%);
     }
   }
 }

@@ -15,7 +15,9 @@ import {
   ModeEnum,
 } from '@/types/sizingV250';
 import ZillizAdv from '@/parts/blogs/zillizAdv';
-import { CLOUD_SIGNUP_LINK } from '@/consts';
+import { CLOUD_SIGNUP_LINK, ABSOLUTE_BASE_URL } from '@/consts';
+import JsonLd from '@/components/JsonLd';
+import { buildSchema } from '@/schema';
 import { LanguageEnum } from '@/types/localization';
 import { fetchMilvusReleases } from '@/http/milvus';
 import {
@@ -115,8 +117,35 @@ export default function SizingTool(props: Props) {
     }));
   };
 
+  const homeUrl =
+    locale === LanguageEnum.ENGLISH
+      ? ABSOLUTE_BASE_URL
+      : `${ABSOLUTE_BASE_URL}/${locale}`;
+  const toolUrl =
+    locale === LanguageEnum.ENGLISH
+      ? `${ABSOLUTE_BASE_URL}/tools/sizing-v250`
+      : `${ABSOLUTE_BASE_URL}/${locale}/tools/sizing-v250`;
+  const ldSchemas = [
+    buildSchema('softwareApp', {
+      name: t('titleV250') || 'Milvus Sizing Tool (v2.5.x)',
+      desc:
+        t('content') ||
+        'Estimate memory, disk, and cluster sizing for Milvus v2.5.x and earlier deployments.',
+      url: toolUrl,
+      softwareVersion: selectedVersion,
+      isAccessibleForFree: true,
+      inLanguage: locale,
+      applicationCategory: 'DeveloperApplication',
+      operatingSystem: 'Web',
+    }),
+    buildSchema('breadcrumb', [
+      { name: 'Home', url: homeUrl },
+      { name: t('titleV250') || 'Milvus Sizing Tool', url: toolUrl },
+    ]),
+  ];
+
   return (
-    <main className={classes.pageContainer}>
+    <div className={classes.pageContainer}>
       <Layout darkMode={false}>
         <Head>
           <title>
@@ -125,8 +154,9 @@ export default function SizingTool(props: Props) {
           </title>
           <meta name="description" content="Sizing tool v2.5.x" />
         </Head>
+        <JsonLd schema={ldSchemas} />
 
-        <div
+        <main
           className={clsx(
             pageClasses.homeContainer,
             classes.sizingToolContainer
@@ -180,9 +210,9 @@ export default function SizingTool(props: Props) {
             className={classes.zillizAdv}
             ctaLink={`${CLOUD_SIGNUP_LINK}?utm_source=milvusio&utm_medium=referral&utm_campaign=milvus_bottom_banner&utm_content=tools/sizing`}
           />
-        </div>
+        </main>
       </Layout>
-    </main>
+    </div>
   );
 }
 

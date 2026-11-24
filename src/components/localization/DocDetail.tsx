@@ -101,7 +101,7 @@ export function DocDetailPage(props: DocDetailPageProps) {
     // The canonical page defines the article's language, version, and date.
     if (seoUrl !== canonicalUrl) return [breadcrumb];
 
-    return [
+    const schemas = [
       buildSchema('techArticle', {
         absoluteUrl: canonicalUrl,
         title: docTitle,
@@ -112,9 +112,22 @@ export function DocDetailPage(props: DocDetailPageProps) {
       }),
       breadcrumb,
     ];
+    if (currentId === 'glossary.md' && tree) {
+      const termSet = buildSchema('definedTermSet', {
+        absoluteUrl: canonicalUrl,
+        name: docTitle,
+        desc: summary || undefined,
+        inLanguage: lang,
+        html: tree,
+      });
+      if (termSet.hasDefinedTerm?.length) {
+        schemas.push(termSet);
+      }
+    }
+    return schemas;
   }, [
     canonicalUrl, seoUrl, docTitle, summary, lastModified, lang, version,
-    homePageLink, headerT,
+    homePageLink, headerT, currentId, tree,
   ]);
 
   return (

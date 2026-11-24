@@ -9,6 +9,8 @@ import { DISCORD_INVITE_URL, MEETUP_URL } from '@/consts/externalLinks';
 import Link from 'next/link';
 import { ABSOLUTE_BASE_URL } from '@/consts';
 import { LanguageEnum } from '@/types/localization';
+import JsonLd from '@/components/JsonLd';
+import { buildSchema, SITE } from '@/schema';
 
 interface Key {
   title: string;
@@ -98,6 +100,35 @@ export function IntroMilvus(props: Props) {
     </li>,
   ];
 
+  const homeUrl =
+    locale === LanguageEnum.ENGLISH
+      ? ABSOLUTE_BASE_URL
+      : `${ABSOLUTE_BASE_URL}/${locale}`;
+  const introUrl =
+    locale === LanguageEnum.ENGLISH
+      ? `${ABSOLUTE_BASE_URL}/intro`
+      : `${ABSOLUTE_BASE_URL}/${locale}/intro`;
+  const ldSchemas = [
+    buildSchema('techArticle', {
+      absoluteUrl: introUrl,
+      title: t('title') || 'What is Milvus',
+      desc:
+        t('desc') ||
+        'All you need to know about vector embedding, vector search, and why Milvus is a purpose-built vector database.',
+      inLanguage: locale,
+      about: {
+        '@type': 'SoftwareApplication',
+        '@id': SITE.softwareAppId,
+        name: SITE.name,
+        url: SITE.url,
+      },
+    }),
+    buildSchema('breadcrumb', [
+      { name: 'Home', url: homeUrl },
+      { name: t('title') || 'What is Milvus', url: introUrl },
+    ]),
+  ];
+
   return (
     <Layout>
       <Head>
@@ -113,6 +144,7 @@ export function IntroMilvus(props: Props) {
           content="Milvus, Vector Database, Vector Search"
         />
       </Head>
+      <JsonLd schema={ldSchemas} />
 
       <main>
         <section className={styles.headerSection}>

@@ -147,7 +147,7 @@ export function MilvusDemos(props: Props) {
   };
 
   return (
-    <main>
+    <>
       <Layout darkMode={true}>
         <Head>
           <title>{t('meta.title')}</title>
@@ -158,7 +158,8 @@ export function MilvusDemos(props: Props) {
           />
         </Head>
 
-        <section className={classes.headerSection}>
+        <main>
+          <section className={classes.headerSection}>
           <div
             className={clsx(pageClasses.homeContainer, classes.innerSection)}
           >
@@ -192,14 +193,15 @@ export function MilvusDemos(props: Props) {
         <section
           className={clsx(pageClasses.homeContainer, classes.demoContainer)}
         >
-          <ul className={classes.demoList}>
-            {DEMOS.map(demo => (
-              <li key={demo.name}>
-                <DemoCard {...demo} handelOpenDialog={handelOpenDialog} />
-              </li>
-            ))}
-          </ul>
-        </section>
+            <ul className={classes.demoList}>
+              {DEMOS.map(demo => (
+                <li key={demo.name}>
+                  <DemoCard {...demo} handelOpenDialog={handelOpenDialog} />
+                </li>
+              ))}
+            </ul>
+          </section>
+        </main>
       </Layout>
       <CustomizedContentDialogs
         open={dialogConfig.open}
@@ -218,6 +220,6 @@ export function MilvusDemos(props: Props) {
         message={snackbarConfig.message}
         handleClose={handleCloseSnackbar}
       />
-    </main>
+    </>
   );
 }

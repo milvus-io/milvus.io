@@ -11,6 +11,9 @@ import { SHARE_YOUR_STORY_URL } from '@/consts/externalLinks';
 import Head from 'next/head';
 import { FinalUserCaseType } from '@/types/useCase';
 import { LanguageEnum } from '@/types/localization';
+import { ABSOLUTE_BASE_URL } from '@/consts';
+import JsonLd from '@/components/JsonLd';
+import { buildSchema } from '@/schema';
 
 type Props = {
   useCaseList: FinalUserCaseType[];
@@ -20,6 +23,36 @@ type Props = {
 export function UseCase(props: Props) {
   const { useCaseList, locale = LanguageEnum.ENGLISH } = props;
   const { t } = useTranslation('useCase', { lng: locale });
+
+  const homeUrl =
+    locale === LanguageEnum.ENGLISH
+      ? ABSOLUTE_BASE_URL
+      : `${ABSOLUTE_BASE_URL}/${locale}`;
+  const pageUrl =
+    locale === LanguageEnum.ENGLISH
+      ? `${ABSOLUTE_BASE_URL}/use-cases`
+      : `${ABSOLUTE_BASE_URL}/${locale}/use-cases`;
+  const ldSchemas = [
+    buildSchema('collectionPage', {
+      absoluteUrl: pageUrl,
+      name: t('title') || 'Milvus Use Cases',
+      desc:
+        t('desc') ||
+        'Discover Milvus use cases across various industries to unveil the power of purpose-built vector databases.',
+      inLanguage: locale,
+      items: (useCaseList || [])
+        .filter(item => item?.name)
+        .map(item => ({
+          name: item.name,
+          url: item.link || undefined,
+          description: item.description || undefined,
+        })),
+    }),
+    buildSchema('breadcrumb', [
+      { name: 'Home', url: homeUrl },
+      { name: t('title') || 'Use cases', url: pageUrl },
+    ]),
+  ];
 
   return (
     <Layout>
@@ -31,6 +64,7 @@ export function UseCase(props: Props) {
         />
         <meta name="keywords" content="Milvus, vector search, use cases" />
       </Head>
+      <JsonLd schema={ldSchemas} />
       <main>
         <div className={styles.casePageContainer}>
           <div

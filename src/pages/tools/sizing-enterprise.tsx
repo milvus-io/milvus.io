@@ -89,7 +89,7 @@ export default function SizingToolEnterprise(props: Props) {
   };
 
   return (
-    <main className={classes.pageContainer}>
+    <div className={classes.pageContainer}>
       <Layout darkMode={false}>
         <Head>
           <title>
@@ -100,7 +100,7 @@ export default function SizingToolEnterprise(props: Props) {
           <meta name="robots" content="noindex, nofollow" />
         </Head>
 
-        <div
+        <main
           className={clsx(
             pageClasses.homeContainer,
             classes.sizingToolContainer
@@ -139,9 +139,9 @@ export default function SizingToolEnterprise(props: Props) {
             className={classes.zillizAdv}
             ctaLink={`${CLOUD_SIGNUP_LINK}?utm_source=milvusio&utm_medium=referral&utm_campaign=milvus_bottom_banner&utm_content=tools/sizing-enterprise`}
           />
-        </div>
+        </main>
       </Layout>
-    </main>
+    </div>
   );
 }
 

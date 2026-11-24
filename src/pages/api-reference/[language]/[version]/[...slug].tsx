@@ -45,6 +45,55 @@ import {
 import { getContentLastModified } from '@/server/content-freshness';
 import { useBreadcrumbLabels } from '@/hooks/use-breadcrumb-lables';
 import { useAnchorEventListener } from '@/hooks/use-anchor-event-listener';
+import JsonLd from '@/components/JsonLd';
+import { buildSchema, SITE } from '@/schema';
+
+const API_SDK_META: Record<
+  string,
+  {
+    name: string;
+    programmingLanguage: string;
+    codeRepository: string;
+    sameAs?: string[];
+  }
+> = {
+  [ApiReferenceRouteEnum.Python]: {
+    name: 'PyMilvus',
+    programmingLanguage: 'Python',
+    codeRepository: 'https://github.com/milvus-io/pymilvus',
+    sameAs: ['https://pypi.org/project/pymilvus/'],
+  },
+  [ApiReferenceRouteEnum.Java]: {
+    name: 'Milvus Java SDK',
+    programmingLanguage: 'Java',
+    codeRepository: 'https://github.com/milvus-io/milvus-sdk-java',
+  },
+  [ApiReferenceRouteEnum.Go]: {
+    name: 'Milvus Go SDK',
+    programmingLanguage: 'Go',
+    codeRepository: 'https://github.com/milvus-io/milvus-sdk-go',
+  },
+  [ApiReferenceRouteEnum.Node]: {
+    name: 'Milvus Node.js SDK',
+    programmingLanguage: 'JavaScript / TypeScript',
+    codeRepository: 'https://github.com/milvus-io/milvus-sdk-node',
+  },
+  [ApiReferenceRouteEnum.Csharp]: {
+    name: 'Milvus C# SDK',
+    programmingLanguage: 'C#',
+    codeRepository: 'https://github.com/milvus-io/milvus-sdk-csharp',
+  },
+  [ApiReferenceRouteEnum.Cplus]: {
+    name: 'Milvus C++ SDK',
+    programmingLanguage: 'C++',
+    codeRepository: 'https://github.com/milvus-io/milvus-sdk-cpp',
+  },
+  [ApiReferenceRouteEnum.Rust]: {
+    name: 'Milvus Rust SDK',
+    programmingLanguage: 'Rust',
+    codeRepository: 'https://github.com/milvus-io/milvus-sdk-rust',
+  },
+};
 
 interface ApiDetailPageProps {
   doc: string;
@@ -59,6 +108,7 @@ interface ApiDetailPageProps {
   headingContent: string;
   languageCategory: string;
   latestVersion: string;
+  lastModified?: string | null;
   meta: {
     title: string;
     path: string[];
@@ -78,6 +128,7 @@ export default function Template(props: ApiDetailPageProps) {
     headingContent,
     languageCategory,
     latestVersion,
+    lastModified,
     meta,
   } = props;
 
@@ -203,8 +254,66 @@ export default function Template(props: ApiDetailPageProps) {
     menu: menus,
   });
 
+  const ldSchemas = useMemo(() => {
+    const breadcrumb = buildSchema('breadcrumb', [
+      { name: 'Home', url: ABSOLUTE_BASE_URL },
+      { name: 'Docs', url: `${ABSOLUTE_BASE_URL}/docs` },
+      {
+        name: 'API Reference',
+        url: `${ABSOLUTE_BASE_URL}/api-reference/${languageCategory}/${version}/About.md`,
+      },
+      { name: headingContent, url: absoluteUrl },
+    ]);
+    if (absoluteUrl !== canonicalUrl) return [breadcrumb];
+    const sdkMeta = API_SDK_META[languageCategory];
+    const releaseEntity = {
+      '@type': 'SoftwareApplication',
+      '@id': `${SITE.softwareAppId}-${encodeURIComponent(version)}`,
+      name: SITE.name,
+      url: SITE.url,
+      softwareVersion: version,
+    };
+    const aboutEntities = sdkMeta
+      ? [
+          releaseEntity,
+          {
+            '@type': 'SoftwareSourceCode',
+            name: sdkMeta.name,
+            programmingLanguage: sdkMeta.programmingLanguage,
+            codeRepository: sdkMeta.codeRepository,
+            ...(sdkMeta.sameAs ? { sameAs: sdkMeta.sameAs } : {}),
+          },
+        ]
+      : releaseEntity;
+    return [
+      buildSchema('techArticle', {
+        absoluteUrl: canonicalUrl,
+        title: pageTitle,
+        desc: pageDesc,
+        modifiedTime: lastModified,
+        inLanguage: 'en',
+        keywords: sdkMeta
+          ? ['Milvus', sdkMeta.name, sdkMeta.programmingLanguage, 'API Reference']
+          : ['Milvus', 'API Reference'],
+        about: aboutEntities,
+      }),
+      breadcrumb,
+    ];
+  }, [
+    languageCategory,
+    version,
+    headingContent,
+    absoluteUrl,
+    canonicalUrl,
+    pageTitle,
+    pageDesc,
+    lastModified,
+  ]);
+
   return (
-    <DocLayout
+    <>
+      <JsonLd schema={ldSchemas} />
+      <DocLayout
       seo={{
         title: pageTitle,
         desc: pageDesc,
@@ -258,7 +367,8 @@ export default function Template(props: ApiDetailPageProps) {
           </div>
         </section>
       }
-    />
+      />
+    </>
   );
 }
 
@@ -443,6 +553,9 @@ export const getStaticProps: GetStaticProps = async context => {
   const metaPathList = slug.slice();
   const metaTitle = metaPathList.pop();
   const metaPath = metaPathList.join('/');
+  const lastModified = matchedDoc.sourcePath
+    ? getContentLastModified(matchedDoc.sourcePath, frontMatter)
+    : undefined;
 
   return {
     props: {
@@ -459,6 +572,7 @@ export const getStaticProps: GetStaticProps = async context => {
       curCategoryContentData: curCategoryContentDataOfAllVersion,
       headingContent: firstHeading || 'Milvus API Reference',
       languageCategory,
+      lastModified: lastModified ?? null,
       meta: {
         title: metaTitle,
         path: metaPath,

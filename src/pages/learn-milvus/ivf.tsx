@@ -130,7 +130,7 @@ export default function IVFLab() {
         ogImage="/images/learn-milvus/og-ivf.png"
         faq={faq}
       />
-      <div className={styles.ivfLab} dir={locale === 'ar' ? 'rtl' : undefined}>
+      <main className={styles.ivfLab} dir={locale === 'ar' ? 'rtl' : undefined}>
         <header className={styles.playgroundHeader}>
           <Link href={getLocalePath('/learn-milvus')} className={styles.backLink}>&larr; {t('common.back')}</Link>
           <h1>{t('ivf.title')}</h1>
@@ -268,7 +268,7 @@ export default function IVFLab() {
           faq={faq}
           related={['hnsw', 'diskann', 'metric']}
         />
-      </div>
+      </main>
     </Layout>
   );
 }

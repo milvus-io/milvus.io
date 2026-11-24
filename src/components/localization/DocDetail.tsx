@@ -93,8 +93,12 @@ export function DocDetailPage(props: DocDetailPageProps) {
   // category labels are omitted since they have no standalone URL.
   const docTitle = `${frontMatter?.title || headingContent}`;
   const ldSchemas = useMemo(() => {
+    const homeUrl =
+      lang === LanguageEnum.ENGLISH
+        ? ABSOLUTE_BASE_URL
+        : `${ABSOLUTE_BASE_URL}/${lang}`;
     const breadcrumb = buildSchema('breadcrumb', [
-      { name: 'Home', url: ABSOLUTE_BASE_URL },
+      { name: 'Home', url: homeUrl },
       { name: headerT('docs'), url: `${ABSOLUTE_BASE_URL}${homePageLink}` },
       { name: docTitle, url: seoUrl },
     ]);

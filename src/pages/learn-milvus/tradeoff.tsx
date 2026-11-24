@@ -39,7 +39,7 @@ export default function TradeoffDashboard() {
       <Head>
         <title>{t('tradeoff.metaTitle')}</title>
       </Head>
-      <div className={styles.tradeoffPage}>
+      <main className={styles.tradeoffPage}>
         <header className={styles.playgroundHeader}>
           <Link href="/learn-milvus" className={styles.backLink}>&larr; {t('common.back')}</Link>
           <h1>{t('tradeoff.title')}</h1>
@@ -147,7 +147,7 @@ export default function TradeoffDashboard() {
             <Trans t={t} i18nKey="tradeoff.takeaway" components={{ strong: <strong key="strong" /> }} />
           </p>
         </div>
-      </div>
+      </main>
     </Layout>
   );
 }

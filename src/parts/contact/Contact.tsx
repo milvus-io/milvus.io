@@ -48,51 +48,51 @@ function ContactContent(props: Props) {
 
   return (
     <Layout>
+      <Head>
+        <title>
+          Contact Us - Get help with Milvus Deployment & Managed Milvus
+        </title>
+        <meta
+          name="description"
+          content="Need help deploying Milvus or have questions about Zilliz Cloud? Reach out to the Zilliz team today through our contact form. Whether you're ready to scale or just starting out, our experts are here to assist you with all your vector database needs."
+        />
+        <meta
+          name="keywords"
+          content="Milvus support, managed Milvus, Zilliz Cloud, Contact Zilliz, Vector database help, Milvus deployment support, Zilliz Cloud support, Managed vector database, Milvus database contact, Zilliz team contact, Get help with Milvus."
+        />
+      </Head>
       <main>
-        <Head>
-          <title>
-            Contact Us - Get help with Milvus Deployment & Managed Milvus
-          </title>
-          <meta
-            name="description"
-            content="Need help deploying Milvus or have questions about Zilliz Cloud? Reach out to the Zilliz team today through our contact form. Whether you're ready to scale or just starting out, our experts are here to assist you with all your vector database needs."
-          />
-          <meta
-            name="keywords"
-            content="Milvus support, managed Milvus, Zilliz Cloud, Contact Zilliz, Vector database help, Milvus deployment support, Zilliz Cloud support, Managed vector database, Milvus database contact, Zilliz team contact, Get help with Milvus."
-          />
-        </Head>
-      </main>
-      <section className="py-[80px] bg-[url('/images/contact/contact-bg.png')] bg-no-repeat bg-cover bg-center">
-        <div className={pageClasses.homeContainer}>
-          <h1 className="text-[42px] leading-[54px] font-[600] text-center mb-[12px]">
-            {t('title')}
-          </h1>
-          <p className="text-[16px] leading-[24px] max-w-[880px] mx-[auto] text-center mb-[40px] font-mono text-black1">
-            <Trans
-              t={t}
-              i18nKey="desc"
-              components={[
-                <LocalizedAnchor
-                  key="cloud"
-                  href={`${CLOUD_SIGNUP_LINK}?utm_source=milvusio&utm_medium=referral&utm_campaign=milvus_contact_us&utm_content=contact`}
-                  target="_blank"
-                  className="underline text-black1"
-                ></LocalizedAnchor>,
-                <LocalizedAnchor
-                  key="zilliz"
-                  href="https://zilliz.com"
-                  target="_blank"
-                  className="underline text-black1"
-                ></LocalizedAnchor>,
-              ]}
-            />
-          </p>
-          <div className="rounded-[16px] border border-solid border-[#ECECEE] bg-white p-[40px] max-w-[680px] min-h-[340px] mx-auto">
-            <div id="hubspot-form" onInputCapture={() => measurement.current.start()} onInvalidCapture={() => measurement.current.error('validation')}>{formContentHtml}</div>
+        <section className="py-[80px] bg-[url('/images/contact/contact-bg.png')] bg-no-repeat bg-cover bg-center">
+          <div className={pageClasses.homeContainer}>
+            <h1 className="text-[42px] leading-[54px] font-[600] text-center mb-[12px]">
+              {t('title')}
+            </h1>
+            <p className="text-[16px] leading-[24px] max-w-[880px] mx-[auto] text-center mb-[40px] font-mono text-black1">
+              <Trans
+                t={t}
+                i18nKey="desc"
+                components={[
+                  <LocalizedAnchor
+                    key="cloud"
+                    href={`${CLOUD_SIGNUP_LINK}?utm_source=milvusio&utm_medium=referral&utm_campaign=milvus_contact_us&utm_content=contact`}
+                    target="_blank"
+                    className="underline text-black1"
+                  ></LocalizedAnchor>,
+                  <LocalizedAnchor
+                    key="zilliz"
+                    href="https://zilliz.com"
+                    target="_blank"
+                    className="underline text-black1"
+                  ></LocalizedAnchor>,
+                ]}
+              />
+            </p>
+            <div className="rounded-[16px] border border-solid border-[#ECECEE] bg-white p-[40px] max-w-[680px] min-h-[340px] mx-auto">
+              <div id="hubspot-form" onInputCapture={() => measurement.current.start()} onInvalidCapture={() => measurement.current.error('validation')}>{formContentHtml}</div>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </main>
     </Layout>
   );
 }

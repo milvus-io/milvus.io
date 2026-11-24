@@ -67,7 +67,7 @@ export default function MetricPlayground() {
         ogImage="/images/learn-milvus/og-metric.png"
         faq={faq}
       />
-      <div className={styles.playground} dir={locale === 'ar' ? 'rtl' : undefined}>
+      <main className={styles.playground} dir={locale === 'ar' ? 'rtl' : undefined}>
         <header className={styles.playgroundHeader}>
           <Link href={getLocalePath('/learn-milvus')} className={styles.backLink}>
             &larr; {t('common.back')}
@@ -146,7 +146,7 @@ export default function MetricPlayground() {
           faq={faq}
           related={['ivf', 'hnsw', 'diskann']}
         />
-      </div>
+      </main>
     </Layout>
   );
 }

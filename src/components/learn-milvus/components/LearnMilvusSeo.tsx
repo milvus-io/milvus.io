@@ -50,12 +50,16 @@ export default function LearnMilvusSeo(props: LearnMilvusSeoProps) {
   const learningResourceLd = {
     '@context': 'https://schema.org',
     '@type': ['WebPage', 'LearningResource'],
+    '@id': `${url}#webpage`,
     name: title,
     description,
     url,
     learningResourceType: 'Interactive visualization',
     inLanguage: locale,
     ...(imageUrl ? { image: imageUrl } : {}),
+    about: {
+      '@id': `${ABSOLUTE_BASE_URL}/#software`,
+    },
     isPartOf: {
       '@id': `${ABSOLUTE_BASE_URL}/#website`,
     },
@@ -105,15 +109,18 @@ export default function LearnMilvusSeo(props: LearnMilvusSeoProps) {
       <meta name="twitter:description" content={description} />
       {imageUrl && <meta name="twitter:image" content={imageUrl} />}
       <script
+        key="ld-learning-resource"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: serializeJsonLd(learningResourceLd) }}
       />
       <script
+        key="ld-breadcrumb"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: serializeJsonLd(breadcrumbLd) }}
       />
       {faqLd && (
         <script
+          key="ld-faq"
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: serializeJsonLd(faqLd) }}
         />

@@ -85,7 +85,7 @@ export default function HNSWExplorer() {
         ogImage="/images/learn-milvus/og-hnsw.png"
         faq={faq}
       />
-      <div className={styles.hnswExplorer} dir={locale === 'ar' ? 'rtl' : undefined}>
+      <main className={styles.hnswExplorer} dir={locale === 'ar' ? 'rtl' : undefined}>
         <header className={styles.playgroundHeader}>
           <Link href={getLocalePath('/learn-milvus')} className={styles.backLink}>&larr; {t('common.back')}</Link>
           <h1>{t('hnsw.title')}</h1>
@@ -185,7 +185,7 @@ export default function HNSWExplorer() {
           faq={faq}
           related={['ivf', 'diskann', 'metric']}
         />
-      </div>
+      </main>
     </Layout>
   );
 }

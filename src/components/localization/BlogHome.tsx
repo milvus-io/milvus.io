@@ -272,7 +272,7 @@ export const BlogHome: React.FC<Props> = props => {
         </Link>
         <p className={styles['recommend-desc']}>{recommend.desc}</p>
         <div className={styles['recommend-extra']}>
-          <BlogExtra data={recommend} dark={true} />
+          <BlogExtra data={recommend} dark={true} locale={locale} />
         </div>
       </section>
     );
@@ -285,7 +285,7 @@ export const BlogHome: React.FC<Props> = props => {
           <Link href={getBlogLink(b, locale as LanguageEnum)}>
             <h2 className={styles['recent-blog-title']}>{b.title}</h2>
           </Link>
-          <BlogExtra data={b} />
+          <BlogExtra data={b} locale={locale} />
         </div>
         {i < list.length - 1 && (
           <hr key={i} className={styles['recent-blog-separator']} />
@@ -612,12 +612,16 @@ interface BlogExtraProps {
   className?: string;
   dark?: boolean;
   data: BlogFrontMatterType;
+  locale?: LanguageEnum;
 }
 
 const BlogExtra: React.FC<BlogExtraProps> = props => {
   const { tags, date } = props.data;
-  const { t } = useTranslation('blog');
-  const displayDate = dayjs.utc(date).format('MMM DD, YYYY');
+  const { t } = useTranslation('blog', props.locale ? { lng: props.locale } : undefined);
+  const parsedDate = date ? dayjs.utc(date) : null;
+  const isValidDate = Boolean(parsedDate?.isValid());
+  const displayDate = isValidDate ? parsedDate!.format('MMM DD, YYYY') : '';
+  const isoDate = isValidDate ? parsedDate!.toISOString() : undefined;
   const displayTags = tags
     .map(tag => t(`blog:filter.${convertToNewTag(tag)}`))
     .join(' ');
@@ -630,8 +634,14 @@ const BlogExtra: React.FC<BlogExtraProps> = props => {
       )}
     >
       <span className={styles['blog-extra-tags']}>{displayTags}</span>
-      <span className={styles['blog-extra-separator']} />
-      <span className={styles['blog-extra-date']}>{displayDate}</span>
+      {isoDate && (
+        <>
+          <span className={styles['blog-extra-separator']} />
+          <time className={styles['blog-extra-date']} dateTime={isoDate}>
+            {displayDate}
+          </time>
+        </>
+      )}
     </p>
   );
 };
@@ -653,7 +663,7 @@ const BlogCard: React.FC<BlogCardProps> = props => {
         className={styles['blog-card-img']}
         style={{ backgroundImage: `url(${data.cover})` }}
       />
-      <BlogExtra className={styles['blog-card-extra']} data={data} />
+      <BlogExtra className={styles['blog-card-extra']} data={data} locale={locale} />
       <h3 className={styles['blog-card-title']}>{data.title}</h3>
     </Link>
   );

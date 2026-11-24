@@ -25,6 +25,10 @@ export default function Homepage(props: {
   const { headlines, lang } = props;
   const { locale } = useGlobalLocale();
   const pageLang = lang || locale || LanguageEnum.ENGLISH;
+  const pageUrl =
+    pageLang === LanguageEnum.ENGLISH
+      ? ABSOLUTE_BASE_URL
+      : `${ABSOLUTE_BASE_URL}/${pageLang}`;
   return (
     <Layout headerClassName={pageClasses.homeContainer}>
       <main className={classes.homepageContainer}>
@@ -34,14 +38,13 @@ export default function Homepage(props: {
             buildSchema('organization'),
             buildSchema('website'),
             buildSchema('webPage', {
-              absoluteUrl: `${ABSOLUTE_BASE_URL}/${pageLang}`,
+              absoluteUrl: pageUrl,
               inLanguage: pageLang,
               about: { '@id': SITE.softwareAppId },
             }),
             buildSchema('softwareApp', {
               offerUrl: CLOUD_SIGNUP_LINK,
               codeRepository: GITHUB_MILVUS_LINK,
-              inLanguage: pageLang,
             }),
           ]}
         />

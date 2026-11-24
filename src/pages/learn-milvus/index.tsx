@@ -26,7 +26,7 @@ export default function LearnMilvusHome() {
         description={t('home.metaDesc')}
         ogImage="/images/learn-milvus/og-home.png"
       />
-      <div className={styles.home} dir={locale === 'ar' ? 'rtl' : undefined}>
+      <main className={styles.home} dir={locale === 'ar' ? 'rtl' : undefined}>
         <header className={styles.homeHeader}>
           <h1>{t('home.title')}</h1>
           <p>
@@ -41,7 +41,7 @@ export default function LearnMilvusHome() {
             </Link>
           ))}
         </div>
-      </div>
+      </main>
     </Layout>
   );
 }

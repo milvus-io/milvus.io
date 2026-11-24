@@ -106,7 +106,7 @@ export default function DiskANNExplorer() {
         ogImage="/images/learn-milvus/og-diskann.png"
         faq={faq}
       />
-      <div className={styles.diskannPage} dir={locale === 'ar' ? 'rtl' : undefined}>
+      <main className={styles.diskannPage} dir={locale === 'ar' ? 'rtl' : undefined}>
         <header className={styles.playgroundHeader}>
           <Link href={getLocalePath('/learn-milvus')} className={styles.backLink}>&larr; {t('common.back')}</Link>
           <h1>{t('diskann.title')}</h1>
@@ -239,7 +239,7 @@ export default function DiskANNExplorer() {
           faq={faq}
           related={['hnsw', 'ivf', 'metric']}
         />
-      </div>
+      </main>
     </Layout>
   );
 }

@@ -351,18 +351,44 @@ export function definedTermSchema({
   };
 }
 
+const NAMED_HTML_ENTITIES: Record<string, string> = {
+  nbsp: ' ',
+  amp: '&',
+  lt: '<',
+  gt: '>',
+  quot: '"',
+  apos: "'",
+  rsquo: '’',
+  lsquo: '‘',
+  rdquo: '”',
+  ldquo: '“',
+  mdash: '—',
+  ndash: '–',
+};
+
 const decodeHtmlEntities = (input: string): string =>
-  input
-    .replace(/&nbsp;/g, ' ')
-    .replace(/&amp;/g, '&')
-    .replace(/&lt;/g, '<')
-    .replace(/&gt;/g, '>')
-    .replace(/&quot;/g, '"')
-    .replace(/&#39;/g, "'");
+  input.replace(/&(?:#(\d+)|#x([0-9a-f]+)|([a-z]+));/gi, (match, dec, hex, name) => {
+    if (dec) {
+      const code = Number.parseInt(dec, 10);
+      return Number.isFinite(code) && code >= 0 && code <= 0x10ffff
+        ? String.fromCodePoint(code)
+        : match;
+    }
+    if (hex) {
+      const code = Number.parseInt(hex, 16);
+      return Number.isFinite(code) && code >= 0 && code <= 0x10ffff
+        ? String.fromCodePoint(code)
+        : match;
+    }
+    const resolved = NAMED_HTML_ENTITIES[name.toLowerCase()];
+    return resolved ?? match;
+  });
 
 const stripHtml = (input: string): string =>
   decodeHtmlEntities(
     input
+      .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '')
+      .replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi, '')
       .replace(/<button\b[^>]*>[\s\S]*?<\/button>/gi, '')
       .replace(/<svg\b[^>]*>[\s\S]*?<\/svg>/gi, '')
       .replace(/<[^>]+>/g, ' ')

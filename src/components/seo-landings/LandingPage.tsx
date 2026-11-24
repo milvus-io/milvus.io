@@ -72,10 +72,11 @@ function useLandingLocale(lang: string) {
 }
 
 export function LandingHead({
-  title, description, path, twinPath, zh, image, faqs = [], reviewedOn, sources = [], slug,
+  title, description, path, twinPath, zh, image, faqs = [], reviewedOn, sources = [], slug, items = [],
 }: {
   title: string; description: string; path: string; twinPath: string; zh: boolean;
   image?: string; faqs?: [string, string][]; reviewedOn?: string; sources?: string[]; slug?: string;
+  items?: { title: string; path: string; description?: string }[];
 }) {
   const en = zh ? twinPath : path;
   const chinese = zh ? path : twinPath;
@@ -90,11 +91,25 @@ export function LandingHead({
   }).filter(Boolean))];
   const graph = [
     {
-      '@type': 'WebPage', '@id': url, url, name: title, description, inLanguage,
+      '@type': !isDetail && items.length ? 'CollectionPage' : 'WebPage',
+      '@id': url, url, name: title, description, inLanguage,
       isPartOf: { '@id': WEBSITE_ID },
       ...(reviewedOn ? { dateModified: reviewedOn, lastReviewed: reviewedOn } : {}),
       ...(image ? { primaryImageOfPage: { '@type': 'ImageObject', url: HOST + image } } : {}),
       publisher: { '@id': ORG_ID },
+      ...(!isDetail && items.length ? {
+        mainEntity: {
+          '@type': 'ItemList',
+          numberOfItems: items.length,
+          itemListElement: items.map((item, idx) => ({
+            '@type': 'ListItem',
+            position: idx + 1,
+            name: item.title,
+            url: HOST + item.path,
+            ...(item.description ? { description: item.description } : {}),
+          })),
+        },
+      } : {}),
     },
     ...(isDetail ? [{
       '@type': 'TechArticle',
@@ -135,7 +150,7 @@ export function LandingHead({
     {image && <><meta property="og:image" content={HOST + image} key="og-image" />
       <meta property="og:image:width" content="1200" /><meta property="og:image:height" content="630" />
       <meta property="og:image:alt" content={title} /><meta name="twitter:image" content={HOST + image} /></>}
-    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: json({ '@context': 'https://schema.org', '@graph': graph }) }} />
+    <script key="ld-landing" type="application/ld+json" dangerouslySetInnerHTML={{ __html: json({ '@context': 'https://schema.org', '@graph': graph }) }} />
   </Head>;
 }
 
@@ -268,7 +283,7 @@ export function LandingIndex({ lang, group, pages }: { lang: string; group: stri
   const title = group === 'compare' ? (zh ? 'Milvus 产品对比' : 'Compare Milvus with other databases') : (zh ? 'Milvus 解决方案' : 'Milvus solutions');
   const description = zh ? '按架构、工作负载和检索需求选择适合的 Milvus 方案，查看代码、文档和用户案例。' : 'Choose a Milvus architecture and retrieval approach for your workload, with examples, documentation and customer stories.';
   const path = `${prefix}/${group}`;
-  return <Layout canonicalUrl={HOST + path} disableSelfHreflang headerClassName={styles.landingHeader}><LandingHead title={title} description={description} path={path} twinPath={`${zh ? '' : '/zh'}/${group}`} zh={zh} />
+  return <Layout canonicalUrl={HOST + path} disableSelfHreflang headerClassName={styles.landingHeader}><LandingHead title={title} description={description} path={path} twinPath={`${zh ? '' : '/zh'}/${group}`} zh={zh} items={pages} />
     <main className={styles.page} lang={zh ? 'zh-Hans' : 'en'}><nav className="landing-subnav"><div className="wrap"><Link href={`${prefix}/solutions`}>{zh ? '解决方案' : 'Solutions'}</Link><Link href={`${prefix}/compare`}>{zh ? '产品对比' : 'Compare'}</Link></div></nav>
       <div className="wrap"><div className="review-hero"><h1>{title}</h1><p>{description}</p></div><div className="index-grid">{pages.map(p => <Link className="index-card" href={p.path} key={p.path}><h2>{p.title}</h2><p>{p.description}</p></Link>)}</div></div>
     </main></Layout>;

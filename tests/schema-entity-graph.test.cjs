@@ -129,9 +129,9 @@ test('glossary.md extracts DefinedTermSet and DefinedTerm on canonical docs only
   const glossaryHtml = `
     <h1 id="Terminology">Terminology</h1>
     <h2 id="AutoID" class="common-anchor-header">AutoID<button class="anchor-icon"><svg></svg></button></h2>
-    <p>AutoID determines whether to auto-generate primary keys and handles &lt;/script&gt;&lt;script&gt; safely.</p>
+    <p>AutoID determines whether to auto-generate primary keys and handles &lt;/script&gt;&lt;script&gt; safely.<script>ignored()</script><style>.x{}</style></p>
     <h2 id="Collection" class="common-anchor-header">Collection<button class="anchor-icon"><svg></svg></button></h2>
-    <p>A collection is equivalent to a table in a relational database &amp; stores entities.</p>
+    <p>A collection is equivalent to a table in a relational database &amp; stores entities &mdash; e.g. &amp;lt;code&amp;gt; and Milvus&#x27;s index&#8217;s schema.</p>
   `;
   const seoUtils = load('src/components/localization/utils.ts', {
     '@/types/localization': localization,
@@ -186,7 +186,21 @@ test('glossary.md extracts DefinedTermSet and DefinedTerm on canonical docs only
   assert.equal(termSet.hasDefinedTerm[0].name, 'AutoID');
   assert.equal(termSet.hasDefinedTerm[0].url, `${canonicalUrl}#AutoID`);
   assert.match(termSet.hasDefinedTerm[0].description, /<\/script><script>/);
-  assert.match(termSet.hasDefinedTerm[1].description, /relational database & stores entities/);
+  assert.doesNotMatch(termSet.hasDefinedTerm[0].description, /ignored\(\)|\.x\{\}/);
+  assert.match(termSet.hasDefinedTerm[1].description, /relational database & stores entities — e\.g\. &lt;code&gt; and Milvus's index’s schema/);
+
+  // Localized canonical doc localizes Breadcrumb Home URL
+  const zhCanonicalUrl = 'https://milvus.io/docs/zh/glossary.md';
+  const zhDocHtml = renderToStaticMarkup(React.createElement(DocDetailPage, {
+    id: 'glossary.md',
+    lang: 'zh',
+    version: 'v3.0.x',
+    latestVersion: 'v3.0.x',
+    canonicalUrl: zhCanonicalUrl,
+    homeData: { frontMatter: { title: 'Glossary' }, tree: glossaryHtml },
+  }));
+  const zhBreadcrumb = parseJsonLd(zhDocHtml).find(s => s['@type'] === 'BreadcrumbList');
+  assert.equal(zhBreadcrumb.itemListElement[0].item, 'https://milvus.io/zh');
 
   // Non-canonical archived glossary must not emit DefinedTermSet
   const archivedHtml = renderToStaticMarkup(React.createElement(DocDetailPage, {
@@ -250,6 +264,25 @@ test('LandingHead links @id entities and emits TechArticle, reviewedOn on WebPag
     'https://zilliz.com/vdbbench-leaderboard',
   ]);
   assert.equal(faq.mainEntity.length, 1);
+
+  // Hub / index landing page emits CollectionPage + ItemList
+  const hubHtml = renderToStaticMarkup(React.createElement(LandingHead, {
+    title: 'Compare Milvus with other databases',
+    description: 'Compare hub.',
+    path: '/compare',
+    twinPath: '/zh/compare',
+    zh: false,
+    items: [
+      { title: 'Milvus vs pgvector', path: '/compare/milvus-vs-pgvector', description: 'pgvector comparison' },
+      { title: 'Milvus vs Qdrant', path: '/compare/milvus-vs-qdrant', description: 'Qdrant comparison' },
+    ],
+  }));
+  const [{ '@graph': hubGraph }] = parseJsonLd(hubHtml);
+  const collection = hubGraph.find(n => n['@type'] === 'CollectionPage');
+  assert.ok(collection, 'landing hub with items must emit CollectionPage');
+  assert.equal(collection.mainEntity.numberOfItems, 2);
+  assert.equal(collection.mainEntity.itemListElement[0].url, 'https://milvus.io/compare/milvus-vs-pgvector');
+  assert.equal(hubGraph.some(n => n['@type'] === 'TechArticle'), false);
 });
 
 test('LearnMilvusSeo references homepage Organization and WebSite via @id', () => {
@@ -268,6 +301,8 @@ test('LearnMilvusSeo references homepage Organization and WebSite via @id', () =
     breadcrumbName: 'HNSW',
   }));
   const lr = parseJsonLd(html).find(s => Array.isArray(s['@type']) && s['@type'].includes('LearningResource'));
+  assert.equal(lr['@id'], 'https://milvus.io/learn-milvus/hnsw#webpage');
+  assert.deepEqual(lr.about, { '@id': 'https://milvus.io/#software' });
   assert.deepEqual(lr.publisher, { '@id': 'https://milvus.io/#organization' });
   assert.deepEqual(lr.isPartOf, { '@id': 'https://milvus.io/#website' });
 });
@@ -305,6 +340,8 @@ test('localized homepage, DocHome, BlogHome, Intro, UseCases, Sizing, and API Re
   assert.equal(zhHomeSchemas[2].url, 'https://milvus.io/zh');
   assert.equal(zhHomeSchemas[2].inLanguage, 'zh');
   assert.deepEqual(zhHomeSchemas[2].isPartOf, { '@id': 'https://milvus.io/#website' });
+  assert.equal(zhHomeSchemas[3]['@id'], 'https://milvus.io/#software');
+  assert.equal(zhHomeSchemas[3].inLanguage, undefined, 'shared flagship #software node must not be stamped with localized inLanguage');
 
   // 2. DocHome
   const seoUtils = load('src/components/localization/utils.ts', {
@@ -368,12 +405,14 @@ test('localized homepage, DocHome, BlogHome, Intro, UseCases, Sizing, and API Re
     author: 'Author',
   }));
   activeRouterQuery = {};
-  const blogPage1 = parseJsonLd(renderToStaticMarkup(React.createElement(BlogHome, {
+  const blogPage1Html = renderToStaticMarkup(React.createElement(BlogHome, {
     locale: 'en', blogList: sampleBlogs,
-  })));
+  }));
+  const blogPage1 = parseJsonLd(blogPage1Html);
   assert.deepEqual(blogPage1.map(s => s['@type']), ['CollectionPage', 'BreadcrumbList']);
   assert.equal(blogPage1[0].mainEntity.numberOfItems, blogConsts.PAGE_SIZE);
   assert.equal(blogPage1[0].mainEntity.itemListElement[0].name, 'Post 1');
+  assert.match(blogPage1Html, /<time\b[^>]*dateTime="2026-10-01T00:00:00\.000Z">Oct 01, 2026<\/time>/);
 
   activeRouterQuery = { [blogConsts.PAGINATION_QUERY_KEY]: 2 };
   const blogPage2 = parseJsonLd(renderToStaticMarkup(React.createElement(BlogHome, {
@@ -562,10 +601,14 @@ test('localized homepage, DocHome, BlogHome, Intro, UseCases, Sizing, and API Re
   assert.notEqual(apiArchivedSelfCanonical[0].about[0]['@id'], 'https://milvus.io/#software');
 
   // 7. RESTful API Reference
+  let capturedRestSeoUrl;
   const { default: RestfulApiPage } = load('src/pages/api-reference/restful/[version]/[...slug].tsx', {
     'next-mdx-remote': { MDXRemote: noOp },
     'next-mdx-remote/serialize': {},
-    '@/components/layout/docLayout': noOp,
+    '@/components/layout/docLayout': ({ seo }) => {
+      capturedRestSeoUrl = seo.url;
+      return null;
+    },
     '@/components/JsonLd': JsonLd,
     '@/schema': schemaIndex,
     '@/components/mdx': { components: {} },
@@ -604,6 +647,7 @@ test('localized homepage, DocHome, BlogHome, Intro, UseCases, Sizing, and API Re
   assert.ok(restSchemas[0].keywords.includes('RESTful API'));
   assert.equal(restSchemas[0].about['@id'], 'https://milvus.io/#software-v2.6.x');
   assert.equal(restSchemas[0].dateModified, '2026-10-20T00:00:00.000Z');
+  assert.equal(capturedRestSeoUrl, 'https://milvus.io/api-reference/restful/v2.6.x/v2/Vector/Search.md');
 });
 
 test('DocLayout, DocContent, BlogDetail, Sizing, Bootcamp, Community, and Demo keep <header>/<aside>/<footer> outside <main> and use semantic <article>/<time>', () => {
@@ -666,10 +710,17 @@ test('DocLayout, DocContent, BlogDetail, Sizing, Bootcamp, Community, and Demo k
   }));
   assert.match(docContentHtml, /<article class="doc-style doc-post-content"><h1>Overview<\/h1><p>Hello<\/p><\/article>/);
 
-  // 3. BlogDetail places <Layout> outside <main>, wraps body in <article>, and uses <time dateTime=...>
+  // 3. BlogDetail places <Layout> outside <main>, wraps body in <article>, uses <time dateTime=...>,
+  //    gates BlogPosting on canonical URL, passes inLanguage, and types org/human authors cleanly
+  const headerTranslationCalls = [];
   const { BlogDetail } = load('src/components/localization/BlogDetail.tsx', {
-    'next/head': noOp,
-    'react-i18next': { useTranslation: () => ({ t: k => k }) },
+    'next/head': ({ children }) => React.createElement(React.Fragment, null, children),
+    'react-i18next': {
+      useTranslation: (ns, opts) => {
+        if (ns === 'header') headerTranslationCalls.push(opts);
+        return { t: k => k };
+      },
+    },
     '@/components/layout/commonLayout': ({ children }) =>
       React.createElement('div', null, React.createElement('header', null, 'H'), children, React.createElement('footer', null, 'F')),
     '@/components/tags': noOp,
@@ -704,7 +755,7 @@ test('DocLayout, DocContent, BlogDetail, Sizing, Bootcamp, Community, and Demo k
     'highlight.js/styles/atom-one-dark.css': {},
     'next/navigation': { useRouter: () => ({ push: noOp }) },
     '@/types/localization': localization,
-    '@/utils/localization': { getBlogPath: () => '/blog' },
+    '@/utils/localization': { getBlogPath: loc => (loc === 'en' ? '/blog' : `/${loc}/blog`) },
     '../breadcrumb': noOp,
     '@/components/LLMActions': Object.assign(noOp, { PageAction: {} }),
     '@/components/icons': { CopyIcon: noOp },
@@ -730,8 +781,35 @@ test('DocLayout, DocContent, BlogDetail, Sizing, Bootcamp, Community, and Demo k
   assert.doesNotMatch(blogHtml, /<main[\s\S]*<footer>[\s\S]*<\/main>/);
   assert.match(blogHtml, /<time class="date" dateTime="2026-10-15T00:00:00\.000Z">October 15, 2026<\/time>/);
   assert.match(blogHtml, /<article class="doc-style scroll-padding blog-style articleContainer"><p>Body<\/p><\/article>/);
+  assert.equal(headerTranslationCalls[0]?.lng, 'en');
+  const blogSchemas = parseJsonLd(blogHtml);
+  const blogPost = blogSchemas.find(s => s['@type'] === 'BlogPosting');
+  assert.ok(blogPost, 'self-canonical blog must emit BlogPosting');
+  assert.equal(blogPost.inLanguage, 'en');
+  assert.equal(blogPost.author['@type'], 'Organization', 'Milvus Team must resolve to Organization, not Person');
+  assert.equal(blogPost.author['@id'], 'https://milvus.io/#organization');
 
-  // 4. Static check: no page wraps <Layout> inside <main>
+  // Cross-post or non-indexable localized blog must omit BlogPosting and keep BreadcrumbList only
+  const crossPostHtml = renderToStaticMarkup(React.createElement(BlogDetail, {
+    blogId: 'post.md',
+    locale: 'fr',
+    newHtml: '<p>Body</p>',
+    author: 'Jane Doe',
+    date: '',
+    tags: ['engineering'],
+    title: 'Test Post',
+    id: 'post.md',
+    desc: 'Desc',
+    cover: 'https://example.com/c.png',
+    canonicalUrl: 'https://milvus.io/blog/post.md',
+    anchorList: [],
+    codeList: [],
+    moreBlogs: [],
+  }));
+  assert.deepEqual(parseJsonLd(crossPostHtml).map(s => s['@type']), ['BreadcrumbList']);
+  assert.doesNotMatch(crossPostHtml, /<time\b/, 'missing date must not render wall-clock <time>');
+
+  // 4. Static check: no page wraps <Layout> inside <main>, Contact <main> wraps content, and Learn Milvus pages have <main>
   for (const rel of [
     'src/pages/tools/sizing.tsx',
     'src/pages/tools/sizing-v250.tsx',
@@ -740,11 +818,19 @@ test('DocLayout, DocContent, BlogDetail, Sizing, Bootcamp, Community, and Demo k
     'src/parts/tutorials/Bootcamp.tsx',
     'src/parts/community/Community.tsx',
     'src/parts/tutorials/Demo.tsx',
+    'src/parts/contact/Contact.tsx',
     'src/pages/milvus-demos/reverse-image-search.jsx',
     'src/components/localization/BlogDetail.tsx',
+    'src/pages/learn-milvus/index.tsx',
+    'src/pages/learn-milvus/metric.tsx',
+    'src/pages/learn-milvus/ivf.tsx',
+    'src/pages/learn-milvus/hnsw.tsx',
+    'src/pages/learn-milvus/diskann.tsx',
+    'src/pages/learn-milvus/tradeoff.tsx',
   ]) {
     const src = fs.readFileSync(path.join(root, rel), 'utf8');
     assert.doesNotMatch(src, /<main\b[^>]*>\s*<Layout\b/, `${rel} must not wrap <Layout> inside <main>`);
     assert.match(src, /<main\b/, `${rel} must contain a <main> landmark`);
+    assert.doesNotMatch(src, /<main\b[^>]*>\s*<Head\b[\s\S]*?<\/Head>\s*<\/main>/, `${rel} must not leave <main> empty around <Head>`);
   }
 });

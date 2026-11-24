@@ -151,7 +151,7 @@ export default function RestfulApiReference(props: {
       seo={{
         title: pageTitle,
         desc: pageDesc,
-        url: absoluteUrl,
+        url: selfRouteUrl,
         canonicalUrl,
       }}
       version={version}

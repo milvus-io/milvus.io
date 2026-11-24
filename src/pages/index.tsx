@@ -30,10 +30,11 @@ export default function Homepage(props: {
         <JsonLd
           schema={[
             buildSchema('organization'),
-            buildSchema('website'),
+            buildSchema('website', { inLanguage: LanguageEnum.ENGLISH }),
             buildSchema('softwareApp', {
               offerUrl: CLOUD_SIGNUP_LINK,
               codeRepository: GITHUB_MILVUS_LINK,
+              inLanguage: LanguageEnum.ENGLISH,
             }),
           ]}
         />

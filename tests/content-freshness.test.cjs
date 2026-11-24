@@ -282,6 +282,7 @@ test('SDK and REST record the source dates of latest and self-canonical archived
       '@/hooks/use-breadcrumb-lables', '@/hooks/use-anchor-event-listener',
       'next-mdx-remote', 'next-mdx-remote/serialize', '@/components/mdx',
       '@/utils/mdx', '@/styles/restful.module.css', '@/components/breadcrumb',
+      '@/components/JsonLd', '@/schema',
     ].map(name => [name, {}])),
   };
   const latestVersion = 'v3.0.x';

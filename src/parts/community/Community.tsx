@@ -180,17 +180,16 @@ export const Community: FC<Props> = (props: Props) => {
     },
   ];
   return (
-    <main>
-      <Layout>
-        <Head>
-          <title>Welcome to the Milvus Community of AI Developers </title>
-          <meta
-            name="description"
-            content="Join an open-source community of passionate developers and engineers dedicated to GenAI"
-          />
-        </Head>
+    <Layout>
+      <Head>
+        <title>Welcome to the Milvus Community of AI Developers </title>
+        <meta
+          name="description"
+          content="Join an open-source community of passionate developers and engineers dedicated to GenAI"
+        />
+      </Head>
 
-        <div className={classes.communityPageContainer}>
+      <main className={classes.communityPageContainer}>
           <section
             className={clsx(pageClasses.homeContainer, classes.headSection)}
           >
@@ -279,8 +278,7 @@ export const Community: FC<Props> = (props: Props) => {
               ))}
             </div>
           </section> */}
-        </div>
-      </Layout>
-    </main>
+      </main>
+    </Layout>
   );
 };

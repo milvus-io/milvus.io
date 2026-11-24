@@ -1,7 +1,14 @@
 import Link from 'next/link';
 import { LocalizedAnchor } from '@/components/localizedLinks';
 import clsx from 'clsx';
-import { useEffect, useId, useState } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useId,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from 'react';
 import { useTranslation } from 'react-i18next';
 
 import CloudBanner from '../banner';
@@ -29,6 +36,22 @@ import {
   useHeaderNavItems,
 } from './navigation';
 
+type HeaderLayoutMode = 'normal' | 'compact' | 'collapsed';
+type ViewportTier = 'mobile' | 'compact-desktop' | 'medium-desktop' | 'wide-desktop';
+
+const DESKTOP_MIN_WIDTH = 1280;
+const OVERFLOW_HYSTERESIS_PX = 16;
+
+const getViewportTier = (width: number): ViewportTier => {
+  if (width < DESKTOP_MIN_WIDTH) return 'mobile';
+  if (width <= 1400) return 'compact-desktop';
+  if (width <= 1580) return 'medium-desktop';
+  return 'wide-desktop';
+};
+
+const useIsomorphicLayoutEffect =
+  typeof window !== 'undefined' ? useLayoutEffect : useEffect;
+
 const startNum = `${(Number(milvusStats?.milvusStars || 0) / 1000).toFixed(
   1
 )}K`;
@@ -39,7 +62,18 @@ const Header: React.FC<{
   disableLangSelector?: boolean;
 }> = ({ darkMode = false, className, disableLangSelector = false }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [layoutMode, setLayoutMode] = useState<HeaderLayoutMode>('normal');
   const mobileMenuId = useId();
+  const navBarRef = useRef<HTMLDivElement>(null);
+  const leftSectionRef = useRef<HTMLDivElement>(null);
+  const desktopNavListRef = useRef<HTMLUListElement>(null);
+  const actionsRef = useRef<HTMLDivElement>(null);
+  const layoutModeRef = useRef<HeaderLayoutMode>('normal');
+  const viewportTierRef = useRef<ViewportTier | null>(null);
+  const thresholdsRef = useRef<{
+    normal: number | null;
+    compact: number | null;
+  }>({ normal: null, compact: null });
   const {
     locale,
     disabled,
@@ -53,37 +87,201 @@ const Header: React.FC<{
   const signupUrl = getCloudSignupUrl(trackPath);
   const containerClassName = className || responsiveClasses.homeContainer;
 
+  const updateLayoutMode = useCallback((nextMode: HeaderLayoutMode) => {
+    if (layoutModeRef.current === nextMode) {
+      return;
+    }
+    layoutModeRef.current = nextMode;
+    setLayoutMode(nextMode);
+  }, []);
+
+  const checkOverflow = useCallback(() => {
+    const navBar = navBarRef.current;
+    const leftSection = leftSectionRef.current;
+    const desktopNavList = desktopNavListRef.current;
+    const actions = actionsRef.current;
+
+    if (!navBar || !leftSection || !desktopNavList || !actions) {
+      return;
+    }
+
+    const tier = getViewportTier(window.innerWidth);
+    if (tier === 'mobile') {
+      viewportTierRef.current = tier;
+      thresholdsRef.current = { normal: null, compact: null };
+      updateLayoutMode('normal');
+      return;
+    }
+
+    if (viewportTierRef.current !== null && viewportTierRef.current !== tier) {
+      viewportTierRef.current = tier;
+      thresholdsRef.current = { normal: null, compact: null };
+      if (layoutModeRef.current !== 'normal') {
+        updateLayoutMode('normal');
+        return;
+      }
+    } else {
+      viewportTierRef.current = tier;
+    }
+
+    const navBarStyle = window.getComputedStyle(navBar);
+    const paddingLeft = parseFloat(navBarStyle.paddingLeft) || 0;
+    const paddingRight = parseFloat(navBarStyle.paddingRight) || 0;
+    const availableWidth = navBar.clientWidth - paddingLeft - paddingRight;
+    const mode = layoutModeRef.current;
+
+    const measureRequiredWidth = () => {
+      const logoEl = leftSection.firstElementChild as HTMLElement | null;
+      const logoWidth = logoEl ? logoEl.getBoundingClientRect().width : 0;
+      const leftStyle = window.getComputedStyle(leftSection);
+      const leftGap = parseFloat(leftStyle.columnGap || leftStyle.gap) || 0;
+
+      const navListStyle = window.getComputedStyle(desktopNavList);
+      const navListGap =
+        parseFloat(navListStyle.columnGap || navListStyle.gap) || 0;
+      const topLevelNavItems = Array.from(
+        desktopNavList.children
+      ) as HTMLElement[];
+      const navItemsWidth =
+        topLevelNavItems.reduce(
+          (sum, item) => sum + item.getBoundingClientRect().width,
+          0
+        ) +
+        Math.max(0, topLevelNavItems.length - 1) * navListGap;
+
+      const actionsStyle = window.getComputedStyle(actions);
+      const actionsGap =
+        parseFloat(actionsStyle.columnGap || actionsStyle.gap) || 0;
+      const visibleActions = (
+        Array.from(actions.children) as HTMLElement[]
+      ).filter(child => window.getComputedStyle(child).display !== 'none');
+      const actionsWidth =
+        visibleActions.reduce(
+          (sum, item) => sum + item.getBoundingClientRect().width,
+          0
+        ) +
+        Math.max(0, visibleActions.length - 1) * actionsGap;
+
+      const navBarGap =
+        parseFloat(navBarStyle.columnGap || navBarStyle.gap) || 0;
+
+      return Math.ceil(
+        logoWidth + leftGap + navItemsWidth + navBarGap + actionsWidth
+      );
+    };
+
+    if (mode === 'normal') {
+      const required = measureRequiredWidth();
+      thresholdsRef.current.normal = required;
+      if (required > availableWidth) {
+        updateLayoutMode('compact');
+      } else {
+        setIsMenuOpen(false);
+      }
+    } else if (mode === 'compact') {
+      const required = measureRequiredWidth();
+      thresholdsRef.current.compact = required;
+      if (required > availableWidth) {
+        updateLayoutMode('collapsed');
+      } else if (
+        thresholdsRef.current.normal !== null &&
+        availableWidth >=
+          thresholdsRef.current.normal + OVERFLOW_HYSTERESIS_PX
+      ) {
+        updateLayoutMode('normal');
+      } else {
+        setIsMenuOpen(false);
+      }
+    } else if (
+      thresholdsRef.current.normal !== null &&
+      availableWidth >= thresholdsRef.current.normal + OVERFLOW_HYSTERESIS_PX
+    ) {
+      updateLayoutMode('normal');
+    } else if (
+      thresholdsRef.current.compact !== null &&
+      availableWidth >= thresholdsRef.current.compact + OVERFLOW_HYSTERESIS_PX
+    ) {
+      updateLayoutMode('compact');
+    }
+  }, [updateLayoutMode]);
+
   useEffect(() => {
     document.body.classList.toggle('lock-scroll', isMenuOpen);
     return () => document.body.classList.remove('lock-scroll');
   }, [isMenuOpen]);
 
-  useEffect(() => {
-    const desktopQuery = window.matchMedia('(min-width: 1280px)');
-    const closeMenuOnDesktop = (event: MediaQueryListEvent) => {
-      if (event.matches) {
-        setIsMenuOpen(false);
-      }
-    };
+  useIsomorphicLayoutEffect(() => {
+    thresholdsRef.current = { normal: null, compact: null };
+    updateLayoutMode('normal');
+  }, [locale, disableLangSelector, containerClassName, updateLayoutMode]);
 
-    desktopQuery.addEventListener('change', closeMenuOnDesktop);
-    return () => desktopQuery.removeEventListener('change', closeMenuOnDesktop);
-  }, []);
+  useIsomorphicLayoutEffect(() => {
+    checkOverflow();
+  }, [layoutMode, locale, disableLangSelector, containerClassName, checkOverflow]);
+
+  useEffect(() => {
+    const navBar = navBarRef.current;
+    const leftSection = leftSectionRef.current;
+    const desktopNavList = desktopNavListRef.current;
+    const actions = actionsRef.current;
+    if (!navBar) {
+      return;
+    }
+
+    const observer =
+      typeof ResizeObserver !== 'undefined'
+        ? new ResizeObserver(() => checkOverflow())
+        : null;
+    observer?.observe(navBar);
+    if (leftSection) observer?.observe(leftSection);
+    if (desktopNavList) observer?.observe(desktopNavList);
+    if (actions) observer?.observe(actions);
+
+    const handleResize = () => checkOverflow();
+    window.addEventListener('resize', handleResize);
+
+    let cancelled = false;
+    document.fonts?.ready.then(() => {
+      if (cancelled) {
+        return;
+      }
+      thresholdsRef.current = { normal: null, compact: null };
+      if (
+        window.innerWidth >= DESKTOP_MIN_WIDTH &&
+        layoutModeRef.current !== 'normal'
+      ) {
+        updateLayoutMode('normal');
+      } else {
+        checkOverflow();
+      }
+    });
+
+    return () => {
+      cancelled = true;
+      observer?.disconnect();
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [checkOverflow, updateLayoutMode]);
 
   return (
     <header
       className={clsx(classes.headerContainer, {
         [classes.stickyHeader]: !darkMode,
         [classes.fixedHeader]: darkMode,
+        [classes.compactNav]: layoutMode === 'compact',
+        [classes.collapsedNav]: layoutMode === 'collapsed',
       })}
     >
       <CloudBanner />
       <div className={classes.navBarWrapper}>
-        <div className={clsx(classes.navBar, containerClassName)}>
-          <div className={classes.leftSection}>
+        <div
+          ref={navBarRef}
+          className={clsx(classes.navBar, containerClassName)}
+        >
+          <div ref={leftSectionRef} className={classes.leftSection}>
             <LogoSection />
             <nav className={classes.desktopNav} aria-label="Primary navigation">
-              <ul className={classes.desktopNavList}>
+              <ul ref={desktopNavListRef} className={classes.desktopNavList}>
                 {navItems.map(item => (
                   <DesktopNavItem key={item.label} item={item} />
                 ))}
@@ -91,7 +289,7 @@ const Header: React.FC<{
             </nav>
           </div>
 
-          <div className={classes.actions}>
+          <div ref={actionsRef} className={classes.actions}>
             {!disableLangSelector && (
               <LanguageSelector
                 value={locale}
@@ -105,6 +303,7 @@ const Header: React.FC<{
             <a
               href={GITHUB_MILVUS_LINK}
               className={classes.githubLink}
+              aria-label={`Milvus GitHub (${t('star')} ${startNum})`}
               target="_blank"
               rel="noopener"
             >
@@ -297,6 +496,8 @@ const MobileNavItem = ({
           className={clsx(classes.mobileSubMenu, {
             [classes.mobileSubMenuOpen]: isOpen,
           })}
+          aria-hidden={!isOpen}
+          inert={!isOpen}
         >
           <ul className={classes.mobileSubMenuList}>
             {item.children?.map(child => (

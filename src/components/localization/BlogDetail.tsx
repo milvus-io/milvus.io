@@ -189,7 +189,6 @@ export function BlogDetail(props: any) {
 
   return (
     <Layout
-      headerClassName={pageClasses.blogContainer}
       canonicalUrl={canonicalUrl || shareUrl}
       disableSelfHreflang
     >

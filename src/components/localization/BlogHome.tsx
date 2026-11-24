@@ -569,7 +569,7 @@ export const BlogHome: React.FC<Props> = props => {
   }, [absoluteUrl, locale, paging.list, t]);
 
   return (
-    <Layout headerClassName={pageClasses.blogContainer}>
+    <Layout>
       <Head>
         <title>{t('blog:homepage.title')}</title>
         <meta name="description" content={t('blog:homepage.desc')} />

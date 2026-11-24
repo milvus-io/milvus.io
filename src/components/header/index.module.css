@@ -80,6 +80,7 @@
   line-height: 21px;
   text-transform: uppercase;
   text-decoration: none;
+  white-space: nowrap;
   transition: color 0.2s ease;
 }
 
@@ -114,7 +115,7 @@
 
 .desktopDropdownPanel {
   position: absolute;
-  left: 0;
+  inset-inline-start: 0;
   top: 100%;
   padding-top: 12px;
   visibility: hidden;
@@ -171,6 +172,7 @@
 }
 
 .actions {
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   gap: 20px;
@@ -182,8 +184,9 @@
 }
 
 .githubLink {
+  position: relative;
   height: 36px;
-  flex: 0 0 77px;
+  flex: 0 0 auto;
   display: flex;
   align-items: center;
   padding: 3px 6px;
@@ -254,11 +257,8 @@
   cursor: pointer;
 }
 
-.mobileNav {
-  display: none;
-}
-
 .logoSection {
+  flex-shrink: 0;
   height: 24px;
   display: flex;
   align-items: center;
@@ -296,18 +296,294 @@
   width: auto;
 }
 
-@media (max-width: 1540px) {
+@media (max-width: 1580px) {
+  .navBar {
+    gap: 16px;
+  }
+
   .leftSection {
+    gap: 20px;
+  }
+
+  .desktopNavList {
     gap: 12px;
+  }
+
+  .actions {
+    gap: 12px;
+  }
+}
+
+@media (min-width: 1280px) and (max-width: 1550px) {
+  .navBarWrapper .navBar,
+  .collapsedNav .mobileNavInner {
+    width: min(calc(100% - 48px), 1280px);
+  }
+}
+
+@media (max-width: 1400px) {
+  .navBar {
+    gap: 12px;
+  }
+
+  .leftSection {
+    gap: 16px;
   }
 
   .desktopNavList {
     gap: 10px;
   }
 
+  .desktopNavButton,
+  .desktopNavLink {
+    font-size: 13px;
+  }
+
   .actions {
     gap: 10px;
   }
+
+  .startButton {
+    font-size: 13px;
+    padding: 6px 10px;
+  }
+}
+
+.compactNav .navBar {
+  gap: 10px;
+}
+
+.compactNav .leftSection {
+  gap: 12px;
+}
+
+.compactNav .desktopNavList {
+  gap: 8px;
+}
+
+.compactNav .desktopNavButton,
+.compactNav .desktopNavLink {
+  font-size: 12px;
+}
+
+.compactNav .actions {
+  gap: 8px;
+}
+
+.compactNav .languageSelector span {
+  display: none;
+}
+
+.compactNav .githubText {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.compactNav .githubCount {
+  margin-inline-start: 4px;
+}
+
+.compactNav .startButton {
+  font-size: 12px;
+  padding: 6px 10px;
+}
+
+.mobileNav {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: var(--header-height-desktop);
+  z-index: 100;
+  display: none;
+  height: calc(100vh - var(--header-height-desktop));
+  height: calc(100dvh - var(--header-height-desktop));
+  overflow: hidden;
+  background: #fff;
+}
+
+.mobileNavOpen {
+  animation: mobileNavSlideDown 0.2s ease-out;
+}
+
+.mobileNavInner {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.mobileNavList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.mobileNavItem {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.mobileNavButton,
+.mobileNavLink,
+.mobileNavButtonGroup {
+  width: 100%;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 0;
+  background: transparent;
+  color: #000;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 22px;
+  text-align: start;
+  text-decoration: none;
+}
+
+.mobileNavButton,
+.mobileNavLink {
+  padding: 10px 16px;
+  cursor: pointer;
+}
+
+.mobileNavLinkWithChildren,
+.mobileNavGroupLabel {
+  flex: 1 1 auto;
+  padding: 10px 16px;
+  border: 0;
+  background: transparent;
+  color: #000;
+  cursor: pointer;
+  font: inherit;
+  text-align: start;
+  text-decoration: none;
+}
+
+.mobileSubMenuToggle {
+  width: 44px;
+  min-height: 44px;
+  flex: 0 0 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  background: transparent;
+  color: #000;
+  cursor: pointer;
+}
+
+.mobileArrow {
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.mobileArrowOpen {
+  transform: rotate(180deg);
+}
+
+.mobileSubMenu {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.25s ease;
+}
+
+.mobileSubMenuOpen {
+  grid-template-rows: 1fr;
+}
+
+.mobileSubMenuList {
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  overflow: hidden;
+  list-style: none;
+  padding: 0 0 8px;
+  padding-inline-start: 16px;
+  margin: 0;
+}
+
+.mobileSubMenuLink {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 16px;
+  color: #000;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  text-decoration: none;
+}
+
+.mobileActions {
+  position: sticky;
+  bottom: 0;
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 24px 0 calc(24px + env(safe-area-inset-bottom));
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+  background: #fff;
+}
+
+.mobileContactLink {
+  display: block;
+  height: 40px;
+  padding: 0 16px;
+  color: #00131a;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 40px;
+  text-align: center;
+  text-decoration: none;
+}
+
+.mobileStartButton {
+  width: 100%;
+}
+
+.collapsedNav .navBarWrapper {
+  border-bottom-color: #d1d5db;
+}
+
+.collapsedNav .navBar {
+  gap: 12px;
+}
+
+.collapsedNav .leftSection {
+  flex: 1 1 auto;
+  gap: 0;
+}
+
+.collapsedNav .desktopNav,
+.collapsedNav .githubLink,
+.collapsedNav .contactLink,
+.collapsedNav .startButton {
+  display: none;
+}
+
+.collapsedNav .actions {
+  flex-shrink: 0;
+  gap: 12px;
+}
+
+.collapsedNav .menuIconBtn {
+  display: flex;
+}
+
+.collapsedNav .mobileNav {
+  display: block;
 }
 
 @media (max-width: 1279px) {
@@ -341,163 +617,11 @@
   }
 
   .mobileNav {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: var(--header-height-desktop);
-    z-index: 100;
     display: block;
-    height: calc(100vh - var(--header-height-desktop));
-    height: calc(100dvh - var(--header-height-desktop));
-    overflow: hidden;
-    background: #fff;
-  }
-
-  .mobileNavOpen {
-    animation: mobileNavSlideDown 0.2s ease-out;
-  }
-
-  .mobileNavInner {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    margin: 0 auto;
-    overflow-y: auto;
-    overscroll-behavior: contain;
-  }
-
-  .mobileNavList {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  .mobileNavItem {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-  }
-
-  .mobileNavButton,
-  .mobileNavLink,
-  .mobileNavButtonGroup {
-    width: 100%;
-    min-height: 44px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border: 0;
-    background: transparent;
-    color: #000;
-    font-size: 16px;
-    font-weight: 600;
-    line-height: 22px;
-    text-align: left;
-    text-decoration: none;
-  }
-
-  .mobileNavButton,
-  .mobileNavLink {
-    padding: 10px 16px;
-    cursor: pointer;
-  }
-
-  .mobileNavLinkWithChildren,
-  .mobileNavGroupLabel {
-    flex: 1 1 auto;
-    padding: 10px 16px;
-    border: 0;
-    background: transparent;
-    color: #000;
-    cursor: pointer;
-    font: inherit;
-    text-align: left;
-    text-decoration: none;
-  }
-
-  .mobileSubMenuToggle {
-    width: 44px;
-    min-height: 44px;
-    flex: 0 0 44px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 0;
-    background: transparent;
-    color: #000;
-    cursor: pointer;
-  }
-
-  .mobileArrow {
-    flex-shrink: 0;
-    transition: transform 0.2s ease;
-  }
-
-  .mobileArrowOpen {
-    transform: rotate(180deg);
-  }
-
-  .mobileSubMenu {
-    display: grid;
-    grid-template-rows: 0fr;
-    transition: grid-template-rows 0.25s ease;
-  }
-
-  .mobileSubMenuOpen {
-    grid-template-rows: 1fr;
-  }
-
-  .mobileSubMenuList {
-    min-height: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    overflow: hidden;
-    list-style: none;
-    padding: 0 0 8px 16px;
-    margin: 0;
-  }
-
-  .mobileSubMenuLink {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    padding: 4px 16px;
-    color: #000;
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 20px;
-    text-decoration: none;
-  }
-
-  .mobileActions {
-    position: sticky;
-    bottom: 0;
-    margin-top: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    padding: 24px 0 calc(24px + env(safe-area-inset-bottom));
-    border-top: 1px solid rgba(0, 0, 0, 0.12);
-    background: #fff;
-  }
-
-  .mobileContactLink {
-    display: block;
-    height: 40px;
-    padding: 0 16px;
-    color: #00131a;
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 40px;
-    text-align: center;
-    text-decoration: none;
-  }
-
-  .mobileStartButton {
-    width: 100%;
   }
 }
 
-@media (--bannerBreak) {
+@media (--tablet), (--bannerBreak) {
   .mobileNav {
     top: var(--header-height-tablet);
     height: calc(100vh - var(--header-height-tablet));

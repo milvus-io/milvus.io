@@ -5,6 +5,9 @@ import Layout from '@/components/layout/commonLayout';
 import Tags from '@/components/tags';
 import BlogCard from '@/components/card/BlogCard';
 import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+
+dayjs.extend(utc);
 import Share from '@/components/share';
 import styles from '@/styles/blogDetail.module.css';
 import { useAnchorEventListener } from '@/hooks/use-anchor-event-listener';
@@ -93,7 +96,10 @@ export function BlogDetail(props: any) {
   const shareUrl = useMemo(() => {
     return `${ABSOLUTE_BASE_URL}${blogPath}/${id}`;
   }, [id, blogPath]);
-  const dateTime = useMemo(() => dayjs(date).format('MMMM DD, YYYY'), [date]);
+  const dateTime = useMemo(
+    () => dayjs.utc(date).format('MMMM DD, YYYY'),
+    [date]
+  );
 
   useCopyCode(codeList);
 
@@ -155,144 +161,144 @@ export function BlogDetail(props: any) {
   );
 
   return (
-    <main>
-      <Layout
-        headerClassName={pageClasses.blogContainer}
-        canonicalUrl={canonicalUrl || shareUrl}
-        disableSelfHreflang
-      >
-        <Head>
-          <title>{metaTitle}</title>
-          <meta name="description" content={desc} />
-          <meta property="og:title" content={metaTitle} />
-          <meta property="og:description" content={desc} />
-          <meta property="og:url" content={shareUrl} />
-          <meta
-            name="image"
-            property="og:image"
-            content={cover}
-            key="og-image"
+    <Layout
+      headerClassName={pageClasses.blogContainer}
+      canonicalUrl={canonicalUrl || shareUrl}
+      disableSelfHreflang
+    >
+      <Head>
+        <title>{metaTitle}</title>
+        <meta name="description" content={desc} />
+        <meta property="og:title" content={metaTitle} />
+        <meta property="og:description" content={desc} />
+        <meta property="og:url" content={shareUrl} />
+        <meta
+          name="image"
+          property="og:image"
+          content={cover}
+          key="og-image"
+        />
+        <meta name="keywords" content={meta_keywords} />
+        {firstImageSrc && (
+          <link rel="preload" as="image" href={firstImageSrc} />
+        )}
+        {/* Canonical is emitted once by <Layout canonicalUrl=...> above to
+            avoid two conflicting <link rel="canonical"> on localized posts. */}
+        {hreflangUrls.map(entry => (
+          <link
+            key={entry.lang}
+            rel="alternate"
+            hrefLang={entry.lang}
+            href={entry.url}
           />
-          <meta name="keywords" content={meta_keywords} />
-          {firstImageSrc && (
-            <link rel="preload" as="image" href={firstImageSrc} />
-          )}
-          {/* Canonical is emitted once by <Layout canonicalUrl=...> above to
-              avoid two conflicting <link rel="canonical"> on localized posts. */}
-          {hreflangUrls.map(entry => (
-            <link
-              key={entry.lang}
-              rel="alternate"
-              hrefLang={entry.lang}
-              href={entry.url}
-            />
-          ))}
-        </Head>
-        <JsonLd schema={ldSchemas} />
-        <div>
-          <div className={clsx(pageClasses.docContainer, styles.upLayout)}>
-            <section className={styles.blogHeader}>
-              <div className={styles.pageHeaderContainer}>
-                <Breadcrumb
-                  list={[
-                    {
-                      label: blogLabel,
-                      href: blogLink,
-                    },
-                    {
-                      label: title,
-                    },
-                  ]}
-                  lang={locale}
-                />
-                <LLMActions
-                  options={blogPageOptions}
-                  githubLink={`${MILVUS_RAW_BLOGS_BASE_URL}/${blogId}`}
-                />
-              </div>
-
-              <h1 className={styles.title}>{title}</h1>
-
-              <div className={styles.subTitle}>
-                <Tags
-                  list={tags}
-                  tagsClass={styles.tags}
-                  onClick={handleTagClick}
-                />
-                <div className={styles.subTitleSeparator} />
-                <span className={styles.date}>{dateTime}</span>
-                <div className={styles.subTitleSeparator} />
-                {author && <span className={styles.author}>{author}</span>}
-              </div>
-            </section>
-
-            <section className={styles.blogContent}>
-              <div
-                className={clsx(
-                  'doc-style',
-                  'scroll-padding',
-                  'blog-style',
-                  styles.articleContainer
-                )}
-                ref={docContainer}
-                dangerouslySetInnerHTML={{ __html: html }}
-              ></div>
-
-              <div className={styles.anchorsContainer}>
-                <BlogAnchorSection
-                  anchors={anchorList}
-                  shareUrl={shareUrl}
-                  title={title}
-                  description={desc}
-                  container={docContainer}
-                  imgUrl={cover}
-                  id={id}
-                  classes={{
-                    root: styles.anchorContainer,
-                  }}
-                />
-              </div>
-            </section>
-
-            <section className={styles.mobileShareSection}>
-              <p>Like the article? Spread the word</p>
-              <Share
-                url={shareUrl}
-                quote={title}
-                desc={desc}
-                image={cover}
-                wrapperClass={styles.share}
-                vertical={false}
+        ))}
+      </Head>
+      <JsonLd schema={ldSchemas} />
+      <main>
+        <div className={clsx(pageClasses.docContainer, styles.upLayout)}>
+          <section className={styles.blogHeader}>
+            <div className={styles.pageHeaderContainer}>
+              <Breadcrumb
+                list={[
+                  {
+                    label: blogLabel,
+                    href: blogLink,
+                  },
+                  {
+                    label: title,
+                  },
+                ]}
+                lang={locale}
               />
-            </section>
-          </div>
+              <LLMActions
+                options={blogPageOptions}
+                githubLink={`${MILVUS_RAW_BLOGS_BASE_URL}/${blogId}`}
+              />
+            </div>
 
-          <section
-            className={clsx(pageClasses.docContainer, styles.bottomLayout)}
-          >
-            <h2 className={styles.title}>{t('blog:detail.keepReading')}</h2>
-            <ul className={styles.blogCards}>
-              {moreBlogs.map((v, index) => {
-                const { desc, cover, tags, title, id } = v;
-                return (
-                  <li key={index}>
-                    <BlogCard
-                      locale={locale as LanguageEnum}
-                      title={title}
-                      cover={cover}
-                      desc={desc}
-                      tags={tags}
-                      path={id}
-                      direction="row"
-                      disableWrapperLink={true}
-                    />
-                  </li>
-                );
-              })}
-            </ul>
+            <h1 className={styles.title}>{title}</h1>
+
+            <div className={styles.subTitle}>
+              <Tags
+                list={tags}
+                tagsClass={styles.tags}
+                onClick={handleTagClick}
+              />
+              <div className={styles.subTitleSeparator} />
+              <time className={styles.date} dateTime={date}>
+                {dateTime}
+              </time>
+              <div className={styles.subTitleSeparator} />
+              {author && <span className={styles.author}>{author}</span>}
+            </div>
+          </section>
+
+          <section className={styles.blogContent}>
+            <article
+              className={clsx(
+                'doc-style',
+                'scroll-padding',
+                'blog-style',
+                styles.articleContainer
+              )}
+              ref={docContainer}
+              dangerouslySetInnerHTML={{ __html: html }}
+            ></article>
+
+            <div className={styles.anchorsContainer}>
+              <BlogAnchorSection
+                anchors={anchorList}
+                shareUrl={shareUrl}
+                title={title}
+                description={desc}
+                container={docContainer}
+                imgUrl={cover}
+                id={id}
+                classes={{
+                  root: styles.anchorContainer,
+                }}
+              />
+            </div>
+          </section>
+
+          <section className={styles.mobileShareSection}>
+            <p>Like the article? Spread the word</p>
+            <Share
+              url={shareUrl}
+              quote={title}
+              desc={desc}
+              image={cover}
+              wrapperClass={styles.share}
+              vertical={false}
+            />
           </section>
         </div>
-      </Layout>
-    </main>
+
+        <section
+          className={clsx(pageClasses.docContainer, styles.bottomLayout)}
+        >
+          <h2 className={styles.title}>{t('blog:detail.keepReading')}</h2>
+          <ul className={styles.blogCards}>
+            {moreBlogs.map((v, index) => {
+              const { desc, cover, tags, title, id } = v;
+              return (
+                <li key={index}>
+                  <BlogCard
+                    locale={locale as LanguageEnum}
+                    title={title}
+                    cover={cover}
+                    desc={desc}
+                    tags={tags}
+                    path={id}
+                    direction="row"
+                    disableWrapperLink={true}
+                  />
+                </li>
+              );
+            })}
+          </ul>
+        </section>
+      </main>
+    </Layout>
   );
 }

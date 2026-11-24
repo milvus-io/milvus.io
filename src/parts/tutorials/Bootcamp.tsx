@@ -22,16 +22,15 @@ export function Bootcamp(props) {
   };
 
   return (
-    <main>
-      <Layout>
-        <Head>
-          <title>Milvus Bootcamp</title>
-          <meta name="description" content="Join Milvus Bootcamp" />
-        </Head>
+    <Layout>
+      <Head>
+        <title>Milvus Bootcamp</title>
+        <meta name="description" content="Join Milvus Bootcamp" />
+      </Head>
 
-        <div
-          className={clsx(pageClasses.homeContainer, classes.bootcampContainer)}
-        >
+      <main
+        className={clsx(pageClasses.homeContainer, classes.bootcampContainer)}
+      >
           <section className={classes.sectionContainer}>
             <h1 className={classes.seoTitle}>Milvus Bootcamp</h1>
             <h2 className={classes.title}>{title}</h2>
@@ -77,8 +76,7 @@ export function Bootcamp(props) {
               </ul>
             </section>
           )}
-        </div>
-      </Layout>
-    </main>
+      </main>
+    </Layout>
   );
 }

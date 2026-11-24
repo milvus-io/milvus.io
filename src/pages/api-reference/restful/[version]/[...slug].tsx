@@ -1,8 +1,11 @@
+import { useMemo } from 'react';
 import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote';
 import { serialize } from 'next-mdx-remote/serialize';
 import clsx from 'clsx';
 
 import DocLayout from '@/components/layout/docLayout';
+import JsonLd from '@/components/JsonLd';
+import { buildSchema } from '@/schema';
 import { components } from '@/components/mdx';
 import { ABSOLUTE_BASE_URL } from '@/consts';
 import LeftNavSection from '@/parts/docs/leftNavTree';
@@ -57,6 +60,7 @@ export default function RestfulApiReference(props: {
   menus: FinalMenuStructureType[];
   currentId: string;
   curCategoryContentData: AllMdVersionIdType[];
+  lastModified?: string | null;
 }) {
   const {
     mdxSource,
@@ -71,6 +75,7 @@ export default function RestfulApiReference(props: {
     menus,
     currentId,
     curCategoryContentData,
+    lastModified,
   } = props;
   const { title: metaTitle, path: metaPath } = meta;
   const suffix = `${ApiReferenceMetaInfoEnum.Restful} sdk ${version}`;
@@ -105,8 +110,44 @@ export default function RestfulApiReference(props: {
     menu: menus,
   });
 
+  const selfRouteUrl = `${ABSOLUTE_BASE_URL}/api-reference/${category}${routeRelativePath}`;
+  const ldSchemas = useMemo(() => {
+    const breadcrumb = buildSchema('breadcrumb', [
+      { name: 'Home', url: ABSOLUTE_BASE_URL },
+      { name: 'Docs', url: `${ABSOLUTE_BASE_URL}/docs` },
+      {
+        name: 'API Reference',
+        url: `${ABSOLUTE_BASE_URL}/api-reference/restful/${version}/About.md`,
+      },
+      { name: headingContent, url: selfRouteUrl },
+    ]);
+    if (selfRouteUrl !== canonicalUrl) return [breadcrumb];
+    return [
+      buildSchema('techArticle', {
+        absoluteUrl: canonicalUrl,
+        title: pageTitle,
+        desc: pageDesc,
+        modifiedTime: lastModified,
+        inLanguage: 'en',
+        softwareVersion: version,
+        keywords: ['Milvus', 'RESTful API', 'HTTP', 'API Reference'],
+      }),
+      breadcrumb,
+    ];
+  }, [
+    version,
+    headingContent,
+    selfRouteUrl,
+    canonicalUrl,
+    pageTitle,
+    pageDesc,
+    lastModified,
+  ]);
+
   return (
-    <DocLayout
+    <>
+      <JsonLd schema={ldSchemas} />
+      <DocLayout
       seo={{
         title: pageTitle,
         desc: pageDesc,
@@ -154,15 +195,16 @@ export default function RestfulApiReference(props: {
               lang={'en'}
               className={styles.breadcrumbContainer}
             />
-            <div className={clsx(styles.restfulContainer)}>
+            <article className={clsx(styles.restfulContainer)}>
               {mdxSource && (
                 <MDXRemote {...mdxSource} components={components} />
               )}
-            </div>
+            </article>
           </div>
         </section>
       }
-    />
+      />
+    </>
   );
 }
 
@@ -315,6 +357,9 @@ export async function getStaticProps({ params }) {
   const metaPathList = slug.slice();
   const metaTitle = metaPathList.pop();
   const metaPath = metaPathList.join('/');
+  const lastModified = matchedDoc.sourcePath
+    ? getContentLastModified(matchedDoc.sourcePath, frontMatter)
+    : undefined;
 
   return {
     props: {
@@ -332,6 +377,7 @@ export async function getStaticProps({ params }) {
       relativePath: frontMatter.relativePath,
       curCategoryContentData: curCategoryContentDataOfAllVersion,
       headingContent: firstHeading || 'Milvus API Reference',
+      lastModified: lastModified ?? null,
       meta: {
         title: metaTitle,
         path: metaPath,

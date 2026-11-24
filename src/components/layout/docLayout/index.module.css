@@ -27,6 +27,13 @@ div.mainContainer {
     width: 0;
   }
 
+  .docMain {
+    width: 100%;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
   footer.docFooterContainer {
     width: 100%;
   }

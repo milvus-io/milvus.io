@@ -31,10 +31,21 @@ export interface ArticleInput {
   modifiedTime?: DateInput;
   inLanguage?: string;
   softwareVersion?: string;
+  keywords?: string[];
   imageUrl?: string;
+  about?: SchemaObject | SchemaObject[];
+  mentions?: SchemaObject[];
+  citation?: string[];
   /** Named human author; falls back to the Organization when absent. */
   author?: { name?: string; type?: 'Person' | 'Organization' };
 }
+
+const orgAuthorRef = (): SchemaObject => ({
+  '@type': 'Organization',
+  '@id': SITE.orgId,
+  name: SITE.name,
+  url: SITE.url,
+});
 
 /** Article / BlogPosting / TechArticle / NewsArticle — the generic content page. */
 export function articleSchema({
@@ -46,11 +57,33 @@ export function articleSchema({
   modifiedTime,
   inLanguage,
   softwareVersion,
+  keywords,
   imageUrl,
+  about,
+  mentions,
+  citation,
   author,
 }: ArticleInput): SchemaObject {
   const datePublished = toISO(publishTime);
   const dateModified = toISO(modifiedTime) || datePublished;
+  const resolvedAbout =
+    about ??
+    (softwareVersion
+      ? {
+          '@type': 'SoftwareApplication',
+          '@id': `${SITE.softwareAppId}-${encodeURIComponent(softwareVersion)}`,
+          name: SITE.name,
+          url: SITE.url,
+          softwareVersion,
+        }
+      : undefined);
+
+  const resolvedAuthor =
+    author?.name && author.type === 'Person'
+      ? { '@type': 'Person', name: author.name }
+      : author?.name && author.type === 'Organization'
+        ? { '@type': 'Organization', name: author.name }
+        : orgAuthorRef();
 
   return {
     '@context': SCHEMA_CONTEXT,
@@ -64,13 +97,11 @@ export function articleSchema({
     datePublished,
     dateModified,
     inLanguage,
-    about: softwareVersion
-      ? { '@type': 'SoftwareApplication', name: SITE.name, softwareVersion }
-      : undefined,
-    author:
-      author?.name && author.type === 'Person'
-        ? { '@type': 'Person', name: author.name }
-        : { '@type': 'Organization', name: SITE.name, url: SITE.url },
+    keywords: keywords?.length ? keywords : undefined,
+    about: resolvedAbout,
+    mentions: mentions?.length ? mentions : undefined,
+    citation: citation?.length ? citation : undefined,
+    author: resolvedAuthor,
     publisher: { '@id': SITE.orgId }, // points at the homepage Organization
   };
 }
@@ -85,19 +116,57 @@ export function organizationSchema(): SchemaObject {
     url: SITE.url,
     logo: SITE.logo,
     description: SITE.description,
+    founder: SITE.founder,
+    memberOf: SITE.memberOf,
     sameAs: SITE.sameAs,
   };
 }
 
-/** WebSite node — homepage only. */
-export function websiteSchema(): SchemaObject {
+export interface WebSiteInput {
+  inLanguage?: string;
+}
+
+/** WebSite node — canonical root domain identity (never overridden by localized paths). */
+export function websiteSchema({ inLanguage }: WebSiteInput = {}): SchemaObject {
   return {
     '@context': SCHEMA_CONTEXT,
     '@type': 'WebSite',
     '@id': SITE.websiteId,
     url: SITE.url,
     name: SITE.name,
+    description: SITE.description,
+    inLanguage,
     publisher: { '@id': SITE.orgId },
+  };
+}
+
+export interface WebPageInput {
+  absoluteUrl: string;
+  name?: string;
+  desc?: string;
+  inLanguage?: string;
+  about?: SchemaObject;
+}
+
+/** WebPage node — localized homepages or standalone pages linked to #website via isPartOf. */
+export function webPageSchema({
+  absoluteUrl,
+  name = SITE.name,
+  desc = SITE.description,
+  inLanguage,
+  about,
+}: WebPageInput): SchemaObject {
+  return {
+    '@context': SCHEMA_CONTEXT,
+    '@type': 'WebPage',
+    '@id': `${absoluteUrl}#webpage`,
+    url: absoluteUrl,
+    name,
+    description: desc || undefined,
+    inLanguage,
+    isPartOf: { '@id': SITE.websiteId },
+    publisher: { '@id': SITE.orgId },
+    about,
   };
 }
 
@@ -188,9 +257,16 @@ export interface SoftwareAppInput {
   offerUrl?: string;
   /** Open-source repository — adds codeRepository semantics. */
   codeRepository?: string;
+  softwareVersion?: string;
+  license?: string;
+  isAccessibleForFree?: boolean;
+  featureList?: readonly string[];
+  applicationCategory?: string;
+  operatingSystem?: string;
+  inLanguage?: string;
 }
 
-/** SoftwareApplication — product pages. Never add aggregateRating/review
+/** SoftwareApplication — product & tool pages. Never add aggregateRating/review
  *  (self-rating violates Google policy). */
 export function softwareAppSchema({
   name = SITE.name,
@@ -198,16 +274,39 @@ export function softwareAppSchema({
   url = SITE.url,
   offerUrl,
   codeRepository,
+  softwareVersion,
+  license,
+  isAccessibleForFree = true,
+  featureList,
+  applicationCategory = 'DeveloperApplication',
+  operatingSystem = 'Cloud / Linux / macOS / Windows',
+  inLanguage,
 }: SoftwareAppInput = {}): SchemaObject {
+  const isFlagship = name === SITE.name && url === SITE.url;
   return {
     '@context': SCHEMA_CONTEXT,
     '@type': 'SoftwareApplication',
+    '@id': isFlagship ? SITE.softwareAppId : `${url}#software`,
     name,
     description: desc,
     url,
-    applicationCategory: 'DeveloperApplication',
-    operatingSystem: 'Cloud / Linux / macOS / Windows',
+    applicationCategory,
+    operatingSystem,
+    isAccessibleForFree,
+    softwareVersion: softwareVersion ?? (isFlagship ? SITE.softwareVersion : undefined),
+    license: license ?? (isFlagship ? SITE.license : undefined),
+    featureList:
+      featureList && featureList.length
+        ? [...featureList]
+        : isFlagship
+          ? [...SITE.featureList]
+          : undefined,
+    inLanguage,
+    creator: isFlagship ? SITE.founder : { '@id': SITE.orgId },
     publisher: { '@id': SITE.orgId },
+    ...(isFlagship && SITE.softwareSameAs.length
+      ? { sameAs: [...SITE.softwareSameAs] }
+      : {}),
     ...(codeRepository ? { codeRepository } : {}),
     offers: offerUrl
       ? {
@@ -216,7 +315,14 @@ export function softwareAppSchema({
           price: '0',
           priceCurrency: 'USD',
         }
-      : undefined,
+      : isAccessibleForFree
+        ? {
+            '@type': 'Offer',
+            url,
+            price: '0',
+            priceCurrency: 'USD',
+          }
+        : undefined,
   };
 }
 
@@ -242,6 +348,159 @@ export function definedTermSchema({
     description: definition,
     url,
     ...(termSetUrl ? { inDefinedTermSet: termSetUrl } : {}),
+  };
+}
+
+const decodeHtmlEntities = (input: string): string =>
+  input
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'");
+
+const stripHtml = (input: string): string =>
+  decodeHtmlEntities(
+    input
+      .replace(/<button\b[^>]*>[\s\S]*?<\/button>/gi, '')
+      .replace(/<svg\b[^>]*>[\s\S]*?<\/svg>/gi, '')
+      .replace(/<[^>]+>/g, ' ')
+  )
+    .replace(/\s+/g, ' ')
+    .trim();
+
+/** Parse rendered glossary HTML (`<h2>Term</h2><p>Definition</p>`) into DefinedTerm inputs. */
+export function extractGlossaryTermsFromHtml(
+  html: string,
+  canonicalUrl: string
+): DefinedTermInput[] {
+  if (!html) return [];
+  const headingRe = /<h2\b([^>]*)>([\s\S]*?)<\/h2>/gi;
+  const headings: { id?: string; term: string; end: number; start: number }[] = [];
+  let match: RegExpExecArray | null;
+  while ((match = headingRe.exec(html)) !== null) {
+    const attrs = match[1] || '';
+    const idMatch = attrs.match(/\bid=["']([^"']+)["']/i);
+    const term = stripHtml(match[2] || '');
+    if (term) {
+      headings.push({
+        id: idMatch?.[1],
+        term,
+        start: match.index,
+        end: headingRe.lastIndex,
+      });
+    }
+  }
+  const terms: DefinedTermInput[] = [];
+  for (let i = 0; i < headings.length; i += 1) {
+    const current = headings[i];
+    const nextStart = i + 1 < headings.length ? headings[i + 1].start : html.length;
+    const bodyHtml = html.slice(current.end, nextStart);
+    const definition = stripHtml(bodyHtml);
+    if (!definition) continue;
+    const url = current.id
+      ? `${canonicalUrl}#${encodeURIComponent(current.id)}`
+      : canonicalUrl;
+    terms.push({
+      term: current.term,
+      definition: definition.slice(0, 500),
+      url,
+      termSetUrl: `${canonicalUrl}#definedtermset`,
+    });
+  }
+  return terms;
+}
+
+export interface DefinedTermSetInput {
+  absoluteUrl: string;
+  name: string;
+  desc?: string;
+  inLanguage?: string;
+  terms?: DefinedTermInput[];
+  html?: string;
+}
+
+/** DefinedTermSet — glossary pages (e.g. /docs/glossary.md). */
+export function definedTermSetSchema({
+  absoluteUrl,
+  name,
+  desc,
+  inLanguage,
+  terms,
+  html,
+}: DefinedTermSetInput): SchemaObject {
+  const termSetId = `${absoluteUrl}#definedtermset`;
+  const resolvedTerms =
+    terms ?? (html ? extractGlossaryTermsFromHtml(html, absoluteUrl) : []);
+  return {
+    '@context': SCHEMA_CONTEXT,
+    '@type': 'DefinedTermSet',
+    '@id': termSetId,
+    url: absoluteUrl,
+    name,
+    description: desc || undefined,
+    inLanguage,
+    publisher: { '@id': SITE.orgId },
+    hasDefinedTerm: resolvedTerms.map(item => {
+      const { '@context': _ctx, ...termNode } = definedTermSchema({
+        ...item,
+        termSetUrl: item.termSetUrl || termSetId,
+      });
+      return termNode;
+    }),
+  };
+}
+
+export interface CollectionPageItem {
+  name: string;
+  url?: string;
+  description?: string;
+}
+
+export interface CollectionPageInput {
+  absoluteUrl: string;
+  name: string;
+  desc?: string;
+  inLanguage?: string;
+  about?: SchemaObject;
+  items?: CollectionPageItem[];
+}
+
+/** CollectionPage — index / hub pages (/docs, /blog, /use-cases). */
+export function collectionPageSchema({
+  absoluteUrl,
+  name,
+  desc,
+  inLanguage,
+  about,
+  items,
+}: CollectionPageInput): SchemaObject {
+  const validItems = (items ?? []).filter(item => item.name?.trim());
+  return {
+    '@context': SCHEMA_CONTEXT,
+    '@type': 'CollectionPage',
+    '@id': `${absoluteUrl}#webpage`,
+    url: absoluteUrl,
+    name,
+    description: desc || undefined,
+    inLanguage,
+    isPartOf: { '@id': SITE.websiteId },
+    publisher: { '@id': SITE.orgId },
+    about,
+    mainEntity: validItems.length
+      ? {
+          '@type': 'ItemList',
+          numberOfItems: validItems.length,
+          itemListElement: validItems.map((item, index) => ({
+            '@type': 'ListItem',
+            position: index + 1,
+            name: item.name.trim(),
+            ...(item.url ? { url: item.url } : {}),
+            ...(item.description ? { description: item.description } : {}),
+          })),
+        }
+      : undefined,
   };
 }
 

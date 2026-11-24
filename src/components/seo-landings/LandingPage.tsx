@@ -19,6 +19,7 @@ export type PageData = {
   slug: string; path: string; nav: string; title: string; description: string; h1: string;
   lang: string; layout?: string; intro?: string; sub?: string; proof: string[]; logos?: string[];
   primary_cta: Cta; secondary_cta: Cta; diagram: { caption: string }; sources: string[];
+  reviewedOn?: string;
   sections?: { id: string; nav: string; h2: string; paragraphs?: string[]; bullets?: string[];
     table?: Table; bench?: Bench[]; note?: string }[];
   stats?: { value: string; label: string; source: string }[];
@@ -31,6 +32,30 @@ export type PageData = {
 type Props = { page: PageData; twinPath: string; lang: string;
   related: { title: string; path: string }[] };
 const HOST = 'https://milvus.io';
+const ORG_ID = `${HOST}/#organization`;
+const ORG_AUTHOR = {
+  '@type': 'Organization',
+  '@id': ORG_ID,
+  name: 'Milvus',
+  url: HOST,
+};
+const WEBSITE_ID = `${HOST}/#website`;
+const SOFTWARE_ID = `${HOST}/#software`;
+const MILVUS_ENTITY = {
+  '@type': 'SoftwareApplication',
+  '@id': SOFTWARE_ID,
+  name: 'Milvus',
+  url: HOST,
+};
+const COMPARE_ENTITIES: Record<string, { '@type': string; name: string; url: string }[]> = {
+  'milvus-vs-pgvector': [{ '@type': 'SoftwareApplication', name: 'pgvector', url: 'https://github.com/pgvector/pgvector' }],
+  'milvus-vs-qdrant': [{ '@type': 'SoftwareApplication', name: 'Qdrant', url: 'https://qdrant.tech/' }],
+  'milvus-vs-elasticsearch': [
+    { '@type': 'SoftwareApplication', name: 'Elasticsearch', url: 'https://www.elastic.co/elasticsearch' },
+    { '@type': 'SoftwareApplication', name: 'OpenSearch', url: 'https://opensearch.org/' },
+  ],
+  'milvus-vs-lancedb': [{ '@type': 'SoftwareApplication', name: 'LanceDB', url: 'https://lancedb.com/' }],
+};
 const json = (value: unknown) => JSON.stringify(value).replace(/</g, '\\u003c');
 function useLandingLocale(lang: string) {
   const { state, dispatch } = useStore();
@@ -46,25 +71,53 @@ function useLandingLocale(lang: string) {
   }, [lang, state.locale, dispatch]);
 }
 
-export function LandingHead({ title, description, path, twinPath, zh, image, faqs = [] }: {
+export function LandingHead({
+  title, description, path, twinPath, zh, image, faqs = [], reviewedOn, sources = [], slug,
+}: {
   title: string; description: string; path: string; twinPath: string; zh: boolean;
-  image?: string; faqs?: [string, string][];
+  image?: string; faqs?: [string, string][]; reviewedOn?: string; sources?: string[]; slug?: string;
 }) {
   const en = zh ? twinPath : path;
   const chinese = zh ? path : twinPath;
   const url = HOST + path;
   const group = path.includes('/compare') ? 'compare' : 'solutions';
   const groupPath = `${zh ? '/zh' : ''}/${group}`;
+  const isDetail = path !== groupPath;
+  const inLanguage = zh ? 'zh-Hans' : 'en';
+  const compared = slug ? (COMPARE_ENTITIES[slug] || []) : [];
+  const citations = [...new Set(sources.map(src => {
+    try { return new URL(src, HOST).toString(); } catch { return ''; }
+  }).filter(Boolean))];
   const graph = [
-    { '@type': 'WebPage', '@id': url, url, name: title, description,
-      inLanguage: zh ? 'zh-Hans' : 'en', ...(image ? { primaryImageOfPage: { '@type': 'ImageObject', url: HOST + image } } : {}),
-      publisher: { '@type': 'Organization', name: 'Milvus', url: HOST } },
+    {
+      '@type': 'WebPage', '@id': url, url, name: title, description, inLanguage,
+      isPartOf: { '@id': WEBSITE_ID },
+      ...(reviewedOn ? { dateModified: reviewedOn, lastReviewed: reviewedOn } : {}),
+      ...(image ? { primaryImageOfPage: { '@type': 'ImageObject', url: HOST + image } } : {}),
+      publisher: { '@id': ORG_ID },
+    },
+    ...(isDetail ? [{
+      '@type': 'TechArticle',
+      '@id': `${url}#article`,
+      mainEntityOfPage: { '@id': url },
+      url,
+      headline: title.slice(0, 110),
+      description,
+      inLanguage,
+      ...(reviewedOn ? { dateModified: reviewedOn } : {}),
+      ...(image ? { image: [HOST + image] } : {}),
+      author: ORG_AUTHOR,
+      publisher: { '@id': ORG_ID },
+      about: compared.length ? [MILVUS_ENTITY, ...compared] : MILVUS_ENTITY,
+      ...(compared.length ? { mentions: compared } : {}),
+      ...(citations.length ? { citation: citations } : {}),
+    }] : []),
     { '@type': 'BreadcrumbList', itemListElement: [
       { '@type': 'ListItem', position: 1, name: zh ? '首页' : 'Home', item: HOST + (zh ? '/zh' : '/') },
       { '@type': 'ListItem', position: 2, name: group === 'compare' ? (zh ? '产品对比' : 'Compare') : (zh ? '解决方案' : 'Solutions'), item: HOST + groupPath },
-      ...(path !== groupPath ? [{ '@type': 'ListItem', position: 3, name: title, item: url }] : []),
+      ...(isDetail ? [{ '@type': 'ListItem', position: 3, name: title, item: url }] : []),
     ] },
-    ...(faqs.length ? [{ '@type': 'FAQPage', mainEntity: faqs.map(([q, a]) => ({
+    ...(faqs.length ? [{ '@type': 'FAQPage', '@id': `${url}#faq`, mainEntity: faqs.map(([q, a]) => ({
       '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a },
     })) }] : []),
   ];
@@ -170,7 +223,8 @@ export default function LandingPage({ page: p, twinPath, related, lang }: Props)
   };
   return <Layout canonicalUrl={HOST + p.path} disableSelfHreflang headerClassName={styles.landingHeader}>
     <LandingHead title={p.title} description={p.description} path={p.path} twinPath={twinPath} zh={zh}
-      image={`/og/${p.slug}${zh ? '-zh' : ''}.png`} faqs={p.faqs} />
+      image={`/og/${p.slug}${zh ? '-zh' : ''}.png`} faqs={p.faqs} reviewedOn={p.reviewedOn}
+      sources={p.sources} slug={p.slug} />
     <main className={styles.page} lang={zh ? 'zh-Hans' : 'en'} onClick={track}>
       <a className="skip" href="#landing-content">{zh ? '跳转到正文' : 'Skip to content'}</a>
       <nav className="landing-subnav" aria-label={zh ? '解决方案导航' : 'Solution navigation'}><div className="wrap">

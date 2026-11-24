@@ -6,6 +6,8 @@ import pageClasses from '../../styles/responsive.module.css';
 import { useRouter } from 'next/router';
 import clsx from 'clsx';
 import { ABSOLUTE_BASE_URL } from '@/consts';
+import JsonLd from '@/components/JsonLd';
+import { buildSchema } from '@/schema';
 import {
   AirplaneArrowIcon,
   ClockIcon,
@@ -26,6 +28,9 @@ import { BlogFrontMatterType } from '@/types/blogs';
 import SubscribeNewsletter from '@/components/subscribe';
 import Link from 'next/link';
 import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+
+dayjs.extend(utc);
 import { Trans, useTranslation } from 'react-i18next';
 import { InkeepCustomTriggerWrapper } from '@/components/inkeep/inkeepChat';
 import ZillizAdv from '@/parts/blogs/zillizAdv';
@@ -538,6 +543,31 @@ export const BlogHome: React.FC<Props> = props => {
     );
   };
 
+  const ldSchemas = useMemo(() => {
+    const homeUrl =
+      locale === LanguageEnum.ENGLISH
+        ? ABSOLUTE_BASE_URL
+        : `${ABSOLUTE_BASE_URL}/${locale}`;
+    const visibleItems = paging.list.map(item => ({
+      name: item.title,
+      url: `${ABSOLUTE_BASE_URL}${getBlogLink(item, locale)}`,
+      description: item.desc || undefined,
+    }));
+    return [
+      buildSchema('collectionPage', {
+        absoluteUrl,
+        name: t('blog:homepage.title'),
+        desc: t('blog:homepage.desc'),
+        inLanguage: locale,
+        items: visibleItems,
+      }),
+      buildSchema('breadcrumb', [
+        { name: 'Home', url: homeUrl },
+        { name: 'Blog', url: absoluteUrl },
+      ]),
+    ];
+  }, [absoluteUrl, locale, paging.list, t]);
+
   return (
     <Layout headerClassName={pageClasses.blogContainer}>
       <Head>
@@ -547,6 +577,7 @@ export const BlogHome: React.FC<Props> = props => {
         <meta property="og:description" content={t('blog:homepage.desc')} />
         <meta property="og:url" content={absoluteUrl} />
       </Head>
+      <JsonLd schema={ldSchemas} />
       <main>
         <section className={styles['banner']}>
           <div className={pageClasses.homeContainer}>
@@ -586,7 +617,7 @@ interface BlogExtraProps {
 const BlogExtra: React.FC<BlogExtraProps> = props => {
   const { tags, date } = props.data;
   const { t } = useTranslation('blog');
-  const displayDate = dayjs(date).format('MMM DD, YYYY');
+  const displayDate = dayjs.utc(date).format('MMM DD, YYYY');
   const displayTags = tags
     .map(tag => t(`blog:filter.${convertToNewTag(tag)}`))
     .join(' ');

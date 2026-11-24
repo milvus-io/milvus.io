@@ -2,11 +2,14 @@ import {
   articleSchema,
   organizationSchema,
   websiteSchema,
+  webPageSchema,
   breadcrumbSchema,
   faqSchema,
   videoSchema,
   softwareAppSchema,
   definedTermSchema,
+  definedTermSetSchema,
+  collectionPageSchema,
   eventSchema,
   jobPostingSchema,
   type SchemaObject,
@@ -19,12 +22,15 @@ export type SchemaPageType =
   | 'newsArticle'
   | 'organization'
   | 'website'
+  | 'webPage'
+  | 'collectionPage'
   | 'event'
   | 'video'
   | 'faq'
   | 'breadcrumb'
   | 'softwareApp'
   | 'definedTerm'
+  | 'definedTermSet'
   | 'jobPosting';
 
 /**
@@ -49,7 +55,11 @@ export function buildSchema(
     case 'organization':
       return organizationSchema();
     case 'website':
-      return websiteSchema();
+      return websiteSchema(data);
+    case 'webPage':
+      return webPageSchema(data);
+    case 'collectionPage':
+      return collectionPageSchema(data);
     case 'event':
       return eventSchema(data);
     case 'video':
@@ -62,6 +72,8 @@ export function buildSchema(
       return softwareAppSchema(data);
     case 'definedTerm':
       return definedTermSchema(data);
+    case 'definedTermSet':
+      return definedTermSetSchema(data);
     case 'jobPosting':
       return jobPostingSchema(data);
     default:

@@ -61,7 +61,7 @@ export default function DocLayout(props: DocLayoutPropsType) {
 
   return (
     <>
-      <main className={clsx(classes.docLayoutContainer, root)}>
+      <div className={clsx(classes.docLayoutContainer, root)}>
         <Head>
           <title>{title}</title>
           <meta name="description" content={desc}></meta>
@@ -101,7 +101,7 @@ export default function DocLayout(props: DocLayoutPropsType) {
               [classes.docHome]: isHome,
             })}
           >
-            {center}
+            <main className={classes.docMain}>{center}</main>
 
             {showFooter && (
               <Footer
@@ -116,7 +116,7 @@ export default function DocLayout(props: DocLayoutPropsType) {
             )}
           </div>
         </div>
-      </main>
+      </div>
     </>
   );
 }

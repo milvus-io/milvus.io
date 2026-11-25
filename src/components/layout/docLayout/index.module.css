@@ -2,6 +2,15 @@
 
 div.mainContainer {
   display: flex;
+  width: 100%;
+  max-width: 1644px;
+  margin: 0 auto;
+  padding-inline: 16px;
+  box-sizing: border-box;
+
+  @media (--tablet), (--phone) {
+    padding-inline: 0;
+  }
 
   .flexibleContainer {
     position: sticky;

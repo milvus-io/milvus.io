@@ -22,7 +22,58 @@ export type HeaderNavItem = {
   href?: string;
   rel?: string;
   external?: boolean;
+  activePaths?: string[];
   children?: HeaderNavItem[];
+};
+
+const LOCALE_PREFIX_REGEX =
+  /^\/(zh-hant|zh|ja|ko|fr|de|es|it|pt|ru|id|ar)(?=\/|$)/;
+
+const normalizeExactPathname = (pathname: string) => {
+  const clean = pathname.split(/[?#]/)[0] || '';
+  if (!clean) {
+    return '';
+  }
+  return clean.length > 1 && clean.endsWith('/') ? clean.slice(0, -1) : clean;
+};
+
+const normalizePathname = (pathname: string) => {
+  const clean = normalizeExactPathname(pathname);
+  if (!clean) {
+    return '';
+  }
+  const withoutLocale = clean.replace(LOCALE_PREFIX_REGEX, '') || '/';
+  return withoutLocale.length > 1 && withoutLocale.endsWith('/')
+    ? withoutLocale.slice(0, -1)
+    : withoutLocale;
+};
+
+export const isHeaderNavItemActive = (
+  item: HeaderNavItem,
+  pathname: string
+): boolean => {
+  if (!item.activePaths?.length || !pathname) {
+    return false;
+  }
+  const normalized = normalizePathname(pathname);
+  if (!normalized) {
+    return false;
+  }
+  return item.activePaths.some(
+    prefix => normalized === prefix || normalized.startsWith(`${prefix}/`)
+  );
+};
+
+export const isHeaderNavLinkCurrent = (
+  item: HeaderNavItem,
+  pathname: string
+): boolean => {
+  if (!item.href || item.external || !pathname) {
+    return false;
+  }
+  const normalizedTarget = normalizeExactPathname(item.href);
+  const normalizedCurrent = normalizeExactPathname(pathname);
+  return Boolean(normalizedTarget) && normalizedTarget === normalizedCurrent;
 };
 
 type HeaderNavItemsParams = {
@@ -40,6 +91,7 @@ export const useHeaderNavItems = ({
     () => [
       {
         label: t('intro.label'),
+        activePaths: ['/intro', '/use-cases', '/solutions', '/compare'],
         children: [
           {
             label: t('intro.definition'),
@@ -59,9 +111,14 @@ export const useHeaderNavItems = ({
           },
         ],
       },
-      { label: t('docs'), href: getLocalePath('/docs') },
+      {
+        label: t('docs'),
+        href: getLocalePath('/docs'),
+        activePaths: ['/docs', '/api-reference'],
+      },
       {
         label: t('tutorials.label'),
+        activePaths: ['/bootcamp', '/milvus-demos'],
         children: [
           {
             label: t('tutorials.bootcamp'),
@@ -81,6 +138,7 @@ export const useHeaderNavItems = ({
       },
       {
         label: t('tools.label'),
+        activePaths: ['/tools', '/learn-milvus'],
         children: [
           {
             label: t('nav.learnMilvus'),
@@ -128,10 +186,15 @@ export const useHeaderNavItems = ({
           },
         ],
       },
-      { label: t('blog'), href: getLocalePath('/blog') },
+      {
+        label: t('blog'),
+        href: getLocalePath('/blog'),
+        activePaths: ['/blog'],
+      },
       {
         label: t('community.label'),
         href: getLocalePath('/community'),
+        activePaths: ['/community'],
         children: [
           {
             label: t('community.officeHours'),

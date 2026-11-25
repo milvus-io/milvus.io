@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { LocalizedAnchor } from '@/components/localizedLinks';
 import clsx from 'clsx';
 import {
@@ -25,7 +26,6 @@ import { LanguageSelector } from '@/components/language-selector';
 import { GITHUB_MILVUS_LINK } from '@/consts/links';
 import { useGlobalLocale } from '@/hooks/use-global-locale';
 import useUtmTrackPath from '@/hooks/use-utm-track-path';
-import responsiveClasses from '@/styles/responsive.module.css';
 
 import milvusStats from '../../../global-stats.json';
 import { LogoSection } from './Logos';
@@ -33,6 +33,8 @@ import classes from './index.module.css';
 import {
   getCloudSignupUrl,
   HeaderNavItem,
+  isHeaderNavItemActive,
+  isHeaderNavLinkCurrent,
   useHeaderNavItems,
 } from './navigation';
 
@@ -74,6 +76,11 @@ const Header: React.FC<{
     normal: number | null;
     compact: number | null;
   }>({ normal: null, compact: null });
+  const { asPath, pathname } = useRouter();
+  const activePathname =
+    pathname === '/404' || pathname === '/_error' || pathname === '/error'
+      ? ''
+      : asPath;
   const {
     locale,
     disabled,
@@ -85,7 +92,7 @@ const Header: React.FC<{
   const navItems = useHeaderNavItems({ t, getLocalePath, locale });
   const trackPath = useUtmTrackPath();
   const signupUrl = getCloudSignupUrl(trackPath);
-  const containerClassName = className || responsiveClasses.homeContainer;
+  const containerClassName = className || '';
 
   const updateLayoutMode = useCallback((nextMode: HeaderLayoutMode) => {
     if (layoutModeRef.current === nextMode) {
@@ -283,7 +290,11 @@ const Header: React.FC<{
             <nav className={classes.desktopNav} aria-label="Primary navigation">
               <ul ref={desktopNavListRef} className={classes.desktopNavList}>
                 {navItems.map(item => (
-                  <DesktopNavItem key={item.label} item={item} />
+                  <DesktopNavItem
+                    key={item.label}
+                    item={item}
+                    activePathname={activePathname}
+                  />
                 ))}
               </ul>
             </nav>
@@ -352,6 +363,7 @@ const Header: React.FC<{
                 <MobileNavItem
                   key={item.label}
                   item={item}
+                  activePathname={activePathname}
                   onNavigate={() => setIsMenuOpen(false)}
                 />
               ))}
@@ -383,7 +395,15 @@ const Header: React.FC<{
   );
 };
 
-const DesktopNavItem = ({ item }: { item: HeaderNavItem }) => {
+const DesktopNavItem = ({
+  item,
+  activePathname,
+}: {
+  item: HeaderNavItem;
+  activePathname: string;
+}) => {
+  const isActive = isHeaderNavItemActive(item, activePathname);
+  const isCurrentPage = isHeaderNavLinkCurrent(item, activePathname);
   const hasChildren = Boolean(item.children?.length);
   const triggerProps = item.href
     ? ({ href: item.href, label: item.label } as const)
@@ -396,8 +416,11 @@ const DesktopNavItem = ({ item }: { item: HeaderNavItem }) => {
           {triggerProps ? (
             <Link
               href={triggerProps.href}
-              className={classes.desktopNavButton}
+              className={clsx(classes.desktopNavButton, {
+                [classes.desktopNavActive]: isActive,
+              })}
               aria-haspopup="menu"
+              aria-current={isCurrentPage ? 'page' : undefined}
             >
               <span>{triggerProps.label}</span>
               <DownArrowIcon
@@ -409,7 +432,9 @@ const DesktopNavItem = ({ item }: { item: HeaderNavItem }) => {
           ) : (
             <button
               type="button"
-              className={classes.desktopNavButton}
+              className={clsx(classes.desktopNavButton, {
+                [classes.desktopNavActive]: isActive,
+              })}
               aria-haspopup="menu"
             >
               <span>{item.label}</span>
@@ -424,7 +449,15 @@ const DesktopNavItem = ({ item }: { item: HeaderNavItem }) => {
             <ul className={classes.desktopDropdownList}>
               {item.children?.map(child => (
                 <li key={child.label}>
-                  <NavLink item={child} className={classes.desktopDropdownLink}>
+                  <NavLink
+                    item={child}
+                    className={classes.desktopDropdownLink}
+                    ariaCurrent={
+                      isHeaderNavLinkCurrent(child, activePathname)
+                        ? 'page'
+                        : undefined
+                    }
+                  >
                     {child.label}
                     {child.external && <RightTopArrowIcon />}
                   </NavLink>
@@ -439,7 +472,13 @@ const DesktopNavItem = ({ item }: { item: HeaderNavItem }) => {
 
   return (
     <li className={classes.desktopNavItem}>
-      <NavLink item={item} className={classes.desktopNavLink}>
+      <NavLink
+        item={item}
+        className={clsx(classes.desktopNavLink, {
+          [classes.desktopNavActive]: isActive,
+        })}
+        ariaCurrent={isCurrentPage ? 'page' : undefined}
+      >
         {item.label}
       </NavLink>
     </li>
@@ -448,12 +487,16 @@ const DesktopNavItem = ({ item }: { item: HeaderNavItem }) => {
 
 const MobileNavItem = ({
   item,
+  activePathname,
   onNavigate,
 }: {
   item: HeaderNavItem;
+  activePathname: string;
   onNavigate: () => void;
 }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const isActive = isHeaderNavItemActive(item, activePathname);
+  const isCurrentPage = isHeaderNavLinkCurrent(item, activePathname);
   const hasChildren = Boolean(item.children?.length);
 
   if (hasChildren) {
@@ -463,7 +506,10 @@ const MobileNavItem = ({
           {item.href ? (
             <NavLink
               item={item}
-              className={classes.mobileNavLinkWithChildren}
+              className={clsx(classes.mobileNavLinkWithChildren, {
+                [classes.mobileNavActive]: isActive,
+              })}
+              ariaCurrent={isCurrentPage ? 'page' : undefined}
               onClick={onNavigate}
             >
               {item.label}
@@ -471,7 +517,9 @@ const MobileNavItem = ({
           ) : (
             <button
               type="button"
-              className={classes.mobileNavGroupLabel}
+              className={clsx(classes.mobileNavGroupLabel, {
+                [classes.mobileNavActive]: isActive,
+              })}
               aria-expanded={isOpen}
               onClick={() => setIsOpen(open => !open)}
             >
@@ -505,6 +553,11 @@ const MobileNavItem = ({
                 <NavLink
                   item={child}
                   className={classes.mobileSubMenuLink}
+                  ariaCurrent={
+                    isHeaderNavLinkCurrent(child, activePathname)
+                      ? 'page'
+                      : undefined
+                  }
                   onClick={onNavigate}
                 >
                   {child.label}
@@ -522,7 +575,10 @@ const MobileNavItem = ({
     <li className={classes.mobileNavItem}>
       <NavLink
         item={item}
-        className={classes.mobileNavLink}
+        className={clsx(classes.mobileNavLink, {
+          [classes.mobileNavActive]: isActive,
+        })}
+        ariaCurrent={isCurrentPage ? 'page' : undefined}
         onClick={onNavigate}
       >
         {item.label}
@@ -535,11 +591,13 @@ const NavLink = ({
   item,
   className,
   children,
+  ariaCurrent,
   onClick,
 }: {
   item: HeaderNavItem;
   className: string;
   children: React.ReactNode;
+  ariaCurrent?: 'page';
   onClick?: () => void;
 }) => {
   if (!item.href) {
@@ -561,7 +619,12 @@ const NavLink = ({
   }
 
   return (
-    <Link href={item.href} className={className} onClick={onClick}>
+    <Link
+      href={item.href}
+      className={className}
+      aria-current={ariaCurrent}
+      onClick={onClick}
+    >
       {children}
     </Link>
   );

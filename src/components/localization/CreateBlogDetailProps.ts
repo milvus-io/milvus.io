@@ -56,7 +56,7 @@ export const createBlogDetailProps = (lang: LanguageEnum) => {
     //   indexed, paired with the hreflang cluster emitted in BlogDetail.
     // - Every other language points to the English milvus.io blog URL to
     //   consolidate it to English instead of competing for the index.
-    const enBlog = enData.find(v => v.id === id) as
+    const enBlog = fallbackData as
       | Record<string, any>
       | undefined;
     const enCanonicalUrl = enBlog?.canonicalUrl as string | undefined;
@@ -82,7 +82,15 @@ export const createBlogDetailProps = (lang: LanguageEnum) => {
         moreBlogs: [
           ...moreBlogs,
           ...allData.filter(item => item.id !== id),
-        ].slice(0, 4),
+        ]
+          .slice(0, 4)
+          .map(({ id, title, cover, tags, desc }) => ({
+            id,
+            title,
+            cover,
+            tags,
+            ...(desc !== undefined && { desc }),
+          })),
         tags,
         ...rest,
         canonicalUrl,

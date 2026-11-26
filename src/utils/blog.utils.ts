@@ -106,6 +106,21 @@ const generateBlogData = (locale: LanguageEnum = LanguageEnum.ENGLISH) => {
   return sortBlogsByDateDesc(blogsData);
 };
 
+// A production build renders many posts from the same immutable checkout per
+// worker. Keep development reads live when an author edits a translation.
+const postsByLocale = new Map<LanguageEnum, ReturnType<typeof generateBlogData>>();
+
+const getAllData = (locale = LanguageEnum.ENGLISH) => {
+  if (process.env.NODE_ENV !== 'production') return generateBlogData(locale);
+
+  const cached = postsByLocale.get(locale);
+  if (cached) return cached;
+
+  const posts = generateBlogData(locale);
+  postsByLocale.set(locale, posts);
+  return posts;
+};
+
 const generateSimpleBlogList = (
   locale: LanguageEnum = LanguageEnum.ENGLISH
 ) => {
@@ -145,7 +160,7 @@ const getAvailableLanguagesForBlog = (id: string) =>
   });
 
 const blogUtils = {
-  getAllData: generateBlogData,
+  getAllData,
   getListData: generateBlogListData,
   getRouter: generateBlogRouter,
   getSimpleList: generateSimpleBlogList,

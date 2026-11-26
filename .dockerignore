@@ -1,3 +1,8 @@
+# Build and dependency artifacts (installed/generated inside Docker stages)
+node_modules/
+.next/
+.doc-sitemap/
+
 # GitHub workflows and secrets
 .github/
 

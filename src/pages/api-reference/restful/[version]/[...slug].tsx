@@ -31,6 +31,10 @@ import {
   SPLIT_FLAG,
 } from '@/utils/restful';
 import {
+  stripMdListDataForClient,
+  stripMenuForClient,
+} from '@/utils/client-doc-data';
+import {
   writeSitemapSegment,
   type ContentSitemapEntry,
 } from '@/utils/doc-sitemap-segments';
@@ -361,6 +365,8 @@ export async function getStaticProps({ params }) {
     ? getContentLastModified(matchedDoc.sourcePath, frontMatter)
     : undefined;
 
+  const currentApiMdId = formatApiRelativePath(frontMatter.relativePath);
+
   return {
     props: {
       version: params.version,
@@ -368,14 +374,17 @@ export async function getStaticProps({ params }) {
       mdxSource,
 
       currentId: slug.join(SPLIT_FLAG),
-      menus: menuData,
+      menus: stripMenuForClient(menuData),
       latestVersion,
       locale: 'en',
       category: ApiReferenceRouteEnum.Restful,
       languageCategory: ApiReferenceLanguageEnum.Restful,
       versions: versions,
       relativePath: frontMatter.relativePath,
-      curCategoryContentData: curCategoryContentDataOfAllVersion,
+      curCategoryContentData: stripMdListDataForClient(
+        curCategoryContentDataOfAllVersion,
+        currentApiMdId
+      ),
       headingContent: firstHeading || 'Milvus API Reference',
       lastModified: lastModified ?? null,
       meta: {

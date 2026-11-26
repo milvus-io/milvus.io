@@ -16,19 +16,26 @@ export const createBlogDetailProps = (lang: LanguageEnum) => {
   const getBlogDetailStaticProps = async ({ params }) => {
     const { id } = params;
 
-    const allData = blogUtils.getAllData(lang);
-    const enData = blogUtils.getAllData(LanguageEnum.ENGLISH);
+    // Validate against the lightweight English metadata index first so unknown
+    // IDs on localized blocking routes 404 immediately without scanning or
+    // caching any localized directory or article bodies.
+    const enList = blogUtils.getListData(LanguageEnum.ENGLISH);
+    const enMeta = enList.find(v => v.id === id) as
+      | Record<string, any>
+      | undefined;
+    if (!enMeta) {
+      return { notFound: true };
+    }
 
-    const langData = allData.find(v => v.id === id);
-    const fallbackData = enData.find(v => v.id === id);
-    const noTranslationData = {
-      tags: [],
-      metaData: {},
-      title: id,
-      content: 'Blog Translation Not Provided.',
-    };
-
-    const sourceData = langData || fallbackData || noTranslationData;
+    const langData =
+      lang === LanguageEnum.ENGLISH
+        ? undefined
+        : blogUtils.getSingleData(lang, id);
+    const sourceData =
+      langData || blogUtils.getSingleData(LanguageEnum.ENGLISH, id);
+    if (!sourceData) {
+      return { notFound: true };
+    }
 
     const { content, tags, metaData, ...rest } = sourceData;
 
@@ -36,15 +43,15 @@ export const createBlogDetailProps = (lang: LanguageEnum) => {
       tree: newHtml,
       codeList = [],
       anchorList = [],
-    } = sourceData === langData || sourceData === fallbackData
-      ? markdownToHtml(content, {
-          showAnchor: true,
-          version: 'blog',
-          useLatex: true,
-        })
-      : { ...metaData, tree: content };
+    } = markdownToHtml(content, {
+      showAnchor: true,
+      version: 'blog',
+      useLatex: true,
+    });
 
-    const moreBlogs = allData
+    const listData =
+      lang === LanguageEnum.ENGLISH ? enList : blogUtils.getListData(lang);
+    const moreBlogs = listData
       .filter(v => v.tags.some(tag => tags.includes(tag) && v.id !== id))
       .slice(0, 4);
 
@@ -56,10 +63,7 @@ export const createBlogDetailProps = (lang: LanguageEnum) => {
     //   indexed, paired with the hreflang cluster emitted in BlogDetail.
     // - Every other language points to the English milvus.io blog URL to
     //   consolidate it to English instead of competing for the index.
-    const enBlog = fallbackData as
-      | Record<string, any>
-      | undefined;
-    const enCanonicalUrl = enBlog?.canonicalUrl as string | undefined;
+    const enCanonicalUrl = enMeta.canonicalUrl as string | undefined;
     let canonicalUrl: string | null =
       (rest as Record<string, any>).canonicalUrl ?? null;
     if (lang !== LanguageEnum.ENGLISH) {
@@ -77,11 +81,13 @@ export const createBlogDetailProps = (lang: LanguageEnum) => {
         blogId: id,
         locale: lang,
         newHtml,
-        anchorList: anchorList.filter(item => item.label !== rest.title && item.type === 2),
+        anchorList: anchorList.filter(
+          item => item.label !== rest.title && item.type === 2
+        ),
         codeList,
         moreBlogs: [
           ...moreBlogs,
-          ...allData.filter(item => item.id !== id),
+          ...listData.filter(item => item.id !== id),
         ]
           .slice(0, 4)
           .map(({ id, title, cover, tags, desc }) => ({

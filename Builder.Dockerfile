@@ -10,6 +10,8 @@ RUN pnpm install --frozen-lockfile --prefer-offline \
  && rm -rf /root/.pnpm-store
 
 FROM dependency AS builder
+# Turbopack's parallel compilation is faster with jemalloc on Alpine.
+RUN apk add --no-cache jemalloc
 ARG REPO_STATICS_KEY
 ARG INKEEP_API_KEY
 ARG MSERVICE_URL
@@ -22,7 +24,11 @@ COPY scripts ./scripts
 COPY next.config.js next-env.d.ts sitemap.config.js ./
 COPY tsconfig.json typings.d.ts ./
 COPY .prettierrc tailwind.config.js postcss.config.js components.json ./
-RUN pnpm build --env=REPO_STATICS_KEY=$REPO_STATICS_KEY --env=INKEEP_API_KEY=$INKEEP_API_KEY --env=MSERVICE_URL=$MSERVICE_URL --env=CMS_BASE_URL=$CMS_BASE_URL
+RUN LD_PRELOAD=/usr/lib/libjemalloc.so.2 pnpm build --env=REPO_STATICS_KEY=$REPO_STATICS_KEY --env=INKEEP_API_KEY=$INKEEP_API_KEY --env=MSERVICE_URL=$MSERVICE_URL --env=CMS_BASE_URL=$CMS_BASE_URL
+
+# The runner already ships node_modules and the content trees. These manifests
+# describe files to copy for standalone packaging and aren't read by next start.
+RUN find .next -name '*.nft.json' -type f -delete
 
 # On-demand rendering reads only markdown/json/mdx from src/docs at runtime.
 # Image assets live under */assets and were already migrated to public during

@@ -22,18 +22,13 @@ jobs:
       cancel-in-progress: true
 
     steps:
-      - name: Free up disk space (comprehensive)
+      - name: Check runner disk space
         run: |
-          echo "=== Before cleanup ==="
-          df -h / 
-
-          # Essential cleanup for GitHub Actions runner
-          sudo rm -rf /usr/share/dotnet || true
-          sudo rm -rf /usr/local/lib/android || true
-
-          echo "=== After cleanup ==="
-          df -h / 
-          echo "Root filesystem available: $(df -h / | awk 'NR==2{print $4}')"
+          # Recent preview builds used about 17 GiB including the checkout and image.
+          if (( $(df -B1 --output=avail / | tail -1) < 25 * 1024 ** 3 )); then
+            sudo rm -rf /usr/share/dotnet /usr/local/lib/android
+          fi
+          df -h /
 
       - uses: azure/docker-login@v2
         with:
@@ -48,7 +43,8 @@ jobs:
       - name: Verify Nginx configuration
         if: always()
         run: |
-          docker build --target nginx-runtime -f Builder.Dockerfile .
+          docker buildx create --name production-builder --driver docker-container --use
+          docker buildx build --target nginx-runtime --output type=cacheonly -f Builder.Dockerfile .
 
       - name: Setup Node.js
         uses: actions/setup-node@v7
@@ -58,7 +54,7 @@ jobs:
       - name: update submodules
         run: |
           git submodule init
-          git submodule update --remote
+          git submodule update --remote --jobs 2
 
       - name: Check disk space after submodule update
         run: |
@@ -107,13 +103,12 @@ jobs:
           max_attempts: 2
           retry_on: error
           command: |
-            docker build "$GITHUB_WORKSPACE/" -f "Builder.Dockerfile" \
+            docker buildx build --push "$GITHUB_WORKSPACE/" -f "Builder.Dockerfile" \
             --build-arg MSERVICE_URL=${{ secrets.MSERVICE_URL }} \
             --build-arg CMS_BASE_URL=${{ secrets.CMS_BASE_URL }} \
             --build-arg REPO_STATICS_KEY=${{ secrets.REPO_STATICS_KEY }} \
             --build-arg INKEEP_API_KEY=${{ secrets.INKEEP_API_KEY }} \
             -t milvusdb/milvus-io-dev:${{ steps.generate-tag-name.outputs.docker_tag }}
-            docker push milvusdb/milvus-io-dev:${{ steps.generate-tag-name.outputs.docker_tag }}
       #         env:
       #           GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES: true
       #           CI: true

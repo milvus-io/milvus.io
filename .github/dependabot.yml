@@ -54,6 +54,9 @@ updates:
       # which breaks every CSS module (see #2439).
       - dependency-name: "postcss-nested"
         update-types: ["version-update:semver-major"]
+      # Keep @types/node aligned with our Node 22 Docker/CI runtime.
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
 
   - package-ecosystem: "github-actions"
     directory: "/"

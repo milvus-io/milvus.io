@@ -8,14 +8,10 @@ import type {
   ToolFunction,
 } from '@inkeep/cxkit-react';
 import {
-  answerConfidence,
-  provideAnswerConfidenceSchema,
   salesSignalType,
   detectedSalesSignal,
-  supportSignalType,
   detectedSupportSignal,
 } from '@/utils/inkeep';
-import { zodToJsonSchema } from 'zod-to-json-schema';
 import { CONTACT_SALES_URL } from '@/consts/externalLinks';
 import { useMemo } from 'react';
 import { getMilvusSlackLink } from '@/consts/links';
@@ -27,8 +23,8 @@ type InkeepSharedSettings = {
   modalSettings: InkeepModalSettings;
 };
 
-const validSalesSignalTypes: string[] = salesSignalType.options.map(
-  option => option.value
+const validSalesSignalTypes: string[] = salesSignalType.anyOf.map(
+  option => option.const
 );
 
 const INKEEP_PRIMARY_COLOR = '#4DB7EF';
@@ -127,7 +123,7 @@ export const useInkeepSettings = ({
       //     name: 'provideAnswerConfidence',
       //     description:
       //       'Determine how confident the AI assistant was and whether or not to escalate to humans.',
-      //     parameters: zodToJsonSchema(provideAnswerConfidenceSchema),
+      //     parameters: provideAnswerConfidenceSchema,
       //   },
       //   renderMessageButtons: ({ args }) => {
       //     const confidence = args.answerConfidence;
@@ -155,7 +151,7 @@ export const useInkeepSettings = ({
           name: 'detectSalesSignal',
           description:
             'Identify when users express interest in potentially purchasing a product.',
-          parameters: zodToJsonSchema(detectedSalesSignal),
+          parameters: detectedSalesSignal,
         },
         renderMessageButtons: ({ args }) => {
           // If any valid sales signal is detected, show a demo scheduling option
@@ -180,7 +176,7 @@ export const useInkeepSettings = ({
           name: 'detectSupportSignal',
           description:
             'Detect whether the user is requesting technical support or reporting an issue.',
-          parameters: zodToJsonSchema(detectedSupportSignal),
+          parameters: detectedSupportSignal,
         },
         renderMessageButtons: ({ args }) => {
           const signal = args?.type;

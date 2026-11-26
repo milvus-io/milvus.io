@@ -174,15 +174,17 @@ module.exports = {
       alternateRefs: config.alternateRefs ?? [],
     };
   },
-  additionalPaths: async () => {
+  additionalPaths: async (config = {}) => {
     // Archived API pages are recorded only when they are self-canonical.
     const urls = new Set(docSitemapEntries.filter(page => page.onDemand).map(page => page.loc));
     const docPaths = [...urls]
       .filter(loc => !isExcludedFromSitemap(loc))
       .map(loc => ({
         loc,
-        changefreq: 'weekly',
-        priority: 0.7,
+        changefreq: BLOG_DETAIL_RE.test(loc)
+          ? (config.changefreq ?? 'daily')
+          : 'weekly',
+        priority: config.priority ?? 0.7,
         lastmod: lastmodByPath.get(loc),
       }));
 

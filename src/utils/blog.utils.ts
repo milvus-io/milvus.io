@@ -3,6 +3,11 @@ import { join } from 'path';
 import matter from 'gray-matter';
 import { INDEXABLE_LANGUAGES, LanguageEnum } from '@/types/localization';
 
+// Passing an options object bypasses gray-matter's unbounded global
+// matter.cache, preventing full article bodies from accumulating in memory on
+// on-demand production renders.
+const parseMatter = (file: Buffer | string) => matter(file, {});
+
 const generateBlogCover = (cover: string, date: Date) => {
   if (cover) {
     return `https://${cover}`;
@@ -28,7 +33,7 @@ const getBlogDir = (locale: LanguageEnum = LanguageEnum.ENGLISH) =>
  *  Console flags as invalid structured data. Skipping them here keeps them out
  *  of every consumer at once: routes, list, sitemap, hreflang. */
 const hasBlogTitle = (blogDir: string, fileName: string) => {
-  const { data } = matter(fs.readFileSync(`${blogDir}/${fileName}`));
+  const { data } = parseMatter(fs.readFileSync(`${blogDir}/${fileName}`));
   return typeof data.title === 'string' && data.title.trim().length > 0;
 };
 
@@ -51,7 +56,7 @@ const generateBlogListData = (
   const BASE_BLOG_DIR = getBlogDir(locale);
   const blogsData = getBlogFileNames(BASE_BLOG_DIR).map(v => {
     const file = fs.readFileSync(`${BASE_BLOG_DIR}/${v}`);
-    const { data } = matter(file);
+    const { data } = parseMatter(file);
     const { tag, date, cover, title = '', content, metaData, ...rest } = data;
 
     return {
@@ -68,11 +73,89 @@ const generateBlogListData = (
   return sortBlogsByDateDesc(blogsData);
 };
 
+// Lightweight metadata-only cache per locale (no article bodies) for
+// production on-demand renders and list pages.
+const listByLocale = new Map<
+  LanguageEnum,
+  ReturnType<typeof generateBlogListData>
+>();
+
+const getListData = (locale: LanguageEnum = LanguageEnum.ENGLISH) => {
+  if (process.env.NODE_ENV !== 'production') {
+    return generateBlogListData(locale);
+  }
+
+  const cached = listByLocale.get(locale);
+  if (cached) return cached;
+
+  const list = generateBlogListData(locale);
+  listByLocale.set(locale, list);
+  return list;
+};
+
+// Reads only the requested blog post's content and sibling metadata JSON
+// without caching full article bodies in memory, keeping on-demand renders
+// memory-bounded.
+const getSingleData = (
+  locale: LanguageEnum = LanguageEnum.ENGLISH,
+  id: string
+) => {
+  if (
+    !id ||
+    !id.endsWith('.md') ||
+    id.includes('/') ||
+    id.includes('\\') ||
+    id.includes('..')
+  ) {
+    return undefined;
+  }
+
+  const BASE_BLOG_DIR = getBlogDir(locale);
+  const filePath = join(BASE_BLOG_DIR, id);
+  if (!fs.existsSync(filePath)) {
+    return undefined;
+  }
+
+  const file = fs.readFileSync(filePath);
+  const { data, content } = parseMatter(file);
+  if (typeof data.title !== 'string' || !data.title.trim()) {
+    return undefined;
+  }
+
+  const { tag, date, cover, title = '', ...rest } = data;
+  const metaFilePath = join(BASE_BLOG_DIR, id.replace('.md', '.json'));
+  let metaData: {
+    codeList?: string[];
+    anchorList?: Array<{
+      label: string;
+      href: string;
+      type: number;
+      isActive: boolean;
+    }>;
+  } = {};
+  if (fs.existsSync(metaFilePath)) {
+    const metaFile = fs.readFileSync(metaFilePath);
+    metaData = JSON.parse(metaFile.toString());
+  }
+
+  return {
+    ...JSON.parse(JSON.stringify(rest)),
+    id,
+    date: new Date(data.date).toJSON(),
+    cover: generateBlogCover(cover, new Date(data.date)),
+    tags: tag ? tag.split(',') : [],
+    href: `/blog/${id}`,
+    content,
+    title,
+    metaData,
+  };
+};
+
 const generateBlogData = (locale: LanguageEnum = LanguageEnum.ENGLISH) => {
   const BASE_BLOG_DIR = getBlogDir(locale);
   const blogsData = getBlogFileNames(BASE_BLOG_DIR).map(v => {
     const file = fs.readFileSync(`${BASE_BLOG_DIR}/${v}`);
-    const { data, content } = matter(file);
+    const { data, content } = parseMatter(file);
     const { tag, date, cover, title = '', ...rest } = data;
 
     const metaFilePath = `${BASE_BLOG_DIR}/${v.replace('.md', '.json')}`;
@@ -127,7 +210,7 @@ const generateSimpleBlogList = (
   const BASE_BLOG_DIR = getBlogDir(locale);
   const blogsData = getBlogFileNames(BASE_BLOG_DIR).map(v => {
     const file = fs.readFileSync(`${BASE_BLOG_DIR}/${v}`);
-    const { data } = matter(file);
+    const { data } = parseMatter(file);
     const { title = '' } = data;
 
     return {
@@ -161,7 +244,8 @@ const getAvailableLanguagesForBlog = (id: string) =>
 
 const blogUtils = {
   getAllData,
-  getListData: generateBlogListData,
+  getListData,
+  getSingleData,
   getRouter: generateBlogRouter,
   getSimpleList: generateSimpleBlogList,
   getAvailableLanguages: getAvailableLanguagesForBlog,

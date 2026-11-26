@@ -39,6 +39,10 @@ import { formatApiRelativePath } from '@/utils';
 import { ABSOLUTE_BASE_URL } from '@/consts';
 import { getApiCanonicalUrl } from '@/components/localization/utils';
 import {
+  stripMdListDataForClient,
+  stripMenuForClient,
+} from '@/utils/client-doc-data';
+import {
   writeSitemapSegment,
   type ContentSitemapEntry,
 } from '@/utils/doc-sitemap-segments';
@@ -557,19 +561,24 @@ export const getStaticProps: GetStaticProps = async context => {
     ? getContentLastModified(matchedDoc.sourcePath, frontMatter)
     : undefined;
 
+  const currentApiMdId = formatApiRelativePath(frontMatter.relativePath);
+
   return {
     props: {
       doc,
       codeList,
       currentId: slug.join('-'),
-      menus: menuData,
+      menus: stripMenuForClient(menuData),
       version: version,
       latestVersion,
       locale: 'en',
       category: languageCategory,
       versions: versions,
       relativePath: frontMatter.relativePath,
-      curCategoryContentData: curCategoryContentDataOfAllVersion,
+      curCategoryContentData: stripMdListDataForClient(
+        curCategoryContentDataOfAllVersion,
+        currentApiMdId
+      ),
       headingContent: firstHeading || 'Milvus API Reference',
       languageCategory,
       lastModified: lastModified ?? null,
